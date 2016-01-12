@@ -158,8 +158,19 @@
 		5CEAC0331AD4F9540058037C /* DDMyCollectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CEAC0321AD4F9540058037C /* DDMyCollectionManager.m */; };
 		9021B9691C2CE7FC008C8F0B /* PIEAvatarImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9021B9681C2CE7FC008C8F0B /* PIEAvatarImageView.m */; };
 		9021B96C1C2D2591008C8F0B /* PIEAvatarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9021B96B1C2D2591008C8F0B /* PIEAvatarButton.m */; };
+		903D51EC1C3A67710020D5BF /* PIELaunchViewController_Black.m in Sources */ = {isa = PBXBuildFile; fileRef = 903D51EB1C3A67710020D5BF /* PIELaunchViewController_Black.m */; };
 		903E09DE1C23DF9E006C87B8 /* PIEEliteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 903E09DD1C23DF9E006C87B8 /* PIEEliteViewController.m */; };
+		906F87E61C3FABF700318DBB /* PIEBindCellphoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 906F87E51C3FABF700318DBB /* PIEBindCellphoneViewController.m */; };
+		906F87EC1C3FBDE200318DBB /* PIEFurtherRegistrationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 906F87EB1C3FBDE200318DBB /* PIEFurtherRegistrationView.m */; };
+		907A431E1C40FC1C002542E6 /* PIELaunchTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 907A431D1C40FC1C002542E6 /* PIELaunchTextField.m */; };
+		907A432D1C40FCA6002542E6 /* PIELaunchNextStepButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 907A432C1C40FCA6002542E6 /* PIELaunchNextStepButton.m */; };
+		907A43301C410C7E002542E6 /* PIEVerificationCodeCountdownButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 907A432F1C410C7E002542E6 /* PIEVerificationCodeCountdownButton.m */; };
+		9085EB731C3B5DC6002EA462 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9085EB511C3B5D91002EA462 /* ReactiveCocoa.framework */; };
+		9085EB741C3B5DC6002EA462 /* ReactiveCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9085EB511C3B5D91002EA462 /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9085EB771C3B5DCC002EA462 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9085EB681C3B5D99002EA462 /* Result.framework */; };
+		9085EB781C3B5DCC002EA462 /* Result.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9085EB681C3B5D99002EA462 /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		90B3A07C1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B3A07B1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m */; };
+		90B8775C1C3E010F0087E9D7 /* PIEForgotPasswordViewController_Black.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B8775B1C3E010F0087E9D7 /* PIEForgotPasswordViewController_Black.m */; };
 		90C60B271C2FD9A300D7F51D /* PIEAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90C60B261C2FD9A300D7F51D /* PIEAvatarView.m */; };
 		90EC3D5C1C2A78D10085A7BE /* PIEProceedingToHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EC3D5B1C2A78D10085A7BE /* PIEProceedingToHelpViewController.m */; };
 		90EC3D5F1C2A78E20085A7BE /* PIEProceedingAskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EC3D5E1C2A78E20085A7BE /* PIEProceedingAskViewController.m */; };
@@ -554,7 +565,134 @@
 			remoteGlobalIDString = 5CDB05C01AA3FE520089121E;
 			remoteInfo = ATOMPSGod;
 		};
+		9085EB4C1C3B5D91002EA462 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9085EB431C3B5D91002EA462 /* ReactiveCocoa.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D04725EA19E49ED7006002AA;
+			remoteInfo = "ReactiveCocoa-Mac";
+		};
+		9085EB4E1C3B5D91002EA462 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9085EB431C3B5D91002EA462 /* ReactiveCocoa.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D04725F519E49ED7006002AA;
+			remoteInfo = "ReactiveCocoa-MacTests";
+		};
+		9085EB501C3B5D91002EA462 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9085EB431C3B5D91002EA462 /* ReactiveCocoa.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D047260C19E49F82006002AA;
+			remoteInfo = "ReactiveCocoa-iOS";
+		};
+		9085EB521C3B5D91002EA462 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9085EB431C3B5D91002EA462 /* ReactiveCocoa.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D047261619E49F82006002AA;
+			remoteInfo = "ReactiveCocoa-iOSTests";
+		};
+		9085EB541C3B5D91002EA462 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9085EB431C3B5D91002EA462 /* ReactiveCocoa.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A9B315541B3940610001CB9C;
+			remoteInfo = "ReactiveCocoa-watchOS";
+		};
+		9085EB561C3B5D91002EA462 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9085EB431C3B5D91002EA462 /* ReactiveCocoa.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 57A4D2411BA13D7A00F7D4B1;
+			remoteInfo = "ReactiveCocoa-tvOS";
+		};
+		9085EB631C3B5D99002EA462 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9085EB581C3B5D99002EA462 /* Result.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D45480571A9572F5009D7229;
+			remoteInfo = "Result-Mac";
+		};
+		9085EB651C3B5D99002EA462 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9085EB581C3B5D99002EA462 /* Result.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D45480671A9572F5009D7229;
+			remoteInfo = "Result-MacTests";
+		};
+		9085EB671C3B5D99002EA462 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9085EB581C3B5D99002EA462 /* Result.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D454807D1A957361009D7229;
+			remoteInfo = "Result-iOS";
+		};
+		9085EB691C3B5D99002EA462 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9085EB581C3B5D99002EA462 /* Result.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D45480871A957362009D7229;
+			remoteInfo = "Result-iOSTests";
+		};
+		9085EB6B1C3B5D99002EA462 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9085EB581C3B5D99002EA462 /* Result.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 57FCDE471BA280DC00130C48;
+			remoteInfo = "Result-tvOS";
+		};
+		9085EB6D1C3B5D99002EA462 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9085EB581C3B5D99002EA462 /* Result.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 57FCDE541BA280E000130C48;
+			remoteInfo = "Result-tvOSTests";
+		};
+		9085EB6F1C3B5D99002EA462 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9085EB581C3B5D99002EA462 /* Result.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D03579A31B2B788F005D26AE;
+			remoteInfo = "Result-watchOS";
+		};
+		9085EB711C3B5D99002EA462 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9085EB581C3B5D99002EA462 /* Result.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D03579B01B2B78A1005D26AE;
+			remoteInfo = "Result-watchOSTests";
+		};
+		9085EB751C3B5DC6002EA462 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9085EB431C3B5D91002EA462 /* ReactiveCocoa.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D047260B19E49F82006002AA;
+			remoteInfo = "ReactiveCocoa-iOS";
+		};
+		9085EB791C3B5DCC002EA462 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9085EB581C3B5D99002EA462 /* Result.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D454807C1A957361009D7229;
+			remoteInfo = "Result-iOS";
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		906D0A8B1C3A8E4D0009E118 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				9085EB741C3B5DC6002EA462 /* ReactiveCocoa.framework in Embed Frameworks */,
+				9085EB781C3B5DCC002EA462 /* Result.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0E0DDC8B1C1A64BC009A66C4 /* PIEChannelActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelActivityViewController.h; sourceTree = "<group>"; };
@@ -871,10 +1009,26 @@
 		9021B9681C2CE7FC008C8F0B /* PIEAvatarImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEAvatarImageView.m; sourceTree = "<group>"; };
 		9021B96A1C2D2591008C8F0B /* PIEAvatarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEAvatarButton.h; sourceTree = "<group>"; };
 		9021B96B1C2D2591008C8F0B /* PIEAvatarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEAvatarButton.m; sourceTree = "<group>"; };
+		903D51EA1C3A67710020D5BF /* PIELaunchViewController_Black.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIELaunchViewController_Black.h; sourceTree = "<group>"; };
+		903D51EB1C3A67710020D5BF /* PIELaunchViewController_Black.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIELaunchViewController_Black.m; sourceTree = "<group>"; };
 		903E09DC1C23DF9E006C87B8 /* PIEEliteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteViewController.h; sourceTree = "<group>"; };
 		903E09DD1C23DF9E006C87B8 /* PIEEliteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteViewController.m; sourceTree = "<group>"; };
+		906F87E41C3FABF700318DBB /* PIEBindCellphoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEBindCellphoneViewController.h; sourceTree = "<group>"; };
+		906F87E51C3FABF700318DBB /* PIEBindCellphoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEBindCellphoneViewController.m; sourceTree = "<group>"; };
+		906F87EA1C3FBDE200318DBB /* PIEFurtherRegistrationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEFurtherRegistrationView.h; sourceTree = "<group>"; };
+		906F87EB1C3FBDE200318DBB /* PIEFurtherRegistrationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEFurtherRegistrationView.m; sourceTree = "<group>"; };
+		907A431C1C40FC1C002542E6 /* PIELaunchTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIELaunchTextField.h; sourceTree = "<group>"; };
+		907A431D1C40FC1C002542E6 /* PIELaunchTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIELaunchTextField.m; sourceTree = "<group>"; };
+		907A432B1C40FCA6002542E6 /* PIELaunchNextStepButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIELaunchNextStepButton.h; sourceTree = "<group>"; };
+		907A432C1C40FCA6002542E6 /* PIELaunchNextStepButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIELaunchNextStepButton.m; sourceTree = "<group>"; };
+		907A432E1C410C7E002542E6 /* PIEVerificationCodeCountdownButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEVerificationCodeCountdownButton.h; sourceTree = "<group>"; };
+		907A432F1C410C7E002542E6 /* PIEVerificationCodeCountdownButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEVerificationCodeCountdownButton.m; sourceTree = "<group>"; };
+		9085EB431C3B5D91002EA462 /* ReactiveCocoa.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactiveCocoa.xcodeproj; path = ../../ReactiveCocoa/ReactiveCocoa.xcodeproj; sourceTree = "<group>"; };
+		9085EB581C3B5D99002EA462 /* Result.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Result.xcodeproj; path = ../../ReactiveCocoa/Carthage/Checkouts/Result/Result.xcodeproj; sourceTree = "<group>"; };
 		90B3A07A1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECellIconStatusChangedNotificationKey.h; sourceTree = "<group>"; };
 		90B3A07B1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECellIconStatusChangedNotificationKey.m; sourceTree = "<group>"; };
+		90B8775A1C3E010F0087E9D7 /* PIEForgotPasswordViewController_Black.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEForgotPasswordViewController_Black.h; sourceTree = "<group>"; };
+		90B8775B1C3E010F0087E9D7 /* PIEForgotPasswordViewController_Black.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEForgotPasswordViewController_Black.m; sourceTree = "<group>"; };
 		90C60B251C2FD9A300D7F51D /* PIEAvatarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEAvatarView.h; sourceTree = "<group>"; };
 		90C60B261C2FD9A300D7F51D /* PIEAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEAvatarView.m; sourceTree = "<group>"; };
 		90EC3D5A1C2A78D10085A7BE /* PIEProceedingToHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEProceedingToHelpViewController.h; sourceTree = "<group>"; };
@@ -1609,8 +1763,10 @@
 				F49160931BEC4D0800BAFB65 /* libMobClickLibrary.a in Frameworks */,
 				F45D8FAB1BD87CFD005946E8 /* ShareSDK.framework in Frameworks */,
 				F45D8FA61BD87CFD005946E8 /* libWeiboSDK.a in Frameworks */,
+				9085EB771C3B5DCC002EA462 /* Result.framework in Frameworks */,
 				F45D8FAD1BD87CFD005946E8 /* ShareSDKExtension.framework in Frameworks */,
 				5CDF82401AC2BEEA00321694 /* SystemConfiguration.framework in Frameworks */,
+				9085EB731C3B5DC6002EA462 /* ReactiveCocoa.framework in Frameworks */,
 				F45D8FA41BD87CFD005946E8 /* TencentOpenAPI.framework in Frameworks */,
 				F45D8FAE1BD87CFD005946E8 /* ShareSDKInterfaceAdapter.framework in Frameworks */,
 				5CDF82421AC2BEF900321694 /* QuartzCore.framework in Frameworks */,
@@ -2248,6 +2404,8 @@
 		5CDB05C31AA3FE520089121E /* TUPAI */ = {
 			isa = PBXGroup;
 			children = (
+				9085EB431C3B5D91002EA462 /* ReactiveCocoa.xcodeproj */,
+				9085EB581C3B5D99002EA462 /* Result.xcodeproj */,
 				5C51B2521AB9088700F442A6 /* Framework */,
 				F40207371BA7C3F60007CE02 /* PIETransition */,
 				5C561A4B1AB7C8210052D4D5 /* model */,
@@ -2534,6 +2692,34 @@
 			path = avatar;
 			sourceTree = "<group>";
 		};
+		9085EB441C3B5D91002EA462 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9085EB4D1C3B5D91002EA462 /* ReactiveCocoa.framework */,
+				9085EB4F1C3B5D91002EA462 /* ReactiveCocoaTests.xctest */,
+				9085EB511C3B5D91002EA462 /* ReactiveCocoa.framework */,
+				9085EB531C3B5D91002EA462 /* ReactiveCocoaTests.xctest */,
+				9085EB551C3B5D91002EA462 /* ReactiveCocoa.framework */,
+				9085EB571C3B5D91002EA462 /* ReactiveCocoa.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9085EB591C3B5D99002EA462 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9085EB641C3B5D99002EA462 /* Result.framework */,
+				9085EB661C3B5D99002EA462 /* Result-MacTests.xctest */,
+				9085EB681C3B5D99002EA462 /* Result.framework */,
+				9085EB6A1C3B5D99002EA462 /* Result-iOSTests.xctest */,
+				9085EB6C1C3B5D99002EA462 /* Result.framework */,
+				9085EB6E1C3B5D99002EA462 /* Result-tvOSTests.xctest */,
+				9085EB701C3B5D99002EA462 /* Result.framework */,
+				9085EB721C3B5D99002EA462 /* Result-watchOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		90FA116C1C1FDB8900D8B602 /* DeviceUtil */ = {
 			isa = PBXGroup;
 			children = (
@@ -2768,6 +2954,10 @@
 				5CDB06651AA45C680089121E /* DDPhoneRegisterVC.m */,
 				5CDB066F1AA47E760089121E /* DDAuthcodeVC.h */,
 				5CDB06701AA47E760089121E /* DDAuthcodeVC.m */,
+				906F87E41C3FABF700318DBB /* PIEBindCellphoneViewController.h */,
+				906F87E51C3FABF700318DBB /* PIEBindCellphoneViewController.m */,
+				906F87EA1C3FBDE200318DBB /* PIEFurtherRegistrationView.h */,
+				906F87EB1C3FBDE200318DBB /* PIEFurtherRegistrationView.m */,
 			);
 			name = registerByPhone;
 			sourceTree = "<group>";
@@ -2779,6 +2969,8 @@
 				E9FF8A3A1B71CCB70010D2C4 /* DDInputPhoneFPVC.m */,
 				E900919B1B71E04E004623E4 /* DDInputAuthcodePwdFPVC.h */,
 				E900919C1B71E04E004623E4 /* DDInputAuthcodePwdFPVC.m */,
+				90B8775A1C3E010F0087E9D7 /* PIEForgotPasswordViewController_Black.h */,
+				90B8775B1C3E010F0087E9D7 /* PIEForgotPasswordViewController_Black.m */,
 			);
 			name = forgetPasswordBabe;
 			sourceTree = "<group>";
@@ -3180,6 +3372,14 @@
 				F428F01B1BD331EF00318AC2 /* PIELaunchViewController.h */,
 				F428F01C1BD331EF00318AC2 /* PIELaunchViewController.m */,
 				F428F01D1BD331EF00318AC2 /* PIELaunchViewController.xib */,
+				903D51EA1C3A67710020D5BF /* PIELaunchViewController_Black.h */,
+				903D51EB1C3A67710020D5BF /* PIELaunchViewController_Black.m */,
+				907A431C1C40FC1C002542E6 /* PIELaunchTextField.h */,
+				907A431D1C40FC1C002542E6 /* PIELaunchTextField.m */,
+				907A432B1C40FCA6002542E6 /* PIELaunchNextStepButton.h */,
+				907A432C1C40FCA6002542E6 /* PIELaunchNextStepButton.m */,
+				907A432E1C410C7E002542E6 /* PIEVerificationCodeCountdownButton.h */,
+				907A432F1C410C7E002542E6 /* PIEVerificationCodeCountdownButton.m */,
 			);
 			name = launch;
 			sourceTree = "<group>";
@@ -4022,10 +4222,13 @@
 				5CDB05BD1AA3FE520089121E /* Sources */,
 				5CDB05BE1AA3FE520089121E /* Frameworks */,
 				5CDB05BF1AA3FE520089121E /* Resources */,
+				906D0A8B1C3A8E4D0009E118 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				9085EB761C3B5DC6002EA462 /* PBXTargetDependency */,
+				9085EB7A1C3B5DCC002EA462 /* PBXTargetDependency */,
 			);
 			name = TUPAI;
 			productName = ATOMPSGod;
@@ -4091,6 +4294,16 @@
 			mainGroup = 5CDB05B81AA3FE520089121E;
 			productRefGroup = 5CDB05C21AA3FE520089121E /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 9085EB441C3B5D91002EA462 /* Products */;
+					ProjectRef = 9085EB431C3B5D91002EA462 /* ReactiveCocoa.xcodeproj */;
+				},
+				{
+					ProductGroup = 9085EB591C3B5D99002EA462 /* Products */;
+					ProjectRef = 9085EB581C3B5D99002EA462 /* Result.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				5CDB05C01AA3FE520089121E /* TUPAI */,
@@ -4098,6 +4311,107 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		9085EB4D1C3B5D91002EA462 /* ReactiveCocoa.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ReactiveCocoa.framework;
+			remoteRef = 9085EB4C1C3B5D91002EA462 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9085EB4F1C3B5D91002EA462 /* ReactiveCocoaTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ReactiveCocoaTests.xctest;
+			remoteRef = 9085EB4E1C3B5D91002EA462 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9085EB511C3B5D91002EA462 /* ReactiveCocoa.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ReactiveCocoa.framework;
+			remoteRef = 9085EB501C3B5D91002EA462 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9085EB531C3B5D91002EA462 /* ReactiveCocoaTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ReactiveCocoaTests.xctest;
+			remoteRef = 9085EB521C3B5D91002EA462 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9085EB551C3B5D91002EA462 /* ReactiveCocoa.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ReactiveCocoa.framework;
+			remoteRef = 9085EB541C3B5D91002EA462 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9085EB571C3B5D91002EA462 /* ReactiveCocoa.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ReactiveCocoa.framework;
+			remoteRef = 9085EB561C3B5D91002EA462 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9085EB641C3B5D99002EA462 /* Result.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Result.framework;
+			remoteRef = 9085EB631C3B5D99002EA462 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9085EB661C3B5D99002EA462 /* Result-MacTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Result-MacTests.xctest";
+			remoteRef = 9085EB651C3B5D99002EA462 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9085EB681C3B5D99002EA462 /* Result.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Result.framework;
+			remoteRef = 9085EB671C3B5D99002EA462 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9085EB6A1C3B5D99002EA462 /* Result-iOSTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Result-iOSTests.xctest";
+			remoteRef = 9085EB691C3B5D99002EA462 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9085EB6C1C3B5D99002EA462 /* Result.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Result.framework;
+			remoteRef = 9085EB6B1C3B5D99002EA462 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9085EB6E1C3B5D99002EA462 /* Result-tvOSTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Result-tvOSTests.xctest";
+			remoteRef = 9085EB6D1C3B5D99002EA462 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9085EB701C3B5D99002EA462 /* Result.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Result.framework;
+			remoteRef = 9085EB6F1C3B5D99002EA462 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9085EB721C3B5D99002EA462 /* Result-watchOSTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Result-watchOSTests.xctest";
+			remoteRef = 9085EB711C3B5D99002EA462 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		5CDB05BF1AA3FE520089121E /* Resources */ = {
@@ -4250,6 +4564,7 @@
 				5C67FB2D1AB2C509004EFF05 /* ATOMCustomCopperView.m in Sources */,
 				F43930441BE4BD75006C9437 /* MRProgressView+AFNetworking.m in Sources */,
 				F44A52821C0C336500707281 /* PIEActionSheet_PS.m in Sources */,
+				907A431E1C40FC1C002542E6 /* PIELaunchTextField.m in Sources */,
 				F41FF0E61BDDFCE800566A12 /* JTSSimpleImageDownloader.m in Sources */,
 				5C83A8861AC66F910071A024 /* POPAnimatableProperty.mm in Sources */,
 				F4B02E1B1BECAAE200406A55 /* DDHotDetailManager.m in Sources */,
@@ -4276,6 +4591,7 @@
 				F4993CEB1BE5B32C007F9BE4 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				F499E45A1BD0F6A100E5F178 /* PIEEliteFollowAskTableViewCell.m in Sources */,
 				F41BA0C91C0EDCE800979D43 /* MJRefreshAutoNormalFooter.m in Sources */,
+				903D51EC1C3A67710020D5BF /* PIELaunchViewController_Black.m in Sources */,
 				5CDB06711AA47E760089121E /* DDAuthcodeVC.m in Sources */,
 				90FA11711C1FDB8900D8B602 /* DeviceUtil.m in Sources */,
 				E99D2F5F1B1C7E8D000D7784 /* NYXImagesHelper.m in Sources */,
@@ -4411,6 +4727,7 @@
 				9021B9691C2CE7FC008C8F0B /* PIEAvatarImageView.m in Sources */,
 				F41BA0C51C0EDCE800979D43 /* MJRefreshComponent.m in Sources */,
 				0E54C7901C1E8F5E00F431AC /* PIEProceedingViewController.m in Sources */,
+				906F87E61C3FABF700318DBB /* PIEBindCellphoneViewController.m in Sources */,
 				5C561A491AB7C7720052D4D5 /* ATOMUserDAO.m in Sources */,
 				5C4F5BDC1AA555F900226F64 /* PIENewViewController.m in Sources */,
 				F4F72C081BCB994B002FF05A /* PIEMyAskViewController.m in Sources */,
@@ -4447,6 +4764,7 @@
 				F44A527F1C0C335000707281 /* PIEActionSheet_Report.m in Sources */,
 				F413B0501C167AB500F9BA27 /* PIECarouselPageTableViewCell.m in Sources */,
 				F46117DB1BAD1101001A6F1A /* IQKeyboardManager.m in Sources */,
+				906F87EC1C3FBDE200318DBB /* PIEFurtherRegistrationView.m in Sources */,
 				F4E5F5FA1BD9D2E100AB8B31 /* AFURLConnectionOperation.m in Sources */,
 				F47EF0891C031FF500BFB442 /* VVBlurViewController.m in Sources */,
 				F4FABAFD1BAA593C00F47064 /* PIERefreshCollectionView.m in Sources */,
@@ -4514,6 +4832,7 @@
 				E94B03221B7C74E500863C6F /* PIECommentTextView.m in Sources */,
 				F4155D461BB3DA1300A0B045 /* PIEHighlightableLabel.m in Sources */,
 				F439303F1BE4BD75006C9437 /* MRProgressOverlayView.m in Sources */,
+				90B8775C1C3E010F0087E9D7 /* PIEForgotPasswordViewController_Black.m in Sources */,
 				F41BA0D51C0EDCE800979D43 /* UIView+MJExtension.m in Sources */,
 				E900919D1B71E04E004623E4 /* DDInputAuthcodePwdFPVC.m in Sources */,
 				5C6CEF2A1AF18BA800F06213 /* ATOMConstant.m in Sources */,
@@ -4552,6 +4871,7 @@
 				F4EA4DB51BF49B9F00486304 /* PIEAboutUsViewController.m in Sources */,
 				5C54DF1E1AB9738E00BDE34D /* DDBaseVC.m in Sources */,
 				F402F0F81BE89530004988B4 /* PIESearchUserCollectionViewCell.m in Sources */,
+				907A43301C410C7E002542E6 /* PIEVerificationCodeCountdownButton.m in Sources */,
 				3B2D90FE1BA03FB000D6A243 /* SZTextView.m in Sources */,
 				F4F28F281C23AE9B0067F2E4 /* UIImage+WebP.m in Sources */,
 				E95691B01B22E88300DA84BB /* MTLModel.m in Sources */,
@@ -4575,6 +4895,7 @@
 				F43930451BE4BD75006C9437 /* MRMessageInterceptor.m in Sources */,
 				5C653B9B1AA96C820025814B /* BJImageCropper.m in Sources */,
 				F4E5F5F61BD9D2E100AB8B31 /* AFHTTPRequestOperationManager.m in Sources */,
+				907A432D1C40FCA6002542E6 /* PIELaunchNextStepButton.m in Sources */,
 				F41BA0CB1C0EDCE800979D43 /* MJRefreshBackGifFooter.m in Sources */,
 				5C83A88B1AC66F910071A024 /* POPAnimationTracer.mm in Sources */,
 				F4E5308F1BD4985400FAA65D /* PIESignUpSheetView.m in Sources */,
@@ -4652,6 +4973,16 @@
 			isa = PBXTargetDependency;
 			target = 5CDB05C01AA3FE520089121E /* TUPAI */;
 			targetProxy = 5CDB05DB1AA3FE520089121E /* PBXContainerItemProxy */;
+		};
+		9085EB761C3B5DC6002EA462 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "ReactiveCocoa-iOS";
+			targetProxy = 9085EB751C3B5DC6002EA462 /* PBXContainerItemProxy */;
+		};
+		9085EB7A1C3B5DCC002EA462 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Result-iOS";
+			targetProxy = 9085EB791C3B5DCC002EA462 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -4772,10 +5103,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4821,10 +5152,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4949,11 +5280,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer: wang xiong (4H3M4NR77W)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

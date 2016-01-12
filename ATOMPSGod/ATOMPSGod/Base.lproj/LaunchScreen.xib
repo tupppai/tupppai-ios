@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -8,28 +8,48 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
+            <rect key="frame" x="0.0" y="0.0" width="480" height="559"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pie_launch_logo" translatesAutoresizingMaskIntoConstraints="NO" id="uvq-N9-XTe">
-                    <rect key="frame" x="212" y="101" width="56" height="56"/>
+                    <rect key="frame" x="194" y="150" width="92" height="64"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="56" id="DUM-L6-J41"/>
-                        <constraint firstAttribute="width" constant="56" id="SSI-OL-j98"/>
+                        <constraint firstAttribute="height" constant="64" id="DUM-L6-J41"/>
+                        <constraint firstAttribute="width" constant="92" id="SSI-OL-j98"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pie_launch_urlImage" translatesAutoresizingMaskIntoConstraints="NO" id="8Bi-3z-nBA">
+                    <rect key="frame" x="194" y="224" width="92" height="8"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="92" id="192-ga-4OH"/>
+                        <constraint firstAttribute="height" constant="8" id="XV6-tV-cdi"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pie_launch_titleImage" translatesAutoresizingMaskIntoConstraints="NO" id="8Oo-BS-HCO">
+                    <rect key="frame" x="157" y="291" width="166" height="12"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="166" id="7qo-cn-JC2"/>
+                        <constraint firstAttribute="height" constant="12" id="Qtz-FI-P0e"/>
                     </constraints>
                 </imageView>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.10196078431372549" green="0.098039215686274508" blue="0.098039215686274508" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
+                <constraint firstItem="8Bi-3z-nBA" firstAttribute="top" secondItem="uvq-N9-XTe" secondAttribute="bottom" constant="10" id="76D-tU-eSH"/>
                 <constraint firstItem="uvq-N9-XTe" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="GnK-yW-m9b"/>
-                <constraint firstItem="uvq-N9-XTe" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="101" id="Wcm-6M-GaM"/>
+                <constraint firstItem="8Oo-BS-HCO" firstAttribute="top" secondItem="8Bi-3z-nBA" secondAttribute="bottom" constant="59" id="PWf-Cd-IkZ"/>
+                <constraint firstItem="8Bi-3z-nBA" firstAttribute="centerX" secondItem="uvq-N9-XTe" secondAttribute="centerX" id="Rlw-oD-xhj"/>
+                <constraint firstItem="uvq-N9-XTe" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="150" id="Wcm-6M-GaM"/>
+                <constraint firstItem="8Oo-BS-HCO" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="uTx-W4-fMo"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="548" y="455"/>
+            <point key="canvasLocation" x="548" y="494.5"/>
         </view>
     </objects>
     <resources>
-        <image name="pie_launch_logo" width="56" height="56"/>
+        <image name="pie_launch_logo" width="91" height="63"/>
+        <image name="pie_launch_titleImage" width="165" height="12"/>
+        <image name="pie_launch_urlImage" width="91" height="8"/>
     </resources>
 </document>

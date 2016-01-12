@@ -41,10 +41,7 @@
     }];
 }
 + (void)authorize2:(SSDKPlatformType)type withBlock:(void (^)(SSDKUser* user ))block{
-    [Hud activity:@""];
-
     [ShareSDK authorize:type settings:nil onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
-        [Hud dismiss];
         if (state == SSDKResponseStateSuccess) {
             block(user);
         }else {

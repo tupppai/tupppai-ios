@@ -25,17 +25,17 @@
 - (instancetype)init {
     if (self = [super init]) {
         _titleIconPositionY = DEFAULT_TITLE_IMAGE_Y_POSITION;
-        _titlePositionY  = DEFAULT_TITLE_LABEL_Y_POSITION;
-        _descPositionY   = DEFAULT_DESCRIPTION_LABEL_Y_POSITION;
-        _title = @"";
-        _titleFont = DEFAULT_TITLE_FONT;
-        _titleColor = DEFAULT_LABEL_COLOR;
-        _desc = @"";
-        _descFont = DEFAULT_DESCRIPTION_FONT;
-        _descColor = DEFAULT_LABEL_COLOR;
-        _bgColor = DEFAULT_BG_COLOR;
-        _showTitleView = YES;
-        _alpha = 1.f;
+        _titlePositionY     = DEFAULT_TITLE_LABEL_Y_POSITION;
+        _descPositionY      = DEFAULT_DESCRIPTION_LABEL_Y_POSITION;
+        _title              = @"";
+        _titleFont          = DEFAULT_TITLE_FONT;
+        _titleColor         = DEFAULT_LABEL_COLOR;
+        _desc               = @"";
+        _descFont           = DEFAULT_DESCRIPTION_FONT;
+        _descColor          = DEFAULT_LABEL_COLOR;
+        _bgColor            = DEFAULT_BG_COLOR;
+        _showTitleView      = YES;
+        _alpha              = 1.f;
     }
     return self;
 }
@@ -45,10 +45,10 @@
 }
 
 + (instancetype)pageWithCustomView:(UIView *)customV {
-    EAIntroPage *newPage = [[self alloc] init];
-    newPage.customView = customV;
+    EAIntroPage *newPage                                         = [[self alloc] init];
+    newPage.customView                                           = customV;
     newPage.customView.translatesAutoresizingMaskIntoConstraints = NO;
-    newPage.bgColor = customV.backgroundColor;
+    newPage.bgColor                                              = customV.backgroundColor;
     return newPage;
 }
 

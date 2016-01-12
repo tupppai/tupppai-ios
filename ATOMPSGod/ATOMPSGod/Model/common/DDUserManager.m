@@ -33,22 +33,22 @@ static  PIEUserModel* _currentUser;
 
 
 + (void)setCurrentUser:(PIEUserModel *)user {
-    self.currentUser.uid = user.uid;
-    self.currentUser.mobile = user.mobile;
-    self.currentUser.nickname = user.nickname;
-    self.currentUser.sex = user.sex;
-    self.currentUser.avatar = user.avatar;
-    self.currentUser.likedCount = user.likedCount;
+    self.currentUser.uid             = user.uid;
+    self.currentUser.mobile          = user.mobile;
+    self.currentUser.nickname        = user.nickname;
+    self.currentUser.sex             = user.sex;
+    self.currentUser.avatar          = user.avatar;
+    self.currentUser.likedCount      = user.likedCount;
     self.currentUser.attentionNumber = user.attentionNumber;
-    self.currentUser.fansNumber = user.fansNumber;
-    self.currentUser.likedCount = user.likedCount;
-    self.currentUser.uploadNumber = user.uploadNumber;
-    self.currentUser.replyNumber = user.replyNumber;
-    self.currentUser.bindWechat = user.bindWechat;
-    self.currentUser.bindWeibo = user.bindWeibo;
-    self.currentUser.bindQQ = user.bindQQ;
-    self.currentUser.token = user.token;
-    self.currentUser.isV = user.isV;
+    self.currentUser.fansNumber      = user.fansNumber;
+    self.currentUser.likedCount      = user.likedCount;
+    self.currentUser.uploadNumber    = user.uploadNumber;
+    self.currentUser.replyNumber     = user.replyNumber;
+    self.currentUser.bindWechat      = user.bindWechat;
+    self.currentUser.bindWeibo       = user.bindWeibo;
+    self.currentUser.bindQQ          = user.bindQQ;
+    self.currentUser.token           = user.token;
+    self.currentUser.isV             = user.isV;
 }
 
 //embarrassing
@@ -157,7 +157,6 @@ static  PIEUserModel* _currentUser;
     }];
 
 }
-
 
 + (void)DD3PartyAuth:(NSDictionary *)param AndType:(NSString *)type withBlock:(void (^)(bool isRegistered,NSString* info))block {
     NSString* url = [NSString stringWithFormat:@"%@%@",URL_AC3PaAuth,type];

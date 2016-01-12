@@ -116,9 +116,32 @@ static DDSessionManager *_shareHTTPSessionManager = nil;
         if (responseObject) {
             int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
             if (ret == 2) {
-                [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NetworkSignOutCall" object:nil]];
+                // 服务器没有监测到“登陆态”——需要用户重新登录, 或者是因为游客状态想要做一些对服务器有着“写”操作的行为
                 
+                if ([DDUserManager currentUser].uid == kPIETouristUID) {
+                    // 游客    -> "没有登录态" == "完成注册的最后一步：绑定手机号"
+                    NSString *openID = [[NSUserDefaults standardUserDefaults]
+                                        objectForKey:PIETouristOpenIdKey];
+                    
+                    NSString *prompt = [NSString stringWithFormat:
+                                        @"ret == 2，游客没有登陆态\n openid = %@", openID];
+                    [Hud text:prompt];
+                    
+                    // post notification
+                    [[NSNotificationCenter defaultCenter]
+                     postNotificationName:PIENetworkCallForFurtherRegistrationNotification
+                     object:nil
+                     userInfo:nil];
+                }
+                else{
+                    // 正常用户 -> "没有登录态" == "重新登录"
+                    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NetworkSignOutCall" object:nil]];
+                    [Hud text:@"ret == 2, 正常用户没有登录态"];
+                }
             } else if (ret != 1) {
+                
+                // ret != 1, 表示网络不正常，或者是某种数据的异常, 向用户显示info字段的消息
+                
                 NSString* info = [responseObject objectForKey:@"info"];
                 NSDictionary* userInfo = [NSDictionary dictionaryWithObject:info forKey:@"info"];
                 [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NetworkShowInfoCall" object:nil userInfo:userInfo]];

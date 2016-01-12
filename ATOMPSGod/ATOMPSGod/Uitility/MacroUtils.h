@@ -25,8 +25,14 @@
 #define CGOriginX(rect)                 rect.origin.x
 #define CGOriginY(rect)                 rect.origin.y
 
-#define baseURLString @"http://api.qiupsdashen.com/"
-#define baseURLString_Test @"http://api.loiter.us/"
+//#define baseURLString @"http://api.qiupsdashen.com/"
+
+/*
+    To peiwei: 
+    没办法我又不知道怎么在新的launchViewController里做出“点击14下切换服务器”的这个功能，然后强哥那边的baseURL因为没有向腾讯备案要改，所以只能出此下策咯。
+ */
+#define baseURLString @"http://tapi.tupppai.com/"
+#define baseURLString_Test @"http://tapi.tupppai.com/"
 
 #define _S(number) (number*[ATOMBaseView scaleInView])
 #define WS(weakSelf) __weak __typeof(&*self)weakSelf = self

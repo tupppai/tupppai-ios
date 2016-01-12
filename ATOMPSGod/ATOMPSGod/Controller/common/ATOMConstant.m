@@ -70,4 +70,12 @@ CGFloat const kPublishTimeFontSizeSmall = 13.f;
 CGFloat const kTitleSizeForEmptyDataSet = 17.f;
 
 
+NSInteger const kPIETouristUID = -233;
 
+
+NSString * const PIETouristOpenIdKey = @"PIETouristOpenIdKey";
+
+NSString * const PIETouristLoginTypeStringKey = @"PIETouristLoginTypeStringKey";
+
+NSString * const PIENetworkCallForFurtherRegistrationNotification =
+@"PIENetworkCallForFurtherRegistrationNotification";
