@@ -23,7 +23,7 @@
 #import "LeesinUploadManager.h"
 #import "LeesinSwipeView.h"
 #import "QBImagePickerController.h"
-
+#import "NSNumber+leesinDone.h"
 typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     PIESwipeViewResueViewTypeMission,
     PIESwipeViewResueViewTypePhoto,
@@ -32,7 +32,7 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
 @property (nonatomic, strong) QBImagePickerController *qbImagePickerController;
 
 @end
-@interface LeesinViewController ()<LeesinBottomBarDelegate>
+@interface LeesinViewController ()<LeesinBottomBarDelegate,LeesinPreviewBarDelegate>
 
 @property (nonatomic, strong) LeesinBottomBar *bottomBar;
 @property (nonatomic, strong) LeesinPreviewBar *previewBar;
@@ -56,7 +56,10 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
 
 @property (nonatomic, strong) NSMutableOrderedSet *sourceAssets;
 @property (nonatomic, strong) NSMutableOrderedSet *selectedAssets;
-@property (nonatomic, assign) NSInteger selectedIndexOfMission;
+@property (nonatomic, strong) NSNumber *selectedIndexOfMission;
+@property (nonatomic, assign) NSInteger selectedIndexOfMission_done;
+@property (nonatomic, assign) NSInteger selectedIndexOfMission_undone;
+
 @end
 
 
@@ -83,6 +86,10 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     [self registerObservers];
 }
 
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+}
+
 -(void)dealloc {
     [self unRegisterObervers];
 }
@@ -96,7 +103,7 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     _sourceMissions_undone = [NSMutableArray array];
     _sourceMissions_done = [NSMutableArray array];
 
-    _selectedIndexOfMission = NSNotFound;
+    _selectedIndexOfMission = nil;
     [self setupPhotoSourceData];
     
     self.sourceMissions = self.sourceMissions_undone;
@@ -292,7 +299,7 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     }
 }
 - (void)bar_tapLeftButton1:(id)sender {
-    if (self.bar.buttonType == LeesinTextInputBarButtonTypeMission && [self.sourceMissions isEqualToArray: self.sourceMissions_undone] ) {
+    if (self.bar.buttonType == LeesinTextInputBarButtonTypeMission && ![self lsn_isCurrentMissionTypeDone] ) {
         return;
     }
     self.sourceMissions = self.sourceMissions_undone;
@@ -337,7 +344,7 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
         uploadModel.type = PIEPageTypeAsk;
     } else if (self.type == LeesinViewControllerTypeReply) {
         uploadModel.type = PIEPageTypeReply;
-        PIEPageVM* vm = [_sourceMissions objectAtIndex:self.selectedIndexOfMission];
+        PIEPageVM* vm = [_sourceMissions objectAtIndex:[self.selectedIndexOfMission integerValue]];
         uploadModel.ask_id = vm.askID;
     } else if (self.type == LeesinViewControllerTypeReplyNoMissionSelection) {
         uploadModel.type = PIEPageTypeReply;
@@ -411,6 +418,7 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
         [self.swipeView reloadData];
         [self lsn_updatePublishButton];
         [self lsn_updateSourceAndReloadPreviewBar];
+        [Hud dismiss:self.view];
     });
 }
 
@@ -463,7 +471,9 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     return [self.previewBar hasSourcePHAsset];
 }
 
-
+- (BOOL)lsn_isCurrentMissionTypeDone {
+    return [self.sourceMissions isEqualToArray:self.sourceMissions_done];
+}
 
 - (BOOL)lsn_isSelectionsReady {
     if (self.type == LeesinViewControllerTypeAsk) {
@@ -490,8 +500,8 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     } else {
         NSMutableOrderedSet *source = [NSMutableOrderedSet orderedSet];
 
-        if (self.selectedIndexOfMission != NSNotFound) {
-            PIEPageVM   *vm = [_sourceMissions objectAtIndex:self.selectedIndexOfMission];
+        if (self.selectedIndexOfMission) {
+            PIEPageVM   *vm = [_sourceMissions objectAtIndex:[self.selectedIndexOfMission integerValue]];
             [source addObject:vm];
         }
         if (self.selectedAssets.count > 0) {
@@ -601,12 +611,14 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
         if (cell.selected) {
             cell.selected = NO;
             vm.selected = NO;
-            _selectedIndexOfMission = NSNotFound;
+            _selectedIndexOfMission = nil;
         } else {
-            if (_selectedIndexOfMission == NSNotFound) {
+            if (_selectedIndexOfMission == nil) {
                 cell.selected = YES;
                 vm.selected = YES;
-                _selectedIndexOfMission = index;
+                _selectedIndexOfMission = @(index);
+                _selectedIndexOfMission.isMission_undone = [self lsn_isCurrentMissionTypeDone]?NO:YES;
+                
             } else {
                 shouldUpdate = NO;
             }
@@ -640,7 +652,7 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
         if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
             UIImagePickerController *picker = [[UIImagePickerController alloc] init];
             picker.delegate = self;
-            picker.allowsEditing = YES;
+            picker.allowsEditing = NO;
             picker.sourceType = UIImagePickerControllerSourceTypeCamera;
             [self presentViewController:picker animated:YES completion:NULL];
             
@@ -651,9 +663,62 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     
 }
 
+-(void)leesinPreviewBar:(LeesinPreviewBar *)leesinPreviewBar didTapImage1:(BOOL)didTapImage1 didTapImage2:(BOOL)didTapImage2 {
+    
+    if (self.type == LeesinViewControllerTypeAsk) {
+        if (didTapImage1) {
+            if (self.selectedAssets.count>0) {
+                PHAsset *asset = [self.selectedAssets objectAtIndex:0];
+                NSInteger index = [_sourceAssets indexOfObject:asset];
+                if (index != NSNotFound) {
+                    [self.swipeView scrollToItemAtIndex:index duration:0.5];
+                }
+            }
+
+        }
+        if (didTapImage2) {
+            if (self.selectedAssets.count>1) {
+                PHAsset *asset = [self.selectedAssets objectAtIndex:1];
+                NSInteger index = [_sourceAssets indexOfObject:asset];
+                if (index != NSNotFound) {
+                    [self.swipeView scrollToItemAtIndex:index duration:0.5];
+                }
+            }
+        }
+    }
+    
+    
+    else {
+        
+            if (self.bar.buttonType == LeesinTextInputBarButtonTypePHAsset) {
+                if (self.selectedAssets.count>0) {
+                    PHAsset *asset = [self.selectedAssets objectAtIndex:0];
+                    NSInteger index = [_sourceAssets indexOfObject:asset];
+                    if (index != NSNotFound) {
+                        [self.swipeView scrollToItemAtIndex:index duration:0.5];
+                    }
+                }
+            } else if (self.bar.buttonType == LeesinTextInputBarButtonTypeMission) {
+                if (self.selectedIndexOfMission) {
+                    if (self.swipeView.numberOfItems > [self.selectedIndexOfMission integerValue]) {
+                        if (self.selectedIndexOfMission.isMission_undone && ![self lsn_isCurrentMissionTypeDone]) {
+                            [self.swipeView scrollToItemAtIndex:[self.selectedIndexOfMission integerValue] duration:0.5];
+                        }
+                        
+                        if (!self.selectedIndexOfMission.isMission_undone && [self lsn_isCurrentMissionTypeDone]) {
+                            [self.swipeView scrollToItemAtIndex:[self.selectedIndexOfMission integerValue] duration:0.5];
+                        }
+                    }
+                }
+            }
+        
+    }
+
+}
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
-    UIImage *imageToBeSaved = info[UIImagePickerControllerEditedImage];
+    [Hud activity:@"" inView:self.view];
+    UIImage *imageToBeSaved = info[UIImagePickerControllerOriginalImage];
     UIImageWriteToSavedPhotosAlbum(imageToBeSaved, nil, nil, nil);
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
@@ -690,6 +755,7 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
 -(LeesinPreviewBar *)previewBar {
     if (!_previewBar) {
         _previewBar = [LeesinPreviewBar new];
+        _previewBar.delegate = self;
     }
     return _previewBar;
 }
@@ -769,14 +835,31 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
         [self.selectedAssets removeAllObjects];
         
         for (PHAsset *asset in assets) {
-            asset.selected = YES;
+            
+
+            NSInteger index = [self.sourceAssets indexOfObject:asset];
+            if (index != NSNotFound) {
+                PHAsset *asset = [self.sourceAssets objectAtIndex:index];
+                asset.selected = YES;
+                [self.sourceAssets exchangeObjectAtIndex:index withObjectAtIndex:0];
+            } else {
+                asset.selected = YES;
+                [self.sourceAssets insertObject:asset atIndex:0];
+            }
+            
+            [self.selectedAssets addObject:asset];
         }
         
-        NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [assets count])];
-        [self.sourceAssets insertObjects:assets atIndexes:indexSet];
-        [self.selectedAssets addObjectsFromArray:assets];
+//     
+//        NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [assets count])];
+//        [self.sourceAssets insertObjects:assets atIndexes:indexSet];
+//        [self.selectedAssets addObjectsFromArray:assets];
         
+//        for (PHAsset* asset in self.selectedAssets) {
+//            asset.selected = YES;
+//        }
         [self.swipeView reloadData];
+        [self.swipeView scrollToOffset:0 duration:0.45];
         [self lsn_updateSourceAndReloadPreviewBar];
         [self lsn_updatePublishButton];
         

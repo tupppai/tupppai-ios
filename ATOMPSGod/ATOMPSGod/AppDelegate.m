@@ -42,7 +42,7 @@
 //    [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
     
     //going to remove
-    [IQKeyboardManager sharedManager].enable = NO;
+    [[IQKeyboardManager sharedManager] setEnable:NO];
     [self initializeDatabase];
     [self initializeAfterDB];
     [self setupShareSDK];

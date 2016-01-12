@@ -50,9 +50,33 @@
     [self addSubview:self.previewImageView2];
     
     [self pie_setupViewConstraints];
-    [_previewImageView1 addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:nil];
+    [self.previewImageView1 addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:nil];
+    UITapGestureRecognizer * tapImage1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapImage1)];
+    UITapGestureRecognizer * tapImage2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapImage2)];
+
+    self.previewImageView1.userInteractionEnabled = YES;
+    self.previewImageView2.userInteractionEnabled = YES;
+    
+    [self.previewImageView1 addGestureRecognizer:tapImage1];
+    [self.previewImageView2 addGestureRecognizer:tapImage2];
 
 
+}
+
+- (void)tapImage1 {
+    if (_delegate && [_delegate respondsToSelector:@selector(leesinPreviewBar:didTapImage1:didTapImage2:)]) {
+        if (self.previewImageView1.image) {
+            [_delegate leesinPreviewBar:self didTapImage1:YES didTapImage2:NO];
+        }
+    }
+}
+
+- (void)tapImage2 {
+    if (_delegate && [_delegate respondsToSelector:@selector(leesinPreviewBar:didTapImage1:didTapImage2:)]) {
+        if (self.previewImageView2.image) {
+            [_delegate leesinPreviewBar:self didTapImage1:NO didTapImage2:YES];
+        }
+    }
 }
 
 -(void)dealloc {
@@ -168,23 +192,7 @@
 - (BOOL)isSourceEmpty {
     return (!_source.count>0);
 }
-//
-//-(void)setSourceMission_reply:(NSString *)sourceMission_reply {
-//    _sourceMission_reply = sourceMission_reply;
-//    [self.previewImageView1 sd_setImageWithURL:[NSURL URLWithString:sourceMission_reply]];
-//}
-//-(void)setSourceAsset_reply:(PHAsset *)sourceAsset_reply {
-//    _sourceAsset_reply = sourceAsset_reply;
-//    PHImageManager *imageManager = [PHImageManager defaultManager];
-//    [imageManager requestImageForAsset:_sourceAsset_reply
-//                            targetSize:CGSizeMake(100,100)
-//                           contentMode:PHImageContentModeDefault
-//                               options:nil
-//                         resultHandler:^(UIImage *result, NSDictionary *info) {
-//                             _previewImageView2.image = result;
-//                         }];
-//
-//}
+
 -(void)setSource:(NSMutableOrderedSet *)source {
     _previewImageView1.image = nil;
     _previewImageView2.image = nil;
