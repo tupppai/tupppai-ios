@@ -138,13 +138,12 @@
                               [ATOMUserDAO clearUsers];
                               //清空当前用户
                               [DDUserManager clearCurrentUser];
-                              
+                              [DDSessionManager resetSharedInstance];
                               [[AppDelegate APP] switchToLoginViewController];
                               
                           }];
     alertView.transitionStyle = SIAlertViewTransitionStyleDropDown;
     [alertView show];
-    
     
 }
 
