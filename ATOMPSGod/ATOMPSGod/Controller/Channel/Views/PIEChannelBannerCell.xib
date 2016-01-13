@@ -31,14 +31,14 @@
                             </mask>
                         </variation>
                         <connections>
-                            <action selector="bannerCellDidClickLeftButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="4Fm-Gi-Cfr"/>
+                            <action selector="tapLeft:" destination="KGk-i7-Jjw" eventType="touchDown" id="Vi9-9F-HpU"/>
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HPV-mE-77p">
                         <rect key="frame" x="217" y="4" width="210" height="139.5"/>
                         <state key="normal" image="pieChannelBannerCellButton1"/>
                         <connections>
-                            <action selector="bannerCellDidClickRightButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="jco-eY-RR8"/>
+                            <action selector="tapRight:" destination="KGk-i7-Jjw" eventType="touchDown" id="wQd-BD-9Mq"/>
                         </connections>
                     </button>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ruI-Kc-5aS" userLabel="cell separator">

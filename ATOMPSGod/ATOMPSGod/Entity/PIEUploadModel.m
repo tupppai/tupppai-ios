@@ -27,7 +27,7 @@
     [_ratioArray removeAllObjects];
     _tagIDArray = nil;
     _type = PIEPageTypeAsk;
-    _ID = 0;
+//    _ID = 0;
     _ask_id = 0;
     _channel_id = 0;
 }

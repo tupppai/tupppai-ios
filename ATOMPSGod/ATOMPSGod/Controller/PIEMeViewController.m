@@ -221,8 +221,9 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
 }
 
 -(void)updateAvatar {
+    NSString* avatarUrl = [[DDUserManager currentUser].avatar trimToImageWidth:_avatarView.frame.size.width*SCREEN_SCALE];
     [DDService sd_downloadImage:
-     [DDUserManager currentUser].avatar withBlock:^(UIImage *image) {
+     avatarUrl withBlock:^(UIImage *image) {
          _avatarView.image       = image;
          _topContainerView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:nil];
     }];

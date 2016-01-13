@@ -23,16 +23,14 @@ static PIEUploadModel *shareModel;
     if (self) {
         _model = [PIEUploadModel new];
         _model.content = shareModel.content;
-        _model.ID = shareModel.ID;
+//        _model.ID = shareModel.ID;
         _model.ask_id = shareModel.ask_id;
         _model.channel_id = shareModel.channel_id;
         _model.type = shareModel.type;
         _model.imageArray = [shareModel.imageArray copy];
         _model.tagIDArray = shareModel.tagIDArray;
-        
         [self resetShareModel];
-
-        }
+    }
     return self;
 }
 

@@ -8,7 +8,7 @@
 
 #import "PIEProceedingToHelpViewController.h"
 #import "PIERefreshTableView.h"
-#import "QBImagePickerController.h"
+//#import "QBImagePickerController.h"
 #import "PIEProceedingShareView.h"
 #import "PIEProceedingToHelpTableViewCell.h"
 #import "PIEFriendViewController.h"
@@ -16,12 +16,14 @@
 #import "DDNavigationController.h"
 #import "PIECarouselViewController2.h"
 #import "AppDelegate.h"
-#import "PIEUploadVC.h"
+//#import "PIEUploadVC.h"
 #import "PIEProceedingManager.h"
 #import "PIEUploadManager.h"
 #import "PIECategoryModel.h"
+#import "LeesinViewController.h"
+#import "MRNavigationBarProgressView.h"
 /* Variables */
-@interface PIEProceedingToHelpViewController ()
+@interface PIEProceedingToHelpViewController ()<LeesinViewControllerDelegate>
 
 @property (nonatomic, strong) PIERefreshTableView *toHelpTableView;
 
@@ -39,11 +41,13 @@
 
 @property (nonatomic, strong) PIEPageVM* selectedVM;
 
-@property (nonatomic, strong) QBImagePickerController* QBImagePickerController;
+//@property (nonatomic, strong) QBImagePickerController* QBImagePickerController;
 
 @property (nonatomic, strong) PIEProceedingShareView *shareView;
 
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureToHelp;
+
+@property (nonatomic, strong) MRNavigationBarProgressView *progressView;
 
 @end
 
@@ -58,9 +62,9 @@
 //
 
 
-@interface PIEProceedingToHelpViewController (QBImagePickerController)
-<QBImagePickerControllerDelegate>
-@end
+//@interface PIEProceedingToHelpViewController (QBImagePickerController)
+//<QBImagePickerControllerDelegate>
+//@end
 
 @interface PIEProceedingToHelpViewController (ProceedingShareView)
 <PIEProceedingShareViewDelegate>
@@ -88,6 +92,15 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     // Dispose of any resources that can be recreated.
 }
 
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self setupProgressView];
+}
+- (void)setupProgressView {
+    _progressView = [MRNavigationBarProgressView progressViewForNavigationController:self.navigationController];
+    _progressView.progressTintColor = [UIColor colorWithHex:0x4a4a4a andAlpha:0.93];
+}
 #pragma mark - init methods
 - (void)configData {
     _canRefreshToHelpFooter = YES;
@@ -154,15 +167,26 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     NSIndexPath *indexPath = [_toHelpTableView indexPathForRowAtPoint:location];
     _selectedIndexPath_toHelp = indexPath;
     PIEPageVM* vm = [_sourceToHelp objectAtIndex:indexPath.row];
+    _selectedVM = vm;
     if (indexPath) {
         PIEProceedingToHelpTableViewCell *cell = (PIEProceedingToHelpTableViewCell *)
         [_toHelpTableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
         //点击图片
         if (CGRectContainsPoint(cell.uploadView.frame, p)) {
+//            
+//            self.QBImagePickerController = nil;
+//            [self presentViewController:self.QBImagePickerController animated:YES completion:nil];
+            LeesinViewController* vc = [LeesinViewController new];
+            vc.delegate = self;
+            vc.type = LeesinViewControllerTypeReplyNoMissionSelection;
+            vc.ask_id = vm.askID;
+            vc.channel_id = vm.model.channelID;
             
-            self.QBImagePickerController = nil;
-            [self presentViewController:self.QBImagePickerController animated:YES completion:nil];
+//            vc.channel_id = _selectedVM 
+//            vc.channelViewModel = [[PIEChannelViewModel alloc]initWithModel:model];
+            [self presentViewController:vc animated:YES completion:nil];
+            
         }
         else if (CGRectContainsPoint(cell.downloadView.frame, p)) {
             [DDService sd_downloadImage:[vm.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION] withBlock:^(UIImage *image) {
@@ -209,6 +233,17 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     
 }
 
+
+#pragma mark - LeesinViewController delegate
+-(void)leesinViewController:(LeesinViewController *)leesinViewController uploadPercentage:(CGFloat)percentage uploadSucceed:(BOOL)success {
+    [self.progressView setProgress:percentage animated:YES];
+    if (success) {
+        if (leesinViewController.type == LeesinViewControllerTypeReplyNoMissionSelection) {
+            [self getRemoteSourceToHelp];
+        }
+    }
+}
+
 #pragma mark - toHelp tableView之内的点击事件
 - (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error
   contextInfo: (void *) contextInfo {
@@ -242,31 +277,31 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
 }
 
 
-
-#pragma mark - <QBImagePickerControllerDelegate>
--(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets {
-    NSMutableArray* array = [NSMutableArray new];
-    for (ALAsset* asset in assets) {
-        [array addObject:asset];
-    }
-    PIEUploadVC* vc = [PIEUploadVC new];
-    vc.assetsArray = assets;
-    vc.hideSecondView = YES;
-    PIEPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath_toHelp.row];
-    [PIEUploadManager shareModel].ask_id = vm.askID;
-    [PIEUploadManager shareModel].type = PIEPageTypeReply;
-    
-    if (vm.models_catogory && vm.models_catogory.count > 0) {
-        PIECategoryModel* model = [vm.models_catogory objectAtIndex:0];
-        [PIEUploadManager shareModel].channel_id = [model.ID integerValue];
-    }
-    [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
-}
-
--(void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController {
-    [self dismissViewControllerAnimated:YES completion:NULL];
-    [self.QBImagePickerController.selectedAssetURLs removeAllObjects];
-}
+//
+//#pragma mark - <QBImagePickerControllerDelegate>
+//-(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets {
+//    NSMutableArray* array = [NSMutableArray new];
+//    for (ALAsset* asset in assets) {
+//        [array addObject:asset];
+//    }
+//    PIEUploadVC* vc = [PIEUploadVC new];
+//    vc.assetsArray = assets;
+//    vc.hideSecondView = YES;
+//    PIEPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath_toHelp.row];
+//    [PIEUploadManager shareModel].ask_id = vm.askID;
+//    [PIEUploadManager shareModel].type = PIEPageTypeReply;
+//    
+//    if (vm.models_catogory && vm.models_catogory.count > 0) {
+//        PIECategoryModel* model = [vm.models_catogory objectAtIndex:0];
+//        [PIEUploadManager shareModel].channel_id = [model.ID integerValue];
+//    }
+//    [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
+//}
+//
+//-(void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController {
+//    [self dismissViewControllerAnimated:YES completion:NULL];
+//    [self.QBImagePickerController.selectedAssetURLs removeAllObjects];
+//}
 
 
 #pragma mark - <UITableViewDataSource>
@@ -425,18 +460,18 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
 
 
 #pragma mark - Lazy loadings
-- (QBImagePickerController* )QBImagePickerController {
-    if (!_QBImagePickerController) {
-        _QBImagePickerController = [QBImagePickerController new];
-        _QBImagePickerController.delegate = self;
-        _QBImagePickerController.filterType = QBImagePickerControllerFilterTypePhotos;
-        _QBImagePickerController.allowsMultipleSelection = YES;
-        _QBImagePickerController.showsNumberOfSelectedAssets = YES;
-        _QBImagePickerController.minimumNumberOfSelection = 1;
-        _QBImagePickerController.maximumNumberOfSelection = 1;
-    }
-    return _QBImagePickerController;
-}
+//- (QBImagePickerController* )QBImagePickerController {
+//    if (!_QBImagePickerController) {
+//        _QBImagePickerController = [QBImagePickerController new];
+//        _QBImagePickerController.delegate = self;
+//        _QBImagePickerController.filterType = QBImagePickerControllerFilterTypePhotos;
+//        _QBImagePickerController.allowsMultipleSelection = YES;
+//        _QBImagePickerController.showsNumberOfSelectedAssets = YES;
+//        _QBImagePickerController.minimumNumberOfSelection = 1;
+//        _QBImagePickerController.maximumNumberOfSelection = 1;
+//    }
+//    return _QBImagePickerController;
+//}
 
 - (void)showShareViewWithToHideDeleteButton:(BOOL)hide{
     self.shareView.hideDeleteButton = hide;

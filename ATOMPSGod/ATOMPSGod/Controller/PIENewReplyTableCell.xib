@@ -128,7 +128,7 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="Wlr-Je-B2P" firstAttribute="centerY" secondItem="CWC-Fy-Ux9" secondAttribute="centerY" id="1Yx-qu-1k7"/>
-                    <constraint firstItem="CWC-Fy-Ux9" firstAttribute="leading" secondItem="yHw-He-aWh" secondAttribute="trailing" constant="15" id="6xJ-jC-a4v"/>
+                    <constraint firstItem="CWC-Fy-Ux9" firstAttribute="leading" secondItem="yHw-He-aWh" secondAttribute="trailing" priority="750" constant="15" id="6xJ-jC-a4v"/>
                     <constraint firstItem="Wlr-Je-B2P" firstAttribute="top" secondItem="XLA-1a-yzs" secondAttribute="bottom" constant="10.5" id="7Og-VY-6cR"/>
                     <constraint firstItem="OK5-wj-zoL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="8fI-2U-Nwu"/>
                     <constraint firstItem="nih-jX-jzj" firstAttribute="top" secondItem="tXl-3D-7si" secondAttribute="top" id="AEr-HX-06S"/>

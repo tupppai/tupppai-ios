@@ -22,10 +22,11 @@
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
 #import "PIEToHelpViewController.h"
-#import "DeviceUtil.h"
 #import "PIECellIconStatusChangedNotificationKey.h"
+#import "LeesinViewController.h"
+
 /* Variables */
-@interface PIENewReplyViewController ()
+@interface PIENewReplyViewController ()<LeesinViewControllerDelegate>
 
 @property (nonatomic, assign) BOOL isfirstLoadingReply;
 
@@ -53,7 +54,7 @@
 
 @property (nonatomic, strong) UIButton                      *takePhotoButton;
 
-@property (nonatomic, strong) MASConstraint *takePhotoButtonConstraint;
+@property (nonatomic, strong) MASConstraint *takePhotoButtonBottomMarginConstraint;
 
 @end
 
@@ -93,9 +94,6 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     
     [self setupNotificationObserver];
     
-    /**
-     *  假如model（_source）为空的话，那就重新fetch data
-     */
     [self firstGetSourceIfEmpty_Reply];
 }
 
@@ -104,7 +102,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 }
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-//    self.navigationController.hidesBarsOnSwipe = YES;
+    [self setupProgressView];
     [self.navigationController.navigationBar setBackgroundImage:nil
                                                   forBarMetrics:UIBarMetricsDefault];
 }
@@ -118,6 +116,12 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     // Dispose of any resources that can be recreated.
 }
 
+-(void)leesinViewController:(LeesinViewController *)leesinViewController uploadPercentage:(CGFloat)percentage uploadSucceed:(BOOL)success {
+    [self.progressView setProgress:percentage animated:YES];
+    if  (success) {
+        [self getRemoteReplySource];
+    }
+}
 
 #pragma mark - property first initiation
 - (void) setupData {
@@ -142,19 +146,19 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 
 - (void)configureTakePhotoButton
 {
-    // --- added as subViews
     [self.view addSubview:self.takePhotoButton];
-    
-    // --- Autolayout constraints
     __weak typeof(self) weakSelf = self;
     
     [_takePhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(weakSelf.view.mas_centerX);
-        make.height.mas_equalTo(50);
-        make.width.mas_equalTo(50);
-        self.takePhotoButtonConstraint =
-        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-12);
+        make.height.mas_equalTo(44);
+        make.leading.and.trailing.equalTo(self.view);
+        self.takePhotoButtonBottomMarginConstraint =
+        make.bottom.equalTo(weakSelf.view);
     }];
+}
+- (void)setupProgressView {
+    _progressView = [MRNavigationBarProgressView progressViewForNavigationController:self.navigationController];
+    _progressView.progressTintColor = [UIColor colorWithHex:0x4a4a4a andAlpha:0.93];
 }
 
 - (void)refreshHeader {
@@ -163,9 +167,10 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     }
 }
 - (void)takePhoto {
-    
-        PIEToHelpViewController* vc = [PIEToHelpViewController new];
-        [self.navigationController pushViewController:vc animated:YES];
+    LeesinViewController* vc = [LeesinViewController new];
+    vc.type = LeesinViewControllerTypeReply;
+    vc.delegate = self;
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 /**
@@ -182,23 +187,20 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 {
     [UIView animateWithDuration:0.1
                      animations:^{
-                         [self.takePhotoButtonConstraint setOffset:50.0];
-                         [self.view layoutIfNeeded];
+                         [self.takePhotoButtonBottomMarginConstraint setOffset:50.0];
+                         [self.takePhotoButton layoutIfNeeded];
                      }];
-    
-    
-    
 }
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    [self.takePhotoButtonConstraint setOffset:-12];
+    [self.takePhotoButtonBottomMarginConstraint setOffset:0];
     [UIView animateWithDuration:0.2
                           delay:1.0
-         usingSpringWithDamping:0
-          initialSpringVelocity:0
+         usingSpringWithDamping:0.9
+          initialSpringVelocity:0.5
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
-                         [self.view layoutIfNeeded];
+                         [self.takePhotoButton layoutIfNeeded];
                          
                      } completion:^(BOOL finished) {
                      }];
@@ -469,8 +471,6 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
         _tableViewReply.psDelegate           = self;
         _tableViewReply.emptyDataSetSource   = self;
         _tableViewReply.emptyDataSetDelegate = self;
-        
-        
         _tableViewReply.estimatedRowHeight = SCREEN_WIDTH+145;
         _tableViewReply.rowHeight          = UITableViewAutomaticDimension;
         UINib* nib = [UINib nibWithNibName:CellIdentifier bundle:nil];
@@ -485,25 +485,18 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 - (UIButton *)takePhotoButton
 {
     if (_takePhotoButton == nil) {
-        // instantiate only for once
         _takePhotoButton = [[UIButton alloc] init];
-        
-        /* Configurations */
-        
-        // --- set background image
-        [_takePhotoButton setBackgroundImage:[UIImage imageNamed:@"pie_channelDetailTakePhotoButton"]
-                                    forState:UIControlStateNormal];
-        
+        [_takePhotoButton setTitle:@"上传作品" forState:UIControlStateNormal];
+        [_takePhotoButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_takePhotoButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+        _takePhotoButton.titleLabel.font = [UIFont mediumTupaiFontOfSize:14];
+        _takePhotoButton.backgroundColor = [UIColor colorWithHex:0xffef00 andAlpha:0.93];
         // --- add drop shadows
         _takePhotoButton.layer.shadowColor  = (__bridge CGColorRef _Nullable)
         ([UIColor colorWithWhite:0.0 alpha:0.5]);
         _takePhotoButton.layer.shadowOffset = CGSizeMake(0, 4);
         _takePhotoButton.layer.shadowRadius = 8.0;
-        
-        // --- add target-actions
-        [_takePhotoButton addTarget:self
-                             action:@selector(takePhoto)
-                   forControlEvents:UIControlEventTouchUpInside];
+        [_takePhotoButton addTarget:self action:@selector(takePhoto) forControlEvents:UIControlEventTouchUpInside];
     }
     return _takePhotoButton;
     

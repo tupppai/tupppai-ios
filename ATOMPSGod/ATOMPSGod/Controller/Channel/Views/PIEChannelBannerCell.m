@@ -39,20 +39,20 @@
     // Configure the view for the selected state
 }
 
-#pragma mark - Target-actions
-- (IBAction)bannerCellDidClickLeftButton:(UIButton *)sender {
+
+- (IBAction)tapLeft:(id)sender {
     if ([self.delegate respondsToSelector:@selector(channelBannerCell:didClickLeftButton:)]) {
         [self.delegate channelBannerCell:self
                       didClickLeftButton:sender];
     }
-    
 }
-- (IBAction)bannerCellDidClickRightButton:(UIButton *)sender {
+
+
+- (IBAction)tapRight:(id)sender {
     if ([self.delegate respondsToSelector:@selector(channelBannerCell:didClickRightButton:)]) {
         [self.delegate channelBannerCell:self
                      didClickRightButton:sender];
     }
-
 }
 
 #pragma mark - Reuse methods

@@ -40,15 +40,18 @@
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
     self.window.backgroundColor = [UIColor whiteColor];
-    [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
+//    [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
+    
+    //going to remove
+    [[IQKeyboardManager sharedManager] setEnable:NO];
     [self initializeDatabase];
     [self initializeAfterDB];
     [self setupShareSDK];
     [self setupUmengPush:launchOptions];
     [self setupBarButtonItem];
-    [[IQKeyboardManager sharedManager] disableInViewControllerClass:[PIECommentViewController class]];
-    [[IQKeyboardManager sharedManager] disableInViewControllerClass:[PIENotificationViewController class]];
-    [[IQKeyboardManager sharedManager]setEnableAutoToolbar:NO];
+//    [[IQKeyboardManager sharedManager] disableInViewControllerClass:[PIECommentViewController class]];
+//    [[IQKeyboardManager sharedManager] disableInViewControllerClass:[PIENotificationViewController class]];
+//    [[IQKeyboardManager sharedManager]setEnableAutoToolbar:NO];
     
     [self setupUmengAnalytics];
     

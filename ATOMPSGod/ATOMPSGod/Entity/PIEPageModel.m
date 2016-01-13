@@ -42,6 +42,7 @@
              @"models_category":@"categories",
              @"isV":@"is_star",
              @"lovedCount":@"love_count",
+             @"channelID":@"category_id",
              };
 }
 

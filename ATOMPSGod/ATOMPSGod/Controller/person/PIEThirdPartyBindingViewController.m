@@ -142,7 +142,7 @@
             label.textColor = [UIColor lightGrayColor];
             label.font = [UIFont systemFontOfSize:14.0];
             NSString* phoneDesc ;
-            if ([[DDUserManager currentUser].mobile isEqualToString:@"-1"] || ![DDUserManager currentUser].mobile) {
+            if ([[DDUserManager currentUser].mobile isEqualToString:@"-1"] || [DDUserManager currentUser].mobile.length < 8) {
                 label.text = @"未绑定";
                  phoneDesc = @"手机号";
             } else {

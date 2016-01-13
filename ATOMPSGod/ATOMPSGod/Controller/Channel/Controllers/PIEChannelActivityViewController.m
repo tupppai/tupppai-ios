@@ -18,16 +18,18 @@
 #import "PIEReplyCollectionViewController.h"
 #import "PIEShareView.h"
 #import "DDCollectManager.h"
-#import "QBImagePickerController.h"
-#import "PIEUploadVC.h"
+//#import "QBImagePickerController.h"
+//#import "PIEUploadVC.h"
 #import "PIEWebViewViewController.h"
 #import "DDSessionManager.h"
 #import "DDNavigationController.h"
-#import "DeviceUtil.h"
 #import "PIECellIconStatusChangedNotificationKey.h"
 #import "PIEPageManager.h"
+
+#import "LeesinViewController.h"
+#import "MRNavigationBarProgressView.h"
 /* Variables */
-@interface PIEChannelActivityViewController ()<QBImagePickerControllerDelegate>
+@interface PIEChannelActivityViewController ()<LeesinViewControllerDelegate>
 
 /*Views*/
 @property (nonatomic, strong) PIERefreshTableView *tableView;
@@ -57,12 +59,15 @@
 @property (nonatomic, assign) NSUInteger currentPageIndex;
 
 
-@property (nonatomic, strong) QBImagePickerController* QBImagePickerController;
+//@property (nonatomic, strong) QBImagePickerController* QBImagePickerController;
 
 /* Autolayout animation */
 @property (nonatomic, strong) MASConstraint *goPsButtonBottomConstraint;
 
 @property (nonatomic, assign) NSInteger                     currentPage_Reply;
+
+@property (nonatomic, strong) MRNavigationBarProgressView *progressView;
+
 
 @end
 
@@ -118,6 +123,12 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 
 }
 
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self setupProgressView];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -134,10 +145,8 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 #pragma mark - UI components setup
 - (void)configureTableView
 {
-    // add to subView
     [self.view addSubview:self.tableView];
     
-    // set constraints
     UIEdgeInsets padding = UIEdgeInsetsMake(0, 0, 0, 0);
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view).with.insets(padding);
@@ -147,10 +156,8 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 
 - (void)configureGoPsButton
 {
-    // add to subView
     [self.view addSubview:self.goPsButton];
     
-    // set constraints
     [self.goPsButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(120);
         make.height.mas_equalTo(32);
@@ -170,12 +177,27 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     
 }
 
+- (void)setupProgressView {
+    _progressView = [MRNavigationBarProgressView progressViewForNavigationController:self.navigationController];
+    _progressView.progressTintColor = [UIColor colorWithHex:0x4a4a4a andAlpha:0.93];
+}
+
 #pragma mark - Notification Observer setup
 - (void)setupNotificationObserver
 {
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateShareStatus)
                                                  name:PIESharedIconStatusChangedNotification object:nil];
+}
+
+#pragma mark - LeesinViewController delegate
+-(void)leesinViewController:(LeesinViewController *)leesinViewController uploadPercentage:(CGFloat)percentage uploadSucceed:(BOOL)success {
+    [self.progressView setProgress:percentage animated:YES];
+    if (success) {
+        if (leesinViewController.type == LeesinViewControllerTypeReplyNoMissionSelection) {
+            [self getSource_Reply];
+        }
+    }
 }
 
 #pragma mark - <UITableViewDelegate>
@@ -222,9 +244,11 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     [replyCell hideThumbnailImage];
     [replyCell injectSauce:_source_reply[indexPath.row]];
    
+    
     /*去掉ChannelActivity中的cell的“其它作品”按钮*/
     replyCell.allWorkView.hidden = YES;
     [replyCell.shareView mas_updateConstraints:^(MASConstraintMaker *make) {
+        
         make.left.equalTo(replyCell.allWorkView.mas_left);
     }];
     
@@ -300,7 +324,11 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 #pragma mark - Target-actions
 - (void)goPSButtonClicked:(UIButton *)button
 {
-    [self presentViewController:self.QBImagePickerController animated:YES completion:nil];
+    LeesinViewController* vc = [LeesinViewController new];
+    vc.delegate = self;
+    vc.type = LeesinViewControllerTypeReplyNoMissionSelection;
+    vc.channel_id = self.currentChannelVM.ID;
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 - (void)headerBannerViewClicked:(UIButton *)button
@@ -514,24 +542,24 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 
 
 
-#pragma mark - qb_imagePickerController delegate
--(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets {
-    
-    [PIEUploadManager shareModel].channel_id = _currentChannelVM.ID;
-
-    [PIEUploadManager shareModel].type = PIEPageTypeReply;
-    PIEUploadVC* vc = [PIEUploadVC new];
-//    vc.channelVM = _currentChannelVM;
-    vc.assetsArray = assets;
-    vc.hideSecondView = YES;
-    [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
-    
-}
-
--(void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController {
-    [self.QBImagePickerController.selectedAssetURLs removeAllObjects];
-    [self dismissViewControllerAnimated:YES completion:NULL];
-}
+//#pragma mark - qb_imagePickerController delegate
+//-(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets {
+//    
+//    [PIEUploadManager shareModel].channel_id = _currentChannelVM.ID;
+//
+//    [PIEUploadManager shareModel].type = PIEPageTypeReply;
+//    PIEUploadVC* vc = [PIEUploadVC new];
+////    vc.channelVM = _currentChannelVM;
+//    vc.assetsArray = assets;
+//    vc.hideSecondView = YES;
+//    [imagePickerController.albumsNavigationController pushViewController:vc animated:YES];
+//    
+//}
+//
+//-(void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController {
+//    [self.QBImagePickerController.selectedAssetURLs removeAllObjects];
+//    [self dismissViewControllerAnimated:YES completion:NULL];
+//}
 
 
 #pragma mark - Lazy loadings
@@ -637,20 +665,20 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     }
     return  _shareView;
 }
-
-- (QBImagePickerController* )QBImagePickerController {
-    if (!_QBImagePickerController) {
-        _QBImagePickerController = [QBImagePickerController new];
-        _QBImagePickerController.delegate = self;
-        _QBImagePickerController.filterType = QBImagePickerControllerFilterTypePhotos;
-        _QBImagePickerController.allowsMultipleSelection = YES;
-        _QBImagePickerController.showsNumberOfSelectedAssets = YES;
-        _QBImagePickerController.minimumNumberOfSelection = 1;
-        _QBImagePickerController.maximumNumberOfSelection = 1;
-    }
-    return _QBImagePickerController;
-}
-
+//
+//- (QBImagePickerController* )QBImagePickerController {
+//    if (!_QBImagePickerController) {
+//        _QBImagePickerController = [QBImagePickerController new];
+//        _QBImagePickerController.delegate = self;
+//        _QBImagePickerController.filterType = QBImagePickerControllerFilterTypePhotos;
+//        _QBImagePickerController.allowsMultipleSelection = YES;
+//        _QBImagePickerController.showsNumberOfSelectedAssets = YES;
+//        _QBImagePickerController.minimumNumberOfSelection = 1;
+//        _QBImagePickerController.maximumNumberOfSelection = 1;
+//    }
+//    return _QBImagePickerController;
+//}
+//
 
 
 

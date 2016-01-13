@@ -22,44 +22,40 @@
 #import "PIEReplyCollectionViewController.h"
 #import "DDCollectManager.h"
 #import "PIECameraViewController.h"
-#import "PIENewAskMakeUpViewController.h"
+#import "PIENewAskViewController.h"
 #import "DeviceUtil.h"
 #import "PIECellIconStatusChangedNotificationKey.h"
 #import "PIEPageManager.h"
-/* Variables */
-@interface PIEChannelDetailViewController ()
+#import "PIEProceedingManager.h"
+
+#import "LeesinViewController.h"
+#import "MRNavigationBarProgressView.h"
+
+@interface PIEChannelDetailViewController ()<LeesinViewControllerDelegate>
 @property (nonatomic, strong) PIERefreshTableView           *tableView;
-@property (nonatomic, strong) UIButton                      *takePhotoButton;
-
-/** 该频道内最新求P */
+@property (nonatomic, strong) UIView                      *bottomContainerView;
 @property (nonatomic, strong) NSMutableArray<PIEPageVM *>   *source_ask;
-/** 该频道内的用户PS作品 */
 @property (nonatomic, strong) NSMutableArray<PIEPageVM *>   *source_reply;
+//@property (nonatomic, strong) NSMutableArray<PIEPageVM *>   *source_toHelp;
 
-/** timeStamp: 刷新数据的时候的时间（整数10位）*/
 @property (nonatomic, assign) long long                     timeStamp;
 @property (nonatomic, assign) NSInteger                     currentPage_Reply;
 
-/** 最新求P中的swipeView */
 @property (nonatomic, strong) SwipeView *swipeView;
 
-/** 点击弹出的分享页面 */
 @property (nonatomic, strong) PIEShareView *shareView;
 
-/** 用户选中的图片 */
 @property (nonatomic, strong) PIEPageVM *selectedVM;
 
-/** 用户点击的Cell的indexPath */
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
 
-/** 用户当前点击的Cell */
 @property (nonatomic, strong) PIENewReplyTableCell *selectedReplyCell;
 
-@property (nonatomic, strong) MASConstraint *takePhotoButtonConstraint;
+@property (nonatomic, strong) MASConstraint *bottomContainerViewBottomMC;
+@property (nonatomic, strong) MRNavigationBarProgressView *progressView;
 
 @end
 
-/* Protocols */
 
 @interface PIEChannelDetailViewController (TableView)
 <UITableViewDelegate, UITableViewDataSource>
@@ -89,110 +85,92 @@ static NSString *  PIEDetailNormalIdentifier =
 static NSString * PIEDetailUsersPSCellIdentifier =
 @"PIENewReplyTableCell";
 
-#pragma mark - UI life cycles
-/**
- *  不能直接用self.tableView替换掉self.view，而是让self.tableView和self.takePhotoButton
- 同时成为self.view的子视图。
- */
--(BOOL)hidesBottomBarWhenPushed {
-    return YES;
-}
+#pragma mark - Life cycles
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    /* setup source data */
     [self setupData];
-    
-    /* setup NSNotificationCenter observer */
-    [self setupNotificationObserver];
-    
-    /* added as subviews & add autolayout constraints */
-    [self configureTableView];
-    [self configureTakePhotoButton];
-    
-    /* 设置可以区分reply cell中不同UI元素（头像，关注按钮，分享, etc.）的点击事件回调 */
+    [self setupViews];
     [self setupGestures];
-    
-    self.title = self.currentChannelViewModel.title;
-    
-    [self getSource_Ask];
     [self.tableView.mj_header beginRefreshing];
     
 }
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:PIESharedIconStatusChangedNotification
-                                                  object:nil];
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self setupProgressView];
 }
 
-#pragma mark - NSNotification Observer Setup
-- (void)setupNotificationObserver
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updateShareStatus)
-                                                 name:PIESharedIconStatusChangedNotification
-                                               object:nil];
+
+-(BOOL)hidesBottomBarWhenPushed {
+    return YES;
 }
 
-#pragma mark - <UITableViewDelegate>
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+- (void)setupData
 {
-    [UIView animateWithDuration:0.1
-                     animations:^{
-                         [self.takePhotoButtonConstraint setOffset:50.0];
-                         [self.takePhotoButton layoutIfNeeded];
-                     }];
+    self.title = self.currentChannelViewModel.title;
+    _source_reply   = [NSMutableArray array];
+    _source_ask     = [NSMutableArray array];
+    //    _source_toHelp  = [NSMutableArray array];
+}
+
+- (void)setupGestures {
+    UITapGestureRecognizer* tapGestureReply =
+    [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnReply:)];
+    UILongPressGestureRecognizer* longPressGestureReply =
+    [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnReply:)];
+    [self.tableView addGestureRecognizer:longPressGestureReply];
+    [self.tableView addGestureRecognizer:tapGestureReply];
     
-    
-    
 }
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    [self.takePhotoButtonConstraint setOffset:-12];
-    [UIView animateWithDuration:0.2
-                          delay:1.0
-         usingSpringWithDamping:0
-          initialSpringVelocity:0
-                        options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^{
-                         [self.view layoutIfNeeded];
-                         
-                     } completion:^(BOOL finished) {
-                     }];
-
+- (void)setupViews {
+    [self.view addSubview:self.tableView];
+    [self.view addSubview:self.bottomContainerView];
+    [self setupViewsContraints];
 }
-
-
+- (void)setupViewsContraints {
+    [self.bottomContainerView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.equalTo(self.view);
+        make.trailing.equalTo(self.view);
+        make.height.equalTo(@44);
+        self.bottomContainerViewBottomMC =
+        make.bottom.equalTo(self.view);
+    }];
+}
+- (void)setupProgressView {
+    _progressView = [MRNavigationBarProgressView progressViewForNavigationController:self.navigationController];
+    _progressView.progressTintColor = [UIColor colorWithHex:0x4a4a4a andAlpha:0.93];
+}
 
 
 #pragma mark - <UITableViewDataSource>
 
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    
-    return self.source_reply.count;
+    if (section == 0) {
+        return 1;
+    } else if (section == 1) {
+        return self.source_reply.count;
+    }
+    else return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if (indexPath.row == 0)
+    if (indexPath.section == 0)
     {
-        /* first row */
         PIEChannelDetailLatestPSCell *detailLatestPSCell =
         [tableView dequeueReusableCellWithIdentifier:PIEDetailLatestPSCellIdentifier];
-        
-        // configure cell
-        
-        // --- set delegate & dataSource
         detailLatestPSCell.swipeView.delegate   = self;
         detailLatestPSCell.swipeView.dataSource = self;
         
-        // ??? 实在是想不到更好地方法了。。。 (BUG AWARE!)
         self.swipeView = detailLatestPSCell.swipeView;
         return detailLatestPSCell;
     }
@@ -215,7 +193,9 @@ static NSString * PIEDetailUsersPSCellIdentifier =
  */
 - (void)didPullRefreshUp:(UITableView *)tableView
 {
-    
+    if (_source_ask.count <= 0) {
+        [self getSource_Ask];
+    }
     [self getMoreSource_Reply];
 }
 
@@ -224,8 +204,12 @@ static NSString * PIEDetailUsersPSCellIdentifier =
  */
 - (void)didPullRefreshDown:(UITableView *)tableView
 {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        //getSource_Ask 经常拿不到数据，如果和getSource_Reply几乎同时调用的话。
+        [self getSource_Ask];
+    });
     
-    [self getSource_Reply];
+    [self getSource_Reply:nil];
 }
 
 #pragma mark - <SwipeViewDelegate>
@@ -301,27 +285,15 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 
 
 
-#pragma mark - Gesture Event - 识别PIENewReplyCell中的不同元素(头像，关注按钮，etc.)的点击事件
 
-- (void)setupGestures {
-    UITapGestureRecognizer* tapGestureReply =
-    [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnReply:)];
-    UILongPressGestureRecognizer* longPressGestureReply =
-    [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnReply:)];
-    [self.tableView addGestureRecognizer:longPressGestureReply];
-    [self.tableView addGestureRecognizer:tapGestureReply];
-    
-}
 
 - (void)tapOnReply:(UITapGestureRecognizer *)gesture {
-    
-    
     
     CGPoint location = [gesture locationInView:self.tableView];
     _selectedIndexPath = [self.tableView indexPathForRowAtPoint:location];
     
-    if (_selectedIndexPath.row == 0) {
-        PIENewAskMakeUpViewController* vc = [PIENewAskMakeUpViewController new];
+    if (_selectedIndexPath.section == 0) {
+        PIENewAskViewController* vc = [PIENewAskViewController new];
         vc.channelVM = _currentChannelViewModel;
         [self.navigationController pushViewController:vc animated:YES];
     }
@@ -343,7 +315,6 @@ static NSString * PIEDetailUsersPSCellIdentifier =
         }
         //点击大图
         else  if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
-            //进入热门详情
             PIECarouselViewController2* vc = [PIECarouselViewController2 new];
             _selectedVM.image = _selectedReplyCell.theImageView.image;
             vc.pageVM = _selectedVM;
@@ -362,17 +333,12 @@ static NSString * PIEDetailUsersPSCellIdentifier =
             friendVC.pageVM = _selectedVM;
             [self.navigationController pushViewController:friendVC animated:YES];
         }
-        //            else if (CGRectContainsPoint(_selectedReplyCell.collectView.frame, p)) {
-        //                //should write this logic in viewModel
-        ////                [self collect:_selectedReplyCell.collectView shouldShowHud:NO];
-        //                [self collect];
-        //            }
+
         else if (CGRectContainsPoint(_selectedReplyCell.likeView.frame, p)) {
-//            [PIEPageManager love:_selectedReplyCell.likeView viewModel:_selectedVM revert:NO];
             [_selectedVM love:NO];
         }
         else if (CGRectContainsPoint(_selectedReplyCell.followView.frame, p)) {
-            [self followReplier];
+            [_selectedVM follow];
         }
         else if (CGRectContainsPoint(_selectedReplyCell.shareView.frame, p)) {
             [self showShareView:_selectedVM];
@@ -393,8 +359,6 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 }
 - (void)longPressOnReply:(UILongPressGestureRecognizer *)gesture {
     
-    
-    
     CGPoint location   = [gesture locationInView:self.tableView];
     _selectedIndexPath = [self.tableView indexPathForRowAtPoint:location];
     if (_selectedIndexPath) {
@@ -406,7 +370,6 @@ static NSString * PIEDetailUsersPSCellIdentifier =
         if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
             [self showShareView:_selectedVM];
         }        else if (CGRectContainsPoint(_selectedReplyCell.likeView.frame, p)) {
-//            [PIEPageManager love:_selectedReplyCell.likeView viewModel:_selectedVM revert:YES];
             [_selectedVM love:YES];
         }
 
@@ -415,65 +378,19 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     
 }
 
-#pragma mark - reply cell 中的点击事件：喜欢该P图，关注P图主。
 
 
-/**
- *  关注这张P图的P图主
- */
--(void)followReplier {
-    
-    
-    
-    
-    _selectedReplyCell.followView.highlighted = !_selectedReplyCell.followView.highlighted;
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    [param setObject:@(_selectedVM.userID) forKey:@"uid"];
-    if (_selectedReplyCell.followView.highlighted) {
-        [param setObject:@1 forKey:@"status"];
-    }
-    else {
-        [param setObject:@0 forKey:@"status"];
-    }
-    [DDService follow:param withBlock:^(BOOL success) {
-        if (success) {
-            _selectedVM.followed = _selectedReplyCell.followView.highlighted;
-        } else {
-            _selectedReplyCell.followView.highlighted = !_selectedReplyCell.followView.highlighted;
-            
-            [Hud text:@"网络异常，请稍后重试"];
-        }
-        
-        if (_selectedReplyCell.followView.highlighted) {
-            [Hud text:@"关注成功"];
-        }else{
-            [Hud text:@"已取消关注"];
-        }
-    }];
-}
-
-
-
-
-
-
-#pragma mark - data first setup
-- (void)setupData
-{
-    _source_reply        = [NSMutableArray<PIEPageVM *> array];
-    _source_ask = [NSMutableArray<PIEPageVM *> array];
-}
-
-
-/**
- *  what the hell is this?
- */
 - (void)getSource_Ask {
     NSMutableDictionary *params  = [NSMutableDictionary dictionary];
     params[@"category_id"]        = @(self.currentChannelViewModel.ID);
     params[@"page"]              = @(1);
     params[@"size"]              = @(10);
     params[@"type"]              = @"ask";
+    
+    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    params[@"last_updated"]              = @(timeStamp);
+    
+    
     [params setObject:@(SCREEN_WIDTH*0.5) forKey:@"width"];
     
     [PIEChannelManager getSource_channelPages:params resultBlock:^(NSMutableArray<PIEPageVM *> *pageArray) {
@@ -484,7 +401,8 @@ static NSString * PIEDetailUsersPSCellIdentifier =
         
     }];
 }
-- (void)getSource_Reply {
+
+- (void)getSource_Reply:(void (^)(BOOL success))block {
     WS(ws);
     _currentPage_Reply = 1;
     NSMutableDictionary *params  = [NSMutableDictionary dictionary];
@@ -496,10 +414,15 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     params[@"last_updated"]      = @(_timeStamp);
     [params setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
     
-    
     [PIEChannelManager getSource_channelPages:params resultBlock:^(NSMutableArray<PIEPageVM *> *pageArray) {
         [_source_reply removeAllObjects];
         [_source_reply addObjectsFromArray:pageArray];
+        
+        if (block && pageArray.count > 0) {
+            block(YES);
+        }else if (block && pageArray.count == 0) {
+            block(NO);
+        }
     } completion:^{
         [ws.tableView.mj_header endRefreshing];
         [ws.tableView reloadData];
@@ -530,7 +453,6 @@ static NSString * PIEDetailUsersPSCellIdentifier =
  *  用户点击了updateShareStatus之后（在弹出的窗口完成分享），刷新本页面的分享数（UI元素的同步）
  */
 - (void)updateShareStatus {
-
     if (_selectedIndexPath) {
         [self.tableView reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
@@ -538,40 +460,65 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 
 
 #pragma mark - Target-actions
-- (void)takePhoto:(UIButton *)button
-{
-    PIECameraViewController *pvc = [PIECameraViewController new];
-    pvc.blurStyle = UIBlurEffectStyleDark;
-    pvc.channelVM = _currentChannelViewModel;
-    [self presentViewController:pvc animated:YES completion:nil];
-    
+
+
+- (void)tapAsk {
+    LeesinViewController* vc = [LeesinViewController new];
+    vc.delegate = self;
+    vc.type = LeesinViewControllerTypeAsk;
+    vc.channel_id = self.currentChannelViewModel.ID;
+    [self presentViewController:vc animated:YES completion:nil];
 }
-#pragma mark - UI components configuration
-- (void)configureTableView
-{
-    // added as subview
-    [self.view addSubview:self.tableView];
-    
-    //    // add constraints
-    //    __weak typeof(self) weakSelf = self;
-    //    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-    //        make.edges.equalTo(weakSelf.view);
-    //    }];
+- (void)tapReply {
+    LeesinViewController* vc = [LeesinViewController new];
+    vc.delegate = self;
+    vc.type = LeesinViewControllerTypeReply;
+    vc.channel_id = self.currentChannelViewModel.ID;
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
-- (void)configureTakePhotoButton
+
+#pragma mark - LeesinViewController delegate
+-(void)leesinViewController:(LeesinViewController *)leesinViewController uploadPercentage:(CGFloat)percentage uploadSucceed:(BOOL)success {
+    [self.progressView setProgress:percentage animated:YES];
+    if (success) {
+        if (leesinViewController.type == LeesinViewControllerTypeAsk) {
+            [self getSource_Ask];
+        } else {
+            [self getSource_Reply:^(BOOL success) {
+                if (success) {
+                    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+                    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+                }
+            }];
+
+        }
+    }
+}
+
+
+#pragma mark - <UITableViewDelegate>
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    // --- added as subViews
-    [self.view addSubview:self.takePhotoButton];
-    // --- Autolayout constraints
-    __weak typeof(self) weakSelf = self;
-    [_takePhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(weakSelf.view.mas_centerX);
-        make.height.mas_equalTo(50);
-        make.width.mas_equalTo(50);
-        self.takePhotoButtonConstraint =
-        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-12);
-    }];
+    [UIView animateWithDuration:0.1
+                     animations:^{
+                         [self.bottomContainerViewBottomMC setOffset:50.0];
+                         [self.bottomContainerView layoutIfNeeded];
+                     }];
+}
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [self.bottomContainerViewBottomMC setOffset:0];
+    [UIView animateWithDuration:0.2
+                          delay:1.0
+         usingSpringWithDamping:0.9
+          initialSpringVelocity:0.5
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         [self.bottomContainerView layoutIfNeeded];
+                         
+                     } completion:^(BOOL finished) {
+                     }];
 }
 
 
@@ -581,65 +528,70 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 {
     if (_tableView == nil) {
         _tableView = [[PIERefreshTableView alloc] initWithFrame:self.view.bounds];
-   
         _tableView.delegate   = self;
-        
         _tableView.dataSource = self;
-        
         _tableView.psDelegate = self;
-        
         // iOS 8+, self-sizing cell
         _tableView.estimatedRowHeight = 400;
-        
         _tableView.rowHeight          = UITableViewAutomaticDimension;
         
-        // register cells
-        [_tableView
-         registerNib:[UINib nibWithNibName:@"PIEChannelDetailLatestPSCell" bundle:nil]
-         forCellReuseIdentifier:PIEDetailLatestPSCellIdentifier];
+        [_tableView registerNib:[UINib nibWithNibName:@"PIEChannelDetailLatestPSCell" bundle:nil]forCellReuseIdentifier:PIEDetailLatestPSCellIdentifier];
         
-        [_tableView registerNib:[UINib nibWithNibName:@"PIENewReplyTableCell"
-                                               bundle:nil]
-         forCellReuseIdentifier:PIEDetailUsersPSCellIdentifier];
+        [_tableView registerNib:[UINib nibWithNibName:@"PIENewReplyTableCell" bundle:nil] forCellReuseIdentifier:PIEDetailUsersPSCellIdentifier];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
     }
     return _tableView;
 }
 
-- (UIButton *)takePhotoButton
+- (UIView *)bottomContainerView
 {
-    if (_takePhotoButton == nil) {
-        // instantiate only for once
-        _takePhotoButton = [[UIButton alloc] init];
+    if (_bottomContainerView == nil) {
+        _bottomContainerView = [[UIView alloc] init];
+        _bottomContainerView.backgroundColor = [UIColor clearColor];
+        UIButton* askButton = [UIButton new];
+        UIButton* replyButton = [UIButton new];
+        [askButton setBackgroundColor:[UIColor colorWithHex:0x4a4a4a  andAlpha:0.93]];
+        [replyButton setBackgroundColor:[UIColor colorWithHex:0xffef00 andAlpha:0.93]];
+        [askButton      setTitle:@"我要求P"  forState:  UIControlStateNormal];
+        [replyButton    setTitle:@"发布作品" forState:  UIControlStateNormal];
+        [askButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [replyButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         
-        /* Configurations */
+        askButton.titleLabel.font = [UIFont mediumTupaiFontOfSize:14];
+        replyButton.titleLabel.font = [UIFont mediumTupaiFontOfSize:14];
+
+        [askButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+        [replyButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
         
-        // --- set background image
-        [_takePhotoButton setBackgroundImage:[UIImage imageNamed:@"pie_channelDetailTakePhotoButton"]
-                                    forState:UIControlStateNormal];
+        [_bottomContainerView addSubview:askButton];
+        [_bottomContainerView addSubview:replyButton];
         
-        // --- add drop shadows
-        _takePhotoButton.layer.shadowColor  = (__bridge CGColorRef _Nullable)
-        ([UIColor colorWithWhite:0.0 alpha:0.5]);
-        _takePhotoButton.layer.shadowOffset = CGSizeMake(0, 4);
-        _takePhotoButton.layer.shadowRadius = 8.0;
+        [askButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.leading.and.top.and.bottom.equalTo(_bottomContainerView);
+            make.width.equalTo(replyButton);
+        }];
+        [replyButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.trailing.and.top.and.bottom.equalTo(_bottomContainerView);
+            make.leading.equalTo(askButton.mas_trailing);
+        }];
         
-        // --- add target-actions
-        [_takePhotoButton addTarget:self
-                             action:@selector(takePhoto:)
-                   forControlEvents:UIControlEventTouchUpInside];
+
+        [askButton addTarget:self
+                             action:@selector(tapAsk)
+                   forControlEvents:UIControlEventTouchDown];
+        [replyButton addTarget:self
+                      action:@selector(tapReply)
+            forControlEvents:UIControlEventTouchUpInside];
     }
-    return _takePhotoButton;
+    return _bottomContainerView;
     
 }
 
 - (PIEShareView *)shareView
 {
     if (_shareView == nil) {
-        // instantiate only for once
         _shareView = [[PIEShareView alloc] init];
-        
         _shareView.delegate = self;
     }
     return  _shareView;
