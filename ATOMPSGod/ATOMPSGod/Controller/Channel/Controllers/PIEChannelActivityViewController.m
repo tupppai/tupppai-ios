@@ -408,7 +408,8 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
             [_selectedVM love:NO];
         }
         else if (CGRectContainsPoint(_selectedReplyCell.followView.frame, p)) {
-            [self followReplier];
+//            [self followReplier];
+            [_selectedVM follow];
         }
         else if (CGRectContainsPoint(_selectedReplyCell.shareView.frame, p)) {
             [self showShareView:_selectedVM];
@@ -457,62 +458,6 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 
 #pragma mark - reply cell 中的点击事件：喜欢该P图，关注P图主。
 
-/**
- *  点击事件： 喜欢这张P图
- */
-//-(void)likeReply {
-//    
-//
-//    
-//    
-//    _selectedReplyCell.likeView.selected = !_selectedReplyCell.likeView.selected;
-//    [DDService toggleLike:_selectedReplyCell.likeView.selected ID:_selectedVM.ID type:_selectedVM.type  withBlock:^(BOOL success) {
-//        if (success) {
-//            _selectedVM.liked = _selectedReplyCell.likeView.selected;
-//            if (_selectedReplyCell.likeView.selected) {
-//                _selectedVM.likeCount = [NSString stringWithFormat:@"%zd",_selectedVM.likeCount.integerValue + 1];
-//            } else {
-//                _selectedVM.likeCount = [NSString stringWithFormat:@"%zd",_selectedVM.likeCount.integerValue - 1];
-//            }
-//        } else {
-//            _selectedReplyCell.likeView.selected = !_selectedReplyCell.likeView.selected;
-//        }
-//    }];
-//}
-
-/**
- *  关注这张P图的P图主
- */
--(void)followReplier {
-    
-
-    
-    
-    _selectedReplyCell.followView.highlighted = !_selectedReplyCell.followView.highlighted;
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    [param setObject:@(_selectedVM.userID) forKey:@"uid"];
-    if (_selectedReplyCell.followView.highlighted) {
-        [param setObject:@1 forKey:@"status"];
-    }
-    else {
-        [param setObject:@0 forKey:@"status"];
-    }
-    [DDService follow:param withBlock:^(BOOL success) {
-        if (success) {
-            _selectedVM.followed = _selectedReplyCell.followView.highlighted;
-        } else {
-            _selectedReplyCell.followView.highlighted = !_selectedReplyCell.followView.highlighted;
-            
-            [Hud text:@"网络异常，请稍后再试"];
-        }
-        
-        if (_selectedReplyCell.followView.highlighted) {
-            [Hud text:@"关注成功"];
-        }else{
-            [Hud text:@"已取消关注"];
-        }
-    }];
-}
 
 
 #pragma mark - <PIEShareViewDelegate>
@@ -635,10 +580,6 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
         // instantiate only for once
         _goPsButton = [[UIButton alloc] init];
         
-        // set background image (make-shift case)
-//        [_goPsButton setBackgroundImage:[UIImage imageNamed:@"moment"]
-//                               forState:UIControlStateNormal];
-//
         NSURL *backgroundImageUrl = [NSURL URLWithString:
                                      self.currentChannelVM.post_btn];
         [_goPsButton setBackgroundImageForState:UIControlStateNormal
@@ -665,20 +606,7 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     }
     return  _shareView;
 }
-//
-//- (QBImagePickerController* )QBImagePickerController {
-//    if (!_QBImagePickerController) {
-//        _QBImagePickerController = [QBImagePickerController new];
-//        _QBImagePickerController.delegate = self;
-//        _QBImagePickerController.filterType = QBImagePickerControllerFilterTypePhotos;
-//        _QBImagePickerController.allowsMultipleSelection = YES;
-//        _QBImagePickerController.showsNumberOfSelectedAssets = YES;
-//        _QBImagePickerController.minimumNumberOfSelection = 1;
-//        _QBImagePickerController.maximumNumberOfSelection = 1;
-//    }
-//    return _QBImagePickerController;
-//}
-//
+
 
 
 

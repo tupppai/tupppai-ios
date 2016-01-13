@@ -100,11 +100,11 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     
     
     [RACObserve([DDUserManager currentUser], avatar) subscribeNext:^(id x) {
-        [DDService sd_downloadImage:[DDUserManager currentUser].avatar withBlock:^(UIImage *image) {
+        NSString* avatarUrl = [[DDUserManager currentUser].avatar trimToImageWidth:200];
+        [DDService sd_downloadImage:avatarUrl withBlock:^(UIImage *image) {
             self.avatarView.image = image;
             self.topContainerView.image = [image blurredImageWithRadius:10 iterations:10 tintColor:nil];
         }];
-
     }];
     
     RAC(self.psGodCertificate,hidden) =  [[RACObserve([DDUserManager currentUser], isV) filter:^BOOL(id _) {
@@ -323,7 +323,7 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     _fansCountLabel.text = [NSString stringWithFormat:@"%zd",user.fansNumber];
     _likedCountLabel.text = [NSString stringWithFormat:@"%zd",user.likedCount];
     
-    NSString* avatarUrl = [user.avatar trimToImageWidth:_avatarView.frame.size.width*SCREEN_SCALE];
+    NSString* avatarUrl = [user.avatar trimToImageWidth:200];
     [DDService sd_downloadImage:
      avatarUrl withBlock:^(UIImage *image) {
          _avatarView.image       = image;

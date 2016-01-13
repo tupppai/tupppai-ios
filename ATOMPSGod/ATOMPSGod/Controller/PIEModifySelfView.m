@@ -29,8 +29,6 @@
         [self createSubView];
         [self createTopViewSubView];
         [self createNameSubView];
-//        [self createAreaSubView];
-//        [self createRegionPickerView];
         [self createProtocolSubView];
         [self injectSource];
     }
@@ -38,10 +36,13 @@
 }
 
 - (void)injectSource {
-    [self.userHeaderButton setImageForState:UIControlStateNormal withURL:[[NSURL alloc]initWithString:[DDUserManager currentUser].avatar]];
+    NSString* avatarUrl = [[DDUserManager currentUser].avatar trimToImageWidth:200];
+    [DDService sd_downloadImage:avatarUrl withBlock:^(UIImage *image) {
+        [self.userHeaderButton setImage:image forState:UIControlStateNormal];
+    }];
     self.nicknameTextField.text = [DDUserManager currentUser].nickname;
-    NSInteger index = [DDUserManager currentUser].sex ? 0:1;
-    [self.sexSegment setSelectedSegmentIndex:index];
+//    NSInteger index = [DDUserManager currentUser].sex ? 0:1;
+//    [self.sexSegment setSelectedSegmentIndex:index];
 }
 - (void)createSubView {
     WS(ws);
