@@ -246,7 +246,7 @@
                               [ATOMUserDAO clearUsers];
                               //清空当前用户
                               [DDUserManager clearCurrentUser];
-                              
+                              [DDSessionManager resetSharedInstance];
                               self.navigationController.viewControllers = @[];
                               PIELaunchViewController_Black *lvc = [[PIELaunchViewController_Black alloc] init];
                               [AppDelegate APP].window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
