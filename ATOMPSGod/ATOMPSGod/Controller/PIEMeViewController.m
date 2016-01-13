@@ -98,6 +98,10 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"PIEMeScrollDown" object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"updateNoticationStatus" object:nil];
 }
+
+- (void)setupObserver {
+    [[DDUserManager currentUser]addObserver:self forKeyPath:@"nickname" options:NSKeyValueObservingOptionNew context:nil];
+}
 - (void)setupNavBar {
     UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
     backButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -291,6 +295,12 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     _likedCountLabel.text = [NSString stringWithFormat:@"%zd",user.likedCount];
     [self updateAvatar];
 }
+
+//-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+//    if ([keyPath isEqualToString:@"nickname"]) {
+//        NSLog(@"%@",change);
+//    }
+//}
 
 - (void)setupTapGesture {
     _followCountLabel.userInteractionEnabled = YES;
