@@ -685,6 +685,8 @@ PIEVerificationCodeCountdownButton *countdownButton;
             pieTouristLoginTypeString = @"qq";
             break;
         }
+        default:
+            break;
     }
     [[NSUserDefaults standardUserDefaults] setObject:pieTouristLoginTypeString
                                               forKey:PIETouristLoginTypeStringKey];
@@ -718,6 +720,8 @@ PIEVerificationCodeCountdownButton *countdownButton;
             authURL = @"auth/qq";
             break;
         }
+            default:
+            break;
     }
     
     NSMutableDictionary *params = [NSMutableDictionary dictionary];

@@ -22,8 +22,8 @@
 
 #import "DDOtherUserManager.h"
 #import "UINavigationBar+Awesome.h"
-
-
+#import "PIEModifyProfileViewController.h"
+#import "DDNavigationController.h"
 typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     PIEMeViewControllerNavigationBarStyleTranslucentStyle,
     PIEMeViewControllerNavigationBarStyleWhiteBackgroundStyle,
@@ -227,6 +227,7 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
          _avatarView.image       = image;
          _topContainerView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:nil];
     }];
+    self.usernameLabel.text = [DDUserManager currentUser].nickname;
     PIEUserModel* user = [DDUserManager currentUser];
     self.psGodIcon_big.hidden    = !user.isV;
     self.psGodCertificate.hidden = !user.isV;
@@ -305,8 +306,17 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     UITapGestureRecognizer *tapG33 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushToFansVC)];
     [_fansCountLabel addGestureRecognizer:tapG3];
     [_fansView addGestureRecognizer:tapG33];
+    
+    UITapGestureRecognizer *tapG4 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAvatar)];
+    _avatarView.userInteractionEnabled = YES;
+    [_avatarView addGestureRecognizer:tapG4];
 }
 
+- (void) tapAvatar {
+    PIEModifyProfileViewController *mpvc = [PIEModifyProfileViewController new];
+    DDNavigationController *nav = [[DDNavigationController alloc]initWithRootViewController:mpvc];
+    [self presentViewController:nav animated:YES completion:nil];
+}
 
 - (void)pushToFollowingVC {
     PIEMyFollowViewController *opvcv = [PIEMyFollowViewController new];
