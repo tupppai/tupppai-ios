@@ -9,6 +9,7 @@
 #import "PIECommentTableHeaderView_Reply.h"
 #import "PIEModelImage.h"
 #import "FXBlurView.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
 
 #define MAXHEIGHT (SCREEN_WIDTH-kPadding15*2)*4/3
 
@@ -26,7 +27,6 @@
     return self;
 }
 - (void)configSubviews {
-    //to avoid contraints break error.
     
     [self addSubview:self.avatarView];
     [self addSubview:self.usernameLabel];
@@ -145,6 +145,11 @@
 -(void)setVm:(PIEPageVM *)vm {
     if (vm) {
         _vm = vm;
+        
+        [RACObserve(vm, followed)subscribeNext:^(id x) {
+            self.followButton.selected = [x boolValue];
+        }];
+        
         [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
         
         _avatarView.isV = vm.isV;
@@ -309,29 +314,12 @@
         [_followButton setImage:[UIImage imageNamed:@"new_reply_follow"] forState:UIControlStateNormal];
         [_followButton setImage:[UIImage imageNamed:@"new_reply_followed"] forState:UIControlStateHighlighted];
         [_followButton setImage:[UIImage imageNamed:@"new_reply_followed"] forState:UIControlStateSelected];
-        [_followButton addTarget:self action:@selector(follow:) forControlEvents:UIControlEventTouchUpInside];
+        [_followButton addTarget:self action:@selector(follow) forControlEvents:UIControlEventTouchDown];
     }
     return _followButton;
 }
--(void)follow:(UIButton*)followView {
-    
-    followView.selected = !followView.selected;
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    [param setObject:@(_vm.userID) forKey:@"uid"];
-    if (followView.selected) {
-        [param setObject:@1 forKey:@"status"];
-    }
-    else {
-        [param setObject:@0 forKey:@"status"];
-    }
-    
-    [DDService follow:param withBlock:^(BOOL success) {
-        if (success) {
-            _vm.followed = followView.selected;
-        } else {
-            followView.selected = !followView.selected;
-        }
-    }];
+-(void)follow {
+    [self.vm follow];
 }
 
 @end

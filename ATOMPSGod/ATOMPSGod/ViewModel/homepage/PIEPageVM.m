@@ -93,16 +93,24 @@
 
 - (void)increaseLoveStatus {
     if (_lovedCount && _lovedCount == 3) {
-        self.lovedCount = 0;
-        if (![self.likeCount isEqualToString:kfcMaxNumberString]) {
-            self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] - 3];
-        }
+//        if (![self.likeCount isEqualToString:kfcMaxNumberString]) {
+//            self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] - 3];
+//        }
+        [Hud text:@"你已经点满了超级赞,长按取消点赞" backgroundColor:[UIColor colorWithHex:0x000000 andAlpha:0.4] margin:14 cornerRadius:7];
     } else {
         self.lovedCount++;
         if (![self.likeCount isEqualToString:kfcMaxNumberString]) {
             self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] + 1];
         }
+        [DDService loveReply:nil ID:self.ID withBlock:^(BOOL succeed) {
+            if (!succeed) {
+                [self decreaseLoveStatus];
+            }
+        }];
     }
+    
+
+
 }
 - (void)decreaseLoveStatus {
     if (_lovedCount && _lovedCount == 0) {
@@ -123,30 +131,34 @@
         self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] - self.lovedCount];
     }
     self.lovedCount = 0;
-}
-
-
-
-/** Cell点击 － 点赞 */
--(void)love:(BOOL)revert {
+    
     NSMutableDictionary *param = [NSMutableDictionary new];
-    
-    if (revert || self.lovedCount == 3) {
-        [param setObject:@"0" forKey:@"status"];
-    }
-    
-    if (revert) {
-        [self revertStatus];
-    } else {
-        [self increaseLoveStatus];
-    }
-    
+    [param setObject:@"0" forKey:@"status"];
     [DDService loveReply:param ID:self.ID withBlock:^(BOOL succeed) {
         if (!succeed) {
             [self decreaseLoveStatus];
         }
     }];
 }
+
+
+
+/** Cell点击 － 点赞 */
+-(void)love:(BOOL)revert {
+ 
+    
+    if (revert) {
+        [self revertStatus];
+
+        
+    }
+    
+    else {
+        [self increaseLoveStatus];
+
+    }
+}
+
 -(void)follow {
     
     self.followed = !self.followed;
@@ -157,7 +169,13 @@
     [param setObject:@(self.userID) forKey:@"uid"];
 
     [DDService follow:param withBlock:^(BOOL success) {
-        if (!success) {
+        if (success) {
+            if (self.followed) {
+                [Hud text:@"关注成功" backgroundColor:[UIColor colorWithHex:0x000000 andAlpha:0.3] margin:15 cornerRadius:7];
+            } else {
+                [Hud text:@"已取消关注" backgroundColor:[UIColor colorWithHex:0x000000 andAlpha:0.3] margin:15 cornerRadius:7];
+            }
+        } else {
             self.followed = !self.followed;
         }
     }];

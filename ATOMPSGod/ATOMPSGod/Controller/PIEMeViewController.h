@@ -9,5 +9,4 @@
 #import "DDBaseVC.h"
 
 @interface PIEMeViewController : DDBaseVC
--(void)updateAvatar;
 @end

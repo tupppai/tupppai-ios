@@ -29,8 +29,6 @@
         [self createSubView];
         [self createTopViewSubView];
         [self createNameSubView];
-//        [self createAreaSubView];
-//        [self createRegionPickerView];
         [self createProtocolSubView];
         [self injectSource];
     }
@@ -38,10 +36,13 @@
 }
 
 - (void)injectSource {
-    [self.userHeaderButton setImageForState:UIControlStateNormal withURL:[[NSURL alloc]initWithString:[DDUserManager currentUser].avatar]];
+    NSString* avatarUrl = [[DDUserManager currentUser].avatar trimToImageWidth:200];
+    [DDService sd_downloadImage:avatarUrl withBlock:^(UIImage *image) {
+        [self.userHeaderButton setImage:image forState:UIControlStateNormal];
+    }];
     self.nicknameTextField.text = [DDUserManager currentUser].nickname;
-    NSInteger index = [DDUserManager currentUser].sex ? 0:1;
-    [self.sexSegment setSelectedSegmentIndex:index];
+//    NSInteger index = [DDUserManager currentUser].sex ? 0:1;
+//    [self.sexSegment setSelectedSegmentIndex:index];
 }
 - (void)createSubView {
     WS(ws);
@@ -282,6 +283,9 @@
         _userHeaderButton = [UIButton new];
         _userHeaderButton.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
         _userHeaderButton.layer.cornerRadius = kUserBigHeaderButtonWidth / 2;
+        _userHeaderButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
+        _userHeaderButton.contentHorizontalAlignment    = UIControlContentHorizontalAlignmentFill;
+        _userHeaderButton.contentVerticalAlignment      = UIControlContentHorizontalAlignmentFill;
         _userHeaderButton.clipsToBounds = YES;
         _maskImageView = [UIImageView new];
         _maskImageView.image =  [UIImage imageNamed:@"login_profile_mask"];

@@ -24,6 +24,8 @@
 #import "UINavigationBar+Awesome.h"
 #import "PIEModifyProfileViewController.h"
 #import "DDNavigationController.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
+
 typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     PIEMeViewControllerNavigationBarStyleTranslucentStyle,
     PIEMeViewControllerNavigationBarStyleWhiteBackgroundStyle,
@@ -76,7 +78,61 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     [self setupNavBar];
     [self setupViews];
     [self setupPageMenu];
-    [self updateViewsWithData];
+    [self updateUserViews];
+    [self setupObserver];
+    
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"PIEMeScrollUp" object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"PIEMeScrollDown" object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"updateNoticationStatus" object:nil];
+}
+
+
+- (void)setupObserver {
+    
+    RAC(self.usernameLabel,text) =  [[RACObserve([DDUserManager currentUser], nickname) filter:^BOOL(id _) {
+        return ![self.usernameLabel.text isEqualToString:[DDUserManager currentUser].nickname];
+    }]map:^id(id value) {
+        return value;
+    }];
+    
+    
+    [RACObserve([DDUserManager currentUser], avatar) subscribeNext:^(id x) {
+        NSString* avatarUrl = [[DDUserManager currentUser].avatar trimToImageWidth:200];
+        [DDService sd_downloadImage:avatarUrl withBlock:^(UIImage *image) {
+            self.avatarView.image = image;
+            self.topContainerView.image = [image blurredImageWithRadius:10 iterations:10 tintColor:nil];
+        }];
+    }];
+    
+    RAC(self.psGodCertificate,hidden) =  [[RACObserve([DDUserManager currentUser], isV) filter:^BOOL(id _) {
+        return YES;
+    }]map:^id(id value) {
+        NSNumber *boolNumber;
+        if ([value boolValue]) {
+             boolNumber = @(NO);
+        } else {
+            boolNumber = @(YES);
+        }
+        return boolNumber;
+    }];
+    
+    RAC(self.psGodIcon_big,hidden) =  [[RACObserve([DDUserManager currentUser], isV) filter:^BOOL(id _) {
+        return YES;
+    }]map:^id(id value) {
+        NSNumber *boolNumber;
+        if ([value boolValue]) {
+            boolNumber = @(NO);
+        } else {
+            boolNumber = @(YES);
+        }
+        return boolNumber;
+    }];
+    
+    
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(scrollUp)
                                                  name:@"PIEMeScrollUp"
@@ -89,18 +145,8 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
                                              selector:@selector(updateNoticationStatus)
                                                  name:@"updateNoticationStatus"
                                                object:nil];
-    
-    
-}
 
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"PIEMeScrollUp" object:nil];
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"PIEMeScrollDown" object:nil];
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"updateNoticationStatus" object:nil];
-}
-
-- (void)setupObserver {
-    [[DDUserManager currentUser]addObserver:self forKeyPath:@"nickname" options:NSKeyValueObservingOptionNew context:nil];
+    
 }
 - (void)setupNavBar {
     UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
@@ -130,13 +176,9 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     self.currentNavigationBarStyle = PIEMeViewControllerNavigationBarStyleTranslucentStyle;
 
 }
-- (void)hideNavitionBarTitleView {
-    UILabel *label = [[UILabel alloc] init];
-    self.navigationItem.titleView = label;
-}
+
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-//
     
     self.edgesForExtendedLayout = UIRectEdgeAll;
 
@@ -148,7 +190,6 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
         - scrollDown: 状态 -> 透明
      */
     [self toggleNavigationBarStyle:self.currentNavigationBarStyle];
-    
     
     [self updateNoticationStatus];
     [MobClick beginLogPageView:@"进入我的"];
@@ -196,7 +237,7 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
 
         [DDUserManager DDGetUserInfoAndUpdateMe:^(BOOL success) {
             if (success) {
-                [self updateViewsWithData];
+                [self updateUserViews];
             }
         }];
     }
@@ -224,18 +265,8 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     }
 }
 
--(void)updateAvatar {
-    NSString* avatarUrl = [[DDUserManager currentUser].avatar trimToImageWidth:_avatarView.frame.size.width*SCREEN_SCALE];
-    [DDService sd_downloadImage:
-     avatarUrl withBlock:^(UIImage *image) {
-         _avatarView.image       = image;
-         _topContainerView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:nil];
-    }];
-    self.usernameLabel.text = [DDUserManager currentUser].nickname;
-    PIEUserModel* user = [DDUserManager currentUser];
-    self.psGodIcon_big.hidden    = !user.isV;
-    self.psGodCertificate.hidden = !user.isV;
-}
+
+
 - (void)pushToSettingViewController {
     PIESettingsViewController* vc = [PIESettingsViewController new];
     [self.navigationController pushViewController:vc animated:YES];
@@ -252,8 +283,6 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor whiteColor] CGColor], (id)[[UIColor blackColor] CGColor], nil];
     [viewBG.layer insertSublayer:gradient atIndex:0];
     [self.view insertSubview:viewBG belowSubview:self.topContainerView];
-    
-    
     
     _dotView1.layer.cornerRadius = _dotView1.frame.size.width/2;
     _dotView2.layer.cornerRadius = _dotView2.frame.size.width/2;
@@ -287,20 +316,23 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     [_likedCountLabel setTextColor:[UIColor colorWithHex:0xffffff andAlpha:0.8]];
 
 }
-- (void)updateViewsWithData {
+- (void)updateUserViews {
     PIEUserModel* user = [DDUserManager currentUser];
     _usernameLabel.text = user.nickname;
     _followCountLabel.text = [NSString stringWithFormat:@"%zd",user.attentionNumber];
     _fansCountLabel.text = [NSString stringWithFormat:@"%zd",user.fansNumber];
     _likedCountLabel.text = [NSString stringWithFormat:@"%zd",user.likedCount];
-    [self updateAvatar];
+    
+    NSString* avatarUrl = [user.avatar trimToImageWidth:200];
+    [DDService sd_downloadImage:
+     avatarUrl withBlock:^(UIImage *image) {
+         _avatarView.image       = image;
+         _topContainerView.image = [image blurredImageWithRadius:10 iterations:10 tintColor:nil];
+     }];
+    self.psGodIcon_big.hidden    = !user.isV;
+    self.psGodCertificate.hidden = !user.isV;
+    
 }
-
-//-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
-//    if ([keyPath isEqualToString:@"nickname"]) {
-//        NSLog(@"%@",change);
-//    }
-//}
 
 - (void)setupTapGesture {
     _followCountLabel.userInteractionEnabled = YES;
