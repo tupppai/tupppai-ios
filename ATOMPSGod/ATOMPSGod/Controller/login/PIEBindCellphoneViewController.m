@@ -156,7 +156,8 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
     PIELaunchTextField *cellphoneTextField = ({
         PIELaunchTextField *textField = [[PIELaunchTextField alloc] init];
         
-        textField.placeholder = @"手机号";
+        textField.placeholder  = @"手机号";
+        textField.keyboardType = UIKeyboardTypePhonePad;
         
         [furtherRegistrationView addSubview:textField];
         

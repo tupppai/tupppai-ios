@@ -111,9 +111,8 @@ PIEVerificationCodeCountdownButton *countdownButton;
     PIELaunchTextField *cellPhoneNumberTextField = ({
         PIELaunchTextField *textField = [[PIELaunchTextField alloc] init];
 
-
-        textField.placeholder = @"手机号";
-
+        textField.placeholder  = @"手机号";
+        textField.keyboardType = UIKeyboardTypePhonePad;
 
         [self.view addSubview:textField];
 
