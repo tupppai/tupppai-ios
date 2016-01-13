@@ -35,6 +35,7 @@ NSString* deviceName();
 @end
 
 @interface Hud : NSObject
++(void)text:(NSString*)message backgroundColor:(UIColor*)color margin:(CGFloat)margin cornerRadius:(CGFloat)cornerRadius;
 +(void)text:(NSString*)message;
 +(void)text:(NSString*)message inView:(UIView*)view;
 +(void)textWithLightBackground:(NSString*)message;

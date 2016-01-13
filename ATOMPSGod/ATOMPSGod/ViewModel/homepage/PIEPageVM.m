@@ -157,7 +157,13 @@
     [param setObject:@(self.userID) forKey:@"uid"];
 
     [DDService follow:param withBlock:^(BOOL success) {
-        if (!success) {
+        if (success) {
+            if (self.followed) {
+                [Hud text:@"关注成功" backgroundColor:[UIColor colorWithHex:0x000000 andAlpha:0.3] margin:15 cornerRadius:7];
+            } else {
+                [Hud text:@"已取消关注" backgroundColor:[UIColor colorWithHex:0x000000 andAlpha:0.3] margin:15 cornerRadius:7];
+            }
+        } else {
             self.followed = !self.followed;
         }
     }];

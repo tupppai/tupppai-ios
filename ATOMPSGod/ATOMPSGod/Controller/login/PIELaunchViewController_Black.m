@@ -92,7 +92,7 @@ PIEVerificationCodeCountdownButton *countdownButton;
         imageView.image        = [UIImage imageNamed:@"pie_logo"];
         imageView.contentMode  = UIViewContentModeScaleAspectFit;
         [self.view addSubview:imageView];
-
+        
         @weakify(self);
 
         [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -106,7 +106,10 @@ PIEVerificationCodeCountdownButton *countdownButton;
         imageView;
     });
     self.logoImageView = logoImageView;
-
+    self.logoImageView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapLogo)];
+    [self.logoImageView addGestureRecognizer:gesture];
+    gesture.numberOfTapsRequired = 14;
     // cellPhone number
     PIELaunchTextField *cellPhoneNumberTextField = ({
         PIELaunchTextField *textField = [[PIELaunchTextField alloc] init];
@@ -787,6 +790,36 @@ PIEVerificationCodeCountdownButton *countdownButton;
 }
 
 
+
+- (void)tapLogo {
+    UIImageView* imgView = [[UIImageView alloc]initWithFrame:self.view.bounds];
+    imgView.image = [UIImage imageNamed:@"baozou"];
+    [self.view addSubview:imgView];
+    
+    if ([[[DDSessionManager shareHTTPSessionManager].baseURL absoluteString] isEqualToString: baseURLString]) {
+        [[NSUserDefaults standardUserDefaults]setObject:baseURLString_Test forKey:@"BASEURL"];
+        [Hud activity:@"切换到到测试服测试服测试服测试服"];
+        [UIView animateWithDuration:2 animations:^{
+            self.view.alpha = 0.0;
+        } completion:^(BOOL finished) {
+            self.view.alpha = 1.0;
+            [imgView removeFromSuperview];
+            [Hud dismiss];
+            [DDSessionManager resetSharedInstance];
+        }];
+    } else {
+        [[NSUserDefaults standardUserDefaults]setObject:baseURLString forKey:@"BASEURL"];
+        [Hud activity:@"切换到正式服正式服正式服正式服正式服"];
+        [UIView animateWithDuration:2 animations:^{
+            self.view.alpha = 0.0;
+        } completion:^(BOOL finished) {
+            self.view.alpha = 1.0;
+            [imgView removeFromSuperview];
+            [Hud dismiss];
+            [DDSessionManager resetSharedInstance];
+        }];
+    }
+}
 
 @end
 
