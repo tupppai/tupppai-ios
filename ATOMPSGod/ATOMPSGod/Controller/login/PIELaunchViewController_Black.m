@@ -156,11 +156,7 @@ PIEVerificationCodeCountdownButton *countdownButton;
     passwordTextField.hidden = YES;
     self.passwordTextField = passwordTextField;
 
-    // 倒计时button
-
-    // 倒计时的button: 点击开始倒计时
-
-
+    // 倒计时button: 点击开始倒计时
     PIEVerificationCodeCountdownButton
         *countdownButton = ({
             PIEVerificationCodeCountdownButton
@@ -185,7 +181,6 @@ PIEVerificationCodeCountdownButton *countdownButton;
                               }];
     };
     self.countdownButton = countdownButton;
-
 
     // 验证码TextField
     PIELaunchTextField *verificationCodeTextField = ({
@@ -284,8 +279,6 @@ PIEVerificationCodeCountdownButton *countdownButton;
     
     self.resetUiButton = resetUiButton;
     
-    
-
     // Sina
     UIButton *sinaButton = ({
         UIButton *button = [[UIButton alloc] init];
@@ -308,7 +301,6 @@ PIEVerificationCodeCountdownButton *countdownButton;
     [sinaButton addTarget:self
                    action:@selector(sinaWeiboLogin)
          forControlEvents:UIControlEventTouchUpInside];
-    
 
     // QQ
     UIButton *QQButton = ({
@@ -334,7 +326,6 @@ PIEVerificationCodeCountdownButton *countdownButton;
     [QQButton addTarget:self
                  action:@selector(QQLogin)
        forControlEvents:UIControlEventTouchUpInside];
-
     
     // wechat
     UIButton *wechatButton = ({
@@ -358,7 +349,6 @@ PIEVerificationCodeCountdownButton *countdownButton;
     [wechatButton addTarget:self
                      action:@selector(wechatLogin)
            forControlEvents:UIControlEventTouchUpInside];
-
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -390,7 +380,10 @@ PIEVerificationCodeCountdownButton *countdownButton;
                                  BOOL hasRegistered = [dataDict[@"has_registered"] boolValue];
                                 
                                  if (hasRegistered) {
-                                     [self updateUIForLogin];
+                                     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                                         [self updateUIForLogin];
+                                     }];
+                                     
                                      [self.hasRegisteredRequestDisposable dispose];
                                      
                                      self.loginOrSignupRequestDisposable =
@@ -398,7 +391,10 @@ PIEVerificationCodeCountdownButton *countdownButton;
                                          [self sendLoginRequest];
                                      }];
                                  }else{
-                                     [self updateUIForSignup];
+                                     [[NSOperationQueue mainQueue]
+                                      addOperationWithBlock:^{
+                                          [self updateUIForSignup];
+                                      }];
                                      [self.hasRegisteredRequestDisposable dispose];
                                      
                                      self.loginOrSignupRequestDisposable =
@@ -538,11 +534,22 @@ PIEVerificationCodeCountdownButton *countdownButton;
         
         [[button rac_signalForControlEvents:UIControlEventTouchUpInside]
          subscribeNext:^(id x) {
-
+             
+             /*
+                BUG found here!
+                假如app启动，用户登录->退出登录，重新返回到这个页面，button的点击事件失效
+                把app从内存中清除然后重新启动，第一次使用的时候按钮的点击事件是正常的
+              */
+             
+             /*
+              
+                第二次返回此页面的时候, [Appdelegate APP].baseNav 为 nil
+              */
+             
              PIEForgotPasswordViewController_Black *forgotPasswordVC =
              [[PIEForgotPasswordViewController_Black alloc] init];
              
-             [[AppDelegate APP].baseNav pushViewController:forgotPasswordVC
+             [self.navigationController pushViewController:forgotPasswordVC
                                                   animated:YES];
 
         }];
@@ -550,6 +557,8 @@ PIEVerificationCodeCountdownButton *countdownButton;
         
         button;
     });
+    
+    
     
     self.passwordTextField.rightViewMode = UITextFieldViewModeAlways;
     [UIView animateWithDuration:0.3 animations:^{

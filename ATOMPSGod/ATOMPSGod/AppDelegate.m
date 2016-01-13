@@ -315,7 +315,7 @@
 - (void)switchToMainTabbarController
 {
     
-    [[AppDelegate APP].baseNav setViewControllers:[NSArray array]];
+    [self.baseNav setViewControllers:[NSArray array]];
     /*
      使用懒加载，重新创建一次mainTabBarController
      */
@@ -326,7 +326,7 @@
 
 - (void)switchToLoginViewController
 {
-    [[AppDelegate APP].baseNav setViewControllers:[NSArray array]];
+    [self.baseNav setViewControllers:[NSArray array]];
     PIELaunchViewController_Black *lvc = [[PIELaunchViewController_Black alloc] init];
     [AppDelegate APP].window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
 }
