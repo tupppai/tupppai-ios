@@ -106,7 +106,6 @@ typedef NS_ENUM(NSUInteger, PIEFriendViewControllerNavigationBarStyle) {
 - (void)setupNavBar {
     
     self.navigationController.navigationBar.shadowImage = [UIImage new];
-
     
     UIButton *buttonLeft = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
     buttonLeft.imageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -271,10 +270,9 @@ typedef NS_ENUM(NSUInteger, PIEFriendViewControllerNavigationBarStyle) {
     
     NSString* avatarUrlString = [user.avatar trimToImageWidth:_avatarView.frame.size.width*SCREEN_SCALE];
 
-    NSLog(@"avatarUrlString!!%@  _avatarView.frame.size.width %f",avatarUrlString,_avatarView.frame.size.width);
     [DDService sd_downloadImage:avatarUrlString withBlock:^(UIImage *image) {
         _avatarView.avatarImageView.image = image;
-        _blurView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:[UIColor blackColor]];
+        _blurView.image = [image blurredImageWithRadius:10 iterations:10 tintColor:[UIColor blackColor]];
     }];
     
     
@@ -305,7 +303,7 @@ typedef NS_ENUM(NSUInteger, PIEFriendViewControllerNavigationBarStyle) {
     
     [DDService sd_downloadImage:pageVM.avatarURL withBlock:^(UIImage *image) {
         _avatarView.avatarImageView.image = image;
-        _blurView.image = [image blurredImageWithRadius:100 iterations:5 tintColor:[UIColor blackColor]];
+        _blurView.image = [image blurredImageWithRadius:10 iterations:10 tintColor:[UIColor blackColor]];
     }];
     
     if (pageVM.userID == [DDUserManager currentUser].uid) {

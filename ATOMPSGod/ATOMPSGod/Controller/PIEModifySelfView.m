@@ -282,6 +282,9 @@
         _userHeaderButton = [UIButton new];
         _userHeaderButton.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
         _userHeaderButton.layer.cornerRadius = kUserBigHeaderButtonWidth / 2;
+        _userHeaderButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
+        _userHeaderButton.contentHorizontalAlignment    = UIControlContentHorizontalAlignmentFill;
+        _userHeaderButton.contentVerticalAlignment      = UIControlContentHorizontalAlignmentFill;
         _userHeaderButton.clipsToBounds = YES;
         _maskImageView = [UIImageView new];
         _maskImageView.image =  [UIImage imageNamed:@"login_profile_mask"];
