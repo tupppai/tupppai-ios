@@ -42,11 +42,10 @@
     [super viewDidLoad];
 //    [self loadRegionResource];
     [self createUI];
+    [self setupNavBar];
 }
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    UIBarButtonItem *btnDone = [[UIBarButtonItem alloc] initWithTitle:@"确认修改" style:UIBarButtonItemStyleDone target:self action:@selector(clickRightButtonItem)];
-    self.navigationItem.rightBarButtonItem = btnDone;
 }
 - (void)createUI {
     self.title = @"资料编辑";
@@ -94,7 +93,12 @@
             DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
             PIEMeViewController* mevc = [nav.viewControllers firstObject];
             [mevc updateAvatar];
-            [self.navigationController popViewControllerAnimated:YES];
+            
+            if (self.navigationController.viewControllers.count <= 1) {
+                [self dismiss];
+            } else {
+                [self.navigationController popViewControllerAnimated:YES];
+            }
             
         } else {
             [Hud error:@"修改失败" inView:self.view];
@@ -109,8 +113,28 @@
     [self.cameraActionsheet showInView:self.view animated:YES];
 }
 
+- (void)setupNavBar {
+    
+    UIBarButtonItem *btnDone = [[UIBarButtonItem alloc] initWithTitle:@"确认修改" style:UIBarButtonItemStyleDone target:self action:@selector(clickRightButtonItem)];
+    self.navigationItem.rightBarButtonItem = btnDone;
 
+    
+    if (self.navigationController.viewControllers.count <= 1) {
+        
+        UIButton *buttonLeft = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
+        buttonLeft.imageView.contentMode = UIViewContentModeScaleAspectFit;
+        [buttonLeft setImage:[UIImage imageNamed:@"PIE_icon_back"] forState:UIControlStateNormal];
+        UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonLeft];
+        self.navigationItem.leftBarButtonItem =  buttonItem;
+        [buttonLeft addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    
+}
 
+- (void)dismiss {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 #pragma mark - Gesture Event
 
 
@@ -182,14 +206,18 @@
         [_cameraActionsheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
             switch (indexPath.row) {
                 case 0:
-                    ws.imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
-                    [ws presentViewController:ws.imagePickerController animated:YES completion:NULL];
-                    [ws.cameraActionsheet dismissAnimated:YES];
+                    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+                        ws.imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+                        [ws presentViewController:ws.imagePickerController animated:YES completion:NULL];
+                        [ws.cameraActionsheet dismissAnimated:YES];
+                    }
                     break;
                 case 1:
-                    ws.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-                    [ws presentViewController:ws.imagePickerController animated:YES completion:NULL];
-                    [ws.cameraActionsheet dismissAnimated:YES];
+                    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+                        ws.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                        [ws presentViewController:ws.imagePickerController animated:YES completion:NULL];
+                        [ws.cameraActionsheet dismissAnimated:YES];
+                    }
                     break;
                 case 2:
                     [ws.cameraActionsheet dismissAnimated:YES];
