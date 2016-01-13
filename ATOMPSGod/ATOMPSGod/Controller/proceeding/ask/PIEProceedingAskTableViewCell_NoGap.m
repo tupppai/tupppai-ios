@@ -14,7 +14,7 @@
 #import "PIECategoryModel.h"
 #import "PIEReplyCollectionViewController.h"
 
-#define kPIEProceedingAskMaxCountForShowingMoreReply 1
+#define kPIEProceedingAskMaxCountForShowingMoreReply 10
 
 @interface PIEProceedingAskTableViewCell_NoGap()
 
