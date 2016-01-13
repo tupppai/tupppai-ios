@@ -17,5 +17,4 @@ typedef NS_ENUM(NSUInteger, LeesinSwipeViewType) {
 @property (nonatomic,assign)LeesinSwipeViewType type;
 @property (nonatomic,assign)BOOL emptyDataSetShouldDisplay;
 @property (nonatomic,strong)UILabel *emptyDisplayLabel;
-
 @end

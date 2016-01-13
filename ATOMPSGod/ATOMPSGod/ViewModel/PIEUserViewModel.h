@@ -7,8 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PIEUserModel.h"
-
+@class PIEUserModel;
 @interface PIEUserViewModel : NSObject
 
 @property (nonatomic, strong) PIEUserModel *model;
