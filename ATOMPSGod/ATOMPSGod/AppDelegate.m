@@ -291,7 +291,7 @@
     [[NSUserDefaults standardUserDefaults]setObject:@(YES) forKey:@"NotificationNew"];
     [[NSUserDefaults standardUserDefaults]synchronize];
     [self addRedDotToTabBarItemIndex:3];
-    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"updateNoticationStatus" object:nil]];
+    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:PIEUpdateNotificationStatusNotification object:nil]];
 
 }
 

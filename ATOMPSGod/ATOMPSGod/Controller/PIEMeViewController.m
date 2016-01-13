@@ -85,10 +85,11 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
                                              selector:@selector(scrollDown)
                                                  name:@"PIEMeScrollDown"
                                                object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updateNoticationStatus)
-                                                 name:@"updateNoticationStatus"
-                                               object:nil];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(updateNotificationStatus)
+     name:PIEUpdateNotificationStatusNotification
+     object:nil];
     
     
 }
@@ -96,7 +97,7 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"PIEMeScrollUp" object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"PIEMeScrollDown" object:nil];
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"updateNoticationStatus" object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:PIEUpdateNotificationStatusNotification object:nil];
 }
 
 - (void)setupObserver {
@@ -150,7 +151,7 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     [self toggleNavigationBarStyle:self.currentNavigationBarStyle];
     
     
-    [self updateNoticationStatus];
+    [self updateNotificationStatus];
     [MobClick beginLogPageView:@"进入我的"];
 }
 -(void)viewWillDisappear:(BOOL)animated {
@@ -204,7 +205,7 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
 }
 
 
-- (void)updateNoticationStatus {
+- (void)updateNotificationStatus {
     if ( [[[NSUserDefaults standardUserDefaults]objectForKey:@"NotificationNew"]boolValue]) {
         UIButton *btn =  self.navigationItem.rightBarButtonItem.customView;
         btn.selected = YES;

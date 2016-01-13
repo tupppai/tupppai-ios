@@ -89,4 +89,7 @@ extern NSString * const PIETouristLoginTypeStringKey;
 extern NSString * const PIENetworkCallForFurtherRegistrationNotification;
 
 
+/** 更新消息状态的通知 */
+extern NSString * const PIEUpdateNotificationStatusNotification;
+
 @end

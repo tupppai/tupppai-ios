@@ -151,8 +151,8 @@
     PIELaunchTextField *resetPasswordTextField = ({
         PIELaunchTextField *textField = [[PIELaunchTextField alloc] init];
         
-        textField.placeholder = @"设置新密码";
-        
+        textField.placeholder     = @"设置新密码";
+        textField.secureTextEntry = YES;
         [self.view addSubview:textField];
         
         CGFloat padding = 8;

@@ -137,7 +137,8 @@ PIEVerificationCodeCountdownButton *countdownButton;
 
         
         textField.placeholder  = @"密码";
-
+        textField.secureTextEntry = YES;
+        
         [self.view addSubview:textField];
 
         @weakify(self);

@@ -223,7 +223,8 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
         PIELaunchTextField *textField = [[PIELaunchTextField alloc] init];
         
         
-        textField.placeholder = @"设置密码";
+        textField.placeholder     = @"设置密码";
+        textField.secureTextEntry = YES;
         
         [furtherRegistrationView addSubview:textField];
         
@@ -518,7 +519,6 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
 
 - (void)sendUnbindCellphoneRequest
 {
-    
     /*
         auth/unbind, POST, (type = weixin, weibo or qq)
      */

@@ -79,3 +79,6 @@ NSString * const PIETouristLoginTypeStringKey = @"PIETouristLoginTypeStringKey";
 
 NSString * const PIENetworkCallForFurtherRegistrationNotification =
 @"PIENetworkCallForFurtherRegistrationNotification";
+
+NSString * const PIEUpdateNotificationStatusNotification =
+@"PIEUpdateNotificationStatusNotification";
