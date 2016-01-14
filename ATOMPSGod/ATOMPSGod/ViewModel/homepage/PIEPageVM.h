@@ -19,7 +19,7 @@
 @property (nonatomic, assign) NSInteger askID;
 @property (nonatomic, assign) NSInteger userID;
 
-//have to be strong since username is reference to model.nickname
+//have to be strong since username is reference to model.nickname,syncedwith model.nickname
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic, strong) NSString *content;
 @property (nonatomic, assign) PIEPageType type;

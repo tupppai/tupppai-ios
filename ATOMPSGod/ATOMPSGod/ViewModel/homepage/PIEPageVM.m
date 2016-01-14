@@ -25,20 +25,26 @@
 -(void)dealloc {
     [_model removeObserver:self forKeyPath:@"loveStatus"];
     [_model removeObserver:self forKeyPath:@"totalPraiseNumber"];
+    [_model removeObserver:self forKeyPath:@"followed"];
+
 }
 - (instancetype)initWithPageEntity:(PIEPageModel *)entity {
     self = [self init];
     if (self) {
         _model = entity;
         
+        
         [_model addObserver:self forKeyPath:@"loveStatus" options:NSKeyValueObservingOptionNew context:NULL];
         [_model addObserver:self forKeyPath:@"totalPraiseNumber" options:NSKeyValueObservingOptionNew context:NULL];
+        [_model addObserver:self forKeyPath:@"followed" options:NSKeyValueObservingOptionNew context:NULL];
+
         
         _imageURL    = entity.imageURL;
         _avatarURL   = entity.avatar;
         
         NSDate *publishDate    = [NSDate dateWithTimeIntervalSince1970:entity.uploadTime];
         _publishTime           = [Util formatPublishTime:publishDate];
+        
         _likeCount = [self dataTransform:entity.totalPraiseNumber];
         _shareCount = [self dataTransform:entity.totalShareNumber];
         _commentCount = [self dataTransform:entity.totalCommentNumber];
@@ -102,13 +108,12 @@
     
     else {
         [self increaseLoveStatus];
-
     }
 }
 
 -(void)follow {
     
-    self.followed = !self.followed;
+    self.model.followed = !self.model.followed;
 
     NSMutableDictionary *param = [NSMutableDictionary new];
     NSNumber *followStatus = self.followed ? @1:@0;
@@ -116,14 +121,8 @@
     [param setObject:@(self.userID) forKey:@"uid"];
 
     [DDService follow:param withBlock:^(BOOL success) {
-        if (success) {
-            if (self.followed) {
-                [Hud text:@"关注成功" backgroundColor:[UIColor colorWithHex:0x000000 andAlpha:0.3] margin:15 cornerRadius:7];
-            } else {
-                [Hud text:@"已取消关注" backgroundColor:[UIColor colorWithHex:0x000000 andAlpha:0.3] margin:15 cornerRadius:7];
-            }
-        } else {
-            self.followed = !self.followed;
+        if (!success) {
+            self.model.followed = !self.model.followed;
         }
     }];
 }
@@ -191,6 +190,9 @@
     } else     if ([keyPath isEqualToString:@"totalPraiseNumber"]) {
         NSInteger newLikeCount = [[change objectForKey:@"new"]integerValue];
         self.likeCount = [self dataTransform:newLikeCount];
+    } else     if ([keyPath isEqualToString:@"followed"]) {
+        BOOL follow = [[change objectForKey:@"new"]boolValue];
+        self.followed = follow;
     }
 }
 

@@ -352,6 +352,9 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
 
 - (void)bar_tapPublishButton:(id)sender {
     
+    if (![self lsn_isPublishReady]) {
+        return;
+    }
     if ([self.bar.textView isFirstResponder]) {
         [self.bar.textView resignFirstResponder];
     }
@@ -399,7 +402,7 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     if (![[sender object] isEqual: self.bar.textView]) {
         return;
     }
-    [self lsn_updatePublishButton];
+//    [self lsn_updatePublishButton];
     if (self.bar.frame.size.height != self.bar.appropriateHeight) {
         [self.inputBarHC setOffset:self.bar.appropriateHeight];
     }
@@ -452,7 +455,7 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
         [self.selectedAssets addObject:asset];
         
         [self.swipeView reloadData];
-        [self lsn_updatePublishButton];
+//        [self lsn_updatePublishButton];
         [self lsn_updateSourceAndReloadPreviewBar];
         [Hud dismiss:self.view];
     });
@@ -491,17 +494,34 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
 }
 
 - (BOOL)lsn_isTextReady {
-    return [self.bar.textView.text length] >= 3;
+    
+    BOOL isReady =  [self.bar.textView.text length] >= 3;
+    if (!isReady) {
+        [Hud text:@"请输入至少3个字符的作品描述~" backgroundColor:[UIColor colorWithHex:0x000000 andAlpha:0.4] margin:15 cornerRadius:7];
+    }
+    return isReady;
 }
 
 - (BOOL)lsn_isMissionReady_reply {
-    return [self.previewBar hasSourceMission];
+    BOOL isReady = [self.previewBar hasSourceMission];
+    if (!isReady) {
+        [Hud text:@"请选择对应的帮P任务~" backgroundColor:[UIColor colorWithHex:0x000000 andAlpha:0.4] margin:15 cornerRadius:7];
+    }
+    return isReady;
 }
 - (BOOL)lsn_isPhotosReady_ask {
-    return [self.previewBar hasSourcePHAsset];
+    BOOL isReady = [self.previewBar hasSourcePHAsset];
+    if (!isReady) {
+        [Hud text:@"请至少选择一张求P~" backgroundColor:[UIColor colorWithHex:0x000000 andAlpha:0.4] margin:15 cornerRadius:7];
+    }
+    return isReady;
 }
 - (BOOL)lsn_isPhotoReady_reply {
-    return [self.previewBar hasSourcePHAsset];
+    BOOL isReady = [self.previewBar hasSourcePHAsset];
+    if (!isReady) {
+        [Hud text:@"请选择一张作品~" backgroundColor:[UIColor colorWithHex:0x000000 andAlpha:0.4] margin:15 cornerRadius:7];
+    }
+    return isReady;
 }
 - (BOOL)lsn_isPhotoReady_replyNoMissionSelection {
     return [self.previewBar hasSourcePHAsset];
@@ -523,11 +543,11 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
 }
 
 - (BOOL)lsn_isPublishReady {
-    return  [self lsn_isTextReady] &&[self lsn_isSelectionsReady];
+    return  [self lsn_isSelectionsReady] && [self lsn_isTextReady];
 }
-- (void)lsn_updatePublishButton {
-    self.bar.rightButton.enabled = [self lsn_isPublishReady];
-}
+//- (void)lsn_updatePublishButton {
+//    self.bar.rightButton.enabled = [self lsn_isPublishReady];
+//}
 
 - (void)lsn_updateSourceAndReloadPreviewBar {
 
@@ -665,7 +685,7 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     
     if (shouldUpdate) {
         [self lsn_updateSourceAndReloadPreviewBar];
-        [self lsn_updatePublishButton];
+//        [self lsn_updatePublishButton];
     }
     
 }
@@ -676,12 +696,24 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
         [self presentViewController:self.qbImagePickerController animated:YES completion:NULL];
     }
     if (isAllMissionButtonTapped) {
-        self.sourceMissions = self.sourceMissions_done;
-        if (self.sourceMissions_done.count <= 0) {
-            [self setupMissionSource_done];
+        self.bottomBar.button_album.selected = !self.bottomBar.button_album.selected;
+        
+        if (self.bottomBar.button_album.selected) {
+            self.sourceMissions = self.sourceMissions_done;
+            if (self.sourceMissions_done.count <= 0) {
+                [self setupMissionSource_done];
+            } else {
+                [self.swipeView reloadData];
+            }
         } else {
-            [self.swipeView reloadData];
+            self.sourceMissions = self.sourceMissions_undone;
+            if (self.sourceMissions_undone.count <= 0) {
+                [self setupMissionSource_undone];
+            } else {
+                [self.swipeView reloadData];
+            }
         }
+  
     }
     
     
@@ -901,7 +933,7 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
         [self.swipeView reloadData];
         [self.swipeView scrollToOffset:0 duration:0.45];
         [self lsn_updateSourceAndReloadPreviewBar];
-        [self lsn_updatePublishButton];
+//        [self lsn_updatePublishButton];
         
         [self.qbImagePickerController.selectedAssets removeAllObjects];
 
