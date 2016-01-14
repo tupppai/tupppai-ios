@@ -336,7 +336,7 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     [param setObject:@(SCREEN_WIDTH*0.5) forKey:@"width"];
     [param setObject:@(_timeStamp_toHelp) forKey:@"last_updated"];
     [param setObject:@(20) forKey:@"size"];
-    [PIEProceedingManager getMyToHelp:param withBlock:^(NSMutableArray *resultArray) {
+    [PIEProceedingManager getMyToHelp:param withBlock:^(NSArray *resultArray) {
         ws.isfirstLoadingToHelp = NO;
         if (resultArray.count == 0) {
             _canRefreshToHelpFooter = NO;
@@ -365,7 +365,7 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     [param setObject:@(SCREEN_WIDTH*0.5) forKey:@"width"];
     [param setObject:@(_timeStamp_toHelp) forKey:@"last_updated"];
     [param setObject:@(20) forKey:@"size"];
-    [PIEProceedingManager getMyToHelp:param withBlock:^(NSMutableArray *resultArray) {
+    [PIEProceedingManager getMyToHelp:param withBlock:^(NSArray *resultArray) {
         if (resultArray.count == 0) {
             _canRefreshToHelpFooter = NO;
         } else {

@@ -181,7 +181,7 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
         [param setObject:@(self.channel_id) forKey:@"category_id"];
         
         self.swipeView.emptyDataSetShouldDisplay = NO;
-        [PIEProceedingManager getMyToHelp:param withBlock:^(NSMutableArray *resultArray) {
+        [PIEProceedingManager getMyToHelp:param withBlock:^(NSArray *resultArray) {
             if (resultArray.count == 0) {
             } else {
                 for (PIEPageModel *model in resultArray) {

@@ -29,9 +29,6 @@
              @"totalShareNumber" : @"share_count",
              @"totalWorkNumber" : @"reply_count",
              @"collectCount" : @"collect_count",
-             @"imageWidth" : @"image_width",
-             @"imageHeight" : @"image_height",
-             @"liked" :@"uped",
              @"collected" : @"collected",
              @"type" : @"type",
              @"models_image":@"ask_uploads",
@@ -41,7 +38,7 @@
              @"imageRatio":@"image_ratio",
              @"models_category":@"categories",
              @"isV":@"is_star",
-             @"lovedCount":@"love_count",
+             @"loveStatus":@"love_count",
              @"channelID":@"category_id",
              };
 }
@@ -55,6 +52,30 @@
 }
 + (NSValueTransformer*)models_categoryJSONTransformer {
     return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[PIECategoryModel class]];
+}
+
+
+
++ (NSValueTransformer *)loveStatusJSONTransformer {
+    
+    return [NSValueTransformer mtl_valueMappingTransformerWithDictionary:@{
+                                                                           @0: @(PIEPageLoveStatus0),
+                                                                           @1: @(PIEPageLoveStatus1),
+                                                                           @2: @(PIEPageLoveStatus2),
+                                                                           @3: @(PIEPageLoveStatus3),
+                                                                           }];
+}
+
+
++ (NSValueTransformer *)typeJSONTransformer {
+    
+    return [MTLValueTransformer transformerWithBlock:^id(NSNumber* type) {
+        if ([type integerValue] == 1) {
+            return @(PIEPageTypeAsk);
+        } else {
+            return @(PIEPageTypeReply);
+        }
+    }];
 }
 
 @end

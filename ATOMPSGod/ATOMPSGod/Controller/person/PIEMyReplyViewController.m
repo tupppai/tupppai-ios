@@ -199,7 +199,7 @@
     CGFloat width;
     CGFloat height;
     width = (SCREEN_WIDTH) /2 - 20;
-    height = vm.imageHeight/vm.imageWidth * width;
+    height = vm.imageRatio * width;
     height = MAX(150, height);
     height = MIN(SCREEN_HEIGHT/2, height);
 

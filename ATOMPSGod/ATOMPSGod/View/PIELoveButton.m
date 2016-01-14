@@ -68,86 +68,28 @@
     return self;
 }
 
-- (void)initStatus :(PIELoveButtonStatus)status numberString:(NSString*)numberString {
+- (void)initStatus :(PIEPageLoveStatus)status numberString:(NSString*)numberString {
     self.status = status;
     self.numberString = numberString;
 }
 
-- (void)increaseStatus {
-    switch (self.status) {
-        case PIELoveButtonStatusNormal:
-            self.status = PIELoveButtonStatusSelectedLow;
-            break;
-        case PIELoveButtonStatusSelectedLow:
-            self.status = PIELoveButtonStatusSelectedMedium;
-            
-            break;
-        case PIELoveButtonStatusSelectedMedium:
-            self.status = PIELoveButtonStatusSelectedHigh;
-            
-            break;
-        case PIELoveButtonStatusSelectedHigh:
-            self.status = PIELoveButtonStatusNormal;
-            
-            break;
-        default:
-            break;
-    }
 
-    [_label increaseCount];
-    self.number = _label.number;
-}
-
-- (void)decreaseStatus {
-    switch (self.status) {
-        case PIELoveButtonStatusNormal:
-            self.status = PIELoveButtonStatusSelectedHigh;
-            break;
-        case PIELoveButtonStatusSelectedLow:
-            self.status = PIELoveButtonStatusNormal;
-            
-            break;
-        case PIELoveButtonStatusSelectedMedium:
-            self.status = PIELoveButtonStatusSelectedLow;
-            
-            break;
-        case PIELoveButtonStatusSelectedHigh:
-            self.status = PIELoveButtonStatusSelectedMedium;
-            
-            break;
-        default:
-            break;
-    }
-    
-    [_label decreaseCount];
-    self.number = _label.number;
-
-}
-
-- (void)revert {
-    
-    [_label revert];
-    self.status = PIELoveButtonStatusNormal;
-    self.number = _label.number;
-    
-}
-
-- (void)setStatus:(PIELoveButtonStatus)status {
+- (void)setStatus:(PIEPageLoveStatus)status {
     _status = status;
     _label.status = status;
     switch (status) {
-        case PIELoveButtonStatusNormal:
+        case PIEPageLoveStatus0:
             self.imageView.image = [UIImage imageNamed:@"love_normal"];
             break;
-        case PIELoveButtonStatusSelectedLow:
+        case PIEPageLoveStatus1:
             self.imageView.image = [UIImage imageNamed:@"love_selected_low"];
             
             break;
-        case PIELoveButtonStatusSelectedMedium:
+        case PIEPageLoveStatus2:
             self.imageView.image = [UIImage imageNamed:@"love_selected_medium"];
             
             break;
-        case PIELoveButtonStatusSelectedHigh:
+        case PIEPageLoveStatus3:
             self.imageView.image = [UIImage imageNamed:@"love_selected_high"];
             
             break;

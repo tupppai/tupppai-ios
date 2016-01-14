@@ -16,6 +16,12 @@ typedef NS_ENUM(NSInteger, PIEPageType) {
     PIEPageTypeAsk = 1,
     PIEPageTypeReply,
 };
+typedef NS_ENUM(NSInteger, PIEPageLoveStatus) {
+    PIEPageLoveStatus0 = 0,
+    PIEPageLoveStatus1,
+    PIEPageLoveStatus2,
+    PIEPageLoveStatus3,
+};
 
 
 @interface PIEPageModel : PIEBaseModel
@@ -67,8 +73,6 @@ typedef NS_ENUM(NSInteger, PIEPageType) {
 @property (nonatomic, assign) NSInteger collectCount;
 
 @property (nonatomic, assign) NSInteger totalWorkNumber;
-@property (nonatomic, assign) CGFloat imageWidth;
-@property (nonatomic, assign) CGFloat imageHeight;
 @property (nonatomic, assign) CGFloat imageRatio;
 
 @property (nonatomic, copy) NSArray <PIEModelImage*>   *models_image;
@@ -83,6 +87,7 @@ typedef NS_ENUM(NSInteger, PIEPageType) {
 @property (nonatomic, assign) BOOL followed;
 @property (nonatomic, assign) BOOL isMyFan;
 @property (nonatomic, assign) BOOL isV;
-@property (nonatomic, assign) NSInteger lovedCount;
+
+@property (nonatomic, assign) PIEPageLoveStatus loveStatus;
 
 @end
