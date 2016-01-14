@@ -16,7 +16,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *replyLabel;
-@property (weak, nonatomic) IBOutlet PIENotificationOriginalCommentLabel *originalCommentLabel;
+@property (weak, nonatomic) IBOutlet UILabel *originalCommentLabel;
+
 
 - (void)injectSauce:(PIENotificationVM*)vm;
 

@@ -8,7 +8,7 @@
 
 #import "PIENotificationCommentFromOtherTableViewCell.h"
 #import "PIENotificationVM.h"
-#import "PIENotificationOriginalCommentLabel.h"
+
 @implementation PIENotificationCommentFromOtherTableViewCell
 
 - (void)awakeFromNib {
@@ -28,7 +28,7 @@
     _timeLabel.font          = [UIFont lightTupaiFontOfSize:10];
  
     
-    _originalCommentLabel.backgroundColor = [UIColor colorWithHex:0xF2F2F2];
+
     _originalCommentLabel.textColor       = [UIColor colorWithHex:0x797979];
     _originalCommentLabel.font            = [UIFont lightTupaiFontOfSize:12];
  
@@ -50,7 +50,9 @@
     _usernameLabel.text          = vm.username;
     _timeLabel.text              = vm.time;
     _contentLabel.text           = vm.content;
-
+    
+    
+    
     NSString *orignalCommentText = [NSString stringWithFormat:@"回复我的评论：%@", vm.desc];
     _originalCommentLabel.text   = orignalCommentText;
     
