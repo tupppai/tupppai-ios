@@ -21,6 +21,7 @@
 #import "PIECommentManager.h"
 //#import "UITableView+FDTemplateLayoutCell.h"
 #import "DeviceUtil.h"
+#import "PIENotificationCommentViewController.h"
 @interface PIENotificationViewController ()
 <UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate>
 
@@ -220,18 +221,30 @@ static NSString * const NotificationViewControllerDefaultCellIdentifier =
             } else if (row == 2){
                 badgeKey = PIENotificationCountCommentKey;
             }
+        
+            /**
+                进入某个特定分类的消息之前，把UI上的提示数量的红点去掉，并且归零本地沙盒之中的全局状态量
+             */
+        
             [[NSUserDefaults standardUserDefaults] setObject:@(0) forKey:badgeKey];
             [[NSUserDefaults standardUserDefaults] synchronize];
             PIENotificationTypeTableViewCell *cell = (PIENotificationTypeTableViewCell*)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
             cell.badgeNumber = 0;
             [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:selectedIndexPath] withRowAnimation:UITableViewRowAnimationFade];
 
+        
             if (selectedIndexPath.row == 0) {
                 PIENotificationSystemViewController* vc = [PIENotificationSystemViewController new];
                 [self.navigationController pushViewController:vc animated:YES];
             } else if (selectedIndexPath.row == 1) {
                 PIENotificationLikedViewController* vc = [PIENotificationLikedViewController new];
                 [self.navigationController pushViewController:vc animated:YES];
+            } else if (selectedIndexPath.row == 2){
+                PIENotificationCommentViewController *commentVC =
+                [[PIENotificationCommentViewController alloc] init];
+                [self.navigationController pushViewController:commentVC
+                                                     animated:YES];
+                
             }
         }
 }
@@ -531,5 +544,7 @@ static NSString * const NotificationViewControllerDefaultCellIdentifier =
     pageVM.publishTime = vm.time;
     return pageVM;
 }
+
+
 
 @end
