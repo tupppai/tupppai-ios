@@ -179,7 +179,7 @@ static NSString * PIENotificationCommentFromOtherCellIdentifier =
         [tableView
          dequeueReusableCellWithIdentifier:PIENotificationCommentFromOtherCellIdentifier];
         
-        commentFromOtherCell.textLabel.text = vm.content;
+        [commentFromOtherCell injectSauce:vm];
         
         return commentFromOtherCell;
         

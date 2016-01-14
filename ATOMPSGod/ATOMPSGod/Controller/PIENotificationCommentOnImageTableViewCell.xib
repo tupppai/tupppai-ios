@@ -131,7 +131,7 @@
                 <outlet property="typeLabel" destination="Plg-VM-uxt" id="wCa-gC-4et"/>
                 <outlet property="usernameLabel" destination="jSI-2B-8an" id="rjT-dy-cVY"/>
             </connections>
-            <point key="canvasLocation" x="-453" y="2"/>
+            <point key="canvasLocation" x="-551" y="-45"/>
         </tableViewCell>
     </objects>
     <resources>

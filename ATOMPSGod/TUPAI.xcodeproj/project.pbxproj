@@ -153,6 +153,7 @@
 		90738B1C1C4763FE00EE6137 /* PIENotificationCommentOnImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90738B1A1C4763FE00EE6137 /* PIENotificationCommentOnImageTableViewCell.xib */; };
 		90738B2C1C477A4400EE6137 /* PIENotificationCommentFromOtherTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90738B2A1C477A4400EE6137 /* PIENotificationCommentFromOtherTableViewCell.m */; };
 		90738B2D1C477A4400EE6137 /* PIENotificationCommentFromOtherTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90738B2B1C477A4400EE6137 /* PIENotificationCommentFromOtherTableViewCell.xib */; };
+		90738B301C478D6900EE6137 /* PIENotificationOriginalCommentLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 90738B2F1C478D6900EE6137 /* PIENotificationOriginalCommentLabel.m */; };
 		907A431E1C40FC1C002542E6 /* PIELaunchTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 907A431D1C40FC1C002542E6 /* PIELaunchTextField.m */; };
 		907A432D1C40FCA6002542E6 /* PIELaunchNextStepButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 907A432C1C40FCA6002542E6 /* PIELaunchNextStepButton.m */; };
 		907A43301C410C7E002542E6 /* PIEVerificationCodeCountdownButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 907A432F1C410C7E002542E6 /* PIEVerificationCodeCountdownButton.m */; };
@@ -1015,6 +1016,8 @@
 		90738B291C477A4400EE6137 /* PIENotificationCommentFromOtherTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIENotificationCommentFromOtherTableViewCell.h; sourceTree = "<group>"; };
 		90738B2A1C477A4400EE6137 /* PIENotificationCommentFromOtherTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIENotificationCommentFromOtherTableViewCell.m; sourceTree = "<group>"; };
 		90738B2B1C477A4400EE6137 /* PIENotificationCommentFromOtherTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIENotificationCommentFromOtherTableViewCell.xib; sourceTree = "<group>"; };
+		90738B2E1C478D6900EE6137 /* PIENotificationOriginalCommentLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIENotificationOriginalCommentLabel.h; sourceTree = "<group>"; };
+		90738B2F1C478D6900EE6137 /* PIENotificationOriginalCommentLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIENotificationOriginalCommentLabel.m; sourceTree = "<group>"; };
 		907A431C1C40FC1C002542E6 /* PIELaunchTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIELaunchTextField.h; sourceTree = "<group>"; };
 		907A431D1C40FC1C002542E6 /* PIELaunchTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIELaunchTextField.m; sourceTree = "<group>"; };
 		907A432B1C40FCA6002542E6 /* PIELaunchNextStepButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIELaunchNextStepButton.h; sourceTree = "<group>"; };
@@ -2747,6 +2750,8 @@
 				90738B291C477A4400EE6137 /* PIENotificationCommentFromOtherTableViewCell.h */,
 				90738B2A1C477A4400EE6137 /* PIENotificationCommentFromOtherTableViewCell.m */,
 				90738B2B1C477A4400EE6137 /* PIENotificationCommentFromOtherTableViewCell.xib */,
+				90738B2E1C478D6900EE6137 /* PIENotificationOriginalCommentLabel.h */,
+				90738B2F1C478D6900EE6137 /* PIENotificationOriginalCommentLabel.m */,
 			);
 			name = comment;
 			sourceTree = "<group>";
@@ -4751,6 +4756,7 @@
 				5CDB06301AA428BD0089121E /* MASConstraintMaker.m in Sources */,
 				F4F28F211C23AE9B0067F2E4 /* SDWebImageDownloader.m in Sources */,
 				F402F1041BE8A327004988B4 /* PIEUserViewModel.m in Sources */,
+				90738B301C478D6900EE6137 /* PIENotificationOriginalCommentLabel.m in Sources */,
 				F4EA4DB81BF49CB700486304 /* PIEAgreementsViewController.m in Sources */,
 				E9F890901B86C4AB0057ECBF /* FMDatabasePool.m in Sources */,
 				5C0D282D1ACA333200491452 /* PIECommentManager.m in Sources */,
