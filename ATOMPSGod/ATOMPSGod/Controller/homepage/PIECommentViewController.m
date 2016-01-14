@@ -433,39 +433,11 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 
 
-//-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-//    if ([tableView.dataSource tableView:tableView numberOfRowsInSection:section] == 0) {
-//        return 0;
-//    } else {
-//        return kTableHeaderHeight;
-//    }
-//}
-
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-//    PIECommentHeaderView *headerView = [PIECommentHeaderView new];
-//    if (section == 0) {
-//        headerView.titleLabel.text = @"最热评论";
-//    } else if (section == 1) {
-//        headerView.titleLabel.text = @"最新评论";
-//    }
-//    return headerView;
-//}
-
 #pragma mark - UITableViewDelegate Methods
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    //    NSInteger section = indexPath.section;
-//    NSInteger row = indexPath.row;
-    //    if (section == 0) {
-    //        _targetCommentVM = _commentsHot[row];
-    //    } else if (section == 1) {
-//    _targetCommentVM = _source_newComment.array[row];
-    //    }
-//    self.textView.placeholder = [NSString stringWithFormat:@"@%@:",_targetCommentVM.username];
-//    [self.textView becomeFirstResponder];
-//    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+
     
 }
 
@@ -495,10 +467,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 -(void)configTableView {
     _source_hotComment = [NSMutableArray new];
-    
     _source_newComment = [KVCMutableArray new];
-    
-    
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag|UIScrollViewKeyboardDismissModeInteractive;
@@ -547,8 +516,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     self.keyboardPanningEnabled = YES;
     self.shouldScrollToBottomAfterKeyboardShows = NO;
     self.inverted = NO;
-//        [self.leftButton setImage:[UIImage imageNamed:@"btn_emoji"] forState:UIControlStateNormal];
-    //    [self.rightButton setImage:[UIImage imageNamed:@"btn_comment_send"] forState:UIControlStateNormal];
     [self.rightButton setTitle:@"发送" forState:UIControlStateNormal];
     [self.rightButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     self.textInputbar.autoHideRightButton = YES;
@@ -713,15 +680,11 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         _headerView.vm = _vm;
         UITapGestureRecognizer* tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap1)];
         UITapGestureRecognizer* tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap2)];
-//        UITapGestureRecognizer* tap3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap3)];
-//        UITapGestureRecognizer* tap4 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap4)];
         
         UITapGestureRecognizer* tap5 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap5)];
         UITapGestureRecognizer* tap6 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapHelp)];
         [_headerView.avatarView addGestureRecognizer:tap1];
         [_headerView.usernameLabel addGestureRecognizer:tap2];
-//        [_headerView.imageViewMain addGestureRecognizer:tap3];
-//        [_headerView.imageViewRight addGestureRecognizer:tap4];
         [_headerView.shareButton addGestureRecognizer:tap5];
         [_headerView.bangView addGestureRecognizer:tap6];
     }
@@ -765,53 +728,53 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     opvc.pageVM = _vm;
     [self.navigationController pushViewController:opvc animated:YES];
 }
-- (void) didTap3 {
-    [self.textView resignFirstResponder];
-    // Create image info
-    JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
-    if (_headerView.imageViewMain.image != nil) {
-        imageInfo.image = _headerView.imageViewMain.image;
-    } else {
-        imageInfo.imageURL = [NSURL URLWithString:_vm.imageURL];
-    }
-    //    imageInfo.referenceRect = _selectedHotDetailCell.userHeaderButton.frame;
-    //    imageInfo.referenceView = _selectedHotDetailCell.userHeaderButton;
-    
-    // Setup view controller
-    JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
-                                           initWithImageInfo:imageInfo
-                                           mode:JTSImageViewControllerMode_Image
-                                           backgroundStyle:JTSImageViewControllerBackgroundOption_Blurred];
-    
-    // Present the view controller.
-    [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOffscreen];
-    imageViewer.interactionsDelegate = self;
-}
-- (void) didTap4 {
-    [self.textView resignFirstResponder];
-    // Create image info
-    JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
-    if (_headerView.imageViewMain.image != nil) {
-//        imageInfo.image = _headerView.imageViewRight.image;
-    } else {
-        if (_vm.models_image.count >= 2) {
-            PIEModelImage* imgEntity = _vm.models_image[1];
-            imageInfo.imageURL = [NSURL URLWithString:imgEntity.url];
-        }
-    }
-    //    imageInfo.referenceRect = _selectedHotDetailCell.userHeaderButton.frame;
-    //    imageInfo.referenceView = _selectedHotDetailCell.userHeaderButton;
-    
-    // Setup view controller
-    JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
-                                           initWithImageInfo:imageInfo
-                                           mode:JTSImageViewControllerMode_Image
-                                           backgroundStyle:JTSImageViewControllerBackgroundOption_Scaled];
-    
-    // Present the view controller.
-    [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOffscreen];
-    imageViewer.interactionsDelegate = self;
-}
+//- (void) didTap3 {
+//    [self.textView resignFirstResponder];
+//    // Create image info
+//    JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
+//    if (_headerView.imageViewMain.image != nil) {
+//        imageInfo.image = _headerView.imageViewMain.image;
+//    } else {
+//        imageInfo.imageURL = [NSURL URLWithString:_vm.imageURL];
+//    }
+//    //    imageInfo.referenceRect = _selectedHotDetailCell.userHeaderButton.frame;
+//    //    imageInfo.referenceView = _selectedHotDetailCell.userHeaderButton;
+//    
+//    // Setup view controller
+//    JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
+//                                           initWithImageInfo:imageInfo
+//                                           mode:JTSImageViewControllerMode_Image
+//                                           backgroundStyle:JTSImageViewControllerBackgroundOption_Blurred];
+//    
+//    // Present the view controller.
+//    [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOffscreen];
+//    imageViewer.interactionsDelegate = self;
+//}
+//- (void) didTap4 {
+//    [self.textView resignFirstResponder];
+//    // Create image info
+//    JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
+//    if (_headerView.imageViewMain.image != nil) {
+////        imageInfo.image = _headerView.imageViewRight.image;
+//    } else {
+//        if (_vm.models_image.count >= 2) {
+//            PIEModelImage* imgEntity = _vm.models_image[1];
+//            imageInfo.imageURL = [NSURL URLWithString:imgEntity.url];
+//        }
+//    }
+//    //    imageInfo.referenceRect = _selectedHotDetailCell.userHeaderButton.frame;
+//    //    imageInfo.referenceView = _selectedHotDetailCell.userHeaderButton;
+//    
+//    // Setup view controller
+//    JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
+//                                           initWithImageInfo:imageInfo
+//                                           mode:JTSImageViewControllerMode_Image
+//                                           backgroundStyle:JTSImageViewControllerBackgroundOption_Scaled];
+//    
+//    // Present the view controller.
+//    [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOffscreen];
+//    imageViewer.interactionsDelegate = self;
+//}
 - (void) didTap5 {
     [self.textView resignFirstResponder];
 
@@ -821,13 +784,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
 }
 - (void) didTapLike {
-    
-//    [PIEPageManager love:_headerView_reply.likeButton viewModel:_vm revert:NO];
     [_vm love:NO];
 }
 - (void) didLongpressLike {
-    
-//    [PIEPageManager love:_headerView_reply.likeButton viewModel:_vm revert:YES];
     [_vm love:YES];
 }
 
@@ -927,7 +886,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 - (void)addKVO {
     if (_shouldShowHeaderView) {
-        [_vm addObserver:self forKeyPath:@"lovedCount" options:NSKeyValueObservingOptionNew context:NULL];
+        [_vm addObserver:self forKeyPath:@"loveStatus" options:NSKeyValueObservingOptionNew context:NULL];
         [_vm addObserver:self forKeyPath:@"likeCount" options:NSKeyValueObservingOptionNew context:NULL];
         [self.source_newComment addObserver:self forKeyPath:@"array" options:NSKeyValueObservingOptionNew context:nil];
     }
@@ -935,7 +894,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)removeKVO {
     if (_shouldShowHeaderView) {
         [_vm removeObserver:self forKeyPath:@"likeCount"];
-        [_vm removeObserver:self forKeyPath:@"lovedCount"];
+        [_vm removeObserver:self forKeyPath:@"loveStatus"];
         [self.source_newComment removeObserver:self forKeyPath:@"array"];
 
     }
@@ -943,7 +902,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"lovedCount"]) {
+    if ([keyPath isEqualToString:@"loveStatus"]) {
         NSInteger newLovedCount = [[change objectForKey:@"new"]integerValue];
         self.headerView_reply.likeButton.status = newLovedCount;
     } else     if ([keyPath isEqualToString:@"likeCount"]) {

@@ -23,7 +23,7 @@
 #import "PIEEliteViewController.h"
 #import "PIELaunchViewController_Black.h"
 #import "PIEBindCellphoneViewController.h"
-
+#import <ReactiveCocoa/ReactiveCocoa.h>
 
 @interface PIETabBarController ()<UITabBarControllerDelegate>
 @property (nonatomic, strong) DDNavigationController *navigation_new;
@@ -55,9 +55,6 @@
     [self setupTitle];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorOccuredRET) name:@"NetworkErrorCall" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(NetworkSignOutRET) name:@"NetworkSignOutCall" object:nil];
-    // for testing PIEEliteViewController2:
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DoUploadJob:) name:@"UploadCall" object:nil];
-    
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showInfoRET:)
@@ -70,6 +67,10 @@
      selector:@selector(touristWantsFurtherRegistration)
      name:PIENetworkCallForFurtherRegistrationNotification
      object:nil];
+    
+    [RACObserve([DDUserManager currentUser], avatar)subscribeNext:^(id x) {
+        [self updateTabbarAvatar];
+    }];
 
 }
 
@@ -83,13 +84,15 @@
 }
 
 -(void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UploadCall"object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkSignOutCall"object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkErrorCall" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkShowInfoCall" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:PIENetworkCallForFurtherRegistrationNotification
                                                   object:nil];
 }
+
+#pragma mark - Notification methods
+
 -(void) errorOccuredRET {
     BOOL shouldShowError = NO;
     long long currentTimeStamp = [[NSDate date]timeIntervalSince1970];
@@ -117,18 +120,7 @@
     [Hud text:prompt inView:self.view];
 }
 
-- (void) DoUploadJob:(NSNotification *)notification
-{
-    PIEEliteViewController* vc = (PIEEliteViewController*)((DDNavigationController*)[self.viewControllers objectAtIndex:0]).topViewController;
-    PIEUploadManager* manager = [[PIEUploadManager alloc]initWithShareModel];
-    [manager upload:^(CGFloat percentage,BOOL success) {
-        [vc.progressView setProgress:percentage animated:YES];
-        if (success) {
-        }
-    }];
-}
 
-#pragma mark - Notification methods
 -(void) NetworkSignOutRET {
     SIAlertView *alertView = [KShareManager NetworkErrorOccurredAlertView];
     [alertView addButtonWithTitle:@"好的"
@@ -179,7 +171,6 @@
     _navigation_elite = [[DDNavigationController alloc] initWithRootViewController:myAttentionViewController];
     _navigation_proceeding = [[DDNavigationController alloc] initWithRootViewController:proceedingViewController];
     _navigation_me = [[DDNavigationController alloc] initWithRootViewController:aboutMeVC];
-//    _centerNav = [[DDNavigationController alloc] initWithRootViewController:takePhotoVC];
     _preNav = _navigation_elite;
     
     _navigation_elite.tabBarItem.image =
@@ -216,6 +207,8 @@
         }
     }];
 }
+
+
 
 - (UIImage*)getSelectedTabImage {
     

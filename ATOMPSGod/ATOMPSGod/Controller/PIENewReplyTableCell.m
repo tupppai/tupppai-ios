@@ -127,7 +127,7 @@
     
 //    _likeView.highlighted = viewModel.liked;
 //    _likeView.numberString = viewModel.likeCount;
-    [_likeView initStatus:viewModel.lovedCount numberString:viewModel.likeCount];
+    [_likeView initStatus:viewModel.loveStatus numberString:viewModel.likeCount];
     _contentLabel.text = viewModel.content;
     
     
@@ -253,13 +253,13 @@
 
 
 - (void)addKVO {
-    [_vm addObserver:self forKeyPath:@"lovedCount" options:NSKeyValueObservingOptionNew context:NULL];
+    [_vm addObserver:self forKeyPath:@"loveStatus" options:NSKeyValueObservingOptionNew context:NULL];
     [_vm addObserver:self forKeyPath:@"likeCount" options:NSKeyValueObservingOptionNew context:NULL];
     [_vm addObserver:self forKeyPath:@"followed" options:NSKeyValueObservingOptionNew context:NULL];
 }
 - (void)removeKVO {
     @try{
-        [_vm removeObserver:self forKeyPath:@"lovedCount"];
+        [_vm removeObserver:self forKeyPath:@"loveStatus"];
         [_vm removeObserver:self forKeyPath:@"likeCount"];
         [_vm removeObserver:self forKeyPath:@"followed"];
     }@catch(id anException){
@@ -269,7 +269,7 @@
 
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"lovedCount"]) {
+    if ([keyPath isEqualToString:@"loveStatus"]) {
         NSInteger newLovedCount = [[change objectForKey:@"new"]integerValue];
         self.likeView.status = newLovedCount;
     } else     if ([keyPath isEqualToString:@"likeCount"]) {

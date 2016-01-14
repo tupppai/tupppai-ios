@@ -82,17 +82,10 @@
         if (success) {
             [Hud success:@"修改成功"];
             [DDUserManager currentUser].nickname = _createProfileView.nicknameTextField.text;
-            [DDUserManager currentUser].sex = _createProfileView.genderIsMan;
             if (_avatar) {
-                //use reactive cocoa to update all avatar view.
                 [DDUserManager currentUser].avatar = _avatar;
-                [[AppDelegate APP].mainTabBarController updateTabbarAvatar];
             }
             [DDUserManager updateCurrentUserInDatabase];
-            
-            DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-            PIEMeViewController* mevc = [nav.viewControllers firstObject];
-            [mevc updateAvatar];
             
             if (self.navigationController.viewControllers.count <= 1) {
                 [self dismiss];

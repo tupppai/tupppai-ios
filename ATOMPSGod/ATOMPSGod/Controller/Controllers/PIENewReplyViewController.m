@@ -195,8 +195,8 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 {
     [self.takePhotoButtonBottomMarginConstraint setOffset:0];
     [UIView animateWithDuration:0.2
-                          delay:1.0
-         usingSpringWithDamping:0.9
+                          delay:2.0
+         usingSpringWithDamping:0.8
           initialSpringVelocity:0.5
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{

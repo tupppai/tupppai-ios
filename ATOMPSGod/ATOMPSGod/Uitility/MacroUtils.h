@@ -34,6 +34,7 @@
 #define baseURLString @"http://tapi.tupppai.com/"
 //#define baseURLString @"http://api.qiudashenps.com/"
 
+
 #define baseURLString_Test @"http://tapi.tupppai.com/"
 
 #define _S(number) (number*[ATOMBaseView scaleInView])

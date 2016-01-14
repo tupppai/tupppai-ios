@@ -215,6 +215,21 @@ NSString* deviceName()
     [hud hide:YES afterDelay:1];
     }
 }
+
++(void)text:(NSString*)message backgroundColor:(UIColor*)color margin:(CGFloat)margin cornerRadius:(CGFloat)cornerRadius {
+    [Hud dismiss];
+    if ([UIApplication sharedApplication].keyWindow) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+        // Configure for text only and offset down
+        hud.color = color;
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = message;
+        hud.margin = margin;
+        hud.cornerRadius = cornerRadius;
+        hud.removeFromSuperViewOnHide = YES;
+        [hud hide:YES afterDelay:1];
+    }
+}
 +(void)textWithLightBackground:(NSString*)message {
     [Hud dismiss];
     if ([UIApplication sharedApplication].keyWindow) {

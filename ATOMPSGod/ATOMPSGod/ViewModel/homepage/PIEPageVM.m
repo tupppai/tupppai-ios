@@ -18,138 +18,102 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _type         = PIEPageTypeAsk;
-        _ID           = 0;
-        _askID        = 0;
-        _publishTime  = @"0";
-        _likeCount    = @"0";
-        _shareCount   = @"0";
-        _commentCount = @"0";
-        _replyCount   = @"0";
-        _liked        = NO;
-        _collected    = NO;
     }
     return self;
 }
 
+-(void)dealloc {
+    [_model removeObserver:self forKeyPath:@"loveStatus"];
+    [_model removeObserver:self forKeyPath:@"totalPraiseNumber"];
+    [_model removeObserver:self forKeyPath:@"followed"];
+
+}
 - (instancetype)initWithPageEntity:(PIEPageModel *)entity {
     self = [self init];
     if (self) {
-        
         _model = entity;
-        _ID          = entity.ID;
-        _askID       = entity.askID;
-        _userID      = entity.uid;
-        _username    = entity.nickname;
+        
+        
+        [_model addObserver:self forKeyPath:@"loveStatus" options:NSKeyValueObservingOptionNew context:NULL];
+        [_model addObserver:self forKeyPath:@"totalPraiseNumber" options:NSKeyValueObservingOptionNew context:NULL];
+        [_model addObserver:self forKeyPath:@"followed" options:NSKeyValueObservingOptionNew context:NULL];
+
+        
         _imageURL    = entity.imageURL;
         _avatarURL   = entity.avatar;
-        _liked       = entity.liked;
-        _collected   = entity.collected;
-        _imageWidth  = entity.imageWidth;
-        _imageHeight = entity.imageHeight;
-        _followed    = entity.followed;
-        _isMyFan        = entity.isMyFan;
-        _models_catogory = entity.models_category;
-        _content               = entity.userDescription;
-        _type                  = entity.type;
-        _models_image      = entity.models_image;
-        _models_comment = entity.models_comment;
-        _isV = entity.isV;
-        _lovedCount = entity.lovedCount;
-        
         
         NSDate *publishDate    = [NSDate dateWithTimeIntervalSince1970:entity.uploadTime];
         _publishTime           = [Util formatPublishTime:publishDate];
-
-        if (entity.totalPraiseNumber>999999) {
-            _likeCount    = kfcMaxNumberString;
-        } else {
-            _likeCount    = [NSString stringWithFormat:@"%zd",entity.totalPraiseNumber];
-        }
-        if (entity.totalShareNumber>999999) {
-            _shareCount   = kfcMaxNumberString;
-        } else {
-            _shareCount   = [NSString stringWithFormat:@"%zd",entity.totalShareNumber];
-        }
-        if (entity.totalCommentNumber>999999) {
-            _commentCount = kfcMaxNumberString;
-        } else {
-            _commentCount = [NSString stringWithFormat:@"%zd",entity.totalCommentNumber];
-        }
-        if (entity.totalWorkNumber>999999) {
-            _replyCount   = kfcMaxNumberString;
-        } else {
-            _replyCount   = [NSString stringWithFormat:@"%zd",entity.totalWorkNumber];
-        }
-
-        if (entity.collectCount>999999) {
-            _collectCount = kfcMaxNumberString;
-        } else {
-            _collectCount = [NSString stringWithFormat:@"%zd",entity.collectCount];
-        }
+        
+        _likeCount = [self dataTransform:entity.totalPraiseNumber];
+        _shareCount = [self dataTransform:entity.totalShareNumber];
+        _commentCount = [self dataTransform:entity.totalCommentNumber];
+        _replyCount = [self dataTransform:entity.totalWorkNumber];
+        _collectCount = [self dataTransform:entity.collectCount];
     }
     return self;
 }
 
 - (void)increaseLoveStatus {
-    if (_lovedCount && _lovedCount == 3) {
-        self.lovedCount = 0;
-        if (![self.likeCount isEqualToString:kfcMaxNumberString]) {
-            self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] - 3];
-        }
+    if (self.model.loveStatus == PIEPageLoveStatus3) {
+        [Hud text:@"你已经点满了超级赞,长按取消点赞" backgroundColor:[UIColor colorWithHex:0x000000 andAlpha:0.4] margin:14 cornerRadius:7];
     } else {
-        self.lovedCount++;
-        if (![self.likeCount isEqualToString:kfcMaxNumberString]) {
-            self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] + 1];
-        }
+        self.model.loveStatus++;
+        self.model.totalPraiseNumber++;
+        [DDService loveReply:nil ID:self.ID withBlock:^(BOOL succeed) {
+            if (!succeed) {
+                [self decreaseLoveStatus];
+            }
+        }];
     }
+    
+
+
 }
 - (void)decreaseLoveStatus {
-    if (_lovedCount && _lovedCount == 0) {
-        self.lovedCount = 3;
-        if (![self.likeCount isEqualToString:kfcMaxNumberString]) {
-            self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] + 3];
-        }
+    if (self.loveStatus == PIEPageLoveStatus0) {
+        self.model.loveStatus = 3;
+        self.model.totalPraiseNumber -= 3;
     } else {
-        self.lovedCount--;
-        if (![self.likeCount isEqualToString:kfcMaxNumberString]) {
-            self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] - 1];
-        }
+        self.model.loveStatus--;
+        self.model.totalPraiseNumber -= 1;
     }
 }
 
 - (void)revertStatus {
-    if (![self.likeCount isEqualToString:kfcMaxNumberString]) {
-        self.likeCount = [NSString stringWithFormat:@"%zd",[_likeCount integerValue] - self.lovedCount];
-    }
-    self.lovedCount = 0;
+    
+    NSInteger previousLoveCount = self.model.loveStatus;
+    
+    self.model.totalPraiseNumber -= self.model.loveStatus;
+    self.model.loveStatus = 0;
+    
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    [param setObject:@"0" forKey:@"status"];
+    [DDService loveReply:param ID:self.ID withBlock:^(BOOL succeed) {
+        if (!succeed) {
+            self.model.loveStatus = previousLoveCount;
+            self.model.totalPraiseNumber += previousLoveCount;
+        }
+    }];
 }
 
 
 
 /** Cell点击 － 点赞 */
 -(void)love:(BOOL)revert {
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    
-    if (revert || self.lovedCount == 3) {
-        [param setObject:@"0" forKey:@"status"];
-    }
     
     if (revert) {
         [self revertStatus];
-    } else {
-        [self increaseLoveStatus];
     }
     
-    [DDService loveReply:param ID:self.ID withBlock:^(BOOL succeed) {
-        if (!succeed) {
-            [self decreaseLoveStatus];
-        }
-    }];
+    else {
+        [self increaseLoveStatus];
+    }
 }
+
 -(void)follow {
     
-    self.followed = !self.followed;
+    self.model.followed = !self.model.followed;
 
     NSMutableDictionary *param = [NSMutableDictionary new];
     NSNumber *followStatus = self.followed ? @1:@0;
@@ -158,11 +122,89 @@
 
     [DDService follow:param withBlock:^(BOOL success) {
         if (!success) {
-            self.followed = !self.followed;
+            self.model.followed = !self.model.followed;
         }
     }];
-    
 }
 
+#pragma -- convinience getters
+-(NSInteger)ID {
+    return self.model.ID;
+}
+
+-(NSInteger)askID {
+    return self.model.askID;
+}
+
+-(NSInteger)userID {
+    return self.model.uid;
+}
+
+-(NSString *)username {
+    return self.model.nickname;
+}
+
+-(PIEPageType)type {
+    return self.model.type;
+}
+
+-(CGFloat)imageRatio {
+    return self.model.imageRatio;
+}
+
+-(BOOL)collected {
+    return self.model.collected;
+}
+-(BOOL)followed {
+    return self.model.followed;
+}
+-(BOOL)isMyFan {
+    return self.model.isMyFan;
+}
+-(BOOL)isV {
+    return self.model.isV;
+}
+-(NSArray<PIEModelImage *> *)models_image {
+    return self.model.models_image;
+}
+-(NSArray<PIECommentModel *> *)models_comment {
+    return self.model.models_comment;
+}
+-(NSArray<PIECategoryModel *> *)models_catogory{
+    return self.model.models_category;
+}
+
+-(PIEPageLoveStatus)loveStatus {
+    return self.model.loveStatus;
+}
+
+//declare as strong
+-(NSString *)content {
+    return self.model.userDescription;
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"loveStatus"]) {
+        NSInteger newLoveStatus = [[change objectForKey:@"new"]integerValue];
+        self.loveStatus = newLoveStatus;
+    } else     if ([keyPath isEqualToString:@"totalPraiseNumber"]) {
+        NSInteger newLikeCount = [[change objectForKey:@"new"]integerValue];
+        self.likeCount = [self dataTransform:newLikeCount];
+    } else     if ([keyPath isEqualToString:@"followed"]) {
+        BOOL follow = [[change objectForKey:@"new"]boolValue];
+        self.followed = follow;
+    }
+}
+
+
+- (NSString*)dataTransform:(NSInteger)count {
+    NSString* countStringTransformed;
+    if (count<=999999) {
+        countStringTransformed    = [NSString stringWithFormat:@"%zd",count];
+    } else {
+        countStringTransformed    = @"1000k+";
+    }
+    return countStringTransformed;
+}
 
 @end

@@ -174,7 +174,7 @@
         CGFloat width;
         CGFloat height;
         width = SCREEN_WIDTH/2 - 20;
-        height = vm.imageHeight/vm.imageWidth * width + 110;
+        height = vm.imageRatio * width + 110;
         height = MAX(height, 50);
         height = MIN(height, SCREEN_HEIGHT/1.5);
         return CGSizeMake(width, height);

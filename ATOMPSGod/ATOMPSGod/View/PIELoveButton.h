@@ -16,9 +16,7 @@
 @property (nonatomic, assign) NSInteger number;
 @property (nonatomic, copy) NSString* numberString;
 @property (nonatomic, assign) CGSize imageSize;
-@property (nonatomic, assign) PIELoveButtonStatus status;
-- (void)initStatus :(PIELoveButtonStatus)status numberString:(NSString*)numberString ;
-- (void)increaseStatus ;
-- (void)decreaseStatus;
-- (void)revert;
+@property (nonatomic, assign) PIEPageLoveStatus status;
+- (void)initStatus :(PIEPageLoveStatus)status numberString:(NSString*)numberString ;
+
 @end
