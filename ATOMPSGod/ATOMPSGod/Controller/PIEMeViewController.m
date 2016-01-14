@@ -206,7 +206,8 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
 
 
 - (void)updateNotificationStatus {
-    if ( [[[NSUserDefaults standardUserDefaults]objectForKey:@"NotificationNew"]boolValue]) {
+    if ( [[[NSUserDefaults
+            standardUserDefaults]objectForKey:PIEHasNewNotificationFlagKey] boolValue]) {
         UIButton *btn =  self.navigationItem.rightBarButtonItem.customView;
         btn.selected = YES;
     } else {

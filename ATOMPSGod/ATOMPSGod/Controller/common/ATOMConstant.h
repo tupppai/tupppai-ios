@@ -92,4 +92,47 @@ extern NSString * const PIENetworkCallForFurtherRegistrationNotification;
 /** 更新消息状态的通知 */
 extern NSString * const PIEUpdateNotificationStatusNotification;
 
+
+/**
+    消息通知的类型
+ */
+typedef NS_ENUM(NSInteger, PIENotificationType) {
+    PIENotificationTypeSystem  = 0,         // 系统通知
+    PIENotificationTypeComment = 1,         // 我收到的评论
+    PIENotificationTypeReply   = 2,         // 有人帮我P图
+    PIENotificationTypeFollow  = 3,         // 有人关注我
+    PIENotificationTypeLike    = 5,         // 我收到的赞
+};
+
+/** 接收到的所有远程通知数量（系统通知，收到的评论， etc.） */
+extern NSString * const PIENotificationCountAllKey;
+
+/** 接收到的系统消息通知数量 */
+extern NSString * const PIENotificationCountSystemKey;
+
+/** 接收到的“我收到的评论”的通知数量 */
+extern NSString * const PIENotificationCountCommentKey;
+
+/** 接收到的"有人帮我P图"的通知的数量 */
+extern NSString * const PIENotificationCountReplyKey;
+
+/** 接收到的“有人关注我”的通知的数量 */
+extern NSString * const PIENotificationCountFollowKey;
+
+/** 接收到的“我收到的赞”的通知的数量 */
+extern NSString * const PIENotificationCountLikeKey;
+
+/** 接收到除了（系统通知 ＋ 收到的赞 + 收到的评论）以外的其他通知的数量 */
+extern NSString * const PIENotificationCountOthersKey;
+
+
+/** 是否有接收到新消息(BOOL) 
+ 
+    Appdelegate didReceiveRemoteNotification -> YES
+    PIENotificationViewController viewWillDisappear -> NO
+    唯一一次读取值：PIEMeViewController updateNotificationStatus
+ 
+ */
+extern NSString * const PIEHasNewNotificationFlagKey;
+
 @end

@@ -23,6 +23,7 @@
 #import "DeviceUtil.h"
 @interface PIENotificationViewController ()
 <UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate>
+
 @property (nonatomic, strong) NSMutableArray<PIENotificationVM *> *source;
 @property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, assign) BOOL canRefreshFooter;
@@ -33,11 +34,14 @@
 
 @implementation PIENotificationViewController
 
+static NSString * const NotificationViewControllerDefaultCellIdentifier =
+@"defaultCell";
+
 #pragma mark - UI life cycles
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     self.title = @"我的消息";
     _source = [NSMutableArray<PIENotificationVM *> array];
     _canRefreshFooter = YES;
@@ -54,13 +58,12 @@
      selector:@selector(updateNotificationStatus)
      name:PIEUpdateNotificationStatusNotification
      object:nil];
-    
-    
+
     [self configSlack];
     [self configTableView];
     [self setupRefresh_Footer];
     [self getDataSource];
-    
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -69,7 +72,8 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    self.navigationController.navigationBar.backgroundColor = [UIColor colorWithHex:0xffffff andAlpha:0.9];
+    self.navigationController.navigationBar.backgroundColor =
+    [UIColor colorWithHex:0xffffff andAlpha:0.9];
 }
 
 - (BOOL)hidesBottomBarWhenPushed {
@@ -80,7 +84,8 @@
     [super viewWillDisappear:animated];
     self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
 
-    [[NSUserDefaults standardUserDefaults]setObject:@(NO) forKey:@"NotificationNew"];
+    [[NSUserDefaults standardUserDefaults]setObject:@(NO)
+                                             forKey:PIEHasNewNotificationFlagKey];
     [[NSUserDefaults standardUserDefaults]synchronize];
 
     if (![[self.navigationController viewControllers] containsObject: self])
@@ -108,10 +113,12 @@
 }
 
 #pragma mark - Gesture methods
+
+/** 识别不同indexPath的cell内部的不同UI元素的点击事件 */
 - (void)tapOnTableView:(UITapGestureRecognizer*)gesture {
     CGPoint location = [gesture locationInView:self.tableView];
     NSIndexPath* selectedIndexPath = [self.tableView indexPathForRowAtPoint:location];
-    
+
     /*
         消息正文部分
      */
@@ -119,40 +126,46 @@
         PIENotificationVM* vm = [_source objectAtIndex:selectedIndexPath.row];
         PIEPageVM* pageVM = [self transformNotificationVMToPageVM:vm];
         _selectedVM = vm;
-        if (vm.type == PIENotificationTypeComment) {
-            PIENotificationCommentTableViewCell* cell = [self.tableView cellForRowAtIndexPath:selectedIndexPath];
-            CGPoint p = [gesture locationInView:cell];
-            if (CGRectContainsPoint(cell.replyLabel.frame,p)) {
-//                self.textInputbarHidden = NO;
-//                self.textView.placeholder = [NSString stringWithFormat:@"@%@:",vm.username];
-//                [self.textView becomeFirstResponder];
-                PIECommentViewController* vc = [PIECommentViewController new];
-                
-//                pageVM.ID = vm.targetID;
-//                pageVM.type = vm.targetType;
-                vc.vm = pageVM;
-//                vc.shouldDownloadVMSource = YES;
-                vc.shouldShowHeaderView = YES;
-                [self.navigationController pushViewController:vc animated:YES];
-                
-            }     else       if (CGRectContainsPoint(cell.avatarView.frame,p) || (CGRectContainsPoint(cell.usernameLabel.frame,p))) {
-                PIEFriendViewController* vc = [PIEFriendViewController new];
-                vc.pageVM = pageVM;
-//                vc.uid = vm.senderID;
-//                vc.name = vm.username;
-                [self.navigationController pushViewController:vc animated:YES];
-            } else   {
-                PIECommentViewController* vc = [PIECommentViewController new];
-//                PIEPageVM* pageVM = [PIEPageVM new];
-//                pageVM.ID = vm.targetID;
-//                pageVM.type = vm.targetType;
-                vc.vm = pageVM;
-//                vc.shouldDownloadVMSource = YES;
-                vc.shouldShowHeaderView = YES;
-                [self.navigationController pushViewController:vc animated:YES];
-            }
-        }
-        else if (vm.type == PIENotificationTypeReply) {
+        
+        
+//         if (vm.type == PIENotificationTypeComment) {
+//             PIENotificationCommentTableViewCell* cell = [self.tableView cellForRowAtIndexPath:selectedIndexPath];
+//             CGPoint p = [gesture locationInView:cell];
+//             if (CGRectContainsPoint(cell.replyLabel.frame,p)) {
+// //                self.textInputbarHidden = NO;
+// //                self.textView.placeholder = [NSString stringWithFormat:@"@%@:",vm.username];
+// //                [self.textView becomeFirstResponder];
+//                 PIECommentViewController* vc = [PIECommentViewController new];
+//
+// //                pageVM.ID = vm.targetID;
+// //                pageVM.type = vm.targetType;
+//                 vc.vm = pageVM;
+// //                vc.shouldDownloadVMSource = YES;
+//                 vc.shouldShowHeaderView = YES;
+//                 [self.navigationController pushViewController:vc animated:YES];
+//
+//             }     else       if (CGRectContainsPoint(cell.avatarView.frame,p) || (CGRectContainsPoint(cell.usernameLabel.frame,p))) {
+//                 PIEFriendViewController* vc = [PIEFriendViewController new];
+//                 vc.pageVM = pageVM;
+// //                vc.uid = vm.senderID;
+// //                vc.name = vm.username;
+//                 [self.navigationController pushViewController:vc animated:YES];
+//             } else   {
+//                 PIECommentViewController* vc = [PIECommentViewController new];
+// //                PIEPageVM* pageVM = [PIEPageVM new];
+// //                pageVM.ID = vm.targetID;
+// //                pageVM.type = vm.targetType;
+//                 vc.vm = pageVM;
+// //                vc.shouldDownloadVMSource = YES;
+//                 vc.shouldShowHeaderView = YES;
+//                 [self.navigationController pushViewController:vc animated:YES];
+//             }
+//         }
+        // else
+        
+        
+        
+         if (vm.type == PIENotificationTypeReply) {
             PIENotificationReplyTableViewCell* cell = [self.tableView cellForRowAtIndexPath:selectedIndexPath];
             CGPoint p = [gesture locationInView:cell];
             if (CGRectContainsPoint(cell.replyLabel.frame,p)) {
@@ -167,7 +180,7 @@
 //                vc.shouldDownloadVMSource = YES;
                 vc.shouldShowHeaderView = YES;
                 [self.navigationController pushViewController:vc animated:YES];
-                
+
             } else if (CGRectContainsPoint(cell.avatarView.frame,p) || (CGRectContainsPoint(cell.usernameLabel.frame,p))) {
                 PIEFriendViewController* vc = [PIEFriendViewController new];
                 vc.pageVM = pageVM;
@@ -185,7 +198,7 @@
                 [self.navigationController pushViewController:vc animated:YES];
             }
         }
-        else if (vm.type == PIENotificationTypeFollow) {
+         else if (vm.type == PIENotificationTypeFollow) {
             PIEFriendViewController* vc = [PIEFriendViewController new];
             vc.pageVM = pageVM;
 //                vc.uid = vm.senderID;
@@ -201,16 +214,18 @@
             NSInteger row = selectedIndexPath.row;
             NSString* badgeKey;
             if (row == 0 ) {
-                badgeKey = @"NotificationSystem";
-            } else     if (row == 1 ) {
-                badgeKey = @"NotificationLike";
+                badgeKey = PIENotificationCountSystemKey;
+            } else   if (row == 1 ) {
+                badgeKey = PIENotificationCountLikeKey;
+            } else if (row == 2){
+                badgeKey = PIENotificationCountCommentKey;
             }
-            [[NSUserDefaults standardUserDefaults]setObject:@(0) forKey:badgeKey];
-            [[NSUserDefaults standardUserDefaults]synchronize];
+            [[NSUserDefaults standardUserDefaults] setObject:@(0) forKey:badgeKey];
+            [[NSUserDefaults standardUserDefaults] synchronize];
             PIENotificationTypeTableViewCell *cell = (PIENotificationTypeTableViewCell*)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
             cell.badgeNumber = 0;
             [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:selectedIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            
+
             if (selectedIndexPath.row == 0) {
                 PIENotificationSystemViewController* vc = [PIENotificationSystemViewController new];
                 [self.navigationController pushViewController:vc animated:YES];
@@ -223,13 +238,15 @@
 
 #pragma mark - Initial setup
 - (void)configTableView {
-    UINib* nib  = [UINib nibWithNibName:@"PIENotificationCommentTableViewCell" bundle:nil];
+//    UINib* nib  = [UINib nibWithNibName:@"PIENotificationCommentTableViewCell" bundle:nil];
     UINib* nib3 = [UINib nibWithNibName:@"PIENotificationFollowTableViewCell" bundle:nil];
     UINib* nib4 = [UINib nibWithNibName:@"PIENotificationReplyTableViewCell" bundle:nil];
-    [self.tableView registerNib:nib  forCellReuseIdentifier:@"PIENotificationCommentTableViewCell"];
+
+//    [self.tableView registerNib:nib  forCellReuseIdentifier:@"PIENotificationCommentTableViewCell"];
     [self.tableView registerNib:nib3 forCellReuseIdentifier:@"PIENotificationFollowTableViewCell"];
     [self.tableView registerNib:nib4 forCellReuseIdentifier:@"PIENotificationReplyTableViewCell"];
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag|UIScrollViewKeyboardDismissModeInteractive;
+
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 50, 0, 10);
@@ -241,21 +258,24 @@
 
 }
 
+/**
+    用于快速回复
+ */
 - (void)configSlack {
-    self.bounces = NO;
-    self.shakeToClearEnabled = NO;
-    self.keyboardPanningEnabled = YES;
+    self.bounces                                = NO;
+    self.shakeToClearEnabled                    = NO;
+    self.keyboardPanningEnabled                 = YES;
     self.shouldScrollToBottomAfterKeyboardShows = NO;
-    self.inverted = NO;
+    self.inverted                               = NO;
     [self.rightButton setTitle:@"回复ta" forState:UIControlStateNormal];
     [self.rightButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    self.textInputbar.autoHideRightButton = YES;
-    self.textInputbar.maxCharCount = 128;
-    self.textInputbar.counterStyle = SLKCounterStyleSplit;
-    self.textInputbar.counterPosition = SLKCounterPositionTop;
-    self.shouldClearTextAtRightButtonPress = YES;
-    self.textView.placeholder = @"回复ta";
-    self.textInputbarHidden = YES;
+    self.textInputbar.autoHideRightButton       = YES;
+    self.textInputbar.maxCharCount              = 128;
+    self.textInputbar.counterStyle              = SLKCounterStyleSplit;
+    self.textInputbar.counterPosition           = SLKCounterPositionTop;
+    self.shouldClearTextAtRightButtonPress      = YES;
+    self.textView.placeholder                   = @"回复ta";
+    self.textInputbarHidden                     = YES;
 }
 /**
     手动设置Refresh_Footer, 执行上拉加载
@@ -263,15 +283,18 @@
 - (void)setupRefresh_Footer {
     NSMutableArray *animatedImages = [NSMutableArray array];
     for (int i = 1; i<=6; i++) {
-        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"pie_loading_%d", i]];
+        UIImage *image =
+        [UIImage imageNamed:[NSString stringWithFormat:@"pie_loading_%d", i]];
         [animatedImages addObject:image];
     }
-    MJRefreshAutoGifFooter *footer = [MJRefreshAutoGifFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    MJRefreshAutoGifFooter *footer =
+    [MJRefreshAutoGifFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     footer.refreshingTitleHidden = YES;
     footer.stateLabel.hidden = YES;
-    [footer setImages:animatedImages duration:0.5 forState:MJRefreshStateRefreshing];
+    [footer setImages:animatedImages
+             duration:0.5 forState:MJRefreshStateRefreshing];
     self.tableView.mj_footer = footer;
-    
+
     _canRefreshFooter = YES;
 }
 
@@ -335,23 +358,28 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        return 2;
+        return 3;
     } else {
         return _source.count;
     }
 }
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+-(UITableViewCell *)tableView:(UITableView *)tableView
+        cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    /*
+        消息正文部分
+     */
     if (indexPath.section == 1) {
         if (_source.count > indexPath.row) {
             PIENotificationVM* vm = [_source objectAtIndex:indexPath.row];
             switch (vm.type) {
-                case PIENotificationTypeComment:
-                {
-                    PIENotificationCommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIENotificationCommentTableViewCell"];
-                    [cell injectSauce:vm];
-                    return cell;
-                    break;
-                }
+//                case PIENotificationTypeComment:
+//                {
+//                    PIENotificationCommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIENotificationCommentTableViewCell"];
+//                    [cell injectSauce:vm];
+//                    return cell;
+//                    break;
+//                }
                 case PIENotificationTypeFollow:
                 {
                     PIENotificationFollowTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIENotificationFollowTableViewCell"];
@@ -359,7 +387,7 @@
                     return cell;
                     break;
                 }
-   
+
                 case PIENotificationTypeReply:
                 {
                     PIENotificationReplyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PIENotificationReplyTableViewCell"];
@@ -374,19 +402,40 @@
             }
         }
     }
-    else {
 
-        PIENotificationTypeTableViewCell* cell = [[PIENotificationTypeTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"defaultCell"];
+    /*
+        消息类型部分
+     */
+    else {
+        PIENotificationTypeTableViewCell* cell =
+        [[PIENotificationTypeTableViewCell alloc]
+         initWithStyle:UITableViewCellStyleDefault
+         reuseIdentifier:@"defaultCell"];
+        cell.textLabel.font = [UIFont lightTupaiFontOfSize:14];
+
+
         if (indexPath.row == 0) {
             cell.imageView.image = [UIImage imageNamed:@"notify_system"];
-            cell.textLabel.text = @"系统消息";
-            cell.badgeNumber = [[[NSUserDefaults standardUserDefaults]objectForKey:@"NotificationSystem"]integerValue];
-        }    else if (indexPath.row == 1) {
+            cell.textLabel.text  = @"系统消息";
+            cell.badgeNumber     =
+            [[[NSUserDefaults standardUserDefaults]
+              objectForKey:PIENotificationCountSystemKey]
+             integerValue];
+
+        }else if (indexPath.row == 1) {
             cell.imageView.image = [UIImage imageNamed:@"pieLike_selected"];
-            cell.textLabel.text = @"收到的赞";
-            cell.badgeNumber = [[[NSUserDefaults standardUserDefaults]objectForKey:@"NotificationLike"]integerValue];
+            cell.textLabel.text  = @"收到的赞";
+            cell.badgeNumber     =
+            [[[NSUserDefaults standardUserDefaults]
+              objectForKey:PIENotificationCountLikeKey] integerValue];
+        }else if (indexPath.row == 2){
+            cell.imageView.image =
+            [UIImage imageNamed:@"pie_notification_receivedComments"];
+            cell.textLabel.text  = @"收到的评论";
+            cell.badgeNumber     =
+            [[[NSUserDefaults standardUserDefaults]
+             objectForKey:PIENotificationCountCommentKey] integerValue];
         }
-        cell.textLabel.font = [UIFont lightTupaiFontOfSize:14];
         return cell;
     }
     return nil;
@@ -406,7 +455,7 @@
     label.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
     label.backgroundColor = [UIColor clearColor];
     [view addSubview:label];
-    
+
     label.font = [UIFont lightTupaiFontOfSize:12];
     switch (section)
     {
@@ -417,16 +466,16 @@
             break;
     }
     return view;
-    
+
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 1) {
         PIENotificationVM* vm = [_source objectAtIndex:indexPath.row];
         switch (vm.type) {
-            case PIENotificationTypeComment:
-                return UITableViewAutomaticDimension;
-                break;
+//            case PIENotificationTypeComment:
+//                return UITableViewAutomaticDimension;
+//                break;
             case PIENotificationTypeFollow:
                 return 68;
                 break;
@@ -440,12 +489,12 @@
         }
     }
     else {
+        /* 上面的消息类型部分，高度统一为50 */
         return 50;
     }
     return 0;
 
 }
-
 
 #pragma mark - overridden super_class methods
 - (void)didPressRightButton:(id)sender
@@ -472,13 +521,13 @@
 
 #pragma mark - private helpers
 - (PIEPageVM*)transformNotificationVMToPageVM:(PIENotificationVM*)vm {
-    PIEPageVM* pageVM = [PIEPageVM new];
-    pageVM.imageURL = vm.imageUrl;
-    pageVM.ID = vm.targetID;
-    pageVM.askID = vm.askID;
-    pageVM.avatarURL = vm.avatarUrl;
-    pageVM.userID = vm.senderID;
-    pageVM.username = vm.username;
+    PIEPageVM* pageVM  = [PIEPageVM new];
+    pageVM.imageURL    = vm.imageUrl;
+    pageVM.ID          = vm.targetID;
+    pageVM.askID       = vm.askID;
+    pageVM.avatarURL   = vm.avatarUrl;
+    pageVM.userID      = vm.senderID;
+    pageVM.username    = vm.username;
     pageVM.publishTime = vm.time;
     return pageVM;
 }

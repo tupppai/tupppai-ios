@@ -275,24 +275,32 @@
     [self.mainTabBarController.tabBar addSubview:redDot ];
 }
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
-//    NSLog(@"userinfo:%@",userInfo);
-    NSInteger notifyType = [[userInfo objectForKey:@"type"]integerValue];
 
-    [self updateBadgeNumberForKey:@"NotificationAll" toAdd:1];
-    if (notifyType == 0) {
-        [self updateBadgeNumberForKey:@"NotificationSystem" toAdd:1];
-    } else if (notifyType == 5) {
-        [self updateBadgeNumberForKey:@"NotificationLike" toAdd:1];
-    } else {
-        [self updateBadgeNumberForKey:@"NotificationOthers" toAdd:1];
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
+    
+    NSInteger notifyType = [[userInfo objectForKey:@"type"] integerValue];
+    
+    [self updateBadgeNumberForKey:PIENotificationCountAllKey toAdd:1];
+    
+    if (notifyType == PIENotificationTypeSystem) {
+        [self updateBadgeNumberForKey:PIENotificationCountSystemKey toAdd:1];
+    } else if (notifyType == PIENotificationTypeLike) {
+        [self updateBadgeNumberForKey:PIENotificationCountLikeKey toAdd:1];
+    } else if (notifyType == PIENotificationTypeComment){
+        [self updateBadgeNumberForKey:PIENotificationCountCommentKey toAdd:1];
+    }
+    else {
+        [self updateBadgeNumberForKey:PIENotificationCountOthersKey toAdd:1];
     }
     
-    [[NSUserDefaults standardUserDefaults]setObject:@(YES) forKey:@"NotificationNew"];
+    [[NSUserDefaults standardUserDefaults]setObject:@(YES)
+                                             forKey:PIEHasNewNotificationFlagKey];
     [[NSUserDefaults standardUserDefaults]synchronize];
+    
     [self addRedDotToTabBarItemIndex:3];
-    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:PIEUpdateNotificationStatusNotification object:nil]];
-
+    [[NSNotificationCenter defaultCenter] postNotification:
+     [NSNotification
+      notificationWithName:PIEUpdateNotificationStatusNotification object:nil]];
 }
 
 -(void)updateBadgeNumberForKey:(NSString*)key toAdd:(int)badgeNumber {
@@ -308,8 +316,6 @@
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     NSLog(@"%@", error);
 }
-
-
 
 #pragma mark - private helpers
 - (void)switchToMainTabbarController
@@ -330,14 +336,6 @@
     PIELaunchViewController_Black *lvc = [[PIELaunchViewController_Black alloc] init];
     [AppDelegate APP].window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
 }
-
-
-
-
-
-
-
-
 
 
 
