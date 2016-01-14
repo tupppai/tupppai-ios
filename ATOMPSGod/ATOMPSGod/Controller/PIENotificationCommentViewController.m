@@ -161,7 +161,7 @@ static NSString * PIENotificationCommentCellIdentifier2 =
      dequeueReusableCellWithIdentifier:PIENotificationCommentCellIdentifier2];
     
     PIENotificationVM *vm = [_source_comment objectAtIndex:indexPath.row];
-    commentCell.textLabel.text = vm.content;
+    [commentCell injectSauce:vm];
     
     return commentCell;
 }
@@ -240,8 +240,6 @@ static NSString * PIENotificationCommentCellIdentifier2 =
         
         _tableView.estimatedRowHeight = 120;
         _tableView.rowHeight          = UITableViewAutomaticDimension;
-       
-        
     }
     return _tableView;
 }
