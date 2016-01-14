@@ -129,6 +129,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="avatarView" destination="Hbb-c5-5Qc" id="cbH-Be-RHz"/>
+                <outlet property="containerView" destination="3cA-ft-Qgs" id="eNX-8g-whX"/>
                 <outlet property="contentLabel" destination="SE5-WK-32K" id="1xc-Pk-cb0"/>
                 <outlet property="originalCommentLabel" destination="Ydb-WL-GMu" id="Lie-Di-nbb"/>
                 <outlet property="pageImageView" destination="UMZ-DD-cdG" id="rTB-on-xxO"/>

@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel     *replyLabel;
 @property (weak, nonatomic) IBOutlet UILabel     *originalCommentLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *pageImageView;
+@property (weak, nonatomic) IBOutlet UIView      *containerView;
 
 
 - (void)injectSauce:(PIENotificationVM*)vm;

@@ -12,6 +12,8 @@
 #import "PIENotificationManager.h"
 #import "PIENotificationCommentOnImageTableViewCell.h"
 #import "PIENotificationCommentFromOtherTableViewCell.h"
+#import "PIECommentViewController.h"
+#import "PIEFriendViewController.h"
 
 /* Variables */
 @interface PIENotificationCommentViewController ()
@@ -56,6 +58,8 @@ static NSString * PIENotificationCommentFromOtherCellIdentifier =
     
     [self setupUI];
     
+    [self setupGesture];
+    
     [self.tableView.mj_header beginRefreshing];
 }
 
@@ -83,6 +87,103 @@ static NSString * PIENotificationCommentFromOtherCellIdentifier =
     self.view                           = self.tableView;
     self.tableView.emptyDataSetSource   = self;
     self.tableView.emptyDataSetDelegate = self;
+}
+
+#pragma mark - Gestures
+- (void)setupGesture
+{
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self action:@selector(tapOnTableView:)];
+    [self.tableView addGestureRecognizer:tap];
+}
+
+- (void)tapOnTableView:(UITapGestureRecognizer *)tap
+{
+    CGPoint tapTableViewLocation
+    = [tap locationInView:self.tableView];
+    NSIndexPath *selectedIndexPath = [self.tableView indexPathForRowAtPoint:tapTableViewLocation];
+
+    PIENotificationVM *viewModel   = self.source_comment[selectedIndexPath.row];
+    PIEPageVM *pageVM              = [self transformNotificationVMToPageVM:viewModel];
+    
+    /*
+        回复 -> PIECommentVC，没Header
+        container -> PIECommentVC, 有Header
+     */
+    if (viewModel.originalCommentId == 0) {
+        PIENotificationCommentOnImageTableViewCell *commentOnImageCell =
+        [self.tableView cellForRowAtIndexPath:selectedIndexPath];
+        
+        CGPoint tapCellLocation = [tap locationInView:commentOnImageCell];
+        
+        if (CGRectContainsPoint(commentOnImageCell.replyLabel.frame,
+                                tapCellLocation))
+        {
+            PIECommentViewController *commentVC = [[PIECommentViewController alloc] init];
+            commentVC.shouldShowHeaderView = NO;
+            commentVC.vm = pageVM;
+            
+            [self.navigationController pushViewController:commentVC animated:YES];
+        }
+        else if
+            (CGRectContainsPoint(commentOnImageCell.containerView.frame, tapCellLocation))
+        {
+            PIECommentViewController *commentVC = [[PIECommentViewController alloc] init];
+            commentVC.shouldShowHeaderView = YES;
+            commentVC.vm = pageVM;
+            [self.navigationController pushViewController:commentVC animated:YES];
+        }
+        else if
+            (CGRectContainsPoint(commentOnImageCell.avatarView.frame,
+                                 tapCellLocation) ||
+             CGRectContainsPoint(commentOnImageCell.usernameLabel.frame,
+                                 tapCellLocation))
+        {
+                PIEFriendViewController* friendVC =
+                [PIEFriendViewController new];
+                friendVC.pageVM = pageVM;
+
+                [self.navigationController pushViewController:friendVC
+                                                     animated:YES];
+        }
+    }else{
+        PIENotificationCommentFromOtherTableViewCell *commentFromOtherCell =
+        [self.tableView cellForRowAtIndexPath:selectedIndexPath];
+        
+        CGPoint tapCellLocation = [tap locationInView:commentFromOtherCell];
+        
+        if (CGRectContainsPoint(commentFromOtherCell.replyLabel.frame,
+                                tapCellLocation)) {
+            PIECommentViewController *commentVC = [[PIECommentViewController alloc] init];
+            commentVC.shouldShowHeaderView = NO;
+            commentVC.vm = pageVM;
+            
+            [self.navigationController pushViewController:commentVC animated:YES];
+        }
+        else if
+            (CGRectContainsPoint(commentFromOtherCell.containerView.frame,
+                                 tapCellLocation))
+        {
+            PIECommentViewController *commentVC = [[PIECommentViewController alloc] init];
+            commentVC.shouldShowHeaderView = YES;
+            commentVC.vm = pageVM;
+            [self.navigationController pushViewController:commentVC animated:YES];
+        }
+        else if
+            (CGRectContainsPoint(commentFromOtherCell.usernameLabel.frame,
+                                 tapCellLocation) ||
+             CGRectContainsPoint(commentFromOtherCell.avatarView.frame,
+                                 tapCellLocation))
+        {
+            PIEFriendViewController* friendVC =
+            [PIEFriendViewController new];
+            friendVC.pageVM = pageVM;
+            
+            [self.navigationController pushViewController:friendVC
+                                                 animated:YES];
+        }
+        
+    }
 }
 
 #pragma mark - Network request for Data Models
@@ -272,6 +373,19 @@ static NSString * PIENotificationCommentFromOtherCellIdentifier =
         _tableView.rowHeight          = UITableViewAutomaticDimension;
     }
     return _tableView;
+}
+
+#pragma mark - private helpers
+- (PIEPageVM*)transformNotificationVMToPageVM:(PIENotificationVM*)vm {
+    PIEPageVM* pageVM  = [PIEPageVM new];
+    pageVM.imageURL    = vm.imageUrl;
+    pageVM.ID          = vm.targetID;
+    pageVM.askID       = vm.askID;
+    pageVM.avatarURL   = vm.avatarUrl;
+    pageVM.userID      = vm.senderID;
+    pageVM.username    = vm.username;
+    pageVM.publishTime = vm.time;
+    return pageVM;
 }
 
 @end
