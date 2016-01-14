@@ -6,9 +6,13 @@
 //  Copyright © 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
+
+//You could call it Elite Data Manager
 #import "PIEEliteManager.h"
 #import "PIECommentModel.h"
 #import "PIEModelImage.h"
+
+
 @implementation PIEEliteManager
 + (void)getMyFollow:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *))block {
     [DDService getFollowPages:param withBlock:^(NSArray *data) {

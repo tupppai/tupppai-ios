@@ -52,6 +52,8 @@
 @property (nonatomic, strong) PIENewReplyTableCell *selectedReplyCell;
 
 @property (nonatomic, strong) MASConstraint *bottomContainerViewBottomMC;
+@property (nonatomic, assign) BOOL bottomContainerViewIsAnimating;
+
 @property (nonatomic, strong) MRNavigationBarProgressView *progressView;
 
 @end
@@ -500,25 +502,37 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 #pragma mark - <UITableViewDelegate>
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    [UIView animateWithDuration:0.1
-                     animations:^{
-                         [self.bottomContainerViewBottomMC setOffset:50.0];
-                         [self.bottomContainerView layoutIfNeeded];
-                     }];
+    if (!_bottomContainerViewIsAnimating) {
+        
+        [UIView animateWithDuration:0.1
+                         animations:^{
+                             [self.bottomContainerViewBottomMC setOffset:50.0];
+                             [self.bottomContainerView layoutIfNeeded];
+                         } completion:^(BOOL finished) {
+                             if (finished) {
+                                 _bottomContainerViewIsAnimating = NO;
+                             }
+                         }];
+    }
+
 }
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    [self.bottomContainerViewBottomMC setOffset:0];
-    [UIView animateWithDuration:0.2
-                          delay:1.0
-         usingSpringWithDamping:0.9
-          initialSpringVelocity:0.5
-                        options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^{
-                         [self.bottomContainerView layoutIfNeeded];
-                         
-                     } completion:^(BOOL finished) {
-                     }];
+    if (!_bottomContainerViewIsAnimating) {
+
+        [self.bottomContainerViewBottomMC setOffset:0];
+        [UIView animateWithDuration:0.2
+                              delay:2.0
+             usingSpringWithDamping:0.8
+              initialSpringVelocity:0.5
+                            options:UIViewAnimationOptionAllowAnimatedContent
+                         animations:^{
+                             [self.bottomContainerView layoutIfNeeded];
+                             
+                         } completion:^(BOOL finished) {
+                             _bottomContainerViewIsAnimating = NO;
+                         }];
+    }
 }
 
 

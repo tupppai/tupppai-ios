@@ -186,7 +186,7 @@
 
         _commentButton.numberString = vm.commentCount;
         _shareButton.numberString = vm.shareCount;
-        [_likeButton initStatus:vm.lovedCount numberString:vm.likeCount];
+        [_likeButton initStatus:vm.loveStatus numberString:vm.likeCount];
         
         NSString * htmlString = vm.content;
         NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];

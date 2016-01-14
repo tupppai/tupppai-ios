@@ -11,5 +11,4 @@
 @interface PIEProceedingManager : NSObject
 + (void)getMyAsk:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *dataArray))block;
 + (void)getMyDone:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *dataArray))block;
-+ (void)getMyToHelp:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *))block;
-@end
++ (void)getMyToHelp:(NSDictionary *)param withBlock:(void (^)(NSArray *))block;@end

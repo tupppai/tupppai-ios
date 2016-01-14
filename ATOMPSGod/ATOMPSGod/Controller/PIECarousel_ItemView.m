@@ -284,7 +284,7 @@
         _bangView.hidden = YES;
         _imageView_type.image = [UIImage imageNamed:@"carousel_type_reply"];
         _pageLikeButton.hidden = NO;
-        [_pageLikeButton initStatus:vm.lovedCount numberString:vm.likeCount];
+        [_pageLikeButton initStatus:vm.loveStatus numberString:vm.likeCount];
     }
     
     _view_pageImage.url = vm.imageURL;
@@ -308,15 +308,15 @@
 
 
 - (void)addKVO {
-    [_vm addObserver:self forKeyPath:@"lovedCount" options:NSKeyValueObservingOptionNew context:NULL];
+    [_vm addObserver:self forKeyPath:@"loveStatus" options:NSKeyValueObservingOptionNew context:NULL];
     [_vm addObserver:self forKeyPath:@"likeCount" options:NSKeyValueObservingOptionNew context:NULL];
 }
 - (void)removeKVO {
-    [_vm removeObserver:self forKeyPath:@"lovedCount"];
+    [_vm removeObserver:self forKeyPath:@"loveStatus"];
     [_vm removeObserver:self forKeyPath:@"likeCount"];
 
 //    @try{
-//        [_vm removeObserver:self forKeyPath:@"lovedCount"];
+//        [_vm removeObserver:self forKeyPath:@"loveStatus"];
 //        [_vm removeObserver:self forKeyPath:@"likeCount"];
 //    }@catch(id anException){
 //        //do nothing, obviously it wasn't attached because an exception was thrown
@@ -325,7 +325,7 @@
 
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"lovedCount"]) {
+    if ([keyPath isEqualToString:@"loveStatus"]) {
         NSInteger newLovedCount = [[change objectForKey:@"new"]integerValue];
         self.pageLikeButton.status = newLovedCount;
     } else     if ([keyPath isEqualToString:@"likeCount"]) {

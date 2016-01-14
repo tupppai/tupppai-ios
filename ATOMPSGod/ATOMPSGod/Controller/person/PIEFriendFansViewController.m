@@ -97,9 +97,9 @@
             cell.attentionButton.selected = !cell.attentionButton.selected;
             NSMutableDictionary* param = [NSMutableDictionary new];
             [param setObject:@(cell.viewModel.model.uid) forKey:@"uid"];
-            if (!cell.attentionButton.selected) {
-                [param setObject:@0 forKey:@"status"];
-            }
+      
+            [param setObject:@(cell.attentionButton.selected) forKey:@"status"];
+
             [DDService follow:param withBlock:^(BOOL success) {
                 if (!success) {
                     cell.attentionButton.selected = !cell.attentionButton.selected;

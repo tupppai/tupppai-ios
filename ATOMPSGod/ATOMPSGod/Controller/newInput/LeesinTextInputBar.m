@@ -263,7 +263,6 @@
         [_rightButton setTitleColor:[UIColor colorWithHex:0x000000 andAlpha:1.0] forState:UIControlStateNormal];
         [_rightButton setTitleColor:[UIColor colorWithHex:0x000000 andAlpha:0.5] forState:UIControlStateHighlighted];
         [_rightButton setTitleColor:[UIColor colorWithHex:0x000000 andAlpha:0.3] forState:UIControlStateDisabled];
-        _rightButton.enabled = NO;
         [_rightButton setTitle:@"发布" forState:UIControlStateNormal];
     }
     return _rightButton;

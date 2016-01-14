@@ -886,7 +886,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 - (void)addKVO {
     if (_shouldShowHeaderView) {
-        [_vm addObserver:self forKeyPath:@"lovedCount" options:NSKeyValueObservingOptionNew context:NULL];
+        [_vm addObserver:self forKeyPath:@"loveStatus" options:NSKeyValueObservingOptionNew context:NULL];
         [_vm addObserver:self forKeyPath:@"likeCount" options:NSKeyValueObservingOptionNew context:NULL];
         [self.source_newComment addObserver:self forKeyPath:@"array" options:NSKeyValueObservingOptionNew context:nil];
     }
@@ -894,7 +894,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)removeKVO {
     if (_shouldShowHeaderView) {
         [_vm removeObserver:self forKeyPath:@"likeCount"];
-        [_vm removeObserver:self forKeyPath:@"lovedCount"];
+        [_vm removeObserver:self forKeyPath:@"loveStatus"];
         [self.source_newComment removeObserver:self forKeyPath:@"array"];
 
     }
@@ -902,7 +902,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"lovedCount"]) {
+    if ([keyPath isEqualToString:@"loveStatus"]) {
         NSInteger newLovedCount = [[change objectForKey:@"new"]integerValue];
         self.headerView_reply.likeButton.status = newLovedCount;
     } else     if ([keyPath isEqualToString:@"likeCount"]) {

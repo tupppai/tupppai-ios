@@ -7,18 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-typedef NS_ENUM(NSInteger, PIELoveButtonStatus) {
-    PIELoveButtonStatusNormal = 0,
-    PIELoveButtonStatusSelectedLow,
-    PIELoveButtonStatusSelectedMedium,
-    PIELoveButtonStatusSelectedHigh,
-};
+
 
 @interface PIELoveLabel : UILabel
 @property (nonatomic, assign) NSInteger number;
 @property (nonatomic, copy) NSString* numberString;
-@property (nonatomic, assign) PIELoveButtonStatus status;
-- (void)increaseCount;
-- (void)decreaseCount ;
-- (void)revert;
+@property (nonatomic, assign) PIEPageLoveStatus status;
+
 @end

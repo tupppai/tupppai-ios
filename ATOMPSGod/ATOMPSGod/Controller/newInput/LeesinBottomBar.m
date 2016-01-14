@@ -100,10 +100,11 @@
 
 -(UIButton *)button_album {
     if (!_button_album) {
-        _button_album = [UIButton buttonWithType:UIButtonTypeSystem];
+        _button_album = [UIButton buttonWithType:UIButtonTypeCustom];
         _button_album.titleLabel.font = [UIFont lightTupaiFontOfSize:14.0];
         [_button_album setTitleColor:[UIColor colorWithHex:0x50484B andAlpha:1.0] forState:UIControlStateNormal];
         [_button_album setTitleColor:[UIColor colorWithHex:0xeeeeee andAlpha:0.5] forState:UIControlStateHighlighted];
+        [_button_album setTitleColor:[UIColor colorWithHex:0x50484B andAlpha:1.0] forState:UIControlStateSelected];
         [_button_album setTitle:@"相册" forState:UIControlStateNormal];
         [_button_album addTarget:self action:@selector(tapButtonAlbum) forControlEvents:UIControlEventTouchDown];
     }
@@ -112,7 +113,7 @@
 
 -(UIButton *)button_shoot {
     if (!_button_shoot) {
-        _button_shoot = [UIButton buttonWithType:UIButtonTypeSystem];
+        _button_shoot = [UIButton buttonWithType:UIButtonTypeCustom];
         _button_shoot.titleLabel.font = [UIFont lightTupaiFontOfSize:14.0];
         [_button_shoot setTitleColor:[UIColor colorWithHex:0x50484B andAlpha:1.0] forState:UIControlStateNormal];
         [_button_shoot setTitleColor:[UIColor colorWithHex:0xeeeeee andAlpha:0.5] forState:UIControlStateHighlighted];
@@ -124,6 +125,7 @@
 
 - (void) tapButtonAlbum {
     if (_delegate && [_delegate respondsToSelector:@selector(leesinBottomBar:isPhotoLibraryButtonTapped:isAllMissionButtonTapped:isShootingButtonTapped:)]) {
+        [_button_album setNeedsDisplay];
         if (self.type == LeeSinBottomBarTypeReplyMission) {
             [_delegate leesinBottomBar:self isPhotoLibraryButtonTapped:NO isAllMissionButtonTapped:YES isShootingButtonTapped:NO];
         } else {
@@ -170,6 +172,8 @@
 //        _label_confirmedCount.hidden = YES;
     } else if (type == LeeSinBottomBarTypeReplyMission) {
         [_button_album setTitle:@"历史任务" forState:UIControlStateNormal];
+        [_button_album setTitle:@"返回" forState:UIControlStateSelected];
+        
         _button_shoot.hidden = YES;
 //        _label_confirmedCount.hidden = YES;
     } else if (type == LeeSinBottomBarTypeAsk) {

@@ -217,11 +217,11 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     [self.goPsButtonBottomConstraint setOffset:-12];
     [UIView animateWithDuration:0.2
                           delay:1.0
-         usingSpringWithDamping:0.5
-          initialSpringVelocity:0
+         usingSpringWithDamping:0.67
+          initialSpringVelocity:0.5
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
-                         [self.view layoutIfNeeded];
+                         [self.goPsButton layoutIfNeeded];
                          
                      } completion:^(BOOL finished) {
                      }];

@@ -108,7 +108,7 @@
 //    
 //    [DDService loveReply:param ID:vm.ID withBlock:^(BOOL succeed) {
 //        if (succeed) {
-////            vm.lovedCount = likeView.status;
+////            vm.loveStatus = likeView.status;
 ////            vm.likeCount = likeView.numberString;
 //        } else {
 ////            [likeView decreaseStatus];
