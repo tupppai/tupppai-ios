@@ -15,6 +15,8 @@
 @interface PIENotificationVM : NSObject
 @property (nonatomic, copy  ) NSString  *avatarUrl;
 @property (nonatomic, assign) NSInteger commentId;
+@property (nonatomic, assign) NSInteger originalCommentId;
+@property (nonatomic, copy  ) NSString  *desc;
 @property (nonatomic, copy  ) NSString  *content;
 @property (nonatomic, assign) NSInteger ID;
 @property (nonatomic, copy  ) NSString  *username;

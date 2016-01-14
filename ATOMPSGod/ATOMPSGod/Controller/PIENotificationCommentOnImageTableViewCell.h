@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @class PIENotificationVM;
 
-@interface PIENotificationCommentTableViewCell2 : UITableViewCell
+@interface PIENotificationCommentOnImageTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;

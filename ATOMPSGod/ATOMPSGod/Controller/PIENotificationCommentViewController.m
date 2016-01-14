@@ -9,9 +9,9 @@
 #import "PIENotificationCommentViewController.h"
 #import "PIENotificationVM.h"
 #import "PIERefreshTableView.h"
-//#import "PIENotificationCommentTableViewCell.h"
 #import "PIENotificationManager.h"
-#import "PIENotificationCommentTableViewCell2.h"
+#import "PIENotificationCommentOnImageTableViewCell.h"
+#import "PIENotificationCommentFromOtherTableViewCell.h"
 
 /* Variables */
 @interface PIENotificationCommentViewController ()
@@ -39,11 +39,12 @@
 
 @implementation PIENotificationCommentViewController
 
-//static NSString * PIENotificationCommentCellIdentifier =
-//@"PIENotificationCommentTableViewCell";
+static NSString * PIENotificationCommentOnImageCellIdentifier =
+@"PIENotificationCommentOnImageTableViewCell";
 
-static NSString * PIENotificationCommentCellIdentifier2 =
-@"PIENotificationCommentTableViewCell2";
+static NSString * PIENotificationCommentFromOtherCellIdentifier =
+@"PIENotificationCommentFromOtherTableViewCell";
+
 
 #pragma mark - UI life cycles
 - (void)viewDidLoad {
@@ -156,14 +157,35 @@ static NSString * PIENotificationCommentCellIdentifier2 =
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PIENotificationCommentTableViewCell2 *commentCell =
-    [tableView
-     dequeueReusableCellWithIdentifier:PIENotificationCommentCellIdentifier2];
-    
     PIENotificationVM *vm = [_source_comment objectAtIndex:indexPath.row];
-    [commentCell injectSauce:vm];
     
-    return commentCell;
+    if (vm.originalCommentId == 0) {
+        /*
+            原始评论ID为0，说明本次评论的消息来自于他人对图片（求P或帮P）的评论, desc字段为图片的描述
+         */
+        PIENotificationCommentOnImageTableViewCell *commentOnImageCell =
+        [tableView
+         dequeueReusableCellWithIdentifier:PIENotificationCommentOnImageCellIdentifier];
+        
+        [commentOnImageCell injectSauce:vm];
+        
+        return commentOnImageCell;
+    }else{
+        /*
+            原始评论ID不为零，说明本次评论的消息来自于他人对本用户评论的评论， desc字段为原评论
+         */
+        
+        PIENotificationCommentFromOtherTableViewCell *commentFromOtherCell =
+        [tableView
+         dequeueReusableCellWithIdentifier:PIENotificationCommentFromOtherCellIdentifier];
+        
+        commentFromOtherCell.textLabel.text = vm.content;
+        
+        return commentFromOtherCell;
+        
+    }
+    return nil;
+    
 }
 
 #pragma mark - <UITableViewDelegate>
@@ -224,12 +246,20 @@ static NSString * PIENotificationCommentCellIdentifier2 =
     if (_tableView == nil) {
         _tableView = [[PIERefreshTableView alloc] init];
         
-        UINib *cellNib =
-        [UINib nibWithNibName:@"PIENotificationCommentTableViewCell2"
+        UINib *commentOnImageCellNib =
+        [UINib nibWithNibName:@"PIENotificationCommentOnImageTableViewCell"
                        bundle:nil];
-        [_tableView registerNib:cellNib
-         forCellReuseIdentifier:PIENotificationCommentCellIdentifier2];
-
+        [_tableView registerNib:commentOnImageCellNib
+         forCellReuseIdentifier:PIENotificationCommentOnImageCellIdentifier];
+        
+        
+        UINib *commentFromOtherCellNib =
+        [UINib nibWithNibName:@"PIENotificationCommentFromOtherTableViewCell"
+                       bundle:nil];
+        [_tableView registerNib:commentFromOtherCellNib
+         forCellReuseIdentifier:PIENotificationCommentFromOtherCellIdentifier];
+        
+        
         _tableView.dataSource = self;
         _tableView.delegate   = self;
         _tableView.psDelegate = self;

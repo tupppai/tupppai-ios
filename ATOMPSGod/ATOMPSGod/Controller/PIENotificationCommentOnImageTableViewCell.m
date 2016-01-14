@@ -6,10 +6,10 @@
 //  Copyright © 2016 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "PIENotificationCommentTableViewCell2.h"
+#import "PIENotificationCommentOnImageTableViewCell.h"
 #import "PIENotificationVM.h"
 
-@implementation PIENotificationCommentTableViewCell2
+@implementation PIENotificationCommentOnImageTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code
