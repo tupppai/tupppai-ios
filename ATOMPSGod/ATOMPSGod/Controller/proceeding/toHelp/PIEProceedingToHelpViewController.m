@@ -38,7 +38,7 @@
 
 @property (nonatomic, assign) NSInteger currentIndex_ToHelp_done;
 
-@property (nonatomic, assign)  long long timeStamp_toHelp;
+@property (nonatomic, assign) long long timeStamp_toHelp;
 
 @property (nonatomic, assign) BOOL canRefreshToHelpFooter;
 
@@ -67,7 +67,6 @@
 <PWRefreshBaseTableViewDelegate>
 @end
 //
-
 
 //@interface PIEProceedingToHelpViewController (QBImagePickerController)
 //<QBImagePickerControllerDelegate>
@@ -157,23 +156,40 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     [_toHelpTableView addGestureRecognizer:_longPressGestureToHelp];
     
 }
+
+/** 长按-> 进入一个比较特殊的shareView进行分享 */
 - (void)longPressOnToHelp:(UILongPressGestureRecognizer *)gesture {
     CGPoint location = [gesture locationInView:_toHelpTableView];
     NSIndexPath *indexPath = [_toHelpTableView indexPathForRowAtPoint:location];
     _selectedIndexPath_toHelp = indexPath;
-    if (_sourceToHelp.count > indexPath.row) {
-        _selectedVM = [_sourceToHelp objectAtIndex:indexPath.row];
+    
+    if ((indexPath.section == 0) &&
+        (_sourceToHelp.count > indexPath.row)) {
+            _selectedVM = [_sourceToHelp objectAtIndex:indexPath.row];
+    }else if ((indexPath.section == 1) &&
+              (_sourceToHelp_done.count > indexPath.row)){
+        _selectedVM = [_sourceToHelp_done objectAtIndex:indexPath.row];
     }
+    
     if (indexPath) {
         //点击图片
         [self showShareViewWithToHideDeleteButton:NO];
     }
+    
 }
+
 - (void)tapToHelpTableViewGesture:(UITapGestureRecognizer *)gesture {
     CGPoint location = [gesture locationInView:_toHelpTableView];
     NSIndexPath *indexPath = [_toHelpTableView indexPathForRowAtPoint:location];
     _selectedIndexPath_toHelp = indexPath;
-    PIEPageVM* vm = [_sourceToHelp objectAtIndex:indexPath.row];
+    
+    PIEPageVM *vm;
+    if (indexPath.section == 0) {
+       vm = [_sourceToHelp objectAtIndex:indexPath.row];
+    }else if (indexPath.section == 1){
+       vm = [_sourceToHelp_done objectAtIndex:indexPath.row];
+    }
+    
     _selectedVM = vm;
     if (indexPath) {
         PIEProceedingToHelpTableViewCell *cell = (PIEProceedingToHelpTableViewCell *)
@@ -234,7 +250,13 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
         if (success) {
             [Hud success:@"删除了一条帮p" inView:_toHelpTableView];
         }
-        [_sourceToHelp removeObjectAtIndex:indexPath.row];
+        
+        if (indexPath.section == 0) {
+            [_sourceToHelp removeObjectAtIndex:indexPath.row];
+        }else if (indexPath.section == 1){
+            [_sourceToHelp_done removeObjectAtIndex:indexPath.row];
+        }
+        
         [_toHelpTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }];
     
@@ -335,7 +357,6 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PIEProceedingToHelpTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:PIEProceedingToHelpTableViewCellIdentifier];
     
-    
     if (indexPath.section == 0) {
         /* 未完成的任务 */
         [cell injectSource:[_sourceToHelp objectAtIndex:indexPath.row]];
@@ -389,6 +410,7 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     WS(ws);
     [_toHelpTableView.mj_footer endRefreshing];
     _currentIndex_ToHelp = 1;
+    _currentIndex_ToHelp_done = 1;
     
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     _timeStamp_toHelp = [[NSDate date] timeIntervalSince1970];
@@ -409,6 +431,8 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
             }
             [ws.sourceToHelp removeAllObjects];
             [ws.sourceToHelp addObjectsFromArray:sourceAgent];
+            
+            [ws.sourceToHelp_done removeAllObjects];
         }
         
         [[NSOperationQueue mainQueue]
@@ -530,8 +554,12 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
 }
 -(void)tapShare7 {
     [self.shareView dismiss];
-    
-    PIEPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath_toHelp.row];
+    PIEPageVM *vm;
+    if (_selectedIndexPath_toHelp.section == 0) {
+        vm = [_sourceToHelp objectAtIndex:_selectedIndexPath_toHelp.row];
+    }else if (_selectedIndexPath_toHelp.section == 1){
+        vm = [_sourceToHelp_done objectAtIndex:_selectedIndexPath_toHelp.row];
+    }
     [self deleteOneToHelp:_selectedIndexPath_toHelp ID:vm.ID];
 }
 
