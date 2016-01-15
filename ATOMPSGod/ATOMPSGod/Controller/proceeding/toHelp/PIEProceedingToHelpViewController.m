@@ -212,8 +212,12 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
             
         }
         else if (CGRectContainsPoint(cell.downloadView.frame, p)) {
+            [Hud activity:@"下载图片中..."];
             [DDService sd_downloadImage:[vm.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION] withBlock:^(UIImage *image) {
+                [Hud dismiss];
+                
                 if (image) {
+                    
                     UIImageWriteToSavedPhotosAlbum(image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
                 }
             }];
