@@ -55,7 +55,8 @@
 
         _label_time.textColor =[UIColor colorWithHex:0x000000 andAlpha:0.4];
         [_label_time setFont:[UIFont lightTupaiFontOfSize:10]];
-
+        
+        _textView_content.font = [UIFont lightTupaiFontOfSize:14];
         [self setupTableView];
         [self addEvent];
     }
@@ -287,7 +288,9 @@
 //            _textView_content.attributedText = attrStr;
 //        }
     _textView_content.text = vm.content;
-    [self getDataSource];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self getDataSource];
+    });
 }
 
 
