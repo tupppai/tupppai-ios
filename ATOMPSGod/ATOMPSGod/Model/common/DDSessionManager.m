@@ -59,7 +59,16 @@ static DDSessionManager *_shareHTTPSessionManager = nil;
     return _shareHTTPSessionManager;
 }
 
+/**
+ *  清理本地cookies，并且重置shareHttpSessionManger
+ */
 + (void)resetSharedInstance {
+    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL: _shareHTTPSessionManager.baseURL];
+    for (NSHTTPCookie *cookie in cookies)
+    {
+        [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
+    }
+    
     _shareHTTPSessionManager = nil;
     NSString *baseURL = [[NSUserDefaults standardUserDefaults] valueForKey:@"BASEURL"];
     _shareHTTPSessionManager = [[DDSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseURL]];

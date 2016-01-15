@@ -24,7 +24,7 @@
 #import "UINavigationBar+Awesome.h"
 #import "PIEModifyProfileViewController.h"
 #import "DDNavigationController.h"
-#import <ReactiveCocoa/ReactiveCocoa.h>
+#import "ReactiveCocoa/ReactiveCocoa.h"
 
 typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     PIEMeViewControllerNavigationBarStyleTranslucentStyle,
@@ -488,5 +488,28 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
         [self.messageButton setImage:[UIImage imageNamed:@"pie_message_new_white"] forState:UIControlStateSelected];
     }
 }
+
+- (void)sendUnbindCellphoneRequest
+{
+    /*
+     auth/unbind, POST, (type = weixin, weibo or qq)
+     */
+    [Hud activity:@"测试版本的隐藏功能：解绑当下第三方用户的openid和之前绑定的手机号码..."];
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"type"] = @"weibo";
+    [DDBaseService POST:params url:@"auth/unbind"
+                  block:^(id responseObject) {
+                      [Hud dismiss];
+                      
+                      NSString *openid =
+                      [[NSUserDefaults standardUserDefaults] objectForKey:PIETouristOpenIdKey];
+                      NSString *prompt =
+                      [NSString
+                       stringWithFormat:@"openId = %@ 已经解绑手机号",openid];
+                      
+                      [Hud text:prompt];
+                  }];
+}
+
 
 @end
