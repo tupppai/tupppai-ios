@@ -32,12 +32,17 @@
 
 @property (nonatomic, strong) NSMutableArray<PIEPageVM *> *sourceToHelp;
 
+@property (nonatomic, strong) NSMutableArray<PIEPageVM *> *sourceToHelp_done;
 
 @property (nonatomic, assign) NSInteger currentIndex_ToHelp;
+
+@property (nonatomic, assign) NSInteger currentIndex_ToHelp_done;
 
 @property (nonatomic, assign)  long long timeStamp_toHelp;
 
 @property (nonatomic, assign) BOOL canRefreshToHelpFooter;
+
+@property (nonatomic, assign) BOOL canRefreshToHelpFooter_done;
 
 @property (nonatomic, strong) NSIndexPath* selectedIndexPath_toHelp;
 
@@ -93,7 +98,6 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     // Dispose of any resources that can be recreated.
 }
 
-
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self setupProgressView];
@@ -104,13 +108,19 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
 }
 #pragma mark - init methods
 - (void)configData {
-    _canRefreshToHelpFooter = YES;
-    
-    _isfirstLoadingToHelp   = YES;
-    
-    _currentIndex_ToHelp    = 1;
-    
-    _sourceToHelp           = [NSMutableArray<PIEPageVM *> new];
+    _canRefreshToHelpFooter      = YES;
+
+    _canRefreshToHelpFooter_done = YES;
+
+    _isfirstLoadingToHelp        = YES;
+
+    _currentIndex_ToHelp         = 1;
+
+    _currentIndex_ToHelp_done    = 1;
+
+    _sourceToHelp                = [NSMutableArray<PIEPageVM *> new];
+
+    _sourceToHelp_done           = [NSMutableArray<PIEPageVM *> new];
 }
 
 - (void)configToHelpTableView {
@@ -147,8 +157,6 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     [_toHelpTableView addGestureRecognizer:_longPressGestureToHelp];
     
 }
-
-
 - (void)longPressOnToHelp:(UILongPressGestureRecognizer *)gesture {
     CGPoint location = [gesture locationInView:_toHelpTableView];
     NSIndexPath *indexPath = [_toHelpTableView indexPathForRowAtPoint:location];
@@ -161,7 +169,6 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
         [self showShareViewWithToHideDeleteButton:NO];
     }
 }
-
 - (void)tapToHelpTableViewGesture:(UITapGestureRecognizer *)gesture {
     CGPoint location = [gesture locationInView:_toHelpTableView];
     NSIndexPath *indexPath = [_toHelpTableView indexPathForRowAtPoint:location];
@@ -271,7 +278,15 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     if (_canRefreshToHelpFooter) {
         [self getMoreRemoteSourceToHelp];
     } else {
-        [_toHelpTableView.mj_footer endRefreshingWithNoMoreData];
+        /*
+            开始加载“历史任务”
+         */
+        if (_canRefreshToHelpFooter_done) {
+            [self getMoreRemoteSourceToHelp_done];
+        }else{
+            [_toHelpTableView.mj_footer endRefreshingWithNoMoreData];
+        }
+        
     }
    
 }
@@ -306,12 +321,31 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
 
 #pragma mark - <UITableViewDataSource>
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _sourceToHelp.count;
+    if (section == 0) {
+        /* 未完成的任务 */
+        return _sourceToHelp.count;
+    }else if(section == 1){
+        /* 已完成的任务（历史任务） */
+        return  _sourceToHelp_done.count;
+    }
+    
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PIEProceedingToHelpTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:PIEProceedingToHelpTableViewCellIdentifier];
-    [cell injectSource:[_sourceToHelp objectAtIndex:indexPath.row]];
+    
+    
+    if (indexPath.section == 0) {
+        /* 未完成的任务 */
+        [cell injectSource:[_sourceToHelp objectAtIndex:indexPath.row]];
+
+    }else if (indexPath.section == 1){
+        /* 已完成的任务 */
+        [cell injectSource:[_sourceToHelp_done objectAtIndex:indexPath.row]];
+    }else{
+        return nil;
+    }
     return cell;
    
 }
@@ -324,7 +358,13 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    return [PIEProceedingToHelpHeaderView headerView];
+    if (section == 0) {
+        return nil;
+    }else if (section == 1){
+        return [PIEProceedingToHelpHeaderView headerView];
+    }else{
+        return nil;
+    }
 }
 
 #pragma mark - <UITableViewDelegate>
@@ -335,7 +375,13 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 32;
+    if (section == 0) {
+        return 0;
+    }else if (section == 1){
+        return 32;
+    }else{
+        return 0;
+    }
 }
 
 #pragma mark - Fetch remote data
@@ -364,9 +410,13 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
             [ws.sourceToHelp removeAllObjects];
             [ws.sourceToHelp addObjectsFromArray:sourceAgent];
         }
-        NSLog(@"");
-        [ws.toHelpTableView reloadData];
-        [ws.toHelpTableView.mj_header endRefreshing];
+        
+        [[NSOperationQueue mainQueue]
+         addOperationWithBlock:^{
+             [ws.toHelpTableView reloadData];
+             [ws.toHelpTableView.mj_header endRefreshing];
+        }];
+        
     }];
 }
 
@@ -382,6 +432,11 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     [PIEProceedingManager getMyToHelp:param withBlock:^(NSArray *resultArray) {
         if (resultArray.count == 0) {
             _canRefreshToHelpFooter = NO;
+            
+            // 第一次加载第二个section的数据，以后会因为上面_canRefreshToHelpFooter里的设置直接刷新done的数据
+            // 感觉这样有点乱来，会不会引起线程同步的问题？
+            [ws getMoreRemoteSourceToHelp_done];
+            
         } else {
             _canRefreshToHelpFooter = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
@@ -390,10 +445,57 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
                 [sourceAgent addObject:vm];
             }
             [ws.sourceToHelp addObjectsFromArray:sourceAgent];
+            
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                [ws.toHelpTableView reloadData];
+                [ws.toHelpTableView.mj_footer endRefreshing];
+            }];
         }
-        [ws.toHelpTableView reloadData];
-        [ws.toHelpTableView.mj_footer endRefreshing];
     }];
+}
+
+- (void)getMoreRemoteSourceToHelp_done{
+    WS(weakSelf);
+    [_toHelpTableView.mj_header endRefreshing];
+    
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    [param setObject:@(_currentIndex_ToHelp_done) forKey:@"page"];
+    [param setObject:@(SCREEN_WIDTH*0.5) forKey:@"width"];
+    [param setObject:@(_timeStamp_toHelp) forKey:@"last_updated"];
+    [param setObject:@(20) forKey:@"size"];
+    
+    [PIEProceedingManager getMyDone:param
+                          withBlock:^(NSMutableArray *dataArray) {
+                              if (dataArray.count == 0) {
+                                  _canRefreshToHelpFooter_done = NO;
+                              }else{
+                                  _canRefreshToHelpFooter_done = YES;
+                                  
+                                  /*
+                                    NSArray<PIEPageModel *> -> NSArray<PIEPageVM *>
+                                   */
+                                  NSMutableArray<PIEPageVM *> *adhocArray =
+                                  [NSMutableArray<PIEPageVM *> new];
+                                  
+                                  for (PIEPageModel *model in dataArray) {
+                                      PIEPageVM *vm = [[PIEPageVM alloc]
+                                                       initWithPageEntity:model];
+                                      [adhocArray addObject:vm];
+                                  }
+                                  
+                                  [weakSelf.sourceToHelp_done addObjectsFromArray:adhocArray];
+                              }
+                              
+                              [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                                  [weakSelf.toHelpTableView reloadData];
+                                  [weakSelf.toHelpTableView.mj_footer endRefreshing];
+                              }];
+                              
+                          }];
+    
+    
+    _currentIndex_ToHelp_done ++;
+    
 }
 
 

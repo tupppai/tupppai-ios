@@ -195,7 +195,7 @@ typedef NS_ENUM(NSUInteger, PIEProceedingControllerType) {
 {
     if (_segmentedControl == nil) {
         __weak typeof(self) weakSelf = self;
-        _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"我的求P",@"我的帮P"]];
+        _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"我的求P",@"我的任务"]];
         _segmentedControl.frame = CGRectMake(0, 120, SCREEN_WIDTH-40, 45);
         _segmentedControl.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor colorWithHex:0x000000 andAlpha:0.6], NSForegroundColorAttributeName, nil];
         _segmentedControl.selectedTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], NSFontAttributeName, [UIColor blackColor], NSForegroundColorAttributeName, nil];
