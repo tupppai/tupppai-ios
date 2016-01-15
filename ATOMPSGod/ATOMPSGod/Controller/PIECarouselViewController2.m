@@ -94,7 +94,7 @@
         CGFloat width  = SCREEN_WIDTH *scale_h;
         _view_placeHoder = [[UIView alloc]initWithFrame:CGRectMake((self.view.frame.size.width-width)/2, margin_v, width, SCREEN_HEIGHT-margin_v+5)];
         _view_placeHoder.backgroundColor = [UIColor whiteColor];
-        _view_placeHoder.alpha = 0.9;
+        _view_placeHoder.alpha = 0.1;
         _view_placeHoder.layer.cornerRadius = 10;
         _view_placeHoder.clipsToBounds = YES;
         
@@ -343,6 +343,8 @@ CGFloat startPanLocationY;
             } completion:^(BOOL finished) {
                 [_view_placeHoder removeFromSuperview];
             }];
+        } else {
+            _view_placeHoder.alpha = 0.6;
         }
             [self reorderSourceAndScroll];
         

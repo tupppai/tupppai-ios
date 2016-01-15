@@ -83,11 +83,7 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     
 }
 
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"PIEMeScrollUp" object:nil];
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"PIEMeScrollDown" object:nil];
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"updateNoticationStatus" object:nil];
-}
+
 
 
 - (void)setupObserver {
@@ -97,7 +93,6 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     }]map:^id(id value) {
         return value;
     }];
-    
     
     [RACObserve([DDUserManager currentUser], avatar) subscribeNext:^(id x) {
         NSString* avatarUrl = [[DDUserManager currentUser].avatar trimToImageWidth:200];
@@ -109,43 +104,36 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     
     RAC(self.psGodCertificate,hidden) =  [[RACObserve([DDUserManager currentUser], isV) filter:^BOOL(id _) {
         return YES;
-    }]map:^id(id value) {
-        NSNumber *boolNumber;
-        if ([value boolValue]) {
-             boolNumber = @(NO);
-        } else {
-            boolNumber = @(YES);
-        }
-        return boolNumber;
+    }]map:^id(NSNumber* value) {
+        NSNumber* reverseValue = @(![value boolValue]);
+        return reverseValue;
     }];
     
     RAC(self.psGodIcon_big,hidden) =  [[RACObserve([DDUserManager currentUser], isV) filter:^BOOL(id _) {
         return YES;
-    }]map:^id(id value) {
-        NSNumber *boolNumber;
-        if ([value boolValue]) {
-            boolNumber = @(NO);
-        } else {
-            boolNumber = @(YES);
-        }
-        return boolNumber;
+    }]map:^id(NSNumber* value) {
+        NSNumber* reverseValue = @(![value boolValue]);
+        return reverseValue;
     }];
     
     
+    [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:@"PIEMeScrollUp" object:nil]
+     takeUntil:[self rac_willDeallocSignal]]
+     subscribeNext:^(id x) {
+        [self scrollUp];
+    }];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(scrollUp)
-                                                 name:@"PIEMeScrollUp"
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(scrollDown)
-                                                 name:@"PIEMeScrollDown"
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updateNoticationStatus)
-                                                 name:@"updateNoticationStatus"
-                                               object:nil];
-
+    [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:@"PIEMeScrollDown" object:nil]
+      takeUntil:[self rac_willDeallocSignal]]
+     subscribeNext:^(id x) {
+         [self scrollDown];
+     }];
+    
+    [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:@"updateNoticationStatus" object:nil]
+      takeUntil:[self rac_willDeallocSignal]]
+     subscribeNext:^(id x) {
+         [self updateNoticationStatus];
+     }];
     
 }
 - (void)setupNavBar {
@@ -413,6 +401,7 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
         make.right.equalTo(self.view);
         make.bottom.equalTo(self.view);
     }];
+
 
 }
 

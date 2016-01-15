@@ -137,6 +137,7 @@
         cell.swipeView.dataSource = self;
         cell.swipeView.tag        = indexPath.row;
         cell.selectionStyle       = UITableViewCellSelectionStyleNone;
+        [cell.swipeView reloadData];
         return cell;
     }
     return nil;
@@ -260,12 +261,16 @@
         [view addSubview:imageView];
     }
     
-    PIEPageVM* vm = [[_source objectAtIndex:swipeView.tag].threads objectAtIndex:index];
-    for (UIView *subView in view.subviews) {
-        if([subView isKindOfClass:[UIImageView class]]){
-            UIImageView *imageView = (UIImageView *)subView;
-            NSString* urlString = [vm.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION*0.2];
-            [imageView sd_setImageWithURL:[NSURL URLWithString:urlString]];
+    NSArray* threads = [_source objectAtIndex:swipeView.tag].threads;
+    if (threads.count > index) {
+        PIEPageVM* vm = [[_source objectAtIndex:swipeView.tag].threads objectAtIndex:index];
+        for (UIView *subView in view.subviews) {
+            if([subView isKindOfClass:[UIImageView class]]){
+                UIImageView *imageView = (UIImageView *)subView;
+                NSString* urlString = [vm.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION*0.2];
+                [imageView sd_setImageWithURL:[NSURL URLWithString:urlString]];
+                break;
+            }
         }
     }
     return view;

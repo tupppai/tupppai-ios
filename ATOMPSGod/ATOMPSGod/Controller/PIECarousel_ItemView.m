@@ -14,15 +14,13 @@
 #import "PIECommentViewController.h"
 #import "AppDelegate.h"
 #import "PIEActionSheet_PS.h"
-#import "PIEPageManager.h"
-//#import "PIEWebViewViewController.h"
-//#import "DDNavigationController.h"
-//#import "AppDelegate.h"
-#import "PIECellIconStatusChangedNotificationKey.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
 @interface PIECarousel_ItemView()
 @property (nonatomic, strong) NSMutableArray *source_newComment;
 @property (nonatomic, strong)  PIEActionSheet_PS * psActionSheet;
 @property (nonatomic, strong)  PIEShareView * shareView;
+@property (nonatomic, strong)  RACDisposable * loveStatusHander;
+@property (nonatomic, strong)  RACDisposable * likeCountHander;
 
 @end
 
@@ -60,18 +58,11 @@
 
         [self setupTableView];
         [self addEvent];
-        [self setupNotificationObserver];
     }
     return self;
 }
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter]
-     removeObserver:self
-     name:PIESharedIconStatusChangedNotification object:nil];
-    [self removeKVO];
-}
+
 
 - (void)addEvent {
     [_button_avatar addTarget:self action:@selector(pushToUser) forControlEvents:UIControlEventTouchUpInside];
@@ -90,13 +81,7 @@
     [_pageLikeButton addGestureRecognizer:longpressLike];
 }
 
-- (void)setupNotificationObserver
-{
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(updateShareStatus:)
-     name:PIESharedIconStatusChangedNotification object:nil];
-}
+
 
 -(void) tapPS {
     [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
@@ -202,18 +187,6 @@
 
 
 
-#pragma mark - Notification Methods
-- (void)updateShareStatus:(NSNotification *)notification {
-    // _vm.shareCount ++ 这个副作用集中发生在PIEShareView之中。
-    
-    // 重刷UI
-    NSString *numberString = notification.userInfo[PIESharedIconSharedCountKey];
-    _pageButton_share.numberString = numberString;
-    
-}
-
-
-
 #pragma mark - <PIEShareViewDelegate> and its related methods
 
 
@@ -254,8 +227,19 @@
 
 #pragma mark - Setters
 -(void)setVm:(PIEPageVM *)vm {
+    
+    [_loveStatusHander dispose];
+    [_likeCountHander dispose];
+    
     _vm = vm;
-    [self addKVO];
+     _loveStatusHander = [RACObserve(_vm,loveStatus)subscribeNext:^(id x) {
+         self.pageLikeButton.status = [x integerValue];
+     }];
+    _likeCountHander = [RACObserve(_vm,likeCount)subscribeNext:^(id x) {
+        self.pageLikeButton.numberString = x;
+    }];
+    
+//    RAC(self.pageLikeButton,numberString) =  RACObserve(_vm,likeCount);
     _pageButton_comment.numberString = vm.commentCount;
     _pageButton_share.numberString = vm.shareCount;
     _label_time.text = vm.publishTime;
@@ -307,31 +291,5 @@
 }
 
 
-- (void)addKVO {
-    [_vm addObserver:self forKeyPath:@"loveStatus" options:NSKeyValueObservingOptionNew context:NULL];
-    [_vm addObserver:self forKeyPath:@"likeCount" options:NSKeyValueObservingOptionNew context:NULL];
-}
-- (void)removeKVO {
-    [_vm removeObserver:self forKeyPath:@"loveStatus"];
-    [_vm removeObserver:self forKeyPath:@"likeCount"];
-
-//    @try{
-//        [_vm removeObserver:self forKeyPath:@"loveStatus"];
-//        [_vm removeObserver:self forKeyPath:@"likeCount"];
-//    }@catch(id anException){
-//        //do nothing, obviously it wasn't attached because an exception was thrown
-//    }
-}
-
-
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"loveStatus"]) {
-        NSInteger newLovedCount = [[change objectForKey:@"new"]integerValue];
-        self.pageLikeButton.status = newLovedCount;
-    } else     if ([keyPath isEqualToString:@"likeCount"]) {
-        NSInteger newLikeCount = [[change objectForKey:@"new"]integerValue];
-        self.pageLikeButton.number = newLikeCount;
-    }
-}
 
 @end
