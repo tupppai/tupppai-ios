@@ -49,9 +49,10 @@
 - (void)upload:(void (^)(CGFloat percentage,BOOL success))block {
     
     if (self.model.type == PIEPageTypeAsk) {
-        [Hud text:@"正在后台上传你的求P..."];
+        [Hud text:@"正在上传你的求P..." backgroundColor:[UIColor colorWithHex:0x000000 andAlpha:0.3] margin:15 cornerRadius:7];
     } else {
-        [Hud text:@"正在后台上传你的作品..."];
+        [Hud text:@"正在上传你的作品..." backgroundColor:[UIColor colorWithHex:0x000000 andAlpha:0.3] margin:15 cornerRadius:7];
+
     }
     
     PHAsset* asset1;

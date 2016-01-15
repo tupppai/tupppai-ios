@@ -26,13 +26,12 @@
     [_model removeObserver:self forKeyPath:@"loveStatus"];
     [_model removeObserver:self forKeyPath:@"totalPraiseNumber"];
     [_model removeObserver:self forKeyPath:@"followed"];
-
 }
+
 - (instancetype)initWithPageEntity:(PIEPageModel *)entity {
     self = [self init];
     if (self) {
         _model = entity;
-        
         
         [_model addObserver:self forKeyPath:@"loveStatus" options:NSKeyValueObservingOptionNew context:NULL];
         [_model addObserver:self forKeyPath:@"totalPraiseNumber" options:NSKeyValueObservingOptionNew context:NULL];

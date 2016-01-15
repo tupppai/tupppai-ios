@@ -19,7 +19,7 @@
 @property (nonatomic, assign) NSInteger askID;
 @property (nonatomic, assign) NSInteger userID;
 
-//have to be strong since username is reference to model.nickname,syncedwith model.nickname
+//have to be strong since username is reference to model.nickname,synced with model.nickname
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic, strong) NSString *content;
 @property (nonatomic, assign) PIEPageType type;
@@ -28,6 +28,7 @@
 @property (nonatomic, assign) BOOL followed;
 @property (nonatomic, assign) BOOL isMyFan;
 @property (nonatomic, assign) BOOL isV;
+
 @property (nonatomic, strong) NSArray <PIEModelImage*> *models_image;
 @property (nonatomic, strong) NSArray <PIECommentModel*> *models_comment;
 @property (nonatomic, strong) NSArray <PIECategoryModel*> *models_catogory;

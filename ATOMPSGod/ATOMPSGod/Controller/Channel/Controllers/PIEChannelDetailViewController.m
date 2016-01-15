@@ -484,13 +484,13 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 -(void)leesinViewController:(LeesinViewController *)leesinViewController uploadPercentage:(CGFloat)percentage uploadSucceed:(BOOL)success {
     [self.progressView setProgress:percentage animated:YES];
     if (success) {
+        [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
+
         if (leesinViewController.type == LeesinViewControllerTypeAsk) {
             [self getSource_Ask];
         } else {
             [self getSource_Reply:^(BOOL success) {
                 if (success) {
-                    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
-                    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
                 }
             }];
 
@@ -523,7 +523,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
         [self.bottomContainerViewBottomMC setOffset:0];
         [UIView animateWithDuration:0.2
                               delay:2.0
-             usingSpringWithDamping:0.8
+             usingSpringWithDamping:0.88
               initialSpringVelocity:0.5
                             options:UIViewAnimationOptionAllowAnimatedContent
                          animations:^{

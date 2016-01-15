@@ -94,7 +94,7 @@
         CGFloat width  = SCREEN_WIDTH *scale_h;
         _view_placeHoder = [[UIView alloc]initWithFrame:CGRectMake((self.view.frame.size.width-width)/2, margin_v, width, SCREEN_HEIGHT-margin_v+5)];
         _view_placeHoder.backgroundColor = [UIColor whiteColor];
-        _view_placeHoder.alpha = 0.9;
+        _view_placeHoder.alpha = 0.1;
         _view_placeHoder.layer.cornerRadius = 10;
         _view_placeHoder.clipsToBounds = YES;
         
@@ -143,33 +143,56 @@ CGFloat startPanLocationY;
     
     
     PIECommentViewController* vc = [PIECommentViewController new];
-    vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     vc.vm = _currentVM;
+    vc.shouldShowHeaderView = YES;
+//    [vc loadViewIfNeeded];
     DDNavigationController* nav = [[DDNavigationController alloc]initWithRootViewController:vc];
+    nav.view.backgroundColor = [UIColor whiteColor];
+    CGRect frame = self.carousel.currentItemView.frame;
+    frame.origin.y = + (6);
     
-    [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-               CGRect frame = self.carousel.currentItemView.frame;
-               frame.origin.y -= 30;
+    [UIView animateWithDuration:0.3 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:1.0 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+        self.view.backgroundColor = [UIColor whiteColor];
         self.carousel.currentItemView.frame = frame;
-        self.view.backgroundColor = [UIColor blackColor];
-//                    [self.carousel.currentItemView setTransform:CGAffineTransformMakeScale(1.05, 1.05)];
-    } completion:^(BOOL finished) {
-        if (finished) {
-//            [self.carousel.currentItemView setTransform:CGAffineTransformIdentity];
+        self.carousel.currentItemView.transform = CGAffineTransformMakeScale(SCREEN_WIDTH/self.carousel.currentItemView.frame.size.width, SCREEN_WIDTH/self.carousel.currentItemView.frame.size.width);
+
+        self.carousel.currentItemView.layer.cornerRadius = 0;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self presentViewController:nav animated:NO completion:^{
-                self.view.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
+                self.carousel.currentItemView.transform = CGAffineTransformIdentity;
                 CGRect frame = self.carousel.currentItemView.frame;
-                frame.origin.y += 30;
+                frame.origin.y = -6;
                 self.carousel.currentItemView.frame = frame;
+                self.view.backgroundColor = [UIColor clearColor];
             }];
-        }
+        });
+    } completion:^(BOOL finished) {
+        
     }];
     
-    
-    
+//    [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
+//        self.carousel.currentItemView.frame = frame;
+//        self.carousel.currentItemView.transform = CGAffineTransformMakeScale(1.05, 1);
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            [self presentViewController:nav animated:NO completion:^{
+//                self.carousel.currentItemView.transform = CGAffineTransformIdentity;
+//                CGRect frame = self.carousel.currentItemView.frame;
+//                frame.origin.y += 40;
+//                self.carousel.currentItemView.frame = frame;
+//            }];
+//        });
+//        
+//    } completion:^(BOOL finished) {
+//        if (finished) {
+////            [self presentViewController:nav animated:NO completion:^{
+////                CGRect frame = self.carousel.currentItemView.frame;
+////                frame.origin.y += 30;
+////                self.carousel.currentItemView.frame = frame;
+////            }];
+//        }
+//    }];
 }
 - (void)handleGesture_SwipeDown:(id)sender {
-//    [self dismissViewControllerAnimated:NO completion:nil];
 
    [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
        CGRect frame = self.carousel.currentItemView.frame;
@@ -178,7 +201,7 @@ CGFloat startPanLocationY;
        self.view.backgroundColor = [UIColor clearColor];
    } completion:^(BOOL finished) {
        if (finished) {
-           [self dismissViewControllerAnimated:YES completion:nil];
+           [self dismissViewControllerAnimated:NO completion:nil];
        }
    }];
 }
@@ -187,6 +210,7 @@ CGFloat startPanLocationY;
     if (!_carousel) {
         _carousel = [[iCarousel alloc]initWithFrame:CGRectMake(0, margin_v, self.view.frame.size.width, SCREEN_HEIGHT)];
         _carousel.type = iCarouselTypeLinear;
+        _carousel.decelerationRate = 0.5;
         _carousel.backgroundColor = [UIColor clearColor];
         _carousel.delegate = self;
         _carousel.dataSource = self;
@@ -343,6 +367,8 @@ CGFloat startPanLocationY;
             } completion:^(BOOL finished) {
                 [_view_placeHoder removeFromSuperview];
             }];
+        } else {
+            _view_placeHoder.alpha = 0.6;
         }
             [self reorderSourceAndScroll];
         
@@ -370,6 +396,7 @@ CGFloat startPanLocationY;
             self.carousel.currentItemView.frame = frame;
         } completion:nil];
     }
+    
 }
 - (void)reorderSourceAndScroll {
     //初始化，把传进来的vm重组，放在原图的下一位，被滚动到此位置。

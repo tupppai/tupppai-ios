@@ -8,10 +8,10 @@
 
 #import "DDUserManager.h"
 #import "ATOMUserDao.h"
+
+
 @implementation DDUserManager
 
-static dispatch_once_t onceToken;
-static  PIEUserModel* _currentUser;
 
 //- (instancetype)init
 //{
@@ -20,15 +20,32 @@ static  PIEUserModel* _currentUser;
 //    }
 //    return self;
 //}
+static  PIEUserModel* shareUser = nil;
 
 + (PIEUserModel *)currentUser {
-//    if (!_currentUser) {
-//        _currentUser = [PIEUserModel new];
-//    }
-    dispatch_once(&onceToken, ^{
-        _currentUser = [PIEUserModel new];
-    });
-    return _currentUser;
+    
+/*   
+ First of all when static is declared within function, it is declared only once. So, the line
+Will be executed only once when the function gets called for first time.
+ 
+ In the next line when you use dispath_once, it will be executed for only once. So the creation of shareUser will be done once only. So, thats a perfect way to create a singleton class.
+ 
+ 
+ static  PIEUserModel* shareUser = nil;
+ 
+ static dispatch_once_t onceToken;
+ dispatch_once(&onceToken, ^{
+ shareUser = [PIEUserModel new];
+ });
+ return shareUser;
+ 
+*/
+    
+
+    if (shareUser == nil) {
+        shareUser = [PIEUserModel new];
+    }
+    return shareUser;
 }
 
 
@@ -69,15 +86,7 @@ static  PIEUserModel* _currentUser;
 }
 
 +(void)clearCurrentUser {
-    _currentUser = nil;
-    _currentUser = [PIEUserModel new];
-//    _currentUser.uid = 0;
-//    _currentUser.nickname = @"游客";
-//    _currentUser.mobile = @"-1";
-//    _currentUser.avatar = @"";
-//    _currentUser.bindWechat = NO;
-//    _currentUser.bindWeibo = NO;
-//    _currentUser.bindQQ = NO;
+    self.currentUser = nil;
 }
 
 
