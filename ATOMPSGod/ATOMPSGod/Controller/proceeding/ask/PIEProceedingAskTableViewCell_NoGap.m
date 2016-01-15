@@ -76,9 +76,15 @@
         NSMutableDictionary* param = [NSMutableDictionary new];
         [param setObject:_contentTextField.text forKey:@"desc"];
         [param setObject:@(_vmAsk1.askID) forKey:@"ask_id"];
+        
+        [Hud activity:@"修改描述中..."];
         [DDService editAsk:param withBlock:^(BOOL success) {
+            
+            [Hud dismiss];
             if (!success) {
                 _contentTextField.text = _vmAsk1.content;
+            }else{
+                [Hud text:@"描述修改成功"];
             }
         }];
     }

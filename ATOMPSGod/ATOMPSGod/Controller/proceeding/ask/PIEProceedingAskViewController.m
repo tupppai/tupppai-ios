@@ -110,8 +110,7 @@ static NSString *PIEProceedingAskTableViewCell_NoGapIdentifier =
     _askTableView.rowHeight            = UITableViewAutomaticDimension;
     _askTableView.separatorStyle       = UITableViewCellSeparatorStyleNone;
     
-//    UINib* nib = [UINib nibWithNibName:@"PIEProceedingAskTableViewCell" bundle:nil];
-//    [_askTableView registerNib:nib forCellReuseIdentifier:PIEProceedingAskTableViewCellIdentifier];
+
     
     UINib* nib2 = [UINib nibWithNibName:@"PIEProceedingAskTableViewCell_NoGap" bundle:nil];
     [_askTableView registerNib:nib2 forCellReuseIdentifier:PIEProceedingAskTableViewCell_NoGapIdentifier];
