@@ -22,6 +22,7 @@
 #import "PIECategoryModel.h"
 #import "LeesinViewController.h"
 #import "MRNavigationBarProgressView.h"
+#import "PIEProceedingToHelpHeaderView.h"
 /* Variables */
 @interface PIEProceedingToHelpViewController ()<LeesinViewControllerDelegate>
 
@@ -30,6 +31,7 @@
 @property (nonatomic, assign) BOOL isfirstLoadingToHelp;
 
 @property (nonatomic, strong) NSMutableArray<PIEPageVM *> *sourceToHelp;
+
 
 @property (nonatomic, assign) NSInteger currentIndex_ToHelp;
 
@@ -81,7 +83,6 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     // Do any additional setup after loading the view.
     [self configData];
     
-    
     [self configToHelpTableView];
     
     [self setupGestures];
@@ -129,7 +130,6 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     
     UINib* nib = [UINib nibWithNibName:@"PIEProceedingToHelpTableViewCell" bundle:nil];
     [_toHelpTableView registerNib:nib forCellReuseIdentifier:PIEProceedingToHelpTableViewCellIdentifier];
-    
     
     [self.view addSubview:_toHelpTableView];
     [_toHelpTableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -316,12 +316,26 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
    
 }
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
+
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    return [PIEProceedingToHelpHeaderView headerView];
+}
 
 #pragma mark - <UITableViewDelegate>
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return UITableViewAutomaticDimension;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 32;
 }
 
 #pragma mark - Fetch remote data
