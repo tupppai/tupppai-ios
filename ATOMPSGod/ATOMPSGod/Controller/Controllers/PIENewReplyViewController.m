@@ -279,13 +279,13 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     
     PIEPageManager *pageManager = [PIEPageManager new];
     [pageManager pullReplySource:param block:^(NSMutableArray *array) {
-        if (array.count) {
-            [ws.sourceReply addObjectsFromArray:array] ;
-            _canRefreshFooter_reply = YES;
-        }
-        else {
+        if (array.count < 15) {
             _canRefreshFooter_reply = NO;
         }
+        else {
+            _canRefreshFooter_reply = YES;
+        }
+        [ws.sourceReply addObjectsFromArray:array] ;
         [ws.tableViewReply reloadData];
         [ws.tableViewReply.mj_footer endRefreshing];
     }];
@@ -302,6 +302,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     if (_canRefreshFooter_reply && !_tableViewReply.mj_header.isRefreshing) {
         [self getMoreRemoteReplySource];
     } else {
+        [Hud text:@"已经拉到底啦"];
         [_tableViewReply.mj_footer endRefreshing];
     }
 }

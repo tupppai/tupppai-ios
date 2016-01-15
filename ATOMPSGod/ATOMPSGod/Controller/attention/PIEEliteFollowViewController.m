@@ -373,17 +373,17 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
     [param setObject:@(_currentIndex_follow) forKey:@"page"];
     [param setObject:@(15) forKey:@"size"];
     [PIEEliteManager getMyFollow:param withBlock:^(NSMutableArray *returnArray) {
-        if (returnArray.count == 0) {
+        if (returnArray.count < 15) {
             _canRefreshFooterFollow = NO;
         } else {
             _canRefreshFooterFollow = YES;
-            NSMutableArray* sourceAgent = [NSMutableArray new];
-            for (PIEPageModel *entity in returnArray) {
-                PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
-                [sourceAgent addObject:vm];
-            }
-            [ws.sourceFollow addObjectsFromArray:sourceAgent];
         }
+        NSMutableArray* sourceAgent = [NSMutableArray new];
+        for (PIEPageModel *entity in returnArray) {
+            PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
+            [sourceAgent addObject:vm];
+        }
+        [ws.sourceFollow addObjectsFromArray:sourceAgent];
         [ws.tableFollow reloadData];
         [ws.tableFollow.mj_footer endRefreshing];
     }];

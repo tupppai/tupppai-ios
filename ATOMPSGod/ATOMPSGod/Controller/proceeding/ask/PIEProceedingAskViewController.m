@@ -159,6 +159,7 @@ static NSString *PIEProceedingAskTableViewCell_NoGapIdentifier =
     if (_canRefreshAskFooter) {
         [self getMoreRemoteSourceMyAsk];
     }else{
+        [Hud text:@"已经拉到底啦"];
         [_askTableView.mj_footer endRefreshingWithNoMoreData];
     }
 }
@@ -222,12 +223,12 @@ static NSString *PIEProceedingAskTableViewCell_NoGapIdentifier =
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getAskWithReplies:param withBlock:^(NSArray *returnArray) {
         ws.isfirstLoadingAsk = NO;
-        if (returnArray.count == 0) {
+        if (returnArray.count < 15) {
             _canRefreshAskFooter = NO;
         } else {
             _canRefreshAskFooter = YES;
-            [ws.sourceAsk addObjectsFromArray:returnArray];
         }
+        [ws.sourceAsk addObjectsFromArray:returnArray];
         [ws.askTableView reloadData];
         [ws.askTableView.mj_footer endRefreshing];
     }];
