@@ -74,11 +74,11 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)commonInit
 {
     _shouldShowHeaderView = YES;
-//    _shouldDownloadVMSource = NO;
     
     // Register a SLKTextView subclass, if you need any special appearance and/or behavior customisation.
     [self registerClassForTextView:[PIECommentTextView class]];
 }
+
 
 #pragma mark - View lifecycle
 
@@ -153,8 +153,8 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
-        [MobClick beginLogPageView:@"进入浏览图片页"];
+    self.view.backgroundColor = [UIColor whiteColor];
+    [MobClick beginLogPageView:@"进入浏览图片页"];
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -167,7 +167,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     float scrollOffset = scrollView.contentOffset.y;
     
     if (scrollOffset < - 90) {
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:NO completion:nil];
     }
 }
 

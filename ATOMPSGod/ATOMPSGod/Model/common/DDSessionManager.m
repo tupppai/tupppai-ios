@@ -10,27 +10,18 @@
 
 @implementation DDSessionManager
 
-static dispatch_once_t onceToken;
-static DDSessionManager *_shareHTTPSessionManager = nil;
+static DDSessionManager *shareInstance = nil;
 
 + (instancetype)shareHTTPSessionManager {
-    dispatch_once(&onceToken, ^{
-        
-        
-//        NSString *baseURL = @"http://api.qiupsdashen.com/";
-
+    if (shareInstance == nil) {
         NSString *baseURL = [[NSUserDefaults standardUserDefaults] valueForKey:@"BASEURL"];
+        shareInstance = [[DDSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseURL]];
+        shareInstance.requestSerializer = [AFHTTPRequestSerializer serializer];
+        shareInstance.responseSerializer = [AFJSONResponseSerializer serializer];
+        [shareInstance.requestSerializer setTimeoutInterval:8];
+    }
+    return shareInstance;
 
-//#if DEBUG
-//        NSString *baseURL = @"http://api.loiter.us/";
-//#elif ADHOC
-//        NSString *baseURL = @"http://api.loiter.us/";
-//#else
-//        NSString *baseURL = @"http://api.qiupsdashen.com/";
-//#endif
-
-        
-        _shareHTTPSessionManager = [[DDSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseURL]];
 //        [_shareHTTPSessionManager.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
 //            switch (status) {
 //                case AFNetworkReachabilityStatusUnknown:
@@ -50,28 +41,20 @@ static DDSessionManager *_shareHTTPSessionManager = nil;
 //            }
 //        }];
 //        [_shareHTTPSessionManager.reachabilityManager startMonitoring];
-        _shareHTTPSessionManager.requestSerializer = [AFHTTPRequestSerializer serializer];
-        _shareHTTPSessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
-//        [_shareHTTPSessionManager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
-//        [_shareHTTPSessionManager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
-        [_shareHTTPSessionManager.requestSerializer setTimeoutInterval:8];
-    });
-    return _shareHTTPSessionManager;
+
 }
 
 /**
  *  清理本地cookies，并且重置shareHttpSessionManger
  */
 + (void)resetSharedInstance {
-    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL: _shareHTTPSessionManager.baseURL];
+    NSArray *cookies =
+    [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL: shareInstance.baseURL];
     for (NSHTTPCookie *cookie in cookies)
     {
         [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
     }
-    
-    _shareHTTPSessionManager = nil;
-    NSString *baseURL = [[NSUserDefaults standardUserDefaults] valueForKey:@"BASEURL"];
-    _shareHTTPSessionManager = [[DDSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseURL]];
+    shareInstance = nil;
 }
 @end
 

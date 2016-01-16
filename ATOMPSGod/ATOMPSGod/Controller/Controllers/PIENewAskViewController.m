@@ -307,6 +307,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [self.progressView setProgress:percentage animated:YES];
     if  (success) {
         [self getRemoteAskSource:nil];
+        [self.collectionView_ask scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
     }
 }
 

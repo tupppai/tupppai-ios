@@ -223,7 +223,7 @@
         _usernameLabel = [UILabel new];
         _usernameLabel.userInteractionEnabled = YES;
         _usernameLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.9];
-        _usernameLabel.font = [UIFont lightTupaiFontOfSize:13];
+        _usernameLabel.font = [UIFont mediumTupaiFontOfSize:13];
     }
     return _usernameLabel;
 }
@@ -267,6 +267,7 @@
 - (PIETextView_linkDetection *)textView_content {
     if (!_textView_content) {
         _textView_content = [PIETextView_linkDetection new];
+        _textView_content.font = [UIFont lightTupaiFontOfSize:14];
     }
     return _textView_content;
 }

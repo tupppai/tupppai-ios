@@ -120,6 +120,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     [self.progressView setProgress:percentage animated:YES];
     if  (success) {
         [self getRemoteReplySource];
+        [self.tableViewReply scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
     }
 }
 

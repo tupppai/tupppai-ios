@@ -195,7 +195,11 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     [self.progressView setProgress:percentage animated:YES];
     if (success) {
         if (leesinViewController.type == LeesinViewControllerTypeReplyNoMissionSelection) {
-            [self getSource_Reply];
+            [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
+            [self getSource_Reply:^(BOOL success) {
+                if (success) {
+                }
+            }];
         }
     }
 }
@@ -203,7 +207,7 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 #pragma mark - <UITableViewDelegate>
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    [UIView animateWithDuration:0.1
+    [UIView animateWithDuration:0.4
                      animations:^{
                          [self.goPsButtonBottomConstraint setOffset:50.0];
                          [self.goPsButton layoutIfNeeded];
@@ -215,8 +219,8 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     [self.goPsButtonBottomConstraint setOffset:-12];
-    [UIView animateWithDuration:0.2
-                          delay:1.0
+    [UIView animateWithDuration:0.8
+                          delay:2.0
          usingSpringWithDamping:0.67
           initialSpringVelocity:0.5
                         options:UIViewAnimationOptionCurveEaseInOut
@@ -260,14 +264,14 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 
 - (void)didPullRefreshDown:(UITableView *)tableView
 {
-    [self getSource_Reply];
+    [self getSource_Reply:nil];
 }
 - (void)didPullRefreshUp:(UITableView *)tableView
 {
     [self getMoreSource_Reply];
 }
 
-- (void)getSource_Reply {
+- (void)getSource_Reply:(void (^)(BOOL success))block {
     WS(ws);
     _currentPage_Reply = 1;
     NSMutableDictionary *params  = [NSMutableDictionary dictionary];
@@ -282,7 +286,11 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     [PIEChannelManager getSource_channelPages:params resultBlock:^(NSMutableArray<PIEPageVM *> *pageArray) {
         [_source_reply removeAllObjects];
         [_source_reply addObjectsFromArray:pageArray];
+        if (block) {
+            block(YES);
+        }
     } completion:^{
+
         [ws.tableView.mj_header endRefreshing];
         [ws.tableView reloadData];
     }];
