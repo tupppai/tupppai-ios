@@ -116,7 +116,7 @@
 
 -(void) showInfoRET:(NSNotification *)notification {
     NSString* info = [[notification userInfo] valueForKey:@"info"];
-    NSString *prompt = [NSString stringWithFormat:@"ret != 1, %@", info];
+    NSString *prompt = [NSString stringWithFormat:@"%@", info];
     [Hud text:prompt inView:self.view];
 }
 

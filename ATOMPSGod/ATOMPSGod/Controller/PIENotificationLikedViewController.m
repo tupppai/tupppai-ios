@@ -142,10 +142,7 @@
                 [self.navigationController pushViewController:vc animated:YES];
        } else  if (CGRectContainsPoint(cell.pageImageView.frame,p)) {
                 PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-                PIEPageVM* pageVM = [PIEPageVM new];
-                pageVM.ID = vm.targetID;
-                pageVM.askID = vm.askID;
-                pageVM.type = vm.targetType;
+                PIEPageVM* pageVM = [self transformNotificationVMToPageVM:vm];
                 vc.pageVM = pageVM;
                 [self.navigationController presentViewController:vc animated:YES completion:nil];
 
@@ -193,6 +190,20 @@
     return YES;
 }
 
+#pragma mark - private helpers
+- (PIEPageVM*)transformNotificationVMToPageVM:(PIENotificationVM*)vm {
+    PIEPageModel* model = [PIEPageModel new];
+    model.ID = vm.model.targetID;
+    model.type = vm.model.targetType;
+    model.imageURL = vm.model.imageUrl;
+    model.avatar = vm.model.avatarUrl;
+    model.askID = vm.model.askID;
+    model.nickname = vm.model.username;
+    model.uid = vm.model.senderID;
+    model.uploadTime = vm.model.time;
+    PIEPageVM* pageVM  = [[PIEPageVM alloc]initWithPageEntity:model];
+    return pageVM;
+}
 
 
 @end

@@ -350,7 +350,7 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     if (section == 0) {
         /* 未完成的任务 */
         return _sourceToHelp.count;
-    }else if(section == 1){
+    } else if(section == 1){
         /* 已完成的任务（历史任务） */
         return  _sourceToHelp_done.count;
     }
@@ -564,6 +564,8 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     }else if (_selectedIndexPath_toHelp.section == 1){
         vm = [_sourceToHelp_done objectAtIndex:_selectedIndexPath_toHelp.row];
     }
+    
+    NSLog(@"tapShare7%@",vm);
     [self deleteOneToHelp:_selectedIndexPath_toHelp ID:vm.ID];
 }
 
@@ -631,6 +633,7 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     if (!_shareView) {
         _shareView = [PIEProceedingShareView new];
         _shareView.delegate = self;
+        
     }
     return _shareView;
 }
