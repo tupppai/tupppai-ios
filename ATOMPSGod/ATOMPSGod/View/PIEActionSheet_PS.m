@@ -58,7 +58,9 @@
     [DDService signProceeding:param withBlock:^(NSString *imageUrl) {
         if (imageUrl != nil) {
             if (shouldDownload) {
+                [Hud activity:@"下载图片中..."];
                 [DDService sd_downloadImage:imageUrl withBlock:^(UIImage *image) {
+                    [Hud dismiss];
                     UIImageWriteToSavedPhotosAlbum(image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
                 }];
             }

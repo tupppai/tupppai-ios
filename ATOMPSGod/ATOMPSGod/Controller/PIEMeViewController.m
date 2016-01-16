@@ -24,7 +24,7 @@
 #import "UINavigationBar+Awesome.h"
 #import "PIEModifyProfileViewController.h"
 #import "DDNavigationController.h"
-#import <ReactiveCocoa/ReactiveCocoa.h>
+#import "ReactiveCocoa/ReactiveCocoa.h"
 
 typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     PIEMeViewControllerNavigationBarStyleTranslucentStyle,
@@ -129,13 +129,25 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
          [self scrollDown];
      }];
     
-    [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:@"updateNoticationStatus" object:nil]
+    [[[[NSNotificationCenter defaultCenter]
+       rac_addObserverForName:PIEUpdateNotificationStatusNotification
+       object:nil]
       takeUntil:[self rac_willDeallocSignal]]
      subscribeNext:^(id x) {
-         [self updateNoticationStatus];
+         [self updateNotificationStatus];
      }];
     
 }
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"PIEMeScrollUp" object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"PIEMeScrollDown" object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:PIEUpdateNotificationStatusNotification object:nil];
+}
+
+
+    
+
 - (void)setupNavBar {
     UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
     backButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -179,7 +191,9 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
      */
     [self toggleNavigationBarStyle:self.currentNavigationBarStyle];
     
-    [self updateNoticationStatus];
+    
+    [self updateNotificationStatus];
+
     [MobClick beginLogPageView:@"进入我的"];
 }
 -(void)viewWillDisappear:(BOOL)animated {
@@ -233,8 +247,9 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
 }
 
 
-- (void)updateNoticationStatus {
-    if ( [[[NSUserDefaults standardUserDefaults]objectForKey:@"NotificationNew"]boolValue]) {
+- (void)updateNotificationStatus {
+    if ( [[[NSUserDefaults
+            standardUserDefaults]objectForKey:PIEHasNewNotificationFlagKey] boolValue]) {
         UIButton *btn =  self.navigationItem.rightBarButtonItem.customView;
         btn.selected = YES;
     } else {
@@ -467,5 +482,28 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
         [self.messageButton setImage:[UIImage imageNamed:@"pie_message_new_white"] forState:UIControlStateSelected];
     }
 }
+
+- (void)sendUnbindCellphoneRequest
+{
+    /*
+     auth/unbind, POST, (type = weixin, weibo or qq)
+     */
+    [Hud activity:@"测试版本的隐藏功能：解绑当下第三方用户的openid和之前绑定的手机号码..."];
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"type"] = @"weibo";
+    [DDBaseService POST:params url:@"auth/unbind"
+                  block:^(id responseObject) {
+                      [Hud dismiss];
+                      
+                      NSString *openid =
+                      [[NSUserDefaults standardUserDefaults] objectForKey:PIETouristOpenIdKey];
+                      NSString *prompt =
+                      [NSString
+                       stringWithFormat:@"openId = %@ 已经解绑手机号",openid];
+                      
+                      [Hud text:prompt];
+                  }];
+}
+
 
 @end

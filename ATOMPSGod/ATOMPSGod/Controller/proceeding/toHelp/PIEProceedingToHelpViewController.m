@@ -22,6 +22,7 @@
 #import "PIECategoryModel.h"
 #import "LeesinViewController.h"
 #import "MRNavigationBarProgressView.h"
+#import "PIEProceedingToHelpHeaderView.h"
 /* Variables */
 @interface PIEProceedingToHelpViewController ()<LeesinViewControllerDelegate>
 
@@ -31,11 +32,17 @@
 
 @property (nonatomic, strong) NSMutableArray<PIEPageVM *> *sourceToHelp;
 
+@property (nonatomic, strong) NSMutableArray<PIEPageVM *> *sourceToHelp_done;
+
 @property (nonatomic, assign) NSInteger currentIndex_ToHelp;
 
-@property (nonatomic, assign)  long long timeStamp_toHelp;
+@property (nonatomic, assign) NSInteger currentIndex_ToHelp_done;
+
+@property (nonatomic, assign) long long timeStamp_toHelp;
 
 @property (nonatomic, assign) BOOL canRefreshToHelpFooter;
+
+@property (nonatomic, assign) BOOL canRefreshToHelpFooter_done;
 
 @property (nonatomic, strong) NSIndexPath* selectedIndexPath_toHelp;
 
@@ -61,7 +68,6 @@
 @end
 //
 
-
 //@interface PIEProceedingToHelpViewController (QBImagePickerController)
 //<QBImagePickerControllerDelegate>
 //@end
@@ -81,7 +87,6 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     // Do any additional setup after loading the view.
     [self configData];
     
-    
     [self configToHelpTableView];
     
     [self setupGestures];
@@ -91,7 +96,6 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -103,13 +107,19 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
 }
 #pragma mark - init methods
 - (void)configData {
-    _canRefreshToHelpFooter = YES;
-    
-    _isfirstLoadingToHelp   = YES;
-    
-    _currentIndex_ToHelp    = 1;
-    
-    _sourceToHelp           = [NSMutableArray<PIEPageVM *> new];
+    _canRefreshToHelpFooter      = YES;
+
+    _canRefreshToHelpFooter_done = YES;
+
+    _isfirstLoadingToHelp        = YES;
+
+    _currentIndex_ToHelp         = 1;
+
+    _currentIndex_ToHelp_done    = 1;
+
+    _sourceToHelp                = [NSMutableArray<PIEPageVM *> new];
+
+    _sourceToHelp_done           = [NSMutableArray<PIEPageVM *> new];
 }
 
 - (void)configToHelpTableView {
@@ -130,7 +140,6 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     UINib* nib = [UINib nibWithNibName:@"PIEProceedingToHelpTableViewCell" bundle:nil];
     [_toHelpTableView registerNib:nib forCellReuseIdentifier:PIEProceedingToHelpTableViewCellIdentifier];
     
-    
     [self.view addSubview:_toHelpTableView];
     [_toHelpTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
@@ -148,25 +157,39 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     
 }
 
-
+/** 长按-> 进入一个比较特殊的shareView进行分享 */
 - (void)longPressOnToHelp:(UILongPressGestureRecognizer *)gesture {
     CGPoint location = [gesture locationInView:_toHelpTableView];
     NSIndexPath *indexPath = [_toHelpTableView indexPathForRowAtPoint:location];
     _selectedIndexPath_toHelp = indexPath;
-    if (_sourceToHelp.count > indexPath.row) {
-        _selectedVM = [_sourceToHelp objectAtIndex:indexPath.row];
+    
+    if ((indexPath.section == 0) &&
+        (_sourceToHelp.count > indexPath.row)) {
+            _selectedVM = [_sourceToHelp objectAtIndex:indexPath.row];
+    }else if ((indexPath.section == 1) &&
+              (_sourceToHelp_done.count > indexPath.row)){
+        _selectedVM = [_sourceToHelp_done objectAtIndex:indexPath.row];
     }
+    
     if (indexPath) {
         //点击图片
         [self showShareViewWithToHideDeleteButton:NO];
     }
+    
 }
 
 - (void)tapToHelpTableViewGesture:(UITapGestureRecognizer *)gesture {
     CGPoint location = [gesture locationInView:_toHelpTableView];
     NSIndexPath *indexPath = [_toHelpTableView indexPathForRowAtPoint:location];
     _selectedIndexPath_toHelp = indexPath;
-    PIEPageVM* vm = [_sourceToHelp objectAtIndex:indexPath.row];
+    
+    PIEPageVM *vm;
+    if (indexPath.section == 0) {
+       vm = [_sourceToHelp objectAtIndex:indexPath.row];
+    }else if (indexPath.section == 1){
+       vm = [_sourceToHelp_done objectAtIndex:indexPath.row];
+    }
+    
     _selectedVM = vm;
     if (indexPath) {
         PIEProceedingToHelpTableViewCell *cell = (PIEProceedingToHelpTableViewCell *)
@@ -189,8 +212,12 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
             
         }
         else if (CGRectContainsPoint(cell.downloadView.frame, p)) {
+            [Hud activity:@"下载图片中..."];
             [DDService sd_downloadImage:[vm.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION] withBlock:^(UIImage *image) {
+                [Hud dismiss];
+                
                 if (image) {
+                    
                     UIImageWriteToSavedPhotosAlbum(image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
                 }
             }];
@@ -227,7 +254,13 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
         if (success) {
             [Hud success:@"删除了一条帮p" inView:_toHelpTableView];
         }
-        [_sourceToHelp removeObjectAtIndex:indexPath.row];
+        
+        if (indexPath.section == 0) {
+            [_sourceToHelp removeObjectAtIndex:indexPath.row];
+        }else if (indexPath.section == 1){
+            [_sourceToHelp_done removeObjectAtIndex:indexPath.row];
+        }
+        
         [_toHelpTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }];
     
@@ -271,7 +304,15 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     if (_canRefreshToHelpFooter) {
         [self getMoreRemoteSourceToHelp];
     } else {
-        [_toHelpTableView.mj_footer endRefreshingWithNoMoreData];
+        /*
+            开始加载“历史任务”
+         */
+        if (_canRefreshToHelpFooter_done) {
+            [self getMoreRemoteSourceToHelp_done];
+        }else{
+            [_toHelpTableView.mj_footer endRefreshingWithNoMoreData];
+        }
+        
     }
    
 }
@@ -306,16 +347,50 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
 
 #pragma mark - <UITableViewDataSource>
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _sourceToHelp.count;
+    if (section == 0) {
+        /* 未完成的任务 */
+        return _sourceToHelp.count;
+    }else if(section == 1){
+        /* 已完成的任务（历史任务） */
+        return  _sourceToHelp_done.count;
+    }
+    
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PIEProceedingToHelpTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:PIEProceedingToHelpTableViewCellIdentifier];
-    [cell injectSource:[_sourceToHelp objectAtIndex:indexPath.row]];
+    
+    if (indexPath.section == 0) {
+        /* 未完成的任务 */
+        [cell injectSource:[_sourceToHelp objectAtIndex:indexPath.row]];
+
+    }else if (indexPath.section == 1){
+        /* 已完成的任务 */
+        [cell injectSource:[_sourceToHelp_done objectAtIndex:indexPath.row]];
+    }else{
+        return nil;
+    }
     return cell;
    
 }
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
+
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return nil;
+    }else if (section == 1){
+        return [PIEProceedingToHelpHeaderView headerView];
+    }else{
+        return nil;
+    }
+}
 
 #pragma mark - <UITableViewDelegate>
 
@@ -324,11 +399,22 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     return UITableViewAutomaticDimension;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (section == 0) {
+        return 0;
+    }else if (section == 1){
+        return 32;
+    }else{
+        return 0;
+    }
+}
+
 #pragma mark - Fetch remote data
 - (void)getRemoteSourceToHelp {
     WS(ws);
     [_toHelpTableView.mj_footer endRefreshing];
     _currentIndex_ToHelp = 1;
+    _currentIndex_ToHelp_done = 1;
     
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     _timeStamp_toHelp = [[NSDate date] timeIntervalSince1970];
@@ -349,10 +435,16 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
             }
             [ws.sourceToHelp removeAllObjects];
             [ws.sourceToHelp addObjectsFromArray:sourceAgent];
+            
+            [ws.sourceToHelp_done removeAllObjects];
         }
-        NSLog(@"");
-        [ws.toHelpTableView reloadData];
-        [ws.toHelpTableView.mj_header endRefreshing];
+        
+        [[NSOperationQueue mainQueue]
+         addOperationWithBlock:^{
+             [ws.toHelpTableView reloadData];
+             [ws.toHelpTableView.mj_header endRefreshing];
+        }];
+        
     }];
 }
 
@@ -368,6 +460,11 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     [PIEProceedingManager getMyToHelp:param withBlock:^(NSArray *resultArray) {
         if (resultArray.count == 0) {
             _canRefreshToHelpFooter = NO;
+            
+            // 第一次加载第二个section的数据，以后会因为上面_canRefreshToHelpFooter里的设置直接刷新done的数据
+            // 感觉这样有点乱来，会不会引起线程同步的问题？
+            [ws getMoreRemoteSourceToHelp_done];
+            
         } else {
             _canRefreshToHelpFooter = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
@@ -376,10 +473,57 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
                 [sourceAgent addObject:vm];
             }
             [ws.sourceToHelp addObjectsFromArray:sourceAgent];
+            
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                [ws.toHelpTableView reloadData];
+                [ws.toHelpTableView.mj_footer endRefreshing];
+            }];
         }
-        [ws.toHelpTableView reloadData];
-        [ws.toHelpTableView.mj_footer endRefreshing];
     }];
+}
+
+- (void)getMoreRemoteSourceToHelp_done{
+    WS(weakSelf);
+    [_toHelpTableView.mj_header endRefreshing];
+    
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    [param setObject:@(_currentIndex_ToHelp_done) forKey:@"page"];
+    [param setObject:@(SCREEN_WIDTH*0.5) forKey:@"width"];
+    [param setObject:@(_timeStamp_toHelp) forKey:@"last_updated"];
+    [param setObject:@(20) forKey:@"size"];
+    
+    [PIEProceedingManager getMyDone:param
+                          withBlock:^(NSMutableArray *dataArray) {
+                              if (dataArray.count == 0) {
+                                  _canRefreshToHelpFooter_done = NO;
+                              }else{
+                                  _canRefreshToHelpFooter_done = YES;
+                                  
+                                  /*
+                                    NSArray<PIEPageModel *> -> NSArray<PIEPageVM *>
+                                   */
+                                  NSMutableArray<PIEPageVM *> *adhocArray =
+                                  [NSMutableArray<PIEPageVM *> new];
+                                  
+                                  for (PIEPageModel *model in dataArray) {
+                                      PIEPageVM *vm = [[PIEPageVM alloc]
+                                                       initWithPageEntity:model];
+                                      [adhocArray addObject:vm];
+                                  }
+                                  
+                                  [weakSelf.sourceToHelp_done addObjectsFromArray:adhocArray];
+                              }
+                              
+                              [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                                  [weakSelf.toHelpTableView reloadData];
+                                  [weakSelf.toHelpTableView.mj_footer endRefreshing];
+                              }];
+                              
+                          }];
+    
+    
+    _currentIndex_ToHelp_done ++;
+    
 }
 
 
@@ -414,8 +558,12 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
 }
 -(void)tapShare7 {
     [self.shareView dismiss];
-    
-    PIEPageVM* vm = [_sourceToHelp objectAtIndex:_selectedIndexPath_toHelp.row];
+    PIEPageVM *vm;
+    if (_selectedIndexPath_toHelp.section == 0) {
+        vm = [_sourceToHelp objectAtIndex:_selectedIndexPath_toHelp.row];
+    }else if (_selectedIndexPath_toHelp.section == 1){
+        vm = [_sourceToHelp_done objectAtIndex:_selectedIndexPath_toHelp.row];
+    }
     [self deleteOneToHelp:_selectedIndexPath_toHelp ID:vm.ID];
 }
 

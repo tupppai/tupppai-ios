@@ -333,6 +333,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     if (_canRefreshFooterHot) {
         [self getMoreRemoteSourceHot];
     } else {
+        [Hud text:@"已经拉到底啦"];
         [self.tableHot.mj_footer endRefreshingWithNoMoreData];
     }
 
@@ -673,12 +674,12 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     [param setObject:@(15) forKey:@"size"];
     
     [PIEEliteManager getHotPages:param withBlock:^(NSMutableArray *returnArray) {
-        if (returnArray.count == 0) {
+        if (returnArray.count < 15) {
             _canRefreshFooterHot = NO;
         } else {
             _canRefreshFooterHot = YES;
-            [weakSelf.sourceHot addObjectsFromArray:returnArray];
         }
+        [weakSelf.sourceHot addObjectsFromArray:returnArray];
         [weakSelf.tableHot reloadData];
         [weakSelf.tableHot.mj_footer endRefreshing];
     }];
@@ -696,12 +697,12 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
         _tableHot.psDelegate           = self;
         _tableHot.emptyDataSetDelegate = self;
         _tableHot.emptyDataSetSource   = self;
-        
+
         _tableHot.estimatedRowHeight   = SCREEN_WIDTH+225;
-        _tableHot.rowHeight = UITableViewAutomaticDimension;
-        
-        _tableHot.tableHeaderView = self.swipeView;
-        
+        _tableHot.rowHeight            = UITableViewAutomaticDimension;
+
+        _tableHot.tableHeaderView      = self.swipeView;
+
         
         UINib* nib = [UINib nibWithNibName:hotReplyIndentifier bundle:nil];
         [_tableHot registerNib:nib forCellReuseIdentifier:hotReplyIndentifier];

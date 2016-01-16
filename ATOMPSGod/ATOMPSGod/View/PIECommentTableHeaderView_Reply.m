@@ -99,8 +99,8 @@
     
     [self.moreWorkButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.commentButton);
-        make.width.equalTo(@50);
-        make.height.equalTo(@25);
+        make.width.equalTo(@70);
+        make.height.equalTo(@15);
         make.left.equalTo(self).with.offset(11);
     }];
     
@@ -302,7 +302,7 @@
     if (!_moreWorkButton) {
         _moreWorkButton = [UIButton new];
         [_moreWorkButton setImage:[UIImage imageNamed:@"hot_allwork"] forState:UIControlStateNormal];
-        _moreWorkButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
+        _moreWorkButton.imageView.contentMode = UIViewContentModeScaleToFill;
     }
     return _moreWorkButton;
 }

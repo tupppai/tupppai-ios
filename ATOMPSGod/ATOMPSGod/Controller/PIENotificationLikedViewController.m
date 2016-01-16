@@ -140,7 +140,7 @@
                 vc.uid = vm.senderID;
                 vc.name = vm.username;
                 [self.navigationController pushViewController:vc animated:YES];
-            } else  if (CGRectContainsPoint(cell.pageImageView.frame,p)) {
+       } else  if (CGRectContainsPoint(cell.pageImageView.frame,p)) {
                 PIECarouselViewController2* vc = [PIECarouselViewController2 new];
                 PIEPageVM* pageVM = [PIEPageVM new];
                 pageVM.ID = vm.targetID;

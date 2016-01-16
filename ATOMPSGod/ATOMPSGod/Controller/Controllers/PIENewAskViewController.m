@@ -240,13 +240,13 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     PIEPageManager *pageManager = [PIEPageManager new];
     
     [pageManager pullAskSource:param block:^(NSMutableArray *homepageArray) {
-        if (homepageArray.count) {
-            [weakSelf.sourceAsk addObjectsFromArray:homepageArray];
-            _canRefreshFooter_ask = YES;
+        if (homepageArray.count < 15) {
+           _canRefreshFooter_ask = NO;
         }
-        else {
-            _canRefreshFooter_ask = NO;
+        else{
+           _canRefreshFooter_ask = YES;
         }
+        [weakSelf.sourceAsk addObjectsFromArray:homepageArray];
         [weakSelf.collectionView_ask reloadData];
         [weakSelf.collectionView_ask.mj_footer endRefreshing];
     }];
@@ -261,6 +261,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     if (_canRefreshFooter_ask && !_collectionView_ask.mj_header.isRefreshing) {
         [self getMoreRemoteAskSource];
     } else {
+        [Hud text:@"已经拉到底了"];
         [_collectionView_ask.mj_footer endRefreshing];
     }
 }

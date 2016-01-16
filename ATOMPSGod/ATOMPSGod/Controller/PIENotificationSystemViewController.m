@@ -10,15 +10,17 @@
 #import "PIERefreshTableView.h"
 #import "PIENotificationManager.h"
 #import "PIENotificationVM.h"
-
 #import "PIENotificationSystemTableViewCell.h"
-//#import "PIENotificationReplyTableViewCell.h"
-//#import "PIENotificationLikeTableViewCell.h"
-//#import "PIENotificationFollowTableViewCell.h"
-//#import "PIENotificationCommentTableViewCell.h"
 
-@interface PIENotificationSystemViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
-@property (nonatomic, strong) NSMutableArray *source;
+@interface PIENotificationSystemViewController ()
+<
+    UITableViewDataSource,
+    UITableViewDelegate,
+    PWRefreshBaseTableViewDelegate,
+    DZNEmptyDataSetSource,
+    DZNEmptyDataSetDelegate
+>
+@property (nonatomic, strong) NSMutableArray<PIENotificationVM *> *source;
 @property (nonatomic, strong) PIERefreshTableView *tableView;
 @property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, assign) BOOL canRefreshFooter;
@@ -27,23 +29,24 @@
 @end
 
 @implementation PIENotificationSystemViewController
--(BOOL)hidesBottomBarWhenPushed {
-    return YES;
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"系统消息";
     // Do any additional setup after loading the view.
-    _source = [NSMutableArray array];
+    _source = [NSMutableArray<PIENotificationVM *> array];
     _canRefreshFooter = YES;
+    _isfirstLoading = YES;
+    
     self.view = self.tableView;
     //    [self getDataSource];
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
-    _isfirstLoading = YES;
+
     [self.tableView.mj_header beginRefreshing];
 }
-
+-(BOOL)hidesBottomBarWhenPushed {
+    return YES;
+}
 #pragma mark - GetDataSource
 - (void)getDataSource {
     _currentIndex = 1;

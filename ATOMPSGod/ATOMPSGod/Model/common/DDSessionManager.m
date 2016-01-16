@@ -44,7 +44,16 @@ static DDSessionManager *shareInstance = nil;
 
 }
 
+/**
+ *  清理本地cookies，并且重置shareHttpSessionManger
+ */
 + (void)resetSharedInstance {
+    NSArray *cookies =
+    [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL: shareInstance.baseURL];
+    for (NSHTTPCookie *cookie in cookies)
+    {
+        [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
+    }
     shareInstance = nil;
 }
 @end
@@ -86,6 +95,7 @@ static DDSessionManager *shareInstance = nil;
         }
     });
 }
+
 
 -(NSURLSessionDataTask *)xxx_dataTaskWithRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLResponse * _Nonnull, id _Nullable, NSError * _Nullable))completionHandler {
     return [self xxx_dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id _Nullable responseObject, NSError * _Nullable error) {

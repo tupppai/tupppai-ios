@@ -10,12 +10,14 @@
 
 @interface PIENotificationModel : PIEBaseModel
 
-@property (nonatomic, copy) NSString *avatarUrl;
+@property (nonatomic, copy  ) NSString  *avatarUrl;
 @property (nonatomic, assign) NSInteger commentId;
-@property (nonatomic, copy) NSString *content;
+@property (nonatomic, copy  ) NSString  *content;
+@property (nonatomic, copy  ) NSString  *desc;
+@property (nonatomic, assign) NSInteger originalCommentId;
 @property (nonatomic, assign) NSInteger ID;
-@property (nonatomic, copy) NSString *username;
-@property (nonatomic, copy) NSString *imageUrl;
+@property (nonatomic, copy  ) NSString  *username;
+@property (nonatomic, copy  ) NSString  *imageUrl;
 @property (nonatomic, assign) NSInteger senderID;
 @property (nonatomic, assign) NSInteger targetID;
 @property (nonatomic, assign) NSInteger targetType;
