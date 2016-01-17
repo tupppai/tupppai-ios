@@ -94,7 +94,7 @@
                 <outlet property="nameButton" destination="wfj-ZC-vbK" id="WK7-qM-Fuv"/>
                 <outlet property="swipeView" destination="j7j-YT-s7L" id="EMY-Mo-JKM"/>
             </connections>
-            <point key="canvasLocation" x="48" y="119.5"/>
+            <point key="canvasLocation" x="40" y="119.5"/>
         </collectionViewCell>
     </objects>
     <resources>

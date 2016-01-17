@@ -79,7 +79,7 @@
                 <outlet property="followButton" destination="izc-HQ-PKb" id="xFp-eh-ZHg"/>
                 <outlet property="nameButton" destination="208-aK-zyn" id="NjB-47-nJU"/>
             </connections>
-            <point key="canvasLocation" x="51" y="120.5"/>
+            <point key="canvasLocation" x="112" y="83.5"/>
         </collectionViewCell>
     </objects>
     <resources>

@@ -13,18 +13,28 @@
 #import "PIESearchManager.h"
 #import "PIEFriendViewController.h"
 
-@interface PIESearchUserViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource,PWRefreshBaseCollectionViewDelegate>
+@interface PIESearchUserViewController ()
+<
+
+    UICollectionViewDataSource,UICollectionViewDelegate,
+    CHTCollectionViewDelegateWaterfallLayout,
+    DZNEmptyDataSetDelegate,DZNEmptyDataSetSource,
+    PWRefreshBaseCollectionViewDelegate
+
+>
+
 @property (nonatomic, strong) PIERefreshCollectionView *collectionView;
-@property (nonatomic, strong) NSMutableArray* source;
-@property (nonatomic, strong) CHTCollectionViewWaterfallLayout *layout;
+@property (nonatomic, strong) NSMutableArray<PIEUserViewModel *> *source;
+@property (nonatomic, strong) CHTCollectionViewWaterfallLayout   *layout;
 @property (nonatomic, assign) BOOL notFirstLoading;
-@property (nonatomic, assign)  long long timeStamp;
-@property (nonatomic, assign)  NSInteger currentPage;
+@property (nonatomic, assign) long long timeStamp;
+@property (nonatomic, assign) NSInteger currentPage;
 
 @end
 
 @implementation PIESearchUserViewController
 
+#pragma mark - UI life cycles
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view addSubview:self.collectionView];
@@ -40,29 +50,64 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (void)setTextToSearch:(NSString *)textToSearch {
-    _textToSearch = textToSearch;
-    [self search];
+
+#pragma mark - Gesture methods
+- (void)tapOnCollectionView:(UITapGestureRecognizer*)gesture {
+    
+    CGPoint location = [gesture locationInView:self.collectionView];
+    NSIndexPath* selectedIndexPath = [self.collectionView indexPathForItemAtPoint:location];
+    if (selectedIndexPath) {
+        PIEUserViewModel* vm = [_source objectAtIndex:selectedIndexPath.row];
+        PIESearchUserCollectionViewCell* cell = (PIESearchUserCollectionViewCell*)[self.collectionView cellForItemAtIndexPath:selectedIndexPath];
+        CGPoint p = [gesture locationInView:cell];
+        if (CGRectContainsPoint(cell.avatarButton.frame, p) || CGRectContainsPoint(cell.nameButton.frame, p)) {
+            PIEFriendViewController* vc = [PIEFriendViewController new];
+            vc.uid = vm.model.uid;
+            vc.name = vm.username;
+            [self.parentViewController.view.superview.viewController.navigationController  pushViewController:vc animated:YES];
+        } else if (CGRectContainsPoint(cell.followButton.frame, p)) {
+            cell.followButton.selected = !cell.followButton.selected;
+            NSMutableDictionary *param = [NSMutableDictionary new];
+            [param setObject:@(vm.model.uid) forKey:@"uid"];
+            [DDService follow:param withBlock:^(BOOL success) {
+                if (!success) {
+                    cell.followButton.selected = !cell.followButton.selected;
+                } else {
+                }
+            }];
+            
+        }
+    }
 }
 
+
+#pragma mark <PIERefreshBaseCollectionViewDelegate>
+-(void)didPullUpCollectionViewBottom:(UICollectionView *)collectionView {
+    //    [self searchMoreRemote];
+    [self searchMore];
+}
+
+#pragma mark - network request (fetch data)
 - (void)search{
     [self.collectionView.mj_footer endRefreshing];
     _currentPage = 1;
     
-    _timeStamp = [[NSDate date] timeIntervalSince1970];
+    _timeStamp                 = [[NSDate date] timeIntervalSince1970];
     NSMutableDictionary* param = [NSMutableDictionary new];
     [param setObject:@(1) forKey:@"page"];
     [param setObject:@(10) forKey:@"size"];
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:_textToSearch forKey:@"name"];
     
-    [PIESearchManager getSearchUserResult:param withBlock:^(NSMutableArray *retArray) {
+    [PIESearchManager getSearchUserResult:param
+                                withBlock:^(NSMutableArray *retArray) {
         _notFirstLoading = YES;
-            [_source removeAllObjects];
-            _source = retArray;
-            [_collectionView reloadData];
+        [_source removeAllObjects];
+        _source = retArray;
+        [_collectionView reloadData];
     }];
 }
+
 - (void)searchMore {
     _currentPage ++;
     NSMutableDictionary* param = [NSMutableDictionary new];
@@ -81,75 +126,7 @@
     }];
 }
 
-
--(PIERefreshCollectionView *)collectionView {
-    if (!_collectionView) {
-        _collectionView = [[PIERefreshCollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:self.layout];
-
-        _collectionView.toRefreshTop = NO;
-        _collectionView.toRefreshBottom = YES;
-        _collectionView.psDelegate = self;
-        _collectionView.delegate = self;
-        _collectionView.dataSource = self;
-        _collectionView.emptyDataSetDelegate = self;
-        _collectionView.emptyDataSetSource = self;
-        _collectionView.collectionViewLayout = self.layout;
-        _collectionView.backgroundColor = [UIColor colorWithHex:0xF8F8F8];
-        _collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
-        
-        UINib* nib = [UINib nibWithNibName:@"PIESearchUserCollectionViewCell" bundle:nil];
-        [_collectionView registerNib:nib forCellWithReuseIdentifier:@"PIESearchUserCollectionViewCell"];
-        UINib* nib3 = [UINib nibWithNibName:@"PIESearchUserSimpleCollectionCell" bundle:nil];
-        [_collectionView registerNib:nib3 forCellWithReuseIdentifier:@"PIESearchUserSimpleCollectionCell"];
-
-        UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnCollectionView:)];
-        [_collectionView addGestureRecognizer:tapGesture];
-    }
-    return _collectionView;
-}
-
-- (void)tapOnCollectionView:(UITapGestureRecognizer*)gesture {
-
-        CGPoint location = [gesture locationInView:self.collectionView];
-        NSIndexPath* selectedIndexPath = [self.collectionView indexPathForItemAtPoint:location];
-        if (selectedIndexPath) {
-            PIEUserViewModel* vm = [_source objectAtIndex:selectedIndexPath.row];
-            PIESearchUserCollectionViewCell* cell = (PIESearchUserCollectionViewCell*)[self.collectionView cellForItemAtIndexPath:selectedIndexPath];
-            CGPoint p = [gesture locationInView:cell];
-            if (CGRectContainsPoint(cell.avatarButton.frame, p) || CGRectContainsPoint(cell.nameButton.frame, p)) {
-                PIEFriendViewController* vc = [PIEFriendViewController new];
-                vc.uid = vm.model.uid;
-                vc.name = vm.username;
-                [self.parentViewController.view.superview.viewController.navigationController  pushViewController:vc animated:YES];
-            } else if (CGRectContainsPoint(cell.followButton.frame, p)) {
-                cell.followButton.selected = !cell.followButton.selected;
-                NSMutableDictionary *param = [NSMutableDictionary new];
-                [param setObject:@(vm.model.uid) forKey:@"uid"];
-                [DDService follow:param withBlock:^(BOOL success) {
-                    if (!success) {
-                        cell.followButton.selected = !cell.followButton.selected;
-                    } else {
-                    }
-                }];
-
-            }
-        }
-
-}
-
--(CHTCollectionViewWaterfallLayout *)layout {
-    if (!_layout) {
-        _layout = [[CHTCollectionViewWaterfallLayout alloc] init];
-        _layout.columnCount = 1;
-        _layout.minimumInteritemSpacing = 1;
-        _layout.minimumColumnSpacing = 0;
-        _layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
-        
-    }
-    return _layout;
-}
-
-#pragma mark - UICollectionViewDataSource
+#pragma mark - <UICollectionViewDataSource>
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return _source.count;
@@ -179,8 +156,6 @@
     return nil;
 }
 
-
-
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -207,7 +182,7 @@
 //    }
 }
 
-#pragma mark - DZNEmptyDataSetSource & delegate
+#pragma mark - <DZNEmptyDataSetSource & delegate>
 -(UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     return [UIImage imageNamed:@"pie_empty"];
 }
@@ -233,10 +208,52 @@
     return -100;
 }
 
--(void)didPullUpCollectionViewBottom:(UICollectionView *)collectionView {
-//    [self searchMoreRemote];
-    [self searchMore];
+
+#pragma mark - setters
+- (void)setTextToSearch:(NSString *)textToSearch {
+    _textToSearch = textToSearch;
+    [self search];
+}
+
+#pragma mark - lazy loadings
+-(PIERefreshCollectionView *)collectionView {
+    if (!_collectionView) {
+        _collectionView = [[PIERefreshCollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:self.layout];
+        
+        _collectionView.toRefreshTop = NO;
+        _collectionView.toRefreshBottom = YES;
+        _collectionView.psDelegate = self;
+        _collectionView.delegate = self;
+        _collectionView.dataSource = self;
+        _collectionView.emptyDataSetDelegate = self;
+        _collectionView.emptyDataSetSource = self;
+        _collectionView.collectionViewLayout = self.layout;
+        _collectionView.backgroundColor = [UIColor colorWithHex:0xF8F8F8];
+        _collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
+        
+        
+        UINib* nib = [UINib nibWithNibName:@"PIESearchUserCollectionViewCell" bundle:nil];
+        [_collectionView registerNib:nib forCellWithReuseIdentifier:@"PIESearchUserCollectionViewCell"];
+        UINib* nib3 = [UINib nibWithNibName:@"PIESearchUserSimpleCollectionCell" bundle:nil];
+        [_collectionView registerNib:nib3 forCellWithReuseIdentifier:@"PIESearchUserSimpleCollectionCell"];
+        
+        
+        UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnCollectionView:)];
+        [_collectionView addGestureRecognizer:tapGesture];
+    }
+    return _collectionView;
 }
 
 
+-(CHTCollectionViewWaterfallLayout *)layout {
+    if (_layout == nil) {
+        _layout = [[CHTCollectionViewWaterfallLayout alloc] init];
+        _layout.columnCount = 1;
+        _layout.minimumInteritemSpacing = 1;
+        _layout.minimumColumnSpacing = 0;
+        _layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
+        
+    }
+    return _layout;
+}
 @end

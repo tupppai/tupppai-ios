@@ -12,8 +12,6 @@
 #import "CAPSPageMenu.h"
 #import "ReactiveCocoa/ReactiveCocoa.h"
 
-
-
 @interface PIESearchViewController ()
 <UITextFieldDelegate>
 
