@@ -602,6 +602,11 @@ PIEVerificationCodeCountdownButton *countdownButton;
 
 - (void)resetOriginUI
 {
+    
+    self.cellPhoneNumberTextField.text  = @"";
+    self.passwordTextField.text         = @"";
+    self.verificationCodeTextField.text = @"";
+    
     [self.logoImageViewTopConstraint setOffset:33];
     [self.nextStepButtonTopConstraint setOffset:19];
     
