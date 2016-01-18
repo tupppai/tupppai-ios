@@ -152,7 +152,7 @@
 
 - (void)animateToggleExpanded {
     [self layoutIfNeeded];
-    if (_thumbView.toExpand) {
+    if (!_thumbView.enlarged) {
         [_thumbView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(_theImageView).with.offset(0);
             make.leading.equalTo(_theImageView).with.offset(-1);
@@ -177,14 +177,14 @@
                      animations:^{
                          [self.contentView layoutIfNeeded];
                      } completion:^(BOOL finished) {
-                         _thumbView.toExpand = !_thumbView.toExpand;
+                         _thumbView.enlarged = !_thumbView.enlarged;
                      }
      ];
 }
 
-- (void)animateThumbScale:(PIEAnimateViewType)type {
+- (void)animateThumbScale:(PIEThumbAnimateViewType)type {
     [self layoutIfNeeded];
-    if (_thumbView.toExpand) {
+    if (!_thumbView.enlarged) {
         [_thumbView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(_theImageView).with.offset(0);
             make.leading.equalTo(_theImageView).with.offset(-1);
@@ -193,7 +193,7 @@
         }];
         
         if (_thumbView.subviewCounts == 2) {
-            if (type == PIEAnimateViewTypeLeft) {
+            if (type == PIEThumbAnimateViewTypeLeft) {
                 [_thumbView.rightView mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.top.equalTo(_thumbView);
                     make.trailing.equalTo(_thumbView);
@@ -235,7 +235,7 @@
                      animations:^{
                          [self.contentView layoutIfNeeded];
                      } completion:^(BOOL finished) {
-                         _thumbView.toExpand = !_thumbView.toExpand;
+                         _thumbView.enlarged = !_thumbView.enlarged;
                      }
      ];
 }

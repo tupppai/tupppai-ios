@@ -357,6 +357,7 @@
 		F421A2101BEB41560028C521 /* PIEShareImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F421A20F1BEB41560028C521 /* PIEShareImageView.m */; };
 		F4275A1A1BE0B9E400BBE7E4 /* PIEMyFansViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4275A191BE0B9E400BBE7E4 /* PIEMyFansViewController.m */; };
 		F4275A1D1BE0B9ED00BBE7E4 /* PIEMyFollowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4275A1C1BE0B9ED00BBE7E4 /* PIEMyFollowViewController.m */; };
+		F42799431C4C90BC004CFBBE /* PIEBlurAnimateImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F42799421C4C90BC004CFBBE /* PIEBlurAnimateImageView.m */; };
 		F428F01E1BD331EF00318AC2 /* PIELaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F428F01C1BD331EF00318AC2 /* PIELaunchViewController.m */; };
 		F428F01F1BD331EF00318AC2 /* PIELaunchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F428F01D1BD331EF00318AC2 /* PIELaunchViewController.xib */; };
 		F42ED3B11BC4FC2D0052A0BF /* PIEMeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42ED3B01BC4FC2D0052A0BF /* PIEMeViewController.m */; };
@@ -1384,6 +1385,8 @@
 		F4275A191BE0B9E400BBE7E4 /* PIEMyFansViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEMyFansViewController.m; sourceTree = "<group>"; };
 		F4275A1B1BE0B9ED00BBE7E4 /* PIEMyFollowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEMyFollowViewController.h; sourceTree = "<group>"; };
 		F4275A1C1BE0B9ED00BBE7E4 /* PIEMyFollowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEMyFollowViewController.m; sourceTree = "<group>"; };
+		F42799411C4C90BC004CFBBE /* PIEBlurAnimateImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEBlurAnimateImageView.h; sourceTree = "<group>"; };
+		F42799421C4C90BC004CFBBE /* PIEBlurAnimateImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEBlurAnimateImageView.m; sourceTree = "<group>"; };
 		F428F01B1BD331EF00318AC2 /* PIELaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIELaunchViewController.h; sourceTree = "<group>"; };
 		F428F01C1BD331EF00318AC2 /* PIELaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIELaunchViewController.m; sourceTree = "<group>"; };
 		F428F01D1BD331EF00318AC2 /* PIELaunchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIELaunchViewController.xib; sourceTree = "<group>"; };
@@ -4071,6 +4074,8 @@
 		F4D9F6C91BBFC5390023A53B /* follow */ = {
 			isa = PBXGroup;
 			children = (
+				F42799411C4C90BC004CFBBE /* PIEBlurAnimateImageView.h */,
+				F42799421C4C90BC004CFBBE /* PIEBlurAnimateImageView.m */,
 				F499E4521BD0F69100E5F178 /* PIEEliteFollowReplyTableViewCell.h */,
 				F499E4531BD0F69100E5F178 /* PIEEliteFollowReplyTableViewCell.m */,
 				F499E4541BD0F69100E5F178 /* PIEEliteFollowReplyTableViewCell.xib */,
@@ -5054,6 +5059,7 @@
 				E90197351B32D2F800F46B78 /* MBProgressHUD.m in Sources */,
 				F49B9FD71C3112B100B65881 /* PIEUploadModel.m in Sources */,
 				E99D2F5D1B1C7E8D000D7784 /* UIView+Screenshot.m in Sources */,
+				F42799431C4C90BC004CFBBE /* PIEBlurAnimateImageView.m in Sources */,
 				F4AFCD4B1BC79A3100027940 /* UIButton+Pop.m in Sources */,
 				F46CBC801C2CE03200A64474 /* PIELoveLabel.m in Sources */,
 				0E3FB9E41C155E0C0012E290 /* PIENewAskViewController.m in Sources */,
