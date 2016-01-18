@@ -377,14 +377,15 @@ static NSString * PIENotificationCommentFromOtherCellIdentifier =
 
 #pragma mark - private helpers
 - (PIEPageVM*)transformNotificationVMToPageVM:(PIENotificationVM*)vm {
-    PIEPageVM* pageVM  = [PIEPageVM new];
-    pageVM.imageURL    = vm.imageUrl;
-    pageVM.ID          = vm.targetID;
-    pageVM.askID       = vm.askID;
-    pageVM.avatarURL   = vm.avatarUrl;
-    pageVM.userID      = vm.senderID;
-    pageVM.username    = vm.username;
-    pageVM.publishTime = vm.time;
+    PIEPageModel *model = [PIEPageModel new];
+    model.imageURL    = vm.imageUrl;
+    model.ID          = vm.targetID;
+    model.askID       = vm.askID;
+    model.type = vm.targetType;
+    model.avatar   = vm.avatarUrl;
+    model.uid      = vm.senderID;
+    model.nickname    = vm.username;
+    PIEPageVM* pageVM  = [[PIEPageVM alloc]initWithPageEntity:model];
     return pageVM;
 }
 

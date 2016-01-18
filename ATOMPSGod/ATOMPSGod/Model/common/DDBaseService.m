@@ -12,8 +12,9 @@
 
 + (void) GET :(NSDictionary*)param url:(NSString*)url block:(void (^)(id responseObject))block {
     if (url) {
-
-//        NSLog(@"GET%@",param);
+#if DEBUG
+        NSLog(@"GET%@",param);
+#endif
 
         [[DDSessionManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
             NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
