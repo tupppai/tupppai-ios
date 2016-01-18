@@ -18,6 +18,9 @@
 #import "PIEChannelActivityViewController.h"
 #import "DeviceUtil.h"
 
+#import "ReactiveCocoa/ReactiveCocoa.h"
+
+
 /* Protocols */
 
 @interface PIEChannelViewController (BannerCellDelegate)<PIEChannelBannerCellDelegate>
@@ -51,6 +54,7 @@
     [self setupNavigationBar];
     [self setupTableView];
     [self setupData];
+    [self setupRAC];
     [self.tableView.mj_header beginRefreshing];
 }
 
@@ -90,6 +94,18 @@
     _source = [NSMutableArray array];
 
 }
+
+- (void)setupRAC{
+    @weakify(self);
+    [[[NSNotificationCenter defaultCenter] rac_addObserverForName:PIERefreshNavigationChannelFromTabBarNotification object:nil]
+     subscribeNext:^(id x) {
+         @strongify(self);
+         if ([self.tableView.mj_header isRefreshing] == NO) {
+             [self.tableView.mj_header beginRefreshing];
+         }
+    }];
+}
+
 #pragma mark - <UITableViewDelegate>
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

@@ -135,4 +135,10 @@ extern NSString * const PIENotificationCountOthersKey;
  */
 extern NSString * const PIEHasNewNotificationFlagKey;
 
+/** 重复点击tabbar上的“图派”， 刷新PIEChannelViewController*/
+extern NSString * const PIERefreshNavigationChannelFromTabBarNotification;
+
+/** 重复点击tabbar上的“进行中”， 刷新PIEProceedingViewController的两个子控制器 */
+extern NSString * const PIEPrefreshNavigationProceedingFromTabBarNotification;
+
 @end

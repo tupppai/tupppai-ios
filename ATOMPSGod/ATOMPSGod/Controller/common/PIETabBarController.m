@@ -234,15 +234,26 @@
 -(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
     if (viewController == _navigation_new) {
         if (_preNav == _navigation_new) {
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshNavigation_New" object:nil];
+
+            [[NSNotificationCenter defaultCenter]
+            postNotificationName:PIERefreshNavigationChannelFromTabBarNotification
+             object:nil];
         }
     } else if (viewController == _navigation_elite) {
         if (_preNav == _navigation_elite) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshNavigation_Elite" object:nil];
         }
+    } else if (viewController == _navigation_proceeding){
+        if (_preNav == _navigation_proceeding) {
+            [[NSNotificationCenter defaultCenter]
+             postNotificationName:PIEPrefreshNavigationProceedingFromTabBarNotification
+             object:nil];
+        }
     }
         _preNav = (DDNavigationController*)viewController;
 }
+
+
 
 //-(BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
 //    if (viewController == _centerNav) {

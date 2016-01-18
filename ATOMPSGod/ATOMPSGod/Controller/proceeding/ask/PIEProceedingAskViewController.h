@@ -13,4 +13,6 @@
 
 - (void)getSourceIfEmpty_ask;
 
+- (void)refreshViewControllerWhileNotReloading;
+
 @end

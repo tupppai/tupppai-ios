@@ -294,6 +294,13 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     }
 }
 
+- (void)refreshViewControllerWhileNotReloading
+{
+    if ([_toHelpTableView.mj_header isRefreshing] == NO) {
+        [self.toHelpTableView.mj_header beginRefreshing];
+    }
+}
+
 #pragma mark - <PWRefreshBaseTableViewDelegate>
 -(void)didPullRefreshDown:(UITableView *)tableView {
     
