@@ -28,7 +28,7 @@
 //#define baseURLString @"http://api.qiupsdashen.com/"
 
 
-#define baseURLString @"http://api.qiudashenps.com/"
+#define baseURLString @"http://api.qiupsdashen.com/"
 #define baseURLString_Test @"http://tapi.tupppai.com/"
 
 #define _S(number) (number*[ATOMBaseView scaleInView])

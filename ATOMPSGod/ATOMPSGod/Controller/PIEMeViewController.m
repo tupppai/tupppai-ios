@@ -93,6 +93,13 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     }]map:^id(id value) {
         return value;
     }];
+    RAC(self.followCountLabel,text) =  [RACObserve([DDUserManager currentUser], attentionNumber) map:^id(id value) {
+        return [value stringValue];
+    }];
+    RAC(self.fansCountLabel,text) =  [RACObserve([DDUserManager currentUser], fansNumber) map:^id(id value) {
+        return [value stringValue];
+    }];
+    
     
     [RACObserve([DDUserManager currentUser], avatar) subscribeNext:^(id x) {
         NSString* avatarUrl = [[DDUserManager currentUser].avatar trimToImageWidth:200];
