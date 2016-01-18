@@ -548,10 +548,10 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
                 if (CGRectContainsPoint(cell.thumbView.frame, p)) {
                     CGPoint pp = [gesture locationInView:cell.thumbView];
                     if (CGRectContainsPoint(cell.thumbView.leftView.frame,pp)) {
-                        [cell animateThumbScale:PIEAnimateViewTypeLeft];
+                        [cell animateThumbScale:PIEThumbAnimateViewTypeLeft];
                     }
                     else if (CGRectContainsPoint(cell.thumbView.rightView.frame,pp)) {
-                        [cell animateThumbScale:PIEAnimateViewTypeRight];
+                        [cell animateThumbScale:PIEThumbAnimateViewTypeRight];
                     }
                 }
                 //点击大图
