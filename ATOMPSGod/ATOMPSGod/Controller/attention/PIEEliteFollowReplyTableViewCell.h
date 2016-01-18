@@ -35,6 +35,6 @@
 //@property (weak, nonatomic) IBOutlet UIImageView *followView;
 @property (strong, nonatomic) PIEThumbAnimateView *thumbView;
 - (void)injectSauce:(PIEPageVM *)viewModel;
-- (void)animateToggleExpanded ;
-- (void)animateThumbScale:(PIEAnimateViewType)type;
+//- (void)animateToggleExpanded ;
+- (void)animateThumbScale:(PIEThumbAnimateViewType)type;
 @end

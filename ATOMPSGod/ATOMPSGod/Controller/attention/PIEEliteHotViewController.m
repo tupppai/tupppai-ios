@@ -399,7 +399,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
             PIEEliteHotReplyTableViewCell* cell = [self.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
             CGPoint p = [gesture locationInView:cell];
             //点击大图
-            if (CGRectContainsPoint(cell.theImageView.frame, p)) {
+            if (CGRectContainsPoint(cell.blurAnimateView.frame, p)) {
                 [self showShareView:_selectedVM];
             } else if (CGRectContainsPoint(cell.likeView.frame, p)) {
 //                [PIEPageManager love:cell.likeView viewModel:_selectedVM revert:YES];
@@ -475,17 +475,19 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
                 PIEEliteHotReplyTableViewCell* cell = [self.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
                 CGPoint p = [gesture locationInView:cell];
                 //点击小图
-                if (CGRectContainsPoint(cell.thumbView.frame, p)) {
-                    CGPoint pp = [gesture locationInView:cell.thumbView];
-                    if (CGRectContainsPoint(cell.thumbView.leftView.frame,pp)) {
-                        [cell animateThumbScale:PIEAnimateViewTypeLeft];
+                if (CGRectContainsPoint(cell.blurAnimateView.frame, p)) {
+                    CGPoint pp = [gesture locationInView:cell.blurAnimateView.thumbView];
+                    if (CGRectContainsPoint(cell.blurAnimateView.thumbView.leftView.frame,pp)) {
+                        [cell animateWithType:PIEThumbAnimateViewTypeLeft];
                     }
-                    else if (CGRectContainsPoint(cell.thumbView.rightView.frame,pp)) {
-                        [cell animateThumbScale:PIEAnimateViewTypeRight];
+                    
+                    //只有一张图的时候 只能点到rightView
+                    else if (CGRectContainsPoint(cell.blurAnimateView.thumbView.rightView.frame,pp)) {
+                        [cell animateWithType:PIEThumbAnimateViewTypeRight];
                     }
                 }
                 //点击大图
-                else  if (CGRectContainsPoint(cell.theImageView.frame, p)) {
+                else  if (CGRectContainsPoint(cell.blurAnimateView.imageView.frame, p)) {
                     //进入热门详情
                     PIECarouselViewController2* vc = [PIECarouselViewController2 new];
                     

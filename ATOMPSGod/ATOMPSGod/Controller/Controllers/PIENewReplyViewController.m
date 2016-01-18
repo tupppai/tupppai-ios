@@ -341,10 +341,10 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
             if (CGRectContainsPoint(_selectedReplyCell.thumbView.frame, p)) {
                 CGPoint pp = [gesture locationInView:_selectedReplyCell.thumbView];
                 if (CGRectContainsPoint(_selectedReplyCell.thumbView.leftView.frame,pp)) {
-                    [_selectedReplyCell animateThumbScale:PIEAnimateViewTypeLeft];
+                    [_selectedReplyCell animateThumbScale:PIEThumbAnimateViewTypeLeft];
                 }
                 else if (CGRectContainsPoint(_selectedReplyCell.thumbView.rightView.frame,pp)) {
-                    [_selectedReplyCell animateThumbScale:PIEAnimateViewTypeRight];
+                    [_selectedReplyCell animateThumbScale:PIEThumbAnimateViewTypeRight];
                 }
             }
             //点击大图

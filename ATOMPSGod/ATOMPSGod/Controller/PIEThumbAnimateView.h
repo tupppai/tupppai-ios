@@ -9,16 +9,20 @@
 #import <UIKit/UIKit.h>
 #import "FXBlurView.h"
 
-typedef NS_ENUM(NSInteger, PIEAnimateViewType) {
-    PIEAnimateViewTypeLeft,
-    PIEAnimateViewTypeRight
+typedef NS_ENUM(NSInteger, PIEThumbAnimateViewType) {
+    PIEThumbAnimateViewTypeLeft,
+    PIEThumbAnimateViewTypeRight
 };
 @interface PIEThumbAnimateView : UIView
+@property (nonatomic,assign)  PIEThumbAnimateViewType animatingType;
+
 @property (nonatomic,assign)  NSInteger subviewCounts;
-@property (nonatomic,assign)  BOOL toExpand;
+@property (nonatomic,assign) BOOL enlarged;
 @property (strong, nonatomic)  UIImageView *blurView;
 @property (strong, nonatomic)  UIImageView *originView;
 @property (strong, nonatomic)  UIImageView *leftView;
 @property (strong, nonatomic)  UIImageView *rightView;
 
+- (void)animateWithType:(PIEThumbAnimateViewType)type;
+- (void)renewContraints;
 @end

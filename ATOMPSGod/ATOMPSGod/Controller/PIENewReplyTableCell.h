@@ -40,5 +40,5 @@
 
 - (void)injectSauce:(PIEPageVM *)viewModel ;
 - (void)animateToggleExpanded ;
-- (void)animateThumbScale:(PIEAnimateViewType)type;
+- (void)animateThumbScale:(PIEThumbAnimateViewType)type;
 @end

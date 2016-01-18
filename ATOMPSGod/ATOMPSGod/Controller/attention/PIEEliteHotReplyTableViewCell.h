@@ -14,19 +14,15 @@
 #import "PIEAvatarImageView.h"
 #import "PIEAvatarView.h"
 
+#import "PIEBlurAnimateImageView.h"
 
 @interface PIEEliteHotReplyTableViewCell : UITableViewCell
 
 @property (nonatomic,strong) PIEPageVM* vm;
 
-//@property (weak, nonatomic) IBOutlet UIImageView *avatarView;
-//@property (weak, nonatomic) IBOutlet PIEAvatarImageView *avatarView;
 @property (weak, nonatomic) IBOutlet PIEAvatarView *avatarView;
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-//@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
-//@property (weak, nonatomic) IBOutlet PIEPageButton *collectView;
-@property (weak, nonatomic) IBOutlet UIImageView *theImageView;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *allWorkView;
 
@@ -40,9 +36,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *commentLabel2;
 @property (weak, nonatomic) IBOutlet UIImageView *commentIndeicatorImageView;
 
+@property (weak, nonatomic) IBOutlet PIEBlurAnimateImageView *blurAnimateView;
+
 @property (weak, nonatomic) IBOutlet UIImageView *followView;
-@property (strong, nonatomic) PIEThumbAnimateView *thumbView;
 - (void)injectSauce:(PIEPageVM *)viewModel;
-- (void)animateToggleExpanded ;
-- (void)animateThumbScale:(PIEAnimateViewType)type;
+- (void)animateWithType:(PIEThumbAnimateViewType)type;
 @end
