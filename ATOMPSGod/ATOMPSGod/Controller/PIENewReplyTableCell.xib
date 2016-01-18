@@ -77,7 +77,7 @@
                         </variation>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="new_reply_follow" highlightedImage="new_reply_followed" translatesAutoresizingMaskIntoConstraints="NO" id="ov8-cU-PvT">
-                        <rect key="frame" x="324" y="7.5" width="50" height="37"/>
+                        <rect key="frame" x="333" y="7.5" width="50" height="37"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="50" id="HN2-kb-c1t"/>
                             <constraint firstAttribute="height" constant="37" id="eQj-1Y-Cc1"/>
@@ -153,7 +153,7 @@
                     <constraint firstAttribute="bottomMargin" secondItem="CWC-Fy-Ux9" secondAttribute="bottom" constant="6.5" id="kLl-h0-5JP"/>
                     <constraint firstItem="nih-jX-jzj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="l7t-8B-L3L"/>
                     <constraint firstItem="Wlr-Je-B2P" firstAttribute="width" secondItem="CWC-Fy-Ux9" secondAttribute="width" id="lrC-YI-LKz"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="ov8-cU-PvT" secondAttribute="trailing" constant="4" id="ons-kw-Xbz"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="ov8-cU-PvT" secondAttribute="trailing" constant="-5" id="ons-kw-Xbz"/>
                     <constraint firstItem="nih-jX-jzj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="pQh-n9-JCw"/>
                     <constraint firstItem="tZ7-6S-wLe" firstAttribute="top" secondItem="tXl-3D-7si" secondAttribute="bottom" constant="4" id="prM-R6-pYJ"/>
                     <constraint firstAttribute="trailingMargin" secondItem="tse-As-wf5" secondAttribute="trailing" constant="17" id="reJ-sB-ZTQ"/>
