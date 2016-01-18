@@ -112,12 +112,12 @@ static DDSessionManager *shareInstance = nil;
                 
                 if ([DDUserManager currentUser].uid == kPIETouristUID) {
                     // 游客    -> "没有登录态" == "完成注册的最后一步：绑定手机号"
-                    NSString *openID = [[NSUserDefaults standardUserDefaults]
-                                        objectForKey:PIETouristOpenIdKey];
+//                    NSString *openID = [[NSUserDefaults standardUserDefaults]
+//                                        objectForKey:PIETouristOpenIdKey];
                     
-                    NSString *prompt = [NSString stringWithFormat:
-                                        @"ret == 2，游客没有登陆态\n openid = %@", openID];
-                    [Hud text:prompt];
+//                    NSString *prompt = [NSString stringWithFormat:
+//                                        @"ret == 2，游客没有登陆态\n openid = %@", openID];
+//                    [Hud text:prompt];
                     
                     // post notification
                     [[NSNotificationCenter defaultCenter]
@@ -128,7 +128,7 @@ static DDSessionManager *shareInstance = nil;
                 else{
                     // 正常用户 -> "没有登录态" == "重新登录"
                     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NetworkSignOutCall" object:nil]];
-                    [Hud text:@"ret == 2, 正常用户没有登录态"];
+//                    [Hud text:@"ret == 2, 正常用户没有登录态"];
                 }
             } else if (ret != 1) {
                 

@@ -170,29 +170,17 @@ static NSString * const NotificationViewControllerDefaultCellIdentifier =
             PIENotificationReplyTableViewCell* cell = [self.tableView cellForRowAtIndexPath:selectedIndexPath];
             CGPoint p = [gesture locationInView:cell];
             if (CGRectContainsPoint(cell.replyLabel.frame,p)) {
-//                self.textInputbarHidden = NO;
-//                self.textView.placeholder = [NSString stringWithFormat:@"@%@:",vm.username];
-//                [self.textView becomeFirstResponder];
                 PIECommentViewController* vc = [PIECommentViewController new];
-                PIEPageVM* pageVM = [PIEPageVM new];
-//                pageVM.ID = vm.targetID;
-//                pageVM.type = vm.targetType;
                 vc.vm = pageVM;
-//                vc.shouldDownloadVMSource = YES;
                 vc.shouldShowHeaderView = YES;
                 [self.navigationController pushViewController:vc animated:YES];
 
             } else if (CGRectContainsPoint(cell.avatarView.frame,p) || (CGRectContainsPoint(cell.usernameLabel.frame,p))) {
                 PIEFriendViewController* vc = [PIEFriendViewController new];
                 vc.pageVM = pageVM;
-//                vc.uid = vm.senderID;
-//                vc.name = vm.username;
                 [self.navigationController pushViewController:vc animated:YES];
             } else {
                 PIECommentViewController* vc = [PIECommentViewController new];
-//                PIEPageVM* pageVM = [PIEPageVM new];
-//                pageVM.ID = vm.targetID;
-//                pageVM.type = vm.targetType;
                 vc.vm = pageVM;
                 vc.shouldShowHeaderView = YES;
 
@@ -534,14 +522,16 @@ static NSString * const NotificationViewControllerDefaultCellIdentifier =
 
 #pragma mark - private helpers
 - (PIEPageVM*)transformNotificationVMToPageVM:(PIENotificationVM*)vm {
-    PIEPageVM* pageVM  = [PIEPageVM new];
-    pageVM.imageURL    = vm.imageUrl;
-    pageVM.ID          = vm.targetID;
-    pageVM.askID       = vm.askID;
-    pageVM.avatarURL   = vm.avatarUrl;
-    pageVM.userID      = vm.senderID;
-    pageVM.username    = vm.username;
-    pageVM.publishTime = vm.time;
+    PIEPageModel* model = [PIEPageModel new];
+    model.ID = vm.model.targetID;
+    model.type = vm.model.targetType;
+    model.imageURL = vm.model.imageUrl;
+    model.avatar = vm.model.avatarUrl;
+    model.askID = vm.model.askID;
+    model.nickname = vm.model.username;
+    model.uid = vm.model.senderID;
+    model.uploadTime = vm.model.time;
+    PIEPageVM* pageVM  = [[PIEPageVM alloc]initWithPageEntity:model];
     return pageVM;
 }
 

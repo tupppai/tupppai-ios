@@ -22,6 +22,9 @@
 //have to be strong since username is reference to model.nickname,synced with model.nickname
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic, strong) NSString *content;
+@property (nonatomic, strong) NSString *imageURL;
+@property (nonatomic, strong) NSString *avatarURL;
+
 @property (nonatomic, assign) PIEPageType type;
 @property (nonatomic, assign) CGFloat imageRatio;
 @property (nonatomic, assign) BOOL collected;
@@ -41,12 +44,9 @@
 @property (nonatomic, copy) NSString *replyCount;
 @property (nonatomic, copy) NSString *collectCount;
 @property (nonatomic, assign) PIEPageLoveStatus loveStatus;
-@property (nonatomic, copy) NSString *imageURL;
-@property (nonatomic, copy) NSString *avatarURL;
 
 
 @property (nonatomic, strong) UIImage *image;
-//求p 的图片对象数组
 
 
 - (instancetype)initWithPageEntity:(PIEPageModel *)entity ;

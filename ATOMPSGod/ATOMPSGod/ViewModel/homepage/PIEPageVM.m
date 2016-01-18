@@ -37,10 +37,6 @@
         [_model addObserver:self forKeyPath:@"totalPraiseNumber" options:NSKeyValueObservingOptionNew context:NULL];
         [_model addObserver:self forKeyPath:@"followed" options:NSKeyValueObservingOptionNew context:NULL];
 
-        
-        _imageURL    = entity.imageURL;
-        _avatarURL   = entity.avatar;
-        
         NSDate *publishDate    = [NSDate dateWithTimeIntervalSince1970:entity.uploadTime];
         _publishTime           = [Util formatPublishTime:publishDate];
         
@@ -52,6 +48,7 @@
     }
     return self;
 }
+
 
 - (void)increaseLoveStatus {
     if (self.model.loveStatus == PIEPageLoveStatus3) {
@@ -122,6 +119,12 @@
     [DDService follow:param withBlock:^(BOOL success) {
         if (!success) {
             self.model.followed = !self.model.followed;
+        } else {
+            if ([followStatus integerValue] == 1) {
+                [DDUserManager currentUser].attentionNumber++;
+            } else {
+                [DDUserManager currentUser].attentionNumber--;
+            }
         }
     }];
 }
@@ -142,7 +145,12 @@
 -(NSString *)username {
     return self.model.nickname;
 }
-
+-(NSString *)imageURL {
+    return self.model.imageURL;
+}
+-(NSString *)avatarURL {
+    return self.model.avatar;
+}
 -(PIEPageType)type {
     return self.model.type;
 }
