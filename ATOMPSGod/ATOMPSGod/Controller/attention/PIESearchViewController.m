@@ -197,7 +197,15 @@
     [self.textField2 becomeFirstResponder];
 }
 - (void) tapCancel {
-    [self.navigationController popViewControllerAnimated:NO];
+    
+    /*
+     新需求：第一次点击取消，清空文本框；第二次点击取消再退出页面
+     */
+    if ([self.textField2.text isEqualToString:@""]) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        self.textField2.text = @"";
+    }
 }
 
 //- (void)dismiss {
