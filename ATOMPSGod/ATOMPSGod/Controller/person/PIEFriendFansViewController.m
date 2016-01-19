@@ -186,7 +186,7 @@
     [param setObject:@(_uid) forKeyedSubscript:@"uid"];
     [Hud activity:@"" inView:self.view];
     [DDUserManager getMyFans:param withBlock:^(NSArray *resultArray) {
-        ws.isfirstLoading = NO;
+        _isfirstLoading = NO;
         [Hud dismiss:self.view];
         [_dataSource removeAllObjects];
         for (PIEUserModel *model in resultArray) {

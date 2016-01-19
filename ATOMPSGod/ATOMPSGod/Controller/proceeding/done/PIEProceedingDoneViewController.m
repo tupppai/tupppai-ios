@@ -172,9 +172,9 @@
     [PIEProceedingManager getMyDone:param withBlock:^(NSMutableArray *resultArray) {
         ws.isfirstLoadingDone = NO;
         if (resultArray.count == 0) {
-            _canRefreshDoneFooter = NO;
+            self.canRefreshDoneFooter = NO;
         } else {
-            _canRefreshDoneFooter = YES;
+            self.canRefreshDoneFooter = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
             for (PIEPageModel *homeImage in resultArray) {
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:homeImage];

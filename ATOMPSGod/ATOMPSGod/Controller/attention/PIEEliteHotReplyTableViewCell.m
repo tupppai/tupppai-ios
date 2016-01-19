@@ -54,6 +54,8 @@
     [super prepareForReuse];
     [self.blurAnimateView renewContraints];
     _followView.hidden = NO;
+    _commentLabel1.text = @"";
+    _commentLabel2.text = @"";
     [_commentLabel1 mas_updateConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(_commentLabel2.mas_top).with.offset(0).priorityHigh();
     }];

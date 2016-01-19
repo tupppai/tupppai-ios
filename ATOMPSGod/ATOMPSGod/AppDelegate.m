@@ -26,6 +26,7 @@
 #import "UMCheckUpdate.h"
 
 @interface AppDelegate ()
+//@property (nonatomic, strong) UINavigationController *baseNav;
 
 @end
 
@@ -135,12 +136,12 @@
                 [[NSUserDefaults standardUserDefaults] setBool:YES forKey:launchKey];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 DDIntroVC* vc = [DDIntroVC new];
-                self.baseNav  = [[DDLoginNavigationController alloc] initWithRootViewController:vc];
-                self.window.rootViewController = self.baseNav;
+//                self.baseNav  = [[DDLoginNavigationController alloc] initWithRootViewController:vc];
+                self.window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:vc];
             } else {
                 PIELaunchViewController_Black *lvc = [[PIELaunchViewController_Black alloc] init];
-                self.baseNav = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
-                self.window.rootViewController = self.baseNav;
+//                self.baseNav = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
+                self.window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
             }
         }
         [self.window makeKeyAndVisible];
@@ -321,10 +322,6 @@
 - (void)switchToMainTabbarController
 {
     
-    [self.baseNav setViewControllers:[NSArray array]];
-    /*
-     使用懒加载，重新创建一次mainTabBarController
-     */
     [AppDelegate APP].mainTabBarController = nil;
     [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
     ;
@@ -332,9 +329,13 @@
 
 - (void)switchToLoginViewController
 {
-    [self.baseNav setViewControllers:[NSArray array]];
+    
+    
     PIELaunchViewController_Black *lvc = [[PIELaunchViewController_Black alloc] init];
     [AppDelegate APP].window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
+    
+    [AppDelegate APP].mainTabBarController = nil;
+
 }
 
 
