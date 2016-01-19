@@ -56,5 +56,7 @@
 -(void)love:(BOOL)revert;
 -(void)follow;
 
+- (void)collect:(void(^)(BOOL success))block;
+
 @end
 
