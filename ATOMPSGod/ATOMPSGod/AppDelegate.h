@@ -12,7 +12,6 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (nonatomic, strong) UINavigationController *baseNav;
 @property (nonatomic, strong) PIETabBarController *mainTabBarController;
 
 + (AppDelegate *)APP;

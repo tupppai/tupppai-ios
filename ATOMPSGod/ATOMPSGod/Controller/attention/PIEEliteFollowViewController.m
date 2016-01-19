@@ -362,7 +362,6 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
 }
 
 - (void)getMoreRemoteSourceFollow {
-    WS(ws);
     [self.tableFollow.mj_header endRefreshing];
     _currentIndex_follow++;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -383,9 +382,9 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
             PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
             [sourceAgent addObject:vm];
         }
-        [ws.sourceFollow addObjectsFromArray:sourceAgent];
-        [ws.tableFollow reloadData];
-        [ws.tableFollow.mj_footer endRefreshing];
+        [_sourceFollow addObjectsFromArray:sourceAgent];
+        [_tableFollow reloadData];
+        [_tableFollow.mj_footer endRefreshing];
     }];
 }
 
