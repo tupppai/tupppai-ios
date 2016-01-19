@@ -126,7 +126,6 @@
          [self allSubControllersSearchText:self.textField2.text];
     }];
     
-    
 }
 
 - (void)setupPageMenu {

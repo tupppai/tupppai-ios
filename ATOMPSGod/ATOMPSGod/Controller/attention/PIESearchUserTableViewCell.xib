@@ -3,17 +3,73 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="PIESearchUserTableViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="266" id="KGk-i7-Jjw" customClass="PIESearchUserTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="556" height="266"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="556" height="265.5"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nip-e4-4lf" userLabel="Avatar Button" customClass="PIEAvatarButton">
+                        <rect key="frame" x="8" y="15" width="30" height="30"/>
+                        <color key="backgroundColor" red="0.78375400641025639" green="0.78375400641025639" blue="0.78375400641025639" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="Jy5-OA-yos"/>
+                            <constraint firstAttribute="width" constant="30" id="nRL-Wv-sGN"/>
+                        </constraints>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vi7-nI-wfe" userLabel="Name Button">
+                        <rect key="frame" x="50" y="3" width="30" height="34"/>
+                        <color key="backgroundColor" red="0.77393830128205132" green="0.77393830128205132" blue="0.77393830128205132" alpha="1" colorSpace="calibratedRGB"/>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SJ8-6F-Pk1" userLabel="Follow Button">
+                        <rect key="frame" x="502" y="15" width="46" height="30"/>
+                        <color key="backgroundColor" red="0.76346153846153841" green="0.76346153846153841" blue="0.76346153846153841" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="2MO-QU-xOZ"/>
+                            <constraint firstAttribute="width" constant="46" id="Dem-KJ-Brn"/>
+                        </constraints>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fH2-YU-zR3" userLabel="Count Label">
+                        <rect key="frame" x="50" y="37" width="443" height="13.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k6Q-27-7Uh" customClass="SwipeView">
+                        <rect key="frame" x="0.0" y="61.5" width="548" height="199"/>
+                        <color key="backgroundColor" red="0.76346153849999998" green="0.76346153849999998" blue="0.76346153849999998" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="k6Q-27-7Uh" secondAttribute="bottom" constant="5" id="3lL-Er-lm2"/>
+                    <constraint firstAttribute="trailing" secondItem="SJ8-6F-Pk1" secondAttribute="trailing" constant="8" id="7G4-fq-3t1"/>
+                    <constraint firstAttribute="trailing" secondItem="k6Q-27-7Uh" secondAttribute="trailing" constant="8" id="Gje-Tn-sPF"/>
+                    <constraint firstItem="fH2-YU-zR3" firstAttribute="leading" secondItem="vi7-nI-wfe" secondAttribute="leading" id="Ll2-n2-azm"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="fH2-YU-zR3" secondAttribute="trailing" constant="55" id="MSU-62-ECa"/>
+                    <constraint firstItem="vi7-nI-wfe" firstAttribute="top" secondItem="Nip-e4-4lf" secondAttribute="top" constant="-12" id="Oy4-qU-Toi"/>
+                    <constraint firstItem="k6Q-27-7Uh" firstAttribute="top" secondItem="fH2-YU-zR3" secondAttribute="bottom" constant="11" id="dhh-du-59V"/>
+                    <constraint firstItem="fH2-YU-zR3" firstAttribute="top" secondItem="vi7-nI-wfe" secondAttribute="bottom" id="eit-Jc-1aD"/>
+                    <constraint firstItem="Nip-e4-4lf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="jgb-QK-F3R"/>
+                    <constraint firstItem="k6Q-27-7Uh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="rIa-Hf-p6B"/>
+                    <constraint firstItem="vi7-nI-wfe" firstAttribute="leading" secondItem="Nip-e4-4lf" secondAttribute="trailing" constant="12" id="rIe-1r-cf3"/>
+                    <constraint firstItem="SJ8-6F-Pk1" firstAttribute="centerY" secondItem="Nip-e4-4lf" secondAttribute="centerY" id="uQ5-bn-7zS"/>
+                    <constraint firstItem="Nip-e4-4lf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="wPd-bE-H5D"/>
+                </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="avatarButton" destination="Nip-e4-4lf" id="yqr-cg-OoH"/>
+                <outlet property="countLabel" destination="fH2-YU-zR3" id="AWE-Lm-HDN"/>
+                <outlet property="followButton" destination="SJ8-6F-Pk1" id="XHh-6n-jky"/>
+                <outlet property="nameButton" destination="vi7-nI-wfe" id="YWo-PE-1dW"/>
+                <outlet property="swipeView" destination="k6Q-27-7Uh" id="By4-vM-Jwb"/>
+            </connections>
+            <point key="canvasLocation" x="429" y="416"/>
         </tableViewCell>
     </objects>
 </document>
