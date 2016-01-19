@@ -49,7 +49,8 @@
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
-        [_collectionView.mj_footer endRefreshing];
+        [Hud text:@"已经拉到底啦"];
+        [_collectionView.mj_footer endRefreshingWithNoMoreData];
     }
     
 }
@@ -68,6 +69,12 @@
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getReply:param withBlock:^(NSMutableArray *resultArray) {
+        if (resultArray.count == 0) {
+            _canRefreshFooter = NO;
+        }else{
+            _canRefreshFooter = YES;
+        }
+        
         NSMutableArray* arrayAgent = [NSMutableArray new];
         for (PIEPageModel *entity in resultArray) {
             PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
@@ -96,14 +103,16 @@
     [param setObject:@(15) forKey:@"size"];
     
     [DDPageManager getReply:param withBlock:^(NSMutableArray *resultArray) {
+        
+        if (resultArray.count < 15) {
+            _canRefreshFooter = NO;
+        } else {
+            _canRefreshFooter = YES;
+        }
+        
         for (PIEPageModel *entity in resultArray) {
             PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
             [ws.dataSource addObject:vm];
-        }
-        if (resultArray.count == 0) {
-            ws.canRefreshFooter = NO;
-        } else {
-            ws.canRefreshFooter = YES;
         }
         [ws.collectionView.mj_footer endRefreshing];
         [ws.collectionView reloadData];

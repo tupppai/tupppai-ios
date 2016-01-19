@@ -317,6 +317,7 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
         if (_canRefreshToHelpFooter_done) {
             [self getMoreRemoteSourceToHelp_done];
         }else{
+            [Hud text:@"已经拉到底啦"];
             [_toHelpTableView.mj_footer endRefreshingWithNoMoreData];
         }
         

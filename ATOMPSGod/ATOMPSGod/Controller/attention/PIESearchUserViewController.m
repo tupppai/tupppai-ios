@@ -42,6 +42,8 @@
 @property (nonatomic, assign) long long timeStamp;
 @property (nonatomic, assign) NSInteger currentPage;
 
+@property (nonatomic, assign) BOOL canRefreshFooter;
+
 @end
 
 @implementation PIESearchUserViewController
@@ -55,23 +57,24 @@ static NSString *PIESearchUserTableViewCellIdentifier =
 #pragma mark - UI life cycles
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    [self.view addSubview:self.collectionView];
-//    [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.view);
-//        make.bottom.equalTo(self.view);
-//        make.left.equalTo(self.view);
-//        make.right.equalTo(self.view);
-//    }];
+
     
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
+    
+    [self setupData];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - data setup
+- (void)setupData{
+    _canRefreshFooter = YES;
 }
 
 #pragma mark - Gesture methods
@@ -178,7 +181,12 @@ static NSString *PIESearchUserTableViewCellIdentifier =
 
 - (void)didPullRefreshUp:(UITableView *)tableView
 {
-    [self searchMore];
+    if (_canRefreshFooter) {
+        [self searchMore];
+    }else{
+        [Hud text:@"已经到底啦"];
+        [_tableView.mj_footer endRefreshingWithNoMoreData];
+    }
 }
 
 #pragma mark - network request (fetch data)
@@ -196,7 +204,13 @@ static NSString *PIESearchUserTableViewCellIdentifier =
         
         [PIESearchManager getSearchUserResult:param
                                     withBlock:^(NSMutableArray *retArray) {
-                                        _notFirstLoading = YES;
+                                        
+                                        if (retArray.count == 0) {
+                                            _canRefreshFooter = NO;
+                                            _notFirstLoading = YES;
+                                        }else{
+                                            _canRefreshFooter = YES;
+                                        }
                                         [_source removeAllObjects];
                                         _source = retArray;
                                         [_tableView reloadData];
@@ -213,13 +227,14 @@ static NSString *PIESearchUserTableViewCellIdentifier =
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:_textToSearch forKey:@"name"];
     [PIESearchManager getSearchUserResult:param withBlock:^(NSMutableArray *retArray) {
+        if (retArray.count < 10) {
+            _canRefreshFooter = NO;
+        } else {
+            _canRefreshFooter = YES;
+        }
+        [_tableView.mj_footer endRefreshing];
         [_source addObjectsFromArray: retArray];
         [_tableView reloadData];
-        if (retArray.count<=0) {
-            [self.tableView.mj_footer endRefreshingWithNoMoreData];
-        } else {
-            [self.tableView.mj_footer endRefreshing];
-        }
     }];
 }
 

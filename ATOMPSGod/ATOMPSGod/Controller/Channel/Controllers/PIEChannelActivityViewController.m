@@ -68,6 +68,7 @@
 
 @property (nonatomic, strong) MRNavigationBarProgressView *progressView;
 
+@property (nonatomic, assign) BOOL canRefreshFooter;
 
 @end
 
@@ -175,6 +176,8 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     
     _currentPageIndex = 0;
     
+    _canRefreshFooter = YES;
+    
 }
 
 - (void)setupProgressView {
@@ -268,7 +271,12 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 }
 - (void)didPullRefreshUp:(UITableView *)tableView
 {
-    [self getMoreSource_Reply];
+    if (_canRefreshFooter) {
+        [self getMoreSource_Reply];
+    }else{
+        [Hud text:@"已经拉到底啦"];
+        [_tableView.mj_footer endRefreshingWithNoMoreData];
+    }
 }
 
 - (void)getSource_Reply:(void (^)(BOOL success))block {
@@ -283,17 +291,25 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     params[@"last_updated"]      = @(_timeStamp);
     [params setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
 
-    [PIEChannelManager getSource_channelPages:params resultBlock:^(NSMutableArray<PIEPageVM *> *pageArray) {
-        [_source_reply removeAllObjects];
-        [_source_reply addObjectsFromArray:pageArray];
-        if (block) {
-            block(YES);
-        }
-    } completion:^{
-
-        [ws.tableView.mj_header endRefreshing];
-        [ws.tableView reloadData];
-    }];
+    [PIEChannelManager getSource_channelPages:params
+                                  resultBlock:^(NSMutableArray<PIEPageVM *> *pageArray) {
+                                      
+                                      if (pageArray.count == 0) {
+                                          _canRefreshFooter = NO;
+                                      }else{
+                                          _canRefreshFooter = YES;
+                                      }
+                                      [_source_reply removeAllObjects];
+                                      [_source_reply addObjectsFromArray:pageArray];
+                                      if (block) {
+                                          block(YES);
+                                      }
+                                      
+                                  } completion:^{
+                                      
+                                      [ws.tableView.mj_header endRefreshing];
+                                      [ws.tableView reloadData];
+                                  }];
 }
 - (void)getMoreSource_Reply {
     WS(ws);
@@ -307,6 +323,12 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     [params setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
 
     [PIEChannelManager getSource_channelPages:params resultBlock:^(NSMutableArray<PIEPageVM *> *pageArray) {
+        if (pageArray.count < 10) {
+            _canRefreshFooter = NO;
+        }else{
+            _canRefreshFooter = YES;
+        }
+        
         [_source_reply addObjectsFromArray:pageArray];
     } completion:^{
         [ws.tableView.mj_footer endRefreshing];

@@ -310,14 +310,14 @@ static NSString * const NotificationViewControllerDefaultCellIdentifier =
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [PIENotificationManager getNotifications:param block:^(NSArray *source) {
-        if (source.count>0) {
-            [ws.source addObjectsFromArray:source];
-            [ws.tableView reloadData];
-            _canRefreshFooter = YES;
-        }
-        else {
+        if (source.count <15) {
             _canRefreshFooter = NO;
         }
+        else {
+            _canRefreshFooter = YES;
+        }
+        [ws.source addObjectsFromArray:source];
+        [ws.tableView reloadData];
         [self.tableView.mj_footer endRefreshing];
     }];
 }
@@ -326,7 +326,8 @@ static NSString * const NotificationViewControllerDefaultCellIdentifier =
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
-        [self.tableView.mj_footer endRefreshing];
+        [Hud text:@"已经拉到底啦"];
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
     }
 }
 
@@ -413,7 +414,6 @@ static NSString * const NotificationViewControllerDefaultCellIdentifier =
          initWithStyle:UITableViewCellStyleDefault
          reuseIdentifier:@"defaultCell"];
         cell.textLabel.font = [UIFont lightTupaiFontOfSize:14];
-
 
         if (indexPath.row == 0) {
             cell.imageView.image = [UIImage imageNamed:@"notify_system"];
@@ -523,15 +523,15 @@ static NSString * const NotificationViewControllerDefaultCellIdentifier =
 #pragma mark - private helpers
 - (PIEPageVM*)transformNotificationVMToPageVM:(PIENotificationVM*)vm {
     PIEPageModel* model = [PIEPageModel new];
-    model.ID = vm.model.targetID;
-    model.type = vm.model.targetType;
-    model.imageURL = vm.model.imageUrl;
-    model.avatar = vm.model.avatarUrl;
-    model.askID = vm.model.askID;
-    model.nickname = vm.model.username;
-    model.uid = vm.model.senderID;
-    model.uploadTime = vm.model.time;
-    PIEPageVM* pageVM  = [[PIEPageVM alloc]initWithPageEntity:model];
+    model.ID            = vm.model.targetID;
+    model.type          = vm.model.targetType;
+    model.imageURL      = vm.model.imageUrl;
+    model.avatar        = vm.model.avatarUrl;
+    model.askID         = vm.model.askID;
+    model.nickname      = vm.model.username;
+    model.uid           = vm.model.senderID;
+    model.uploadTime    = vm.model.time;
+    PIEPageVM* pageVM   = [[PIEPageVM alloc]initWithPageEntity:model];
     return pageVM;
 }
 

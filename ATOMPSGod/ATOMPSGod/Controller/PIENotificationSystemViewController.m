@@ -83,17 +83,18 @@
     [param setObject:@(_currentIndex) forKey:@"page"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    [param setObject:@"fold" forKey:@"type"];
+    [param setObject:@"system" forKey:@"type"];
 
     [PIENotificationManager getNotifications:param block:^(NSArray *source) {
-        if (source.count>0) {
-            [ws.source addObjectsFromArray:source];
-            [ws.tableView reloadData];
-            _canRefreshFooter = YES;
-        }
-        else {
+        if (source.count < 15) {
             _canRefreshFooter = NO;
         }
+        else {
+            _canRefreshFooter = YES;
+        }
+        
+        [ws.source addObjectsFromArray:source];
+        [ws.tableView reloadData];
         [self.tableView.mj_footer endRefreshing];
     }];
 }
@@ -105,7 +106,8 @@
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
-        [self.tableView.mj_footer endRefreshing];
+        [Hud text:@"已经拉到底啦"];
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
     }
 }
 -(PIERefreshTableView *)tableView {

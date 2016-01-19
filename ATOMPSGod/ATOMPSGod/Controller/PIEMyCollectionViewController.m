@@ -97,7 +97,8 @@
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
-        [_tableView.mj_footer endRefreshing];
+        [Hud text:@"已经拉到底啦"];
+        [_tableView.mj_footer endRefreshingWithNoMoreData];
     }
 }
 #pragma mark - GetDataSource
@@ -149,7 +150,7 @@
         }
         [ws.tableView reloadData];
         [ws.tableView.mj_footer endRefreshing];
-        if (resultArray.count == 0) {
+        if (resultArray.count < 15) {
             ws.canRefreshFooter = NO;
         } else {
             ws.canRefreshFooter = YES;
