@@ -7,7 +7,7 @@
 //
 
 #import "DDCollectManager.h"
-
+#import "PIECommentManager.h"
 
 @interface PIEPageVM ()
 
@@ -29,6 +29,7 @@
     [_model removeObserver:self forKeyPath:@"collected"];
     [_model removeObserver:self forKeyPath:@"collectCount"];
     [_model removeObserver:self forKeyPath:@"totalShareNumber"];
+    [_model removeObserver:self forKeyPath:@"totalCommentNumber"];
 
 }
 
@@ -43,6 +44,7 @@
         [_model addObserver:self forKeyPath:@"collected" options:NSKeyValueObservingOptionNew context:NULL];
         [_model addObserver:self forKeyPath:@"collectCount" options:NSKeyValueObservingOptionNew context:NULL];
         [_model addObserver:self forKeyPath:@"totalShareNumber" options:NSKeyValueObservingOptionNew context:NULL];
+        [_model addObserver:self forKeyPath:@"totalCommentNumber" options:NSKeyValueObservingOptionNew context:NULL];
 
 
         NSDate *publishDate    = [NSDate dateWithTimeIntervalSince1970:entity.uploadTime];
@@ -83,6 +85,7 @@
         self.model.totalPraiseNumber -= 1;
     }
 }
+
 
 - (void)revertStatus {
     
@@ -177,6 +180,8 @@
      }];
 }
 
+
+
 #pragma -- convinience getters
 -(NSInteger)ID {
     return self.model.ID;
@@ -253,6 +258,9 @@
     } else     if ([keyPath isEqualToString:@"totalShareNumber"]) {
         NSInteger value = [[change objectForKey:@"new"]integerValue];
         self.shareCount = [self transfromRawToViewData:value];
+    } else     if ([keyPath isEqualToString:@"totalCommentNumber"]) {
+        NSInteger value = [[change objectForKey:@"new"]integerValue];
+        self.commentCount = [self transfromRawToViewData:value];
     }
 }
 

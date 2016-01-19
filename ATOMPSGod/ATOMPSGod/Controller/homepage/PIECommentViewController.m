@@ -126,10 +126,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [param setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
 
     [PIEPageManager getPageSource:param block:^(PIEPageVM *remoteVM) {
-        //reset kvo
-        [self removeKVO];
+//        [self removeKVO];
         _vm = remoteVM;
-        [self addKVO];
+//        [self addKVO];
         if (_vm.type == PIEPageTypeAsk) {
             self.headerView.vm = _vm;
         } else {
@@ -161,11 +160,8 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 
 -(void)dealloc {
-    [self removeKVO];
+//    [self removeKVO];
 
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:PIESharedIconStatusChangedNotification
-                                                  object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -292,7 +288,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [showDetailOfComment SendComment:param withBlock:^(NSInteger comment_id, NSError *error) {
         if (comment_id) {
             commentVM.ID = comment_id;
-            _vm.commentCount = [NSString stringWithFormat:@"%zd",[_vm.commentCount integerValue]+1];
+            self.vm.model.totalCommentNumber++;
         }
     }];
     self.textView.text = @"";
@@ -477,7 +473,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
             self.tableView.tableHeaderView = self.headerView_reply;
         }
         [self resizeHeaderView];
-        [self addKVO];
+//        [self addKVO];
 
     } else {
         self.title = @"全部评论";
@@ -845,30 +841,30 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 
 
-- (void)addKVO {
-    if (_shouldShowHeaderView) {
-        [self.source_newComment addObserver:self forKeyPath:@"array" options:NSKeyValueObservingOptionNew context:nil];
-    }
-}
-- (void)removeKVO {
-    if (_shouldShowHeaderView) {
+//- (void)addKVO {
+//    if (_shouldShowHeaderView) {
+//        [self.source_newComment addObserver:self forKeyPath:@"array" options:NSKeyValueObservingOptionNew context:nil];
+//    }
+//}
+//- (void)removeKVO {
+//    if (_shouldShowHeaderView) {
+//
+//        [self.source_newComment removeObserver:self forKeyPath:@"array"];
+//
+//    }
+//}
 
-        [self.source_newComment removeObserver:self forKeyPath:@"array"];
 
-    }
-}
-
-
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
-if ([keyPath isEqualToString:@"array"]) {
-        if (_vm.type == PIEPageTypeAsk) {
-            ((PIECommentTableHeaderView_Ask*)self.tableView.tableHeaderView).commentButton.number = _source_newComment.countOfArray;
-        }    else    if (_vm.type == PIEPageTypeReply) {
-            ((PIECommentTableHeaderView_Reply*)self.tableView.tableHeaderView).commentButton.number = _source_newComment.countOfArray;
-        }
-    }
-
-}
+//-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+//if ([keyPath isEqualToString:@"array"]) {
+//        if (_vm.type == PIEPageTypeAsk) {
+//            ((PIECommentTableHeaderView_Ask*)self.tableView.tableHeaderView).commentButton.number = _source_newComment.countOfArray;
+//        }    else    if (_vm.type == PIEPageTypeReply) {
+//            ((PIECommentTableHeaderView_Reply*)self.tableView.tableHeaderView).commentButton.number = _source_newComment.countOfArray;
+//        }
+//    }
+//
+//}
 
 
 @end

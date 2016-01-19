@@ -152,6 +152,10 @@
         [RACObserve(vm, shareCount)subscribeNext:^(id x) {
             self.shareButton.numberString = x;
         }];
+        [RACObserve(vm, commentCount)subscribeNext:^(id x) {
+            self.commentButton.numberString = x;
+        }];
+
         [RACObserve(vm, likeCount)subscribeNext:^(id x) {
             self.likeButton.numberString = x;
         }];

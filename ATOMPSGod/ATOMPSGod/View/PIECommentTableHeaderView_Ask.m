@@ -144,6 +144,9 @@
         [RACObserve(vm, shareCount)subscribeNext:^(id x) {
             self.shareButton.numberString = x;
         }];
+        [RACObserve(vm, commentCount)subscribeNext:^(id x) {
+            self.commentButton.numberString = x;
+        }];
         [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
         
         _avatarView.isV = vm.isV;
