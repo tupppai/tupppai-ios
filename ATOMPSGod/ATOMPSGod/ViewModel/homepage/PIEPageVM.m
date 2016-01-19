@@ -28,6 +28,8 @@
     [_model removeObserver:self forKeyPath:@"followed"];
     [_model removeObserver:self forKeyPath:@"collected"];
     [_model removeObserver:self forKeyPath:@"collectCount"];
+    [_model removeObserver:self forKeyPath:@"totalShareNumber"];
+
 }
 
 - (instancetype)initWithPageEntity:(PIEPageModel *)entity {
@@ -40,6 +42,7 @@
         [_model addObserver:self forKeyPath:@"followed" options:NSKeyValueObservingOptionNew context:NULL];
         [_model addObserver:self forKeyPath:@"collected" options:NSKeyValueObservingOptionNew context:NULL];
         [_model addObserver:self forKeyPath:@"collectCount" options:NSKeyValueObservingOptionNew context:NULL];
+        [_model addObserver:self forKeyPath:@"totalShareNumber" options:NSKeyValueObservingOptionNew context:NULL];
 
 
         NSDate *publishDate    = [NSDate dateWithTimeIntervalSince1970:entity.uploadTime];
@@ -241,15 +244,15 @@
     } else     if ([keyPath isEqualToString:@"totalPraiseNumber"]) {
         NSInteger newLikeCount = [[change objectForKey:@"new"]integerValue];
         self.likeCount = [self transfromRawToViewData:newLikeCount];
-    } else     if ([keyPath isEqualToString:@"followed"]) {
-        BOOL follow = [[change objectForKey:@"new"]boolValue];
-        self.followed = follow;
+    }  else     if ([keyPath isEqualToString:@"collectCount"]) {
+        NSInteger value = [[change objectForKey:@"new"]integerValue];
+        self.collectCount = [self transfromRawToViewData:value];
     } else     if ([keyPath isEqualToString:@"collected"]) {
         BOOL value = [[change objectForKey:@"new"]boolValue];
         self.collected = value;
-    } else     if ([keyPath isEqualToString:@"collectCount"]) {
+    } else     if ([keyPath isEqualToString:@"totalShareNumber"]) {
         NSInteger value = [[change objectForKey:@"new"]integerValue];
-        self.collectCount = [self transfromRawToViewData:value];
+        self.shareCount = [self transfromRawToViewData:value];
     }
 }
 

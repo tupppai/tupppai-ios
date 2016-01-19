@@ -21,6 +21,7 @@
 @property (nonatomic, strong)  PIEShareView * shareView;
 @property (nonatomic, strong)  RACDisposable * loveStatusHander;
 @property (nonatomic, strong)  RACDisposable * likeCountHander;
+@property (nonatomic, strong)  RACDisposable * shareCountHander;
 
 @end
 
@@ -231,13 +232,16 @@
     
     [_loveStatusHander dispose];
     [_likeCountHander dispose];
-    
+    [_shareCountHander dispose];
     _vm = vm;
      _loveStatusHander = [RACObserve(_vm,loveStatus)subscribeNext:^(id x) {
          self.pageLikeButton.status = [x integerValue];
      }];
     _likeCountHander = [RACObserve(_vm,likeCount)subscribeNext:^(id x) {
         self.pageLikeButton.numberString = x;
+    }];
+    _shareCountHander = [RACObserve(_vm,shareCount)subscribeNext:^(id x) {
+        self.pageButton_share.numberString = x;
     }];
     
 //    RAC(self.pageLikeButton,numberString) =  RACObserve(_vm,likeCount);

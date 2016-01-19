@@ -244,30 +244,13 @@
 - (void)postShareType:(ATOMShareType)shareType
     selectedViewModel:(PIEPageVM *)selectedVM
 {
-    // ASSUMPTION: selectedVM is not nil
     [DDShareManager
      postSocialShare2:selectedVM
      withSocialShareType:shareType
      block:^(BOOL success) {
-         
          if (success) {
-             
-             
-            selectedVM.shareCount =
-             [NSString stringWithFormat:@"%zd",[selectedVM.shareCount integerValue]+1];
-             
-//             // 这里是通知PIESharedIconStatusChangedNotification 唯一发布的地方
-//             [[NSNotificationCenter defaultCenter]
-//              postNotificationName:PIESharedIconStatusChangedNotification
-//              object:nil
-//              userInfo:@{PIESharedIconSharedCountKey: selectedVM.shareCount}];
-//             
+             selectedVM.model.totalShareNumber++;
          }
-         else
-         {
-             /* evoke a network error prompt message to user. */
-         }
-         
      }];
 }
 

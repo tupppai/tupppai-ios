@@ -135,12 +135,15 @@
     [_vm addObserver:self forKeyPath:@"loveStatus" options:NSKeyValueObservingOptionNew context:NULL];
     [_vm addObserver:self forKeyPath:@"likeCount" options:NSKeyValueObservingOptionNew context:NULL];
     [_vm addObserver:self forKeyPath:@"followed" options:NSKeyValueObservingOptionNew context:NULL];
+    [_vm addObserver:self forKeyPath:@"shareCount" options:NSKeyValueObservingOptionNew context:NULL];
+
 }
 - (void)removeKVO {
     @try{
         [_vm removeObserver:self forKeyPath:@"loveStatus"];
         [_vm removeObserver:self forKeyPath:@"likeCount"];
         [_vm removeObserver:self forKeyPath:@"followed"];
+        [_vm removeObserver:self forKeyPath:@"shareCount"];
     }@catch(id anException){
         //do nothing, obviously it wasn't attached because an exception was thrown
     }
@@ -159,6 +162,9 @@
     } else     if ([keyPath isEqualToString:@"followed"]) {
         BOOL newFollowed = [[change objectForKey:@"new"]boolValue];
         self.followView.highlighted = newFollowed;
+    } else     if ([keyPath isEqualToString:@"shareCount"]) {
+        NSString* value = [change objectForKey:@"new"];
+        self.shareView.numberString = value;
     }
 }
 @end

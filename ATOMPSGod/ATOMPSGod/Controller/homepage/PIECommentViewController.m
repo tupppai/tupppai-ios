@@ -88,16 +88,12 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     _isFirstLoading = YES;
     [self setupNavBar];
     
-    [self setupNotificationObserver];
-    
     [self configTableView];
     [self configFooterRefresh];
     [self configTextInput];
     [self addGestureToCommentTableView];
     [self getDataSource];
-//    if (_shouldDownloadVMSource && _shouldShowHeaderView) {
-//        [self getVMSource];
-//    }
+
 }
 
 - (void)setupNavBar {
@@ -115,13 +111,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     }
 }
 
-- (void)setupNotificationObserver
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updateShareStatus:)
-                                                 name:PIESharedIconStatusChangedNotification
-                                               object:nil];
-}
 
 - (void) dismiss {
     [self dismissViewControllerAnimated:NO completion:nil];
@@ -854,47 +843,16 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 
 
-#pragma mark - Notification methods
-/**
- *  用户点击了updateShareStatus之后（在弹出的窗口分享），刷新本页面ReplyCell的分享数
- */
-- (void)updateShareStatus:(NSNotification *)notification
-{
-    /*
-     _vm.shareCount ++ 这个副作用集中发生在PIEShareView之中。
-     
-     */
-    
-    //    /*??? 分享结束之后没有刷新UI，reload tableView之类的*/
-    //    _vm.shareCount = [NSString stringWithFormat:@"%zd",[_vm.shareCount integerValue]+1];
-    
-    NSString *numberString = notification.userInfo[PIESharedIconSharedCountKey];
-   
-    if (_vm.type == PIEPageTypeAsk && _headerView != nil) {
-        _headerView.shareButton.numberString = numberString;
-    }
-    else if (_vm.type == PIEPageTypeReply && _headerView_reply != nil){
-        _headerView_reply.shareButton.numberString = numberString;
-    }
-    else{
-        /* nothing happened. */
-    }
-    
-}
-
 
 
 - (void)addKVO {
     if (_shouldShowHeaderView) {
-        [_vm addObserver:self forKeyPath:@"loveStatus" options:NSKeyValueObservingOptionNew context:NULL];
-        [_vm addObserver:self forKeyPath:@"likeCount" options:NSKeyValueObservingOptionNew context:NULL];
         [self.source_newComment addObserver:self forKeyPath:@"array" options:NSKeyValueObservingOptionNew context:nil];
     }
 }
 - (void)removeKVO {
     if (_shouldShowHeaderView) {
-        [_vm removeObserver:self forKeyPath:@"likeCount"];
-        [_vm removeObserver:self forKeyPath:@"loveStatus"];
+
         [self.source_newComment removeObserver:self forKeyPath:@"array"];
 
     }
@@ -902,14 +860,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"loveStatus"]) {
-        NSInteger newLovedCount = [[change objectForKey:@"new"]integerValue];
-        self.headerView_reply.likeButton.status = newLovedCount;
-    } else     if ([keyPath isEqualToString:@"likeCount"]) {
-        NSInteger newLikeCount = [[change objectForKey:@"new"]integerValue];
-        self.headerView_reply.likeButton.number = newLikeCount;
-    } else     if ([keyPath isEqualToString:@"array"]) {
-        
+if ([keyPath isEqualToString:@"array"]) {
         if (_vm.type == PIEPageTypeAsk) {
             ((PIECommentTableHeaderView_Ask*)self.tableView.tableHeaderView).commentButton.number = _source_newComment.countOfArray;
         }    else    if (_vm.type == PIEPageTypeReply) {
