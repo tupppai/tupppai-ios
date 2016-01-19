@@ -49,11 +49,14 @@
     _avatarButton.isV = vm.model.isV;
     
     [_nameButton setTitle:vm.username forState:UIControlStateNormal];
-    _countLabel.text = [NSString stringWithFormat:@"%@ 作品   %@ 粉丝   %@ 关注",vm.replyCount,vm.fansCount,vm.followCount];
+    _countLabel.text       =
+    [NSString stringWithFormat:@"%@ 作品   %@ 粉丝   %@ 关注",vm.replyCount,vm.fansCount,vm.followCount];
+    
+    /*
+        TODO: 深入判断是单方面关注，还是互相关注
+     */
     _followButton.selected = vm.model.isMyFollow;
 }
-
-
 
 
 @end
