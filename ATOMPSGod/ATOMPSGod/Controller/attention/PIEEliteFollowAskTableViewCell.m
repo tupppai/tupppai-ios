@@ -54,13 +54,18 @@
 }
 
 -(void)dealloc {
+    [self removeKVO];
 }
 -(void)prepareForReuse {
     [super prepareForReuse];
+    [self removeKVO];
 }
 - (void)injectSauce:(PIEPageVM *)viewModel {
     WS(ws);
+    
+    
     _vm = viewModel;
+    [self addKVO];
     NSString *urlString_avatar = [viewModel.avatarURL trimToImageWidth:_avatarView.frame.size.width*SCREEN_SCALE];
     NSString *urlString_imageView = [viewModel.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
     [_theImageView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView]
@@ -82,7 +87,29 @@
     _timeLabel.text = viewModel.publishTime;
 }
 
+- (void)addKVO {
+    [_vm addObserver:self forKeyPath:@"shareCount" options:NSKeyValueObservingOptionNew context:NULL];
+    [_vm addObserver:self forKeyPath:@"commentCount" options:NSKeyValueObservingOptionNew context:NULL];
+}
+- (void)removeKVO {
+    @try{
+        [_vm removeObserver:self forKeyPath:@"shareCount"];
+        [_vm removeObserver:self forKeyPath:@"commentCount"];
+    }@catch(id anException){
+        //do nothing, obviously it wasn't attached because an exception was thrown
+    }
+}
 
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+      if ([keyPath isEqualToString:@"shareCount"]) {
+        NSString* value = [change objectForKey:@"new"];
+        self.shareView.numberString = value;
+    } else     if ([keyPath isEqualToString:@"commentCount"]) {
+        NSString* value = [change objectForKey:@"new"];
+        self.commentView.numberString = value;
+    }
+}
 
 
 

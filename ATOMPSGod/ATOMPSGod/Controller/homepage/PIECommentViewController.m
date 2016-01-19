@@ -88,16 +88,12 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     _isFirstLoading = YES;
     [self setupNavBar];
     
-    [self setupNotificationObserver];
-    
     [self configTableView];
     [self configFooterRefresh];
     [self configTextInput];
     [self addGestureToCommentTableView];
     [self getDataSource];
-//    if (_shouldDownloadVMSource && _shouldShowHeaderView) {
-//        [self getVMSource];
-//    }
+
 }
 
 - (void)setupNavBar {
@@ -115,13 +111,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     }
 }
 
-- (void)setupNotificationObserver
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updateShareStatus:)
-                                                 name:PIESharedIconStatusChangedNotification
-                                               object:nil];
-}
 
 - (void) dismiss {
     [self dismissViewControllerAnimated:NO completion:nil];
@@ -137,10 +126,9 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [param setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
 
     [PIEPageManager getPageSource:param block:^(PIEPageVM *remoteVM) {
-        //reset kvo
-        [self removeKVO];
+//        [self removeKVO];
         _vm = remoteVM;
-        [self addKVO];
+//        [self addKVO];
         if (_vm.type == PIEPageTypeAsk) {
             self.headerView.vm = _vm;
         } else {
@@ -172,11 +160,8 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 
 -(void)dealloc {
-    [self removeKVO];
+//    [self removeKVO];
 
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:PIESharedIconStatusChangedNotification
-                                                  object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -303,7 +288,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [showDetailOfComment SendComment:param withBlock:^(NSInteger comment_id, NSError *error) {
         if (comment_id) {
             commentVM.ID = comment_id;
-            _vm.commentCount = [NSString stringWithFormat:@"%zd",[_vm.commentCount integerValue]+1];
+            self.vm.model.totalCommentNumber++;
         }
     }];
     self.textView.text = @"";
@@ -488,7 +473,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
             self.tableView.tableHeaderView = self.headerView_reply;
         }
         [self resizeHeaderView];
-        [self addKVO];
+//        [self addKVO];
 
     } else {
         self.title = @"全部评论";
@@ -854,70 +839,32 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 }
 
 
-#pragma mark - Notification methods
-/**
- *  用户点击了updateShareStatus之后（在弹出的窗口分享），刷新本页面ReplyCell的分享数
- */
-- (void)updateShareStatus:(NSNotification *)notification
-{
-    /*
-     _vm.shareCount ++ 这个副作用集中发生在PIEShareView之中。
-     
-     */
-    
-    //    /*??? 分享结束之后没有刷新UI，reload tableView之类的*/
-    //    _vm.shareCount = [NSString stringWithFormat:@"%zd",[_vm.shareCount integerValue]+1];
-    
-    NSString *numberString = notification.userInfo[PIESharedIconSharedCountKey];
-   
-    if (_vm.type == PIEPageTypeAsk && _headerView != nil) {
-        _headerView.shareButton.numberString = numberString;
-    }
-    else if (_vm.type == PIEPageTypeReply && _headerView_reply != nil){
-        _headerView_reply.shareButton.numberString = numberString;
-    }
-    else{
-        /* nothing happened. */
-    }
-    
-}
 
 
-
-- (void)addKVO {
-    if (_shouldShowHeaderView) {
-        [_vm addObserver:self forKeyPath:@"loveStatus" options:NSKeyValueObservingOptionNew context:NULL];
-        [_vm addObserver:self forKeyPath:@"likeCount" options:NSKeyValueObservingOptionNew context:NULL];
-        [self.source_newComment addObserver:self forKeyPath:@"array" options:NSKeyValueObservingOptionNew context:nil];
-    }
-}
-- (void)removeKVO {
-    if (_shouldShowHeaderView) {
-        [_vm removeObserver:self forKeyPath:@"likeCount"];
-        [_vm removeObserver:self forKeyPath:@"loveStatus"];
-        [self.source_newComment removeObserver:self forKeyPath:@"array"];
-
-    }
-}
+//- (void)addKVO {
+//    if (_shouldShowHeaderView) {
+//        [self.source_newComment addObserver:self forKeyPath:@"array" options:NSKeyValueObservingOptionNew context:nil];
+//    }
+//}
+//- (void)removeKVO {
+//    if (_shouldShowHeaderView) {
+//
+//        [self.source_newComment removeObserver:self forKeyPath:@"array"];
+//
+//    }
+//}
 
 
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"loveStatus"]) {
-        NSInteger newLovedCount = [[change objectForKey:@"new"]integerValue];
-        self.headerView_reply.likeButton.status = newLovedCount;
-    } else     if ([keyPath isEqualToString:@"likeCount"]) {
-        NSInteger newLikeCount = [[change objectForKey:@"new"]integerValue];
-        self.headerView_reply.likeButton.number = newLikeCount;
-    } else     if ([keyPath isEqualToString:@"array"]) {
-        
-        if (_vm.type == PIEPageTypeAsk) {
-            ((PIECommentTableHeaderView_Ask*)self.tableView.tableHeaderView).commentButton.number = _source_newComment.countOfArray;
-        }    else    if (_vm.type == PIEPageTypeReply) {
-            ((PIECommentTableHeaderView_Reply*)self.tableView.tableHeaderView).commentButton.number = _source_newComment.countOfArray;
-        }
-    }
-
-}
+//-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+//if ([keyPath isEqualToString:@"array"]) {
+//        if (_vm.type == PIEPageTypeAsk) {
+//            ((PIECommentTableHeaderView_Ask*)self.tableView.tableHeaderView).commentButton.number = _source_newComment.countOfArray;
+//        }    else    if (_vm.type == PIEPageTypeReply) {
+//            ((PIECommentTableHeaderView_Reply*)self.tableView.tableHeaderView).commentButton.number = _source_newComment.countOfArray;
+//        }
+//    }
+//
+//}
 
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "DDCollectManager.h"
-
+#import "PIECommentManager.h"
 
 @interface PIEPageVM ()
 
@@ -26,6 +26,11 @@
     [_model removeObserver:self forKeyPath:@"loveStatus"];
     [_model removeObserver:self forKeyPath:@"totalPraiseNumber"];
     [_model removeObserver:self forKeyPath:@"followed"];
+    [_model removeObserver:self forKeyPath:@"collected"];
+    [_model removeObserver:self forKeyPath:@"collectCount"];
+    [_model removeObserver:self forKeyPath:@"totalShareNumber"];
+    [_model removeObserver:self forKeyPath:@"totalCommentNumber"];
+
 }
 
 - (instancetype)initWithPageEntity:(PIEPageModel *)entity {
@@ -36,15 +41,20 @@
         [_model addObserver:self forKeyPath:@"loveStatus" options:NSKeyValueObservingOptionNew context:NULL];
         [_model addObserver:self forKeyPath:@"totalPraiseNumber" options:NSKeyValueObservingOptionNew context:NULL];
         [_model addObserver:self forKeyPath:@"followed" options:NSKeyValueObservingOptionNew context:NULL];
+        [_model addObserver:self forKeyPath:@"collected" options:NSKeyValueObservingOptionNew context:NULL];
+        [_model addObserver:self forKeyPath:@"collectCount" options:NSKeyValueObservingOptionNew context:NULL];
+        [_model addObserver:self forKeyPath:@"totalShareNumber" options:NSKeyValueObservingOptionNew context:NULL];
+        [_model addObserver:self forKeyPath:@"totalCommentNumber" options:NSKeyValueObservingOptionNew context:NULL];
+
 
         NSDate *publishDate    = [NSDate dateWithTimeIntervalSince1970:entity.uploadTime];
         _publishTime           = [Util formatPublishTime:publishDate];
         
-        _likeCount = [self dataTransform:entity.totalPraiseNumber];
-        _shareCount = [self dataTransform:entity.totalShareNumber];
-        _commentCount = [self dataTransform:entity.totalCommentNumber];
-        _replyCount = [self dataTransform:entity.totalWorkNumber];
-        _collectCount = [self dataTransform:entity.collectCount];
+        _likeCount = [self transfromRawToViewData:entity.totalPraiseNumber];
+        _shareCount = [self transfromRawToViewData:entity.totalShareNumber];
+        _commentCount = [self transfromRawToViewData:entity.totalCommentNumber];
+        _replyCount = [self transfromRawToViewData:entity.totalWorkNumber];
+        _collectCount = [self transfromRawToViewData:entity.collectCount];
     }
     return self;
 }
@@ -75,6 +85,7 @@
         self.model.totalPraiseNumber -= 1;
     }
 }
+
 
 - (void)revertStatus {
     
@@ -128,6 +139,48 @@
         }
     }];
 }
+
+- (void)collect:(void(^)(BOOL success))block
+{
+    
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    
+    if (self.collected) {
+        //取消收藏
+        [param setObject:@(0) forKey:@"status"];
+    } else {
+        //反之，收藏
+        [param setObject:@(1) forKey:@"status"];
+    }
+    
+    [DDCollectManager
+     toggleCollect:param
+     withPageType:self.type
+     withID:self.ID withBlock:^(NSError *error) {
+         if (error == nil) {
+             
+             if (!self.collected) {
+                 [Hud text:@"收藏成功" backgroundColor:[UIColor colorWithHex:0x00000 andAlpha:0.3] margin:16 cornerRadius:8];
+                 self.model.collectCount++;
+                 self.model.collected = YES;
+             } else {
+                 [Hud text:@"取消收藏成功" backgroundColor:[UIColor colorWithHex:0x00000 andAlpha:0.3] margin:16 cornerRadius:8];
+                 self.model.collected = NO;
+                 self.model.collectCount--;
+             }
+             
+             if (block) {
+                 block(YES);
+             }
+         } else {
+             if (block) {
+                 block(NO);
+             }
+         }
+     }];
+}
+
+
 
 #pragma -- convinience getters
 -(NSInteger)ID {
@@ -185,7 +238,6 @@
     return self.model.loveStatus;
 }
 
-//declare as strong
 -(NSString *)content {
     return self.model.userDescription;
 }
@@ -196,15 +248,26 @@
         self.loveStatus = newLoveStatus;
     } else     if ([keyPath isEqualToString:@"totalPraiseNumber"]) {
         NSInteger newLikeCount = [[change objectForKey:@"new"]integerValue];
-        self.likeCount = [self dataTransform:newLikeCount];
-    } else     if ([keyPath isEqualToString:@"followed"]) {
-        BOOL follow = [[change objectForKey:@"new"]boolValue];
-        self.followed = follow;
+        self.likeCount = [self transfromRawToViewData:newLikeCount];
+    }  else     if ([keyPath isEqualToString:@"collectCount"]) {
+        NSInteger value = [[change objectForKey:@"new"]integerValue];
+        self.collectCount = [self transfromRawToViewData:value];
+    } else     if ([keyPath isEqualToString:@"collected"]) {
+        BOOL value = [[change objectForKey:@"new"]boolValue];
+        self.collected = value;
+    } else     if ([keyPath isEqualToString:@"totalShareNumber"]) {
+        NSInteger value = [[change objectForKey:@"new"]integerValue];
+        self.shareCount = [self transfromRawToViewData:value];
+    } else     if ([keyPath isEqualToString:@"totalCommentNumber"]) {
+        NSInteger value = [[change objectForKey:@"new"]integerValue];
+        self.commentCount = [self transfromRawToViewData:value];
     }
 }
 
 
-- (NSString*)dataTransform:(NSInteger)count {
+
+
+- (NSString*)transfromRawToViewData:(NSInteger)count {
     NSString* countStringTransformed;
     if (count<=999999) {
         countStringTransformed    = [NSString stringWithFormat:@"%zd",count];
