@@ -46,20 +46,22 @@
     [self search];
 }
 - (void)search {
-    
-    NSMutableDictionary* param = [NSMutableDictionary new];
-    [param setObject:@(1) forKey:@"page"];
-    [param setObject:@(10) forKey:@"size"];
-    _timeStamp = [[NSDate date] timeIntervalSince1970];
-    [param setObject:@(_timeStamp) forKey:@"last_updated"];
-    [param setObject:_textToSearch forKey:@"desc"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
-    [PIESearchManager getSearchContentResult:param withBlock:^(NSMutableArray *retArray) {
+    if ([_collectionView.mj_header isRefreshing] == NO) {
+        NSMutableDictionary* param = [NSMutableDictionary new];
+        [param setObject:@(1) forKey:@"page"];
+        [param setObject:@(10) forKey:@"size"];
+        _timeStamp = [[NSDate date] timeIntervalSince1970];
+        [param setObject:@(_timeStamp) forKey:@"last_updated"];
+        [param setObject:_textToSearch forKey:@"desc"];
+        [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+        [PIESearchManager getSearchContentResult:param withBlock:^(NSMutableArray *retArray) {
             _notFirstLoading = YES;
             [_source removeAllObjects];
             _source = retArray;
             [_collectionView reloadData];
-    }];
+        }];
+    }
+    
 }
 - (void)searchMore {
     _currentPage ++;

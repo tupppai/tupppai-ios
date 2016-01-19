@@ -89,23 +89,26 @@
 
 #pragma mark - network request (fetch data)
 - (void)search{
-    [self.collectionView.mj_footer endRefreshing];
-    _currentPage = 1;
+    if ([self.collectionView.mj_header isRefreshing] == NO) {
+        [self.collectionView.mj_footer endRefreshing];
+        _currentPage = 1;
+        
+        _timeStamp                 = [[NSDate date] timeIntervalSince1970];
+        NSMutableDictionary* param = [NSMutableDictionary new];
+        [param setObject:@(1) forKey:@"page"];
+        [param setObject:@(10) forKey:@"size"];
+        [param setObject:@(_timeStamp) forKey:@"last_updated"];
+        [param setObject:_textToSearch forKey:@"name"];
+        
+        [PIESearchManager getSearchUserResult:param
+                                    withBlock:^(NSMutableArray *retArray) {
+                                        _notFirstLoading = YES;
+                                        [_source removeAllObjects];
+                                        _source = retArray;
+                                        [_collectionView reloadData];
+                                    }];
+    }
     
-    _timeStamp                 = [[NSDate date] timeIntervalSince1970];
-    NSMutableDictionary* param = [NSMutableDictionary new];
-    [param setObject:@(1) forKey:@"page"];
-    [param setObject:@(10) forKey:@"size"];
-    [param setObject:@(_timeStamp) forKey:@"last_updated"];
-    [param setObject:_textToSearch forKey:@"name"];
-    
-    [PIESearchManager getSearchUserResult:param
-                                withBlock:^(NSMutableArray *retArray) {
-        _notFirstLoading = YES;
-        [_source removeAllObjects];
-        _source = retArray;
-        [_collectionView reloadData];
-    }];
 }
 
 - (void)searchMore {

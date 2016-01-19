@@ -11,6 +11,7 @@
 #import "PIESearchUserViewController.h"
 #import "CAPSPageMenu.h"
 #import "ReactiveCocoa/ReactiveCocoa.h"
+#import "LxDBAnything.h"
 
 @interface PIESearchViewController ()
 <UITextFieldDelegate>
@@ -108,14 +109,24 @@
     [_textField2 setReturnKeyType:UIReturnKeySearch];
     
     
-//    _textField2.delegate = self;
+    /* RAC-binding */
+    _textField2.delegate = self;
+    RACSignal *textFieldDidPressReturnButtonSignal =
+    [self rac_signalForSelector:@selector(textFieldShouldReturn:)
+                   fromProtocol:@protocol(UITextFieldDelegate)];
+    
+    RACSignal *textFieldShouldSearchTextSignal =
+    [[[_textField2.rac_textSignal throttle:0.8] distinctUntilChanged ]ignore:@""];
+    
+    
     @weakify(self);
-    [[[[_textField2.rac_textSignal throttle:0.5] distinctUntilChanged ]ignore:@""]
-     subscribeNext:^(NSString  *searchText) {
+    [[textFieldShouldSearchTextSignal merge:textFieldDidPressReturnButtonSignal]
+     subscribeNext:^(id x) {
          @strongify(self);
-         [self allSubControllersSearchText:searchText];
-     }];
-
+         [self allSubControllersSearchText:self.textField2.text];
+    }];
+    
+    
 }
 
 - (void)setupPageMenu {
@@ -164,30 +175,44 @@
 
 
 #pragma mark - <UITextFieldDelegate>
--(BOOL)textFieldShouldReturn:(UITextField *)textField {
+/*
+    警告：不要删除下面的代码！
+        现在使用RAC的信号合并，将下面的代理方法的信号和text_racSignal] throttle] 的信号进行合并；
+        但假如rac信号不好使，那么就必须使用下面的方法来进行替代！
+        删除下面的代码就是断自己后路！
+ */
+
+//-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+//    
+//    if ([_lastSearchKeyword isEqualToString: textField.text ] && _lastIndex == _pageMenu.currentPageIndex ) {
+//        
+//        
+//    } else {
+//        _lastSearchKeyword = textField.text;
+//        _lastIndex = _pageMenu.currentPageIndex;
+//            if (_pageMenu.currentPageIndex == 0) {
+//                PIESearchUserViewController *vc = [_pageMenu.controllerArray objectAtIndex:0];;
+//                vc.textToSearch = textField.text;
+//                // 需求：两边一起刷新数据
+//                PIESearchPageViewController *vc2 = [_pageMenu.controllerArray objectAtIndex:1];
+//                vc2.textToSearch = textField.text;
+//                
+//            } else if (_pageMenu.currentPageIndex == 1) {
+//                PIESearchPageViewController *vc = [_pageMenu.controllerArray objectAtIndex:1];;
+//                vc.textToSearch = textField.text;
+//                
+//                // 需求：两边一起刷新数据
+//                PIESearchUserViewController *vc1 = [_pageMenu.controllerArray objectAtIndex:0];
+//                vc1.textToSearch= textField.text;
+//            }
+//    }
+//    return YES;
+//}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    // do nothing
     
-    if ([_lastSearchKeyword isEqualToString: textField.text ] && _lastIndex == _pageMenu.currentPageIndex ) {
-        
-        
-    } else {
-        _lastSearchKeyword = textField.text;
-        _lastIndex = _pageMenu.currentPageIndex;
-            if (_pageMenu.currentPageIndex == 0) {
-                PIESearchUserViewController *vc = [_pageMenu.controllerArray objectAtIndex:0];;
-                vc.textToSearch = textField.text;
-                // 需求：两边一起刷新数据
-                PIESearchPageViewController *vc2 = [_pageMenu.controllerArray objectAtIndex:1];
-                vc2.textToSearch = textField.text;
-                
-            } else if (_pageMenu.currentPageIndex == 1) {
-                PIESearchPageViewController *vc = [_pageMenu.controllerArray objectAtIndex:1];;
-                vc.textToSearch = textField.text;
-                
-                // 需求：两边一起刷新数据
-                PIESearchUserViewController *vc1 = [_pageMenu.controllerArray objectAtIndex:0];
-                vc1.textToSearch= textField.text;
-            }
-    }
     return YES;
 }
 
