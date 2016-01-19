@@ -23,10 +23,10 @@
                         </constraints>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yl5-6A-GFU" userLabel="Name Button">
-                        <rect key="frame" x="52" y="50" width="30" height="34"/>
+                        <rect key="frame" x="52" y="50" width="30" height="67"/>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="count Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WnJ-kL-QLy" userLabel="Count Label">
-                        <rect key="frame" x="52" y="84" width="360" height="13.5"/>
+                        <rect key="frame" x="52" y="117" width="360" height="13.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
@@ -50,6 +50,7 @@
                     <constraint firstItem="yl5-6A-GFU" firstAttribute="leading" secondItem="Nx9-Zc-5me" secondAttribute="trailing" constant="12" id="ReS-Yk-xLh"/>
                     <constraint firstItem="WnJ-kL-QLy" firstAttribute="top" secondItem="yl5-6A-GFU" secondAttribute="bottom" id="bCq-eC-Mkm"/>
                     <constraint firstItem="yl5-6A-GFU" firstAttribute="top" secondItem="Nx9-Zc-5me" secondAttribute="top" constant="-12" id="gl3-Yj-vo4"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="WnJ-kL-QLy" secondAttribute="bottom" constant="15" id="hB3-Iw-IfT"/>
                     <constraint firstAttribute="trailingMargin" secondItem="WnJ-kL-QLy" secondAttribute="trailing" constant="55" id="sUO-5z-Pgj"/>
                 </constraints>
             </tableViewCellContentView>

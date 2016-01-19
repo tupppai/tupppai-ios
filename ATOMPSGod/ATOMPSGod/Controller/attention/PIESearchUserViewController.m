@@ -107,10 +107,33 @@ static NSString *PIESearchUserTableViewCellIdentifier =
             cell.followButton.selected = !cell.followButton.selected;
             NSMutableDictionary *param = [NSMutableDictionary new];
             [param setObject:@(vm.model.uid) forKey:@"uid"];
+            
+            /*
+             接口改了，得靠自己判断到底是关注还是取消关注
+             */
+            
+            if (cell.followButton.selected) {
+                /* 想要关注别人，status 传 1 */
+                [param setObject:@(1) forKey:@"status"];
+            }else{
+                /* 想要取fo，status 传 0 */
+                [param setObject:@(0) forKey:@"status"];
+            }
+            
             [DDService follow:param withBlock:^(BOOL success) {
-                if (!success) {
-                    cell.followButton.selected = !cell.followButton.selected;
+                if (success) {
+                    /*
+                        而且服务器几乎没有返回任何有价值的数据回来，到底有没有成功操作也不知道，data统统传　true
+                     */
+                    if (cell.followButton.selected) {
+                        [Hud text:@"关注成功"];
+                    }else{
+                        [Hud text:@"已取消关注"];
+                    }
                 } else {
+                    /* 操作不成功， 将UI恢复原样 */
+                    cell.followButton.selected = !cell.followButton.selected;
+ 
                 }
             }];
             

@@ -53,10 +53,30 @@
     [NSString stringWithFormat:@"%@ 作品   %@ 粉丝   %@ 关注",vm.replyCount,vm.fansCount,vm.followCount];
     
     /*
-        TODO: 深入判断是单方面关注，还是互相关注
+        TODO: 极端情况，自己搜索自己，不要显示followButton
      */
-    _followButton.selected = vm.model.isMyFollow;
+    if (vm.model.uid == [DDUserManager currentUser].uid) {
+        _followButton.hidden = YES;
+    }else{
+        _followButton.hidden = NO;
+        
+        /*
+         TODO: 深入判断是单方面关注，还是互相关注
+         */
+        if (vm.model.isMyFan) {
+            /* 如果对方也是我的粉丝 */
+            [_followButton setImage:[UIImage imageNamed:@"pie_mutualfollow"]
+                           forState:UIControlStateSelected];
+        }
+        
+        _followButton.selected = vm.model.isMyFollow;
+    }
+    
+    
+    
+    
 }
+
 
 
 @end

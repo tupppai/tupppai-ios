@@ -112,8 +112,6 @@
 + (void) follow :(NSDictionary*)param withBlock:(void (^)(BOOL success))block {
     [[self class]POST:param url:URL_PFFollow block:^(id responseObject) {
         if (responseObject) {
-            NSString *prompt = [[param objectForKey:@"status"]integerValue] == 0 ? @"已取消关注":@"关注成功";
-            [Hud text:prompt backgroundColor:[UIColor colorWithHex:0x000000 andAlpha:0.3] margin:15 cornerRadius:7];
             if (block) { block(YES); }
         } else {
             if (block) { block(NO); }
