@@ -149,7 +149,19 @@
         [RACObserve(vm, followed)subscribeNext:^(id x) {
             self.followButton.selected = [x boolValue];
         }];
-        
+        [RACObserve(vm, shareCount)subscribeNext:^(id x) {
+            self.shareButton.numberString = x;
+        }];
+        [RACObserve(vm, commentCount)subscribeNext:^(id x) {
+            self.commentButton.numberString = x;
+        }];
+
+        [RACObserve(vm, likeCount)subscribeNext:^(id x) {
+            self.likeButton.numberString = x;
+        }];
+        [RACObserve(vm, loveStatus)subscribeNext:^(id x) {
+            self.likeButton.status = [x integerValue];
+        }];
         [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
         
         _avatarView.isV = vm.isV;

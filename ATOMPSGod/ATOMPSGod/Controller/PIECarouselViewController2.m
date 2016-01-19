@@ -259,6 +259,8 @@ CGFloat startPanLocationY;
             if ([subview isKindOfClass:[PIECarousel_ItemView class]]) {
                 PIECarousel_ItemView* itemView = subview;
                 itemView.vm = vm;
+                NSLog(@"set data done vm %@",vm);
+
             }
         }
         return view;
@@ -360,7 +362,6 @@ CGFloat startPanLocationY;
             [self.dataSource removeAllObjects];
             [self.dataSource addObjectsFromArray:askArray];
             [self.dataSource addObjectsFromArray: replyArray];
-//            [_carousel reloadData];
         if (self.dataSource.count > 0) {
             [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
                 _view_placeHoder.alpha = 0;
@@ -404,11 +405,11 @@ CGFloat startPanLocationY;
     for (int i =0; i < _dataSource.count; i++) {
         PIEPageVM* vm = [_dataSource objectAtIndex:i];
         //找出与传进来的pageVM匹配的vm
+        
         if (vm.ID == _pageVM.ID && vm.type == _pageVM.type ) {
-            
             //为了数据能够同步
-            _pageVM.imageURL = vm.imageURL;
-            vm = _pageVM;
+
+            [_dataSource replaceObjectAtIndex:i withObject:_pageVM];
 
             if (_pageVM.type == PIEPageTypeReply) {
                 
@@ -433,6 +434,8 @@ CGFloat startPanLocationY;
 
         }
     }
+    
+    
     if (!shouldScroll) {
         [_carousel reloadData];
         [self updateCurrentVMWithIndex:0];

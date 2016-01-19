@@ -21,6 +21,8 @@
 @property (nonatomic, strong)  PIEShareView * shareView;
 @property (nonatomic, strong)  RACDisposable * loveStatusHander;
 @property (nonatomic, strong)  RACDisposable * likeCountHander;
+@property (nonatomic, strong)  RACDisposable * shareCountHander;
+@property (nonatomic, strong)  RACDisposable * commentCountHander;
 
 @end
 
@@ -89,16 +91,12 @@
 }
 
 - (void)longpressLike {
-//    [PIEPageManager love:_pageLikeButton viewModel:_vm revert:YES];
     [_vm love:YES];
 }
 - (void)tapLike {
-//    [PIEPageManager love:_pageLikeButton viewModel:_vm revert:NO];
     [_vm love:NO];
 }
 - (void)tapShare {
-//    [self.shareView show];
-   
     [self showShareView];
 }
 - (void)tapComment {
@@ -231,7 +229,8 @@
     
     [_loveStatusHander dispose];
     [_likeCountHander dispose];
-    
+    [_shareCountHander dispose];
+    [_commentCountHander dispose];
     _vm = vm;
      _loveStatusHander = [RACObserve(_vm,loveStatus)subscribeNext:^(id x) {
          self.pageLikeButton.status = [x integerValue];
@@ -239,12 +238,14 @@
     _likeCountHander = [RACObserve(_vm,likeCount)subscribeNext:^(id x) {
         self.pageLikeButton.numberString = x;
     }];
+    _shareCountHander = [RACObserve(_vm,shareCount)subscribeNext:^(id x) {
+        self.pageButton_share.numberString = x;
+    }];
+    _commentCountHander = [RACObserve(_vm,commentCount)subscribeNext:^(id x) {
+        self.pageButton_comment.numberString = x;
+    }];
     
-//    RAC(self.pageLikeButton,numberString) =  RACObserve(_vm,likeCount);
-    _pageButton_comment.numberString = vm.commentCount;
-    _pageButton_share.numberString = vm.shareCount;
     _label_time.text = vm.publishTime;
-    //    _label_content.text = vm.content;
     [_button_name setTitle:vm.username forState:UIControlStateNormal];
     
     NSString* urlString_avatar = [vm.avatarURL trimToImageWidth:_button_avatar.frame.size.height*SCREEN_SCALE];
@@ -269,10 +270,9 @@
         _bangView.hidden = YES;
         _imageView_type.image = [UIImage imageNamed:@"carousel_type_reply"];
         _pageLikeButton.hidden = NO;
-        [_pageLikeButton initStatus:vm.loveStatus numberString:vm.likeCount];
     }
     
-    _view_pageImage.url = vm.imageURL;
+    _view_pageImage.url = [vm.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
     
     if ([vm.content isEqualToString:@""]) {
         [_textView_content mas_updateConstraints:^(MASConstraintMaker *make) {

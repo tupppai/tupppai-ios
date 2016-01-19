@@ -23,6 +23,10 @@
             if (block) {
                 block(nil);
             }
+        } else {
+            if (block) {
+                block([NSError new]);
+            }
         }
     }];
 }
