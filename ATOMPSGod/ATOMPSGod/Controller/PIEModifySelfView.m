@@ -169,6 +169,7 @@
     arrowImageView.contentMode = UIViewContentModeCenter;
     arrowImageView.image = [UIImage imageNamed:@"ic_right-arrow"];
     [_areaView addSubview:arrowImageView];
+    
     [arrowImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(_areaView.mas_right).with.offset(-kPadding5);
         make.centerY.equalTo(_areaView.mas_centerY);

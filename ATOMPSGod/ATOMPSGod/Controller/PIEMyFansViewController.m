@@ -179,7 +179,6 @@
 #pragma mark - GetDataSource
 
 - (void)getDataSource {
-    WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     _timeStamp = [[NSDate date] timeIntervalSince1970];
     _currentPage = 1;
@@ -189,14 +188,14 @@
     [param setObject:@([DDUserManager currentUser].uid) forKeyedSubscript:@"uid"];
     [Hud activity:@"" inView:self.view];
     [DDUserManager getMyFans:param withBlock:^(NSArray *resultArray) {
-        ws.isfirstLoading = NO;
+        _isfirstLoading = NO;
         [Hud dismiss:self.view];
         [_dataSource removeAllObjects];
         for (PIEUserModel *model in resultArray) {
             PIEUserViewModel *vm = [[PIEUserViewModel alloc]initWithEntity:model];
-            [ws.dataSource addObject:vm];
+            [_dataSource addObject:vm];
         }
-        [ws.tableView reloadData];
+        [_tableView reloadData];
     }];
 }
 

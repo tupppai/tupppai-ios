@@ -47,7 +47,6 @@
 - (void)getDataSource {
     _currentIndex = 1;
     [self.tableView.mj_footer endRefreshing];
-    WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     _timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(1) forKey:@"page"];
@@ -56,16 +55,16 @@
     [param setObject:@"like" forKey:@"type"];
     
     [PIENotificationManager getNotifications:param block:^(NSArray *source) {
-        ws.isfirstLoading = NO;
+        _isfirstLoading = NO;
         if (source.count>0) {
-            ws.source = [source mutableCopy];
+            _source = [source mutableCopy];
             _canRefreshFooter = YES;
         }
         else {
             _canRefreshFooter = NO;
         }
         
-        [ws.tableView reloadData];
+        [_tableView reloadData];
         [self.tableView.mj_header endRefreshing];
     }];
 }

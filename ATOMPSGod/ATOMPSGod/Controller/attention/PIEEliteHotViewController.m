@@ -485,16 +485,18 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
                     else if (CGRectContainsPoint(cell.blurAnimateView.thumbView.rightView.frame,pp)) {
                         [cell animateWithType:PIEThumbAnimateViewTypeRight];
                     }
-                }
-                //点击大图
-                else  if (CGRectContainsPoint(cell.blurAnimateView.imageView.frame, p)) {
-                    //进入热门详情
-                    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
                     
-                    //                    _selectedVM.image = cell.theImageView.image;
-                    vc.pageVM = _selectedVM;
-                    [self presentViewController:vc animated:YES completion:nil];
+                    //点击大图
+                    else  if (CGRectContainsPoint(cell.blurAnimateView.imageView.frame, p)) {
+                        //进入热门详情
+                        PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+                        
+                        //                    _selectedVM.image = cell.theImageView.image;
+                        vc.pageVM = _selectedVM;
+                        [self presentViewController:vc animated:YES completion:nil];
+                    }
                 }
+              
                 //点击头像
                 else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
                     PIEFriendViewController * friendVC = [PIEFriendViewController new];

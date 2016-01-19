@@ -657,6 +657,8 @@ PIEVerificationCodeCountdownButton *countdownButton;
     [DDShareManager
      authorize2:platformType
      withBlock:^(SSDKUser *user) {
+         
+
          @strongify(self);
          if (user != nil) {
              [self fetchUserFromOpenId:user.uid
@@ -688,7 +690,13 @@ PIEVerificationCodeCountdownButton *countdownButton;
      */
     userModel.uid      = kPIETouristUID;
     userModel.nickname = user.nickname;
-    userModel.avatar   = user.icon;
+
+
+    if (platformType == SSDKPlatformTypeQQ) {
+        userModel.avatar = [user.rawData objectForKey:@"figureurl_qq_2"];
+    }else {
+        userModel.avatar   = user.icon;
+    }
     userModel.mobile   = user.nickname;
     
     [[NSUserDefaults standardUserDefaults] setObject:user.uid

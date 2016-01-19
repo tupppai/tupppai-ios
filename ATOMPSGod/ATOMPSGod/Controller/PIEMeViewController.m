@@ -14,17 +14,17 @@
 #import "PIEMyReplyViewController.h"
 #import "PIESettingsViewController.h"
 #import "FXBlurView.h"
-#import "PIEMyAskViewController.h"
-#import "BBBadgeBarButtonItem.h"
+//#import "PIEMyAskViewController.h"
+//#import "BBBadgeBarButtonItem.h"
 #import "PIENotificationViewController.h"
 #import "PIEMyFollowViewController.h"
 #import "PIEMyFansViewController.h"
 
-#import "DDOtherUserManager.h"
+//#import "DDOtherUserManager.h"
 #import "UINavigationBar+Awesome.h"
 #import "PIEModifyProfileViewController.h"
 #import "DDNavigationController.h"
-#import "ReactiveCocoa/ReactiveCocoa.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
 
 typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     PIEMeViewControllerNavigationBarStyleTranslucentStyle,
@@ -55,7 +55,7 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
 
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) BOOL canRefreshFooter;
-@property (nonatomic, assign) CGPoint startPanLocation;
+//@property (nonatomic, assign) CGPoint startPanLocation;
 @property (weak, nonatomic) IBOutlet UIImageView *psGodCertificate;
 
 @property (nonatomic) CAPSPageMenu *pageMenu;
