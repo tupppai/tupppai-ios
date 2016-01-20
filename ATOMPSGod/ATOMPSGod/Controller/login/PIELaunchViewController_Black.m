@@ -579,7 +579,7 @@ PIEVerificationCodeCountdownButton *countdownButton;
         self.passwordTextField.hidden    = NO;
         self.passwordTextField.rightView = forgotPasswordButton;
 
-        [self.nextStepButton setTitle:@"登陆" forState:UIControlStateNormal];
+        [self.nextStepButton setTitle:@"登录" forState:UIControlStateNormal];
     }];
 }
 

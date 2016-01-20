@@ -25,6 +25,7 @@
 #import "PIEAboutUsViewController.h"
 #import "UMCheckUpdate.h"
 #import "PIELaunchViewController_Black.h"
+#import "PIEBindCellphoneViewController.h"
 
 
 @interface PIESettingsViewController () <UITableViewDelegate, UITableViewDataSource>
@@ -174,8 +175,18 @@
     NSInteger row = indexPath.row;
     if (section == 0) {
         if (row == 0) {
-            PIEThirdPartyBindingViewController *abvc = [PIEThirdPartyBindingViewController new];
-            [self.navigationController pushViewController:abvc animated:YES];
+            
+            /* if isTourist, please finish binding cellphone first */
+            if ([self isTourist]) {
+                PIEBindCellphoneViewController *bindCellphoneVC =
+                [[PIEBindCellphoneViewController alloc] init];
+                [self presentViewController:bindCellphoneVC
+                                   animated:YES
+                                 completion:nil];
+            }else{
+                PIEThirdPartyBindingViewController *abvc = [PIEThirdPartyBindingViewController new];
+                [self.navigationController pushViewController:abvc animated:YES];
+            }
         } else if (row == 1) {
             PIEModifyProfileViewController *mpvc = [PIEModifyProfileViewController new];
             [self.navigationController pushViewController:mpvc animated:YES];
@@ -321,5 +332,10 @@
                           }];
     alertView.transitionStyle = SIAlertViewTransitionStyleDropDown;
     [alertView show];
+}
+
+#pragma mark - private helpers
+- (BOOL)isTourist{
+    return ([DDUserManager currentUser].uid == kPIETouristUID);
 }
 @end

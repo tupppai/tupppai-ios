@@ -53,7 +53,7 @@
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
     [self.navigationController.navigationBar
-     lt_setBackgroundColor:[UIColor clearColor]];
+     lt_setBackgroundColor:[UIColor whiteColor]];
     
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     

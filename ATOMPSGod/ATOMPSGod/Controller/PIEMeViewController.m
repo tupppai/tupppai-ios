@@ -81,6 +81,9 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     [self updateUserViews];
     [self setupObserver];
     
+    /* only for testing, discard while bind/unbind/ is finished. */
+//    [self sendUnbindCellphoneRequest];
+    
 }
 
 

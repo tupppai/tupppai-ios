@@ -12,6 +12,10 @@
 #import "DDMySettingsManager.h"
 
 #import "PIEModifyPasswordViewController.h"
+
+typedef void(^requestResultBlock)(void);
+
+
 @interface PIEThirdPartyBindingViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) PIEAccountBindingView *accountBindingView;
@@ -48,7 +52,6 @@
 }
 -(void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [DDUserManager updateCurrentUserInDatabase];
 }
 
 #pragma mark - UITableViewDataSource
@@ -104,6 +107,8 @@
     }
 }
 
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"AccountBindingCell";
     PIEAccountBindingTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -131,9 +136,8 @@
             [cell addSwitch];
             [cell.bindSwitch setOn:[DDUserManager currentUser].bindQQ];
         }
-
-        [cell.bindSwitch addTarget:self action:@selector(toggleSwitch:) forControlEvents:UIControlEventValueChanged];
         cell.bindSwitch.tag = indexPath.row;
+        [cell.bindSwitch addTarget:self action:@selector(toggleSwitch:) forControlEvents:UIControlEventValueChanged];
     } else if (section == 0) {
         if (row == 0) {
             cell.accessoryType = UITableViewCellAccessoryNone;
@@ -173,90 +177,163 @@
 
 -(void)toggleSwitch:(id)sender {
     UISwitch *bindSwitch = sender;
-    NSString *type = @"";
-    int shareType = 99;
+    NSString *type;
+    SSDKPlatformType shareType;
     switch (bindSwitch.tag) {
-        case 0:
+        case 0:{
             type = @"weibo";
             shareType = SSDKPlatformTypeSinaWeibo;
             break;
-        case 1:
+        }
+        case 1:{
             type = @"weixin";
             shareType = SSDKPlatformTypeWechat;
             break;
-        case 2:
+        }
+        case 2:{
             type = @"qq";
             shareType = SSDKPlatformTypeQQ;
             break;
+        }
         default:
             break;
     }
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    [param setObject:type forKey:@"type"];
+    
     //1.如果想要绑定
     if (bindSwitch.on) {
-        [DDShareManager getUserInfo:shareType withBlock:^(NSString *openId) {
-            if (openId) {
-                [param setObject:openId forKey:@"openid"];
-            [DDMySettingsManager setBindSetting:param withToggleBind:YES withBlock:^(NSError *error) {
-                if (error) {
-                    //绑定失败，回到原型
-                    bindSwitch.on = NO;
-                }else {
-                    switch (bindSwitch.tag) {
-                        case 0:
-                            [DDUserManager currentUser].bindWeibo = YES;
-
-                            break;
-                        case 1:
-                            [DDUserManager currentUser].bindWechat = YES;
-                            break;
-                        case 2:
-                            [DDUserManager currentUser].bindQQ = YES;
-                            break;
-                        default:
-                            break;
-                    }
-                    [DDUserManager updateCurrentUserInDatabase];
-                    [Hud success:@"绑定成功" inView:self.view];
-                }
-            }];
-            }
-            else {
-                bindSwitch.on = NO;
-            }
-
-
-        }];
+        // 弹出第三方的登录界面，目标只有openid
+        [DDShareManager
+         authorize2:shareType
+         withBlock:^(SSDKUser *user) {
+             // 取得openID之后，开始手机与第三方openID的绑定
+             NSString *openId = user.uid;
+             
+             [self
+              bindUserWithThirdPartyPlatform:type
+              openId:openId
+              failure:^{
+                  /*绑定失败，重置UI*/
+                  bindSwitch.on = NO;
+              }
+              success:^{
+                  // 重置currentUser单例并且同步到本地沙盒
+                  NSString *prompt =
+                  [NSString stringWithFormat:@"已经解绑%@",type];
+                  [Hud text:prompt];
+                  
+                  // 重置currentUser单例并且同步到本地沙盒
+                  switch (bindSwitch.tag) {
+                      case 0:{
+                          [DDUserManager currentUser].bindWeibo = YES;
+                          break;
+                      }
+                      case 1:{
+                          [DDUserManager currentUser].bindWechat = YES;
+                          break;
+                      }
+                      case 2:{
+                          [DDUserManager currentUser].bindQQ = YES;
+                          break;
+                      }
+                      default:
+                          break;
+                  }
+                  [DDUserManager updateCurrentUserInDatabase];
+                  
+              }];
+         }];
+        
     }
     //2.如果想要取消绑定
     else  {
-        [DDMySettingsManager setBindSetting:param withToggleBind:NO withBlock:^(NSError *error) {
-            //绑定失败，回到原型
-            if (error) {
-                bindSwitch.on = YES;
-            } else {
-                switch (bindSwitch.tag) {
-                    case 0:
-                        [DDUserManager currentUser].bindWeibo = NO;
-                        
-                        break;
-                    case 1:
-                        [DDUserManager currentUser].bindWechat = NO;
-                        break;
-                    case 2:
-                        [DDUserManager currentUser].bindQQ = NO;
-                        break;
-                    default:
-                        break;
-                }
-                [Hud success:@"已解绑" inView:self.view];
-            }
-        }];
+        [self
+         unbindUserWithThirdPartyPlatform:type
+         failure:^{
+             /* 解绑失败，重置UI */
+             bindSwitch.on = YES;
+         } success:^{
+             NSString *prompt =
+             [NSString stringWithFormat:@"已经解绑%@",type];
+             [Hud text:prompt];
+             // 重置currentUser单例并且同步到本地沙盒
+             switch (bindSwitch.tag) {
+                 case 0:{
+                     [DDUserManager currentUser].bindWeibo = NO;
+                     break;
+                 }
+                 case 1:{
+                     [DDUserManager currentUser].bindWechat = NO;
+                     break;
+                 }
+                 case 2:{
+                     [DDUserManager currentUser].bindQQ = NO;
+                     break;
+                 }
+                 default:
+                     break;
+             }
+             [DDUserManager updateCurrentUserInDatabase];
+         }];
     }
 }
 
 
+#pragma mark - private helpers
+- (void)unbindUserWithThirdPartyPlatform: (NSString *)type
+                                 failure:(void (^) (void))failure
+                                 success:(void (^) (void))success
+{
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    [param setObject:type forKey:@"type"];
+    /*
+     auth/unbind, POST, (type = weixin, weibo or qq)
+     */
+    [Hud activity:@"解绑中..."];
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"type"] = type;
+    [DDBaseService POST:params url:@"auth/unbind"
+                  block:^(id responseObject) {
+                      [Hud dismiss];
+                      if (responseObject == nil) {
+                          if (failure) {
+                              failure();
+                          }
+                      }else{
+                          if (success) {
+                              success();
+                          }
+                      }
+                  }];
+}
 
+- (void)bindUserWithThirdPartyPlatform:(NSString *)type openId:(NSString *)openId
+                               failure:(void (^)(void))failure
+                               success:(void (^)(void))success
+{
+    /*
+        auth/bind, POST, openid, type(qq, weixin or weibo)
+     */
+    
+    NSMutableDictionary *params = [NSMutableDictionary <NSString *, NSString *> new];
+    params[@"type"]             = type;
+    params[@"openid"]           = openId;
+    
+    [Hud activity:@"绑定中..."];
+    [DDBaseService POST:params
+                    url:@"auth/bind"
+                  block:^(id responseObject) {
+                      [Hud dismiss];
+                      
+                      if (responseObject == nil) {
+                          if (failure != nil) {
+                              failure();
+                          }
+                      }else{
+                          if (success != nil) {
+                              success();
+                          }
+                      }
+                  }];
+}
 
 @end

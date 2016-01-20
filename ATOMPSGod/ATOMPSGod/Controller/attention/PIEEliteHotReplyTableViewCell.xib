@@ -180,10 +180,10 @@
                     <mask key="constraints">
                         <exclude reference="vNY-Rb-g1X"/>
                         <exclude reference="6VD-Ip-fhb"/>
-                        <exclude reference="QXd-xv-Hkd"/>
-                        <exclude reference="hmZ-3F-D6A"/>
                         <exclude reference="C3Z-fu-ali"/>
                         <exclude reference="qLE-bR-kWC"/>
+                        <exclude reference="QXd-xv-Hkd"/>
+                        <exclude reference="hmZ-3F-D6A"/>
                         <exclude reference="7hE-wE-Zc7"/>
                     </mask>
                 </variation>
