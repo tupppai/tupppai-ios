@@ -128,7 +128,7 @@
         PIELaunchTextField *textField = [[PIELaunchTextField alloc] init];
         
         textField.placeholder   = @"验证码";
-
+        textField.keyboardType  = UIKeyboardTypePhonePad;
         textField.rightView     = countdownButton;
         
         [self.view addSubview:textField];

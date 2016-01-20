@@ -192,7 +192,7 @@ PIEVerificationCodeCountdownButton *countdownButton;
 
         textField.placeholder   = @"验证码";
         textField.rightView     = countdownButton;
-
+        textField.keyboardType  = UIKeyboardTypePhonePad;
         [self.view addSubview:textField];
 
         @weakify(self);
