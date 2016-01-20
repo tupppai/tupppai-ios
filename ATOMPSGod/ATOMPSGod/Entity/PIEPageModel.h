@@ -76,7 +76,7 @@ typedef NS_ENUM(NSInteger, PIEPageLoveStatus) {
 @property (nonatomic, assign) CGFloat imageRatio;
 
 @property (nonatomic, copy) NSArray <PIEModelImage*>   *models_image;
-@property (nonatomic, copy) NSArray <PIECommentModel*> *models_comment;
+@property (nonatomic, strong) NSMutableArray <PIECommentModel*> *models_comment;
 @property (nonatomic, copy) NSArray <PIECategoryModel*> *models_category;
 
 

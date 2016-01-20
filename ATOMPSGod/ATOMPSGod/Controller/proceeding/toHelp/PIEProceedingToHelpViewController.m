@@ -273,6 +273,7 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     if (success) {
         if (leesinViewController.type == LeesinViewControllerTypeReplyNoMissionSelection) {
             [self getRemoteSourceToHelp];
+            [self getMoreRemoteSourceToHelp_done];
         }
     }
 }
@@ -408,13 +409,14 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (section == 0) {
-        return 0;
-    }else if (section == 1){
-        return 32;
-    }else{
-        return 0;
+  
+    if (section == 1){
+        if (_sourceToHelp_done.count>0) {
+            return 32;
+        }
     }
+    
+        return 0;
 }
 
 #pragma mark - Fetch remote data
@@ -434,6 +436,7 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
         ws.isfirstLoadingToHelp = NO;
         if (resultArray.count == 0) {
             _canRefreshToHelpFooter = NO;
+            [ws.sourceToHelp removeAllObjects];
         } else {
             _canRefreshToHelpFooter = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
@@ -500,6 +503,9 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     [param setObject:@(_timeStamp_toHelp) forKey:@"last_updated"];
     [param setObject:@(20) forKey:@"size"];
     
+    
+    _currentIndex_ToHelp_done++;
+
     [PIEProceedingManager getMyDone:param
                           withBlock:^(NSMutableArray *dataArray) {
                               if (dataArray.count == 0) {
@@ -530,7 +536,6 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
                           }];
     
     
-    _currentIndex_ToHelp_done ++;
     
 }
 

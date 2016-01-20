@@ -413,8 +413,8 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
             PIECarouselViewController2* vc = [PIECarouselViewController2 new];
             _selectedVM.image = _selectedReplyCell.theImageView.image;
             vc.pageVM = _selectedVM;
+            NSLog(@"!!%@,%zd,%zd",_selectedVM,_selectedVM.askID,_selectedVM.ID);
             [self presentViewController:vc animated:YES completion:nil];
-            //                [self.navigationController pushViewController:vc animated:YES];
         }
         //点击头像
         else if (CGRectContainsPoint(_selectedReplyCell.avatarView.frame, p)) {

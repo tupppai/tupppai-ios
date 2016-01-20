@@ -18,6 +18,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+        _commentViewModelArray = [NSMutableArray array];
     }
     return self;
 }
@@ -227,7 +228,7 @@
 -(NSArray<PIEModelImage *> *)models_image {
     return self.model.models_image;
 }
--(NSArray<PIECommentModel *> *)models_comment {
+-(NSMutableArray<PIECommentModel *> *)models_comment {
     return self.model.models_comment;
 }
 -(NSArray<PIECategoryModel *> *)models_catogory{

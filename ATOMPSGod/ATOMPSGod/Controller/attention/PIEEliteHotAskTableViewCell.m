@@ -120,21 +120,21 @@
     
 
     
-    if (viewModel.models_comment.count > 0) {
-        PIECommentModel* commentEntity1  = viewModel.models_comment[0];
+    if (viewModel.model.models_comment.count > 0) {
+        PIECommentModel* commentEntity1  = viewModel.model.models_comment[0];
         _commentLabel1.text = [NSString stringWithFormat:@"%@: %@",commentEntity1.nickname,commentEntity1.content];
         
         [_commentLabel2 mas_updateConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(_gapView.mas_top).with.offset(-25).with.priorityHigh();
         }];
         
-        if (viewModel.models_comment.count > 1) {
+        if (viewModel.model.models_comment.count > 1) {
             
             [_commentLabel1 mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.bottom.equalTo(_commentLabel2.mas_top).with.offset(-10).with.priorityHigh();
             }];
             
-            PIECommentModel* commentEntity2  = viewModel.models_comment[1];
+            PIECommentModel* commentEntity2  = viewModel.model.models_comment[1];
             _commentLabel2.text = [NSString stringWithFormat:@"%@: %@",commentEntity2.nickname,commentEntity2.content];
         }
     }
