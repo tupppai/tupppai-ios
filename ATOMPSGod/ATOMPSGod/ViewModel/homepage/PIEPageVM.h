@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "PIEPageModel.h"
+@class PIECommentVM;
 @interface PIEPageVM : NSObject
 
 @property (nonatomic, strong) PIEPageModel *model;
@@ -33,7 +34,7 @@
 @property (nonatomic, assign) BOOL isV;
 
 @property (nonatomic, strong) NSArray <PIEModelImage*> *models_image;
-@property (nonatomic, strong) NSArray <PIECommentModel*> *models_comment;
+//@property (nonatomic, strong) NSArray <PIECommentModel*> *models_comment;
 @property (nonatomic, strong) NSArray <PIECategoryModel*> *models_catogory;
 
 
@@ -45,6 +46,9 @@
 @property (nonatomic, copy) NSString *collectCount;
 @property (nonatomic, assign) PIEPageLoveStatus loveStatus;
 
+
+
+@property (nonatomic, strong) NSMutableArray <PIECommentVM*> *commentViewModelArray;
 
 @property (nonatomic, strong) UIImage *image;
 

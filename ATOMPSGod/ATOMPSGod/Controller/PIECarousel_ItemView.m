@@ -16,7 +16,7 @@
 #import "PIEActionSheet_PS.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
 @interface PIECarousel_ItemView()
-@property (nonatomic, strong) NSMutableArray *source_newComment;
+//@property (nonatomic, strong) NSMutableArray *source_newComment;
 @property (nonatomic, strong)  PIEActionSheet_PS * psActionSheet;
 @property (nonatomic, strong)  PIEShareView * shareView;
 @property (nonatomic, strong)  RACDisposable * loveStatusHander;
@@ -116,7 +116,7 @@
     [self.viewController presentViewController:nav animated:YES completion:nil];
 }
 - (void)setupTableView {
-    _source_newComment = [NSMutableArray new];
+//    _source_newComment = [NSMutableArray new];
     _tableView_comment.dataSource = self;
     _tableView_comment.delegate = self;
     _tableView_comment.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -138,7 +138,7 @@
 
 #pragma mark 0 - <UITableViewDataSource>
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _source_newComment.count;
+    return self.vm.commentViewModelArray.count;
 }
 
 
@@ -148,7 +148,8 @@
         if (!cell) {
             cell = [[PIECommentTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellIdentifier"];
         }
-        [cell getSource:_source_newComment[indexPath.row]];
+
+        [cell getSource:self.vm.commentViewModelArray[indexPath.row]];
 
         return cell;
     }
@@ -171,17 +172,19 @@
 #pragma mark - GetDataSource
 
 - (void)getDataSource {
-    WS(ws);
-    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setObject:@(_vm.ID) forKey:@"target_id"];
-    [param setObject:@(_vm.type) forKey:@"type"];
-    [param setObject:@(1) forKey:@"page"];
-    [param setObject:@(2) forKey:@"size"];
-    PIECommentManager *commentManager = [PIECommentManager new];
-    [commentManager ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
-        ws.source_newComment.array = recentCommentArray;
-        [self.tableView_comment reloadData];
-    }];
+    if (self.vm.commentViewModelArray.count == 0 && self.vm.model.totalCommentNumber>0) {
+        NSMutableDictionary *param = [NSMutableDictionary dictionary];
+        [param setObject:@(_vm.ID) forKey:@"target_id"];
+        [param setObject:@(_vm.type) forKey:@"type"];
+        [param setObject:@(1) forKey:@"page"];
+        [param setObject:@(2) forKey:@"size"];
+        PIECommentManager *commentManager = [PIECommentManager new];
+        [commentManager ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
+            [self.vm.commentViewModelArray addObjectsFromArray:recentCommentArray];
+            [self.tableView_comment reloadData];
+        }];
+    }
+
 }
 
 
