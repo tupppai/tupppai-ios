@@ -41,6 +41,7 @@ static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
     _source = [NSMutableArray array];
     _currentIndex = 1;
     _isfirstLoading = YES;
+    _canRefreshFooter = YES;
     
     [self.view addSubview: self.collectionView];
     
@@ -104,16 +105,20 @@ static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
     [DDOtherUserManager getFriendReply:param withBlock:^(NSMutableArray *returnArray) {
         NSMutableArray* arrayAgent = [NSMutableArray array];
         if (returnArray.count) {
-            _canRefreshFooter = YES;
             for (PIEPageModel *entity in returnArray) {
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 [arrayAgent addObject:vm];
             }
             [_source addObjectsFromArray:arrayAgent];
         }
-        else {
+
+        
+        if (returnArray.count < 15) {
             _canRefreshFooter = NO;
+        }else{
+            _canRefreshFooter = YES;
         }
+        
         [_collectionView.mj_footer endRefreshing];
         [_collectionView reloadData];
     }];
@@ -152,7 +157,8 @@ static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
     if (_canRefreshFooter && !_collectionView.mj_header.isRefreshing) {
         [self getMoreRemoteSource];
     } else {
-        [_collectionView.mj_footer endRefreshing];
+        [Hud text:@"已经拉到底啦"];
+        [_collectionView.mj_footer endRefreshingWithNoMoreData];
     }
 }
 

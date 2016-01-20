@@ -10,6 +10,7 @@
 #import "HMSegmentedControl.h"
 #import "PIEProceedingToHelpViewController.h"
 #import "PIEProceedingAskViewController.h"
+#import "ReactiveCocoa/ReactiveCocoa.h"
 
 
 /* Variables */
@@ -59,6 +60,9 @@ typedef NS_ENUM(NSUInteger, PIEProceedingControllerType) {
     
     // add view controllers as child view controllers
     [self configureViewControllers];
+    
+    // setup RAC
+    [self setupRAC];
     
     // call the first view controller to start refresh & fetch data
     PIEProceedingAskViewController *controller =
@@ -116,6 +120,36 @@ typedef NS_ENUM(NSUInteger, PIEProceedingControllerType) {
 {
     // configure segmentedControl
     self.navigationItem.titleView = self.segmentedControl;
+    
+}
+
+- (void)setupRAC{
+    @weakify(self);
+    [[[NSNotificationCenter defaultCenter]
+     rac_addObserverForName:PIEPrefreshNavigationProceedingFromTabBarNotification
+     object:nil] subscribeNext:^(id x) {
+        /*
+            根据当前的segment，判断具体是哪个控制器需要重新刷新
+         */
+        @strongify(self);
+        /*
+            应该定义一个Protocol， 里面有一个方法对外暴露， <PIEPrefreshableFromTabBar>
+        */
+        NSInteger currentViewControllerIndex =
+        self.segmentedControl.selectedSegmentIndex;
+        
+        if (currentViewControllerIndex == 0) {
+            PIEProceedingAskViewController *viewController =
+            (PIEProceedingAskViewController *)self.proceedingViewControllers[0];
+            
+            [viewController refreshViewControllerWhileNotReloading];
+        }else if (currentViewControllerIndex == 1){
+            PIEProceedingToHelpViewController *viewController =
+            (PIEProceedingToHelpViewController *)self.proceedingViewControllers[1];
+            [viewController refreshViewControllerWhileNotReloading];
+        }
+        
+    }];
     
 }
 

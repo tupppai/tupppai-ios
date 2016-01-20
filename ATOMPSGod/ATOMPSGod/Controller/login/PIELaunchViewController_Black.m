@@ -19,6 +19,7 @@
 #import "PIELaunchNextStepButton.h"
 #import "PIEVerificationCodeCountdownButton.h"
 #import "UINavigationBar+Awesome.h"
+#import "DeviceUtil.h"
 
 
 /* Variables */
@@ -242,8 +243,15 @@ PIEVerificationCodeCountdownButton *countdownButton;
 
         [self.view addSubview:imageView];
 
+        CGFloat launchSeparatorTop;
+        if ([DeviceUtil hardware] == IPHONE_4S) {
+            launchSeparatorTop = 117;
+        }else{
+            launchSeparatorTop = 127;
+        }
+        
         [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(nextStepButton.mas_bottom).with.offset(127);
+            make.top.equalTo(nextStepButton.mas_bottom).with.offset(launchSeparatorTop);
             make.height.mas_equalTo(10);
             make.centerX.equalTo(self.view);
             make.left.equalTo(nextStepButton);
@@ -374,7 +382,7 @@ PIEVerificationCodeCountdownButton *countdownButton;
         else{
             [Hud activity:@"验证手机中..."];
             NSMutableDictionary *params = [NSMutableDictionary dictionary];
-            params[@"phone"] = @([self.cellPhoneNumberTextField.text integerValue]);
+            params[@"phone"] = self.cellPhoneNumberTextField.text ;
             [DDBaseService GET:params url:URL_ACHasRegistered
                          block:^(id responseObject) {
                              [Hud dismiss];
@@ -594,6 +602,11 @@ PIEVerificationCodeCountdownButton *countdownButton;
 
 - (void)resetOriginUI
 {
+    
+    self.cellPhoneNumberTextField.text  = @"";
+    self.passwordTextField.text         = @"";
+    self.verificationCodeTextField.text = @"";
+    
     [self.logoImageViewTopConstraint setOffset:33];
     [self.nextStepButtonTopConstraint setOffset:19];
     

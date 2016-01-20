@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PIEFeedbackViewController">
@@ -18,8 +18,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d72-0D-1jo" customClass="SZTextView">
-                    <rect key="frame" x="18" y="90" width="564" height="195"/>
-                    <animations/>
+                    <rect key="frame" x="18" y="18" width="564" height="195"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="195" id="HmC-nJ-8fD"/>
@@ -31,19 +30,17 @@
                     </userDefinedRuntimeAttributes>
                 </textView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="也可以发送截图到 " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9kW-hj-pKh">
-                    <rect key="frame" x="18" y="299" width="564" height="20.5"/>
-                    <animations/>
+                    <rect key="frame" x="18" y="227" width="564" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="9kW-hj-pKh" firstAttribute="trailing" secondItem="d72-0D-1jo" secondAttribute="trailing" id="3pa-zg-5ti"/>
                 <constraint firstItem="9kW-hj-pKh" firstAttribute="leading" secondItem="d72-0D-1jo" secondAttribute="leading" id="5w9-pB-3Ft"/>
-                <constraint firstItem="d72-0D-1jo" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="90" id="BaK-Lh-RO3"/>
+                <constraint firstItem="d72-0D-1jo" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="18" id="BaK-Lh-RO3"/>
                 <constraint firstAttribute="trailing" secondItem="d72-0D-1jo" secondAttribute="trailing" constant="18" id="DK3-qG-Vud"/>
                 <constraint firstItem="d72-0D-1jo" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="18" id="Zu5-DH-Wyl"/>
                 <constraint firstItem="9kW-hj-pKh" firstAttribute="top" secondItem="d72-0D-1jo" secondAttribute="bottom" constant="14" id="orA-Hx-Fiw"/>

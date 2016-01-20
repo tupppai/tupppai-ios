@@ -294,6 +294,13 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     }
 }
 
+- (void)refreshViewControllerWhileNotReloading
+{
+    if ([_toHelpTableView.mj_header isRefreshing] == NO) {
+        [self.toHelpTableView.mj_header beginRefreshing];
+    }
+}
+
 #pragma mark - <PWRefreshBaseTableViewDelegate>
 -(void)didPullRefreshDown:(UITableView *)tableView {
     
@@ -310,6 +317,7 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
         if (_canRefreshToHelpFooter_done) {
             [self getMoreRemoteSourceToHelp_done];
         }else{
+            [Hud text:@"已经拉到底啦"];
             [_toHelpTableView.mj_footer endRefreshingWithNoMoreData];
         }
         

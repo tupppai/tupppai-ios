@@ -232,15 +232,14 @@ static NSString * PIENotificationCommentFromOtherCellIdentifier =
      getNotifications:params
      block:^(NSArray *source_comment) {
          [self.tableView.mj_footer endRefreshing];
-         if (source_comment.count > 0) {
-             [weakSelf.source_comment addObjectsFromArray:source_comment];
-             [weakSelf.tableView reloadData];
-             
-             _canRefreshFooter = YES;
-         }
-         else{
+         if (source_comment.count < 15) {
              _canRefreshFooter = NO;
          }
+         else{
+             _canRefreshFooter = YES;
+         }
+         [weakSelf.source_comment addObjectsFromArray:source_comment];
+         [weakSelf.tableView reloadData];
      }];
 }
 
@@ -298,7 +297,8 @@ static NSString * PIENotificationCommentFromOtherCellIdentifier =
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     }else {
-        [self.tableView.mj_footer endRefreshing];
+        [Hud text:@"已经拉到底啦"];
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
     }
 }
 

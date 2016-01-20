@@ -436,8 +436,9 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
                               [self dismissViewControllerAnimated:YES
                                                        completion:nil];
                               
-                              // 跳转到主控制器
-                              [[AppDelegate APP] switchToMainTabbarController];
+
+
+
                           }
                       }];
     }
@@ -508,8 +509,6 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
                               [self dismissViewControllerAnimated:YES
                                                        completion:nil];
                               
-                              // 跳转到主控制器
-                              [[AppDelegate APP] switchToMainTabbarController];
                           }
                       }];
 
@@ -562,5 +561,10 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
     [Hud text:prompt inView:self.view];
 }
 
+#pragma mark - touching methods
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 @end

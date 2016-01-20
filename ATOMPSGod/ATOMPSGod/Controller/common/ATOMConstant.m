@@ -81,8 +81,6 @@ NSString * const PIENetworkCallForFurtherRegistrationNotification =
 NSString * const PIEUpdateNotificationStatusNotification =
 @"PIEUpdateNotificationStatusNotification";
 
-
-
 NSString * const PIENotificationCountAllKey =
 @"PIENotificationCountAllKey";
 
@@ -107,4 +105,8 @@ NSString * const PIENotificationCountOthersKey =
 NSString * const PIEHasNewNotificationFlagKey =
 @"PIEHasNewNotificationFlagKey";
 
+NSString * const PIERefreshNavigationChannelFromTabBarNotification =
+@"PIERefreshNavigationChannelFromTabBarNotification";
 
+NSString * const PIEPrefreshNavigationProceedingFromTabBarNotification =
+@"PIEPrefreshNavigationProceedingFromTabBarNotification";

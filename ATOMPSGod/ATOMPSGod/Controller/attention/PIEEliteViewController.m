@@ -127,7 +127,6 @@ typedef NS_ENUM(NSInteger, PIEEliteType) {
 
 - (void)setupNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_Elite" object:nil];
-    
 }
 
 - (void)refreshHeader {

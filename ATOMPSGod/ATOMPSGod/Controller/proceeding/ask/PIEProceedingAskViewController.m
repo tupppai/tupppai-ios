@@ -153,6 +153,13 @@ static NSString *PIEProceedingAskTableViewCell_NoGapIdentifier =
     }
 }
 
+- (void)refreshViewControllerWhileNotReloading
+{
+    if ([self.askTableView.mj_header isRefreshing] == NO) {
+        [self.askTableView.mj_header beginRefreshing];
+    }
+}
+
 #pragma mark - <PWRefreshBaseTableViewDelegate>
 - (void)didPullRefreshUp:(UITableView *)tableView
 {

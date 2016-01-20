@@ -1,17 +1,17 @@
 //
-//  PIESearchUserTableViewCell.h
+//  PIESearchUserSimpleTableViewCell.h
 //  TUPAI
 //
-//  Created by chenpeiwei on 11/24/15.
-//  Copyright © 2015 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
+//  Created by TUPAI-Huangwei on 1/17/16.
+//  Copyright © 2016 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "PIEUserViewModel.h"
-#import "SwipeView.h"
 #import "PIEAvatarButton.h"
 
-@interface PIESearchUserSimpleCollectionCell : UICollectionViewCell
+@interface PIESearchUserSimpleTableViewCell : UITableViewCell
+
 @property (weak, nonatomic) IBOutlet PIEAvatarButton *avatarButton;
 @property (weak, nonatomic) IBOutlet UIButton *nameButton;
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;

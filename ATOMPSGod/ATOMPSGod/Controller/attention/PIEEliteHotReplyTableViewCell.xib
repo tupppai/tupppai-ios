@@ -44,7 +44,7 @@
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="new_reply_follow" highlightedImage="new_reply_followed" translatesAutoresizingMaskIntoConstraints="NO" id="4B8-5j-F6n">
-                        <rect key="frame" x="311" y="5" width="60" height="36"/>
+                        <rect key="frame" x="328" y="5" width="60" height="36"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="36" id="bbJ-9b-sch"/>
                             <constraint firstAttribute="width" constant="60" id="mgN-wR-Y94"/>
@@ -151,7 +151,7 @@
                     <constraint firstItem="kwf-rd-ff2" firstAttribute="leading" secondItem="bwm-3T-NMU" secondAttribute="trailing" constant="5" id="GD8-mJ-wB1"/>
                     <constraint firstItem="nKA-JB-Smk" firstAttribute="leading" secondItem="Nz0-bb-Mel" secondAttribute="leading" id="LPf-NG-SHW"/>
                     <constraint firstItem="I1R-dy-cUb" firstAttribute="centerY" secondItem="Nz0-bb-Mel" secondAttribute="centerY" id="QXd-xv-Hkd"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="4B8-5j-F6n" secondAttribute="trailing" constant="7" id="R8D-Hf-fIr"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="4B8-5j-F6n" secondAttribute="trailing" constant="-10" id="R8D-Hf-fIr"/>
                     <constraint firstItem="QlZ-S5-oPz" firstAttribute="leading" secondItem="r7k-a1-VTN" secondAttribute="leading" id="TYY-qS-Z0U"/>
                     <constraint firstItem="Sgj-ub-LZu" firstAttribute="leading" secondItem="hvb-nQ-yFa" secondAttribute="trailing" constant="15" id="YJK-Ww-T3e"/>
                     <constraint firstItem="jz8-n6-016" firstAttribute="leading" secondItem="r7k-a1-VTN" secondAttribute="leading" id="ZQW-pr-w71"/>
@@ -201,7 +201,7 @@
                 <outlet property="nameLabel" destination="kwf-rd-ff2" id="joW-UL-lKm"/>
                 <outlet property="shareView" destination="hvb-nQ-yFa" id="dyR-rS-NIE"/>
             </connections>
-            <point key="canvasLocation" x="247" y="657.5"/>
+            <point key="canvasLocation" x="296" y="629.5"/>
         </tableViewCell>
     </objects>
     <resources>

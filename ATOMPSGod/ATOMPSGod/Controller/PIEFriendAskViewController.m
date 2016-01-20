@@ -46,6 +46,8 @@
     _isfirstLoading = YES;
     [self getRemoteSource];
     
+    _canRefreshFooter = YES;
+    
 }
 
 #pragma mark - UITableViewDataSource
@@ -130,6 +132,13 @@
         } else {
             _canRefreshFooter = NO;
         }
+        
+        if (returnArray.count < 15) {
+            _canRefreshFooter = NO;
+        }else{
+            _canRefreshFooter = YES;
+        }
+        
         [self.table reloadData];
         [self.table.mj_footer endRefreshing];
     }];
@@ -158,7 +167,8 @@
     if (_canRefreshFooter && !_table.mj_header.isRefreshing) {
         [self getMoreRemoteSource];
     } else {
-        [_table.mj_footer endRefreshing];
+        [Hud text:@"已经拉到底啦"];
+        [_table.mj_footer endRefreshingWithNoMoreData];
     }
 }
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {

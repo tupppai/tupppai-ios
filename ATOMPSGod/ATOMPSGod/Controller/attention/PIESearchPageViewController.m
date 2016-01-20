@@ -12,13 +12,23 @@
 #import "PIESearchManager.h"
 #import "PIEFriendViewController.h"
 #import "PIECarouselViewController2.h"
-@interface PIESearchPageViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource,PWRefreshBaseCollectionViewDelegate>
+@interface PIESearchPageViewController ()
+<
+    UICollectionViewDataSource,
+    UICollectionViewDelegate,
+    CHTCollectionViewDelegateWaterfallLayout,
+    DZNEmptyDataSetDelegate,
+    DZNEmptyDataSetSource,
+    PWRefreshBaseCollectionViewDelegate
+>
 @property (nonatomic, strong) PIERefreshCollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray* source;
 @property (nonatomic, strong) CHTCollectionViewWaterfallLayout *layout;
 @property (nonatomic, assign) BOOL notFirstLoading;
 @property (nonatomic, assign)  long long timeStamp;
 @property (nonatomic, assign)  NSInteger currentPage;
+
+@property (nonatomic, assign) BOOL canRefreshFooter;
 
 @end
 
@@ -33,6 +43,8 @@
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
     }];
+    
+    [self setupData];
 
 }
 
@@ -41,25 +53,39 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)setupData{
+    _canRefreshFooter = YES;
+}
+
 - (void)setTextToSearch:(NSString *)textToSearch {
     _textToSearch = textToSearch;
     [self search];
 }
 - (void)search {
-    
-    NSMutableDictionary* param = [NSMutableDictionary new];
-    [param setObject:@(1) forKey:@"page"];
-    [param setObject:@(10) forKey:@"size"];
-    _timeStamp = [[NSDate date] timeIntervalSince1970];
-    [param setObject:@(_timeStamp) forKey:@"last_updated"];
-    [param setObject:_textToSearch forKey:@"desc"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
-    [PIESearchManager getSearchContentResult:param withBlock:^(NSMutableArray *retArray) {
-            _notFirstLoading = YES;
+    if ([_collectionView.mj_header isRefreshing] == NO) {
+        NSMutableDictionary* param = [NSMutableDictionary new];
+        [param setObject:@(1) forKey:@"page"];
+        [param setObject:@(10) forKey:@"size"];
+        _timeStamp = [[NSDate date] timeIntervalSince1970];
+        [param setObject:@(_timeStamp) forKey:@"last_updated"];
+        [param setObject:_textToSearch forKey:@"desc"];
+        [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+        [PIESearchManager getSearchContentResult:param withBlock:^(NSMutableArray *retArray) {
+            
+            if (retArray.count == 0) {
+                _notFirstLoading = YES;
+                _canRefreshFooter = NO;
+            }else{
+                _canRefreshFooter = YES;
+                
+            }
             [_source removeAllObjects];
             _source = retArray;
             [_collectionView reloadData];
-    }];
+            
+        }];
+    }
+    
 }
 - (void)searchMore {
     _currentPage ++;
@@ -70,13 +96,15 @@
     [param setObject:_textToSearch forKey:@"desc"];
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [PIESearchManager getSearchContentResult:param withBlock:^(NSMutableArray *retArray) {
+        
+        if (retArray.count < 10) {
+            _canRefreshFooter = NO;
+        } else {
+            _canRefreshFooter = YES;
+        }
+        [_collectionView.mj_footer endRefreshing];
         [_source addObjectsFromArray: retArray];
         [_collectionView reloadData];
-        if (retArray.count<=0) {
-            [self.collectionView.mj_footer endRefreshingWithNoMoreData];
-        } else {
-            [self.collectionView.mj_footer endRefreshing];
-        }
     }];
 }
 
@@ -206,7 +234,14 @@
 }
 
 -(void)didPullUpCollectionViewBottom:(UICollectionView *)collectionView {
+//        [self searchMore];
+    
+    if (_canRefreshFooter) {
         [self searchMore];
+    }else{
+        [Hud text:@"已经拉到底啦"];
+        [self.collectionView.mj_footer endRefreshingWithNoMoreData];
+    }
 }
 
 

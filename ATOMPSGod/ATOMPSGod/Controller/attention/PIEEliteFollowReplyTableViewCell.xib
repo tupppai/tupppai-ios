@@ -163,6 +163,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="hot_allwork" width="68" height="15"/>
+        <image name="hot_allwork" width="69" height="15"/>
     </resources>
 </document>
