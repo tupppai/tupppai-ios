@@ -192,7 +192,7 @@ PIEVerificationCodeCountdownButton *countdownButton;
 
         textField.placeholder   = @"验证码";
         textField.rightView     = countdownButton;
-
+        textField.keyboardType  = UIKeyboardTypePhonePad;
         [self.view addSubview:textField];
 
         @weakify(self);
@@ -579,7 +579,7 @@ PIEVerificationCodeCountdownButton *countdownButton;
         self.passwordTextField.hidden    = NO;
         self.passwordTextField.rightView = forgotPasswordButton;
 
-        [self.nextStepButton setTitle:@"登陆" forState:UIControlStateNormal];
+        [self.nextStepButton setTitle:@"登录" forState:UIControlStateNormal];
     }];
 }
 

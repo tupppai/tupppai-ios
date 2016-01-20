@@ -45,7 +45,10 @@
     
     [_followView setContentMode:UIViewContentModeCenter];
     
-    
+    _commentLabel1.verticalAlignment =
+    TTTAttributedLabelVerticalAlignmentTop;
+    _commentLabel2.verticalAlignment =
+    TTTAttributedLabelVerticalAlignmentTop;
 }
 
 

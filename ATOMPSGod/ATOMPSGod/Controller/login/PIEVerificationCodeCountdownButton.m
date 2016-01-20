@@ -55,7 +55,7 @@
     // ## Step 1:倒计时button的制作， 获取验证码->倒计时 + 发网络请求，一系列的信号处理
     
     // RAC-signal binding
-    const NSInteger numberLimit   = 10;
+    const NSInteger numberLimit   = 60;
     __block NSInteger numberCount = numberLimit;
     
     /*

@@ -199,8 +199,10 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
     
     PIELaunchTextField *verificationTextField = ({
         PIELaunchTextField *textField = [[PIELaunchTextField alloc] init];
-     
-        textField.placeholder = @"验证码";
+
+        textField.placeholder         = @"验证码";
+        textField.keyboardType        = UIKeyboardTypePhonePad;
+        
         textField.rightView = countdownButton;
         
         [furtherRegistrationView addSubview:textField];

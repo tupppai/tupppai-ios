@@ -15,6 +15,7 @@
 #import "PIEAvatarView.h"
 
 #import "PIEBlurAnimateImageView.h"
+#import "TTTAttributedLabel.h"
 
 @interface PIEEliteHotReplyTableViewCell : UITableViewCell
 
@@ -32,8 +33,8 @@
 
 @property (weak, nonatomic) IBOutlet PIEPageButton *commentView;
 @property (weak, nonatomic) IBOutlet PIELoveButton *likeView;
-@property (weak, nonatomic) IBOutlet UILabel *commentLabel1;
-@property (weak, nonatomic) IBOutlet UILabel *commentLabel2;
+@property (weak, nonatomic) IBOutlet TTTAttributedLabel *commentLabel1;
+@property (weak, nonatomic) IBOutlet TTTAttributedLabel *commentLabel2;
 @property (weak, nonatomic) IBOutlet UIImageView *commentIndeicatorImageView;
 
 @property (weak, nonatomic) IBOutlet PIEBlurAnimateImageView *blurAnimateView;

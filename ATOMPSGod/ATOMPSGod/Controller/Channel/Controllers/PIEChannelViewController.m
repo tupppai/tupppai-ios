@@ -17,7 +17,6 @@
 #import "PIEChannelDetailViewController.h"
 #import "PIEChannelActivityViewController.h"
 #import "DeviceUtil.h"
-
 #import "ReactiveCocoa/ReactiveCocoa.h"
 
 
@@ -43,7 +42,9 @@
 @property (nonatomic, strong) NSMutableArray<PIEChannelViewModel *> *source;
 @property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, assign) long long timeStamp;
-@property (nonatomic, assign) BOOL stopRefreshFooter;
+@property (nonatomic, assign) BOOL canRefreshFooter;
+
+
 @end
 
 
@@ -91,7 +92,9 @@
     [super viewWillDisappear:animated];
 }
 - (void)setupData {
-    _source = [NSMutableArray array];
+    _source = [NSMutableArray<PIEChannelViewModel *> array];
+    
+    _canRefreshFooter = YES;
 
 }
 
@@ -189,9 +192,10 @@
         if (array.count) {
             [_source removeAllObjects];
             [_source addObjectsFromArray:array];
+            _canRefreshFooter = YES;
             
         } else {
-            _stopRefreshFooter = YES;
+            _canRefreshFooter = NO;
         }
         [self.tableView reloadData];
         [self.tableView.mj_header endRefreshing];
@@ -211,22 +215,24 @@
 
     
     [PIEChannelManager getSource_Channel:params block:^(NSMutableArray *array) {
-        if (array.count) {
-            [_source addObjectsFromArray: array];;
-            [self.tableView reloadData];
+        if (array.count < 5) {
+            _canRefreshFooter = NO;
         } else {
-            _stopRefreshFooter = YES;
+            _canRefreshFooter = YES;
         }
+        [_source addObjectsFromArray: array];;
+        [self.tableView reloadData];
         [self.tableView.mj_footer endRefreshing];
     }];
 }
 
 #pragma marmk - <PWRefreshBaseTableViewDelegate>
 - (void)didPullRefreshUp:(UITableView *)tableView{
-    if (_stopRefreshFooter) {
-        [self.tableView.mj_footer endRefreshingWithNoMoreData];
-    } else {
+    if (_canRefreshFooter) {
         [self loadMoreChannels];
+    } else {
+        [Hud text:@"已经拉到底啦"];
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
     }
 }
 

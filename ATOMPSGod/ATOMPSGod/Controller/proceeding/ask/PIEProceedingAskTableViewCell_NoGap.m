@@ -21,6 +21,8 @@
 @property (strong, nonatomic) NSMutableArray<PIEPageVM *> *source;
 @property (strong, nonatomic) PIEPageVM *vmAsk1;
 @property (strong, nonatomic) PIEPageVM *vmAsk2;
+@property (copy,   nonatomic) NSString  *previousTextFieldText;
+
 @end
 
 @implementation PIEProceedingAskTableViewCell_NoGap
@@ -58,6 +60,8 @@
     _uploadTimeLabel.font = [UIFont lightTupaiFontOfSize:10];
     
     _contentTextField.enabled = NO;
+    
+    
     [_editButton setTitleColor:[UIColor colorWithHex:0xff6d3f] forState:UIControlStateSelected];
     [_editButton setImage:[UIImage new] forState:UIControlStateSelected];
     [_editButton setTitle:@"确定" forState:UIControlStateSelected];
@@ -70,23 +74,37 @@
         _editButton.selected = YES;
         _contentTextField.enabled = YES;
         [_contentTextField becomeFirstResponder];
-    } else  {
-        _editButton.selected = NO;
-        _contentTextField.enabled = NO;
-        NSMutableDictionary* param = [NSMutableDictionary new];
-        [param setObject:_contentTextField.text forKey:@"desc"];
-        [param setObject:@(_vmAsk1.askID) forKey:@"ask_id"];
         
-        [Hud activity:@"修改描述中..."];
-        [DDService editAsk:param withBlock:^(BOOL success) {
-            
-            [Hud dismiss];
-            if (!success) {
-                _contentTextField.text = _vmAsk1.content;
-            }else{
-                [Hud text:@"描述修改成功"];
-            }
-        }];
+        /*
+            record the current textField text as the previous one
+         */
+        _previousTextFieldText = _contentTextField.text;
+        
+    } else  {
+        /*
+            if the textField.text remains unchanged, do not send any requeest.
+         */
+        
+        if ([_previousTextFieldText isEqualToString:_contentTextField.text]) {
+            [Hud text:@"请修改描述"];
+        }
+        else{
+            _editButton.selected = NO;
+            _contentTextField.enabled = NO;
+            NSMutableDictionary* param = [NSMutableDictionary new];
+            [param setObject:_contentTextField.text forKey:@"desc"];
+            [param setObject:@(_vmAsk1.askID) forKey:@"ask_id"];
+            [Hud activity:@"修改描述中..."];
+            [DDService editAsk:param withBlock:^(BOOL success) {
+                
+                [Hud dismiss];
+                if (!success) {
+                    _contentTextField.text = _vmAsk1.content;
+                }else{
+                    [Hud text:@"描述修改成功"];
+                }
+            }];
+        }
     }
 }
 - (void)tapOnAsk1 {
