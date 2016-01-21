@@ -22,7 +22,7 @@
 #import "DDNavigationController.h"
 #import "AppDelegate.h"
 #import "PIEToHelpViewController.h"
-#import "PIECellIconStatusChangedNotificationKey.h"
+
 #import "LeesinViewController.h"
 
 /* Variables */
@@ -138,10 +138,6 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 
 - (void)setupNotificationObserver
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updateShareStatus)
-                                                 name:PIESharedIconStatusChangedNotification
-                                               object:nil];
 }
 
 
@@ -178,9 +174,6 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
  *  remove observers while being deallocated.
  */
 -(void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:PIESharedIconStatusChangedNotification
-                                                  object:nil];
 }
 
 #pragma mark - <UITableViewDelegate>

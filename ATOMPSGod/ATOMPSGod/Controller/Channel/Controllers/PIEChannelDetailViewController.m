@@ -24,7 +24,7 @@
 #import "PIECameraViewController.h"
 #import "PIENewAskViewController.h"
 #import "DeviceUtil.h"
-#import "PIECellIconStatusChangedNotificationKey.h"
+
 #import "PIEPageManager.h"
 #import "PIEProceedingManager.h"
 

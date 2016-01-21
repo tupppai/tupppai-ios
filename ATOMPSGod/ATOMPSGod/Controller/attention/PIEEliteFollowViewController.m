@@ -21,7 +21,7 @@
 #import "PIECommentViewController.h"
 #import "PIEReplyCollectionViewController.h"
 
-#import "PIECellIconStatusChangedNotificationKey.h"
+
 #import "PIEPageManager.h"
 /* Variables */
 @interface PIEEliteFollowViewController ()
@@ -94,12 +94,6 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
 
 -(void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNavigation_Elite_Follow" object:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:PIECollectedIconStatusChangedNotification
-                                                  object:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:PIESharedIconStatusChangedNotification
-                                                  object:nil];
 }
 
 #pragma mark - data setup
@@ -119,27 +113,6 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
 - (void)setupNotificationObserver
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_Elite_Follow" object:nil];
-    
-//    // 响应下一级PIECarouselItemView和下下一级的PIECommentViewController的“收藏”Icon同步事件
-//    [[NSNotificationCenter defaultCenter]
-//     addObserver:self
-//     selector:@selector(collectedIconStatusDidChanged:)
-//     name:PIECollectedIconStatusChangedNotification
-//     object:nil];
-    
-    // 响应下一级的PIECarouselItemView和下下一级的PIECommentViewController的“分享”icon的数字的同步事件
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(updateShareStatus)
-     name:PIESharedIconStatusChangedNotification
-     object:nil];
-//    
-//    // 响应下一级的PIECarouselItemView和下下一级的PIECommentViewController的“点赞”icon的数字的同步事件
-//    [[NSNotificationCenter defaultCenter]
-//     addObserver:self
-//     selector:@selector(updateLikedStatus:)
-//     name:PIELikedIconStatusChangedNotification
-//     object:nil];
 }
 
 

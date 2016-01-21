@@ -23,8 +23,6 @@
 #import "AppDelegate.h"
 #import "PIECommentViewController.h"
 #import "PIEReplyCollectionViewController.h"
-#import "DDCollectManager.h"
-#import "PIECellIconStatusChangedNotificationKey.h"
 #import "PIEPageManager.h"
 /* Variables */
 @interface PIEEliteHotViewController ()
@@ -121,16 +119,6 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 -(void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNavigation_Elite_Hot" object:nil];
     
-
-//    
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:PIECollectedIconStatusChangedNotification
-//                                                  object:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:PIESharedIconStatusChangedNotification
-                                                  object:nil];
-    
-    
 }
 
 #pragma mark - data setup
@@ -150,14 +138,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 #pragma mark - Notification setup
 - (void)setupNotificationObserver
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_Elite_Hot" object:nil];
-    
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updateShareStatus)
-                                                 name:PIESharedIconStatusChangedNotification
-                                               object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_Elite_Hot" object:nil];    
 
 }
 

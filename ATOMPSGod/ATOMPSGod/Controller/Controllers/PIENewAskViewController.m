@@ -24,7 +24,7 @@
 //#import "PIEUploadVC.h"
 //#import "QBImagePickerController.h"
 #import "DeviceUtil.h"
-#import "PIECellIconStatusChangedNotificationKey.h"
+
 #import "LeesinViewController.h"
 #import "MRNavigationBarProgressView.h"
 
@@ -109,12 +109,6 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     // Dispose of any resources that can be recreated.
 }
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:PIESharedIconStatusChangedNotification
-                                                  object:nil];
-}
 #pragma mark - property first initiation
 - (void) setupData {
     //set this before firstGetRemoteSource
@@ -132,10 +126,6 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 #pragma mark - Notification Observer setup
 - (void)setupNotificationObserver
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updateShareStatus)
-                                                 name:PIESharedIconStatusChangedNotification
-                                               object:nil];
 }
 
 - (void)setupProgressView {

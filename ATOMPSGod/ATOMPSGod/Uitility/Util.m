@@ -206,11 +206,11 @@ NSString* deviceName()
     [Hud dismiss];
     if ([UIApplication sharedApplication].keyWindow) {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-    // Configure for text only and offset down
+    hud.color = [UIColor colorWithHex:0x000000 andAlpha:0.6];
     hud.mode = MBProgressHUDModeText;
     hud.labelText = message;
-    hud.margin = 30.f;
-    hud.cornerRadius = 4;
+    hud.margin = 16.f;
+    hud.cornerRadius = 8;
     hud.removeFromSuperViewOnHide = YES;
     [hud hide:YES afterDelay:1];
     }
@@ -238,8 +238,8 @@ NSString* deviceName()
         // Configure for text only and offset down
         hud.mode = MBProgressHUDModeText;
         hud.labelText = message;
-        hud.margin = 30.f;
-        hud.cornerRadius = 4;
+        hud.margin = 18.f;
+        hud.cornerRadius = 8;
         hud.removeFromSuperViewOnHide = YES;
         [hud hide:YES afterDelay:1];
     }
@@ -252,8 +252,8 @@ NSString* deviceName()
         // Configure for text only and offset down
         hud.mode = MBProgressHUDModeText;
         hud.labelText = message;
-        hud.margin = 30.f;
-        hud.cornerRadius = 4;
+        hud.margin = 18.0f;
+        hud.cornerRadius = 8;
         hud.removeFromSuperViewOnHide = YES;
         [hud hide:YES afterDelay:1];
     }
@@ -265,8 +265,8 @@ NSString* deviceName()
         // Configure for text only and offset down
         hud.mode = MBProgressHUDModeText;
         hud.labelText = message;
-        hud.margin = 30.f;
-        hud.cornerRadius = 4;
+        hud.margin = 18.f;
+        hud.cornerRadius = 8;
         hud.removeFromSuperViewOnHide = YES;
         [hud hide:YES afterDelay:1];
     }
@@ -276,8 +276,8 @@ NSString* deviceName()
     if ([UIApplication sharedApplication].keyWindow) {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
-    hud.margin = 30;
-    hud.cornerRadius = 4;
+    hud.margin = 20;
+    hud.cornerRadius = 6;
     hud.color = [UIColor colorWithHex:0x000000 andAlpha:0.2];
     hud.labelText = message;
     }
@@ -286,8 +286,8 @@ NSString* deviceName()
     [Hud dismiss:view];
     if (view) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
-        hud.margin = 30;
-        hud.cornerRadius = 4;
+        hud.margin = 20;
+        hud.cornerRadius = 6;
         hud.color = [UIColor colorWithHex:0x000000 andAlpha:0.2];
         hud.mode = MBProgressHUDModeIndeterminate;
         hud.labelText = message;
