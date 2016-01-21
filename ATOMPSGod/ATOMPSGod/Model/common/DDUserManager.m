@@ -76,14 +76,12 @@ Will be executed only once when the function gets called for first time.
 
 
 + (void)updateCurrentUserFromUser:(PIEUserModel *)user {
-    if ([ATOMUserDAO isExistUser:user]) {
-        [ATOMUserDAO updateUser:user];
-        self.currentUser = user;
-    } else {
-        [ATOMUserDAO insertUser:user];
-        self.currentUser = user;
-    }
+    [ATOMUserDAO clearUsers];
+    [ATOMUserDAO insertUser:user];
+    self.currentUser = user;
 }
+
+
 
 +(void)clearCurrentUser {
     self.currentUser = nil;

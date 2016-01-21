@@ -178,7 +178,7 @@ typedef void(^requestResultBlock)(void);
 -(void)toggleSwitch:(id)sender {
     UISwitch *bindSwitch = sender;
     NSString *type;
-    SSDKPlatformType shareType;
+    SSDKPlatformType shareType = SSDKPlatformTypeUnknown;
     switch (bindSwitch.tag) {
         case 0:{
             type = @"weibo";
