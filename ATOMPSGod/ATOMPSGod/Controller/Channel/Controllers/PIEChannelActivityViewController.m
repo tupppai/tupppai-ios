@@ -380,6 +380,8 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     CGPoint location = [gesture locationInView:self.tableView];
     _selectedIndexPath = [self.tableView indexPathForRowAtPoint:location];
     if (_selectedIndexPath) {
+        return;
+    }
         _selectedReplyCell = [self.tableView cellForRowAtIndexPath:_selectedIndexPath];
         _selectedVM = self.source_reply[_selectedIndexPath.row];
         CGPoint p = [gesture locationInView:_selectedReplyCell];
@@ -446,7 +448,6 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 //            vc.pageVM = _selectedVM;
 //            [self.navigationController pushViewController:vc animated:YES];
 //        }
-    }
     
 }
 - (void)longPressOnReply:(UILongPressGestureRecognizer *)gesture {

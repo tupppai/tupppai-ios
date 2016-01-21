@@ -18,7 +18,6 @@
 @interface PIEMyCollectionViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @property (nonatomic, strong)  PIERefreshTableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
-@property (nonatomic, strong) UITapGestureRecognizer *tapMyCollectionGesture;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @property (nonatomic, assign) BOOL isfirstLoading;
