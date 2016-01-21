@@ -165,6 +165,10 @@
 		90EC3D5C1C2A78D10085A7BE /* PIEProceedingToHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EC3D5B1C2A78D10085A7BE /* PIEProceedingToHelpViewController.m */; };
 		90EC3D5F1C2A78E20085A7BE /* PIEProceedingAskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EC3D5E1C2A78E20085A7BE /* PIEProceedingAskViewController.m */; };
 		90EC3D621C2A79030085A7BE /* PIEProceedingViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EC3D611C2A79030085A7BE /* PIEProceedingViewController2.m */; };
+		90F401501C5084BB00B39CEB /* PIEMyWalletViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F4014F1C5084BB00B39CEB /* PIEMyWalletViewController.m */; };
+		90F4015F1C50A1BD00B39CEB /* PIECashFlowDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F4015E1C50A1BD00B39CEB /* PIECashFlowDetailsViewController.m */; };
+		90F401621C50C55100B39CEB /* PIEBindWeixinPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F401611C50C55100B39CEB /* PIEBindWeixinPaymentViewController.m */; };
+		90F401651C50DE6600B39CEB /* PIEFinishWithdralViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F401641C50DE6600B39CEB /* PIEFinishWithdralViewController.m */; };
 		90F566451C45EF4A000BC3E2 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90F566231C45EF03000BC3E2 /* ReactiveCocoa.framework */; };
 		90F566461C45EF4B000BC3E2 /* ReactiveCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 90F566231C45EF03000BC3E2 /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		90F566491C45EF50000BC3E2 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90F5663A1C45EF42000BC3E2 /* Result.framework */; };
@@ -1044,6 +1048,14 @@
 		90EC3D5E1C2A78E20085A7BE /* PIEProceedingAskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEProceedingAskViewController.m; sourceTree = "<group>"; };
 		90EC3D601C2A79030085A7BE /* PIEProceedingViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEProceedingViewController2.h; sourceTree = "<group>"; };
 		90EC3D611C2A79030085A7BE /* PIEProceedingViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEProceedingViewController2.m; sourceTree = "<group>"; };
+		90F4014E1C5084BB00B39CEB /* PIEMyWalletViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEMyWalletViewController.h; sourceTree = "<group>"; };
+		90F4014F1C5084BB00B39CEB /* PIEMyWalletViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEMyWalletViewController.m; sourceTree = "<group>"; };
+		90F4015D1C50A1BD00B39CEB /* PIECashFlowDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECashFlowDetailsViewController.h; sourceTree = "<group>"; };
+		90F4015E1C50A1BD00B39CEB /* PIECashFlowDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECashFlowDetailsViewController.m; sourceTree = "<group>"; };
+		90F401601C50C55100B39CEB /* PIEBindWeixinPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEBindWeixinPaymentViewController.h; sourceTree = "<group>"; };
+		90F401611C50C55100B39CEB /* PIEBindWeixinPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEBindWeixinPaymentViewController.m; sourceTree = "<group>"; };
+		90F401631C50DE6600B39CEB /* PIEFinishWithdralViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEFinishWithdralViewController.h; sourceTree = "<group>"; };
+		90F401641C50DE6600B39CEB /* PIEFinishWithdralViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEFinishWithdralViewController.m; sourceTree = "<group>"; };
 		90F566151C45EF03000BC3E2 /* ReactiveCocoa.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactiveCocoa.xcodeproj; path = ../../ReactiveCocoa/ReactiveCocoa.xcodeproj; sourceTree = "<group>"; };
 		90F5662A1C45EF42000BC3E2 /* Result.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Result.xcodeproj; path = ../../ReactiveCocoa/Carthage/Checkouts/Result/Result.xcodeproj; sourceTree = "<group>"; };
 		90F6126D1C4735DB0095A543 /* PIENotificationCommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIENotificationCommentViewController.h; sourceTree = "<group>"; };
@@ -3918,6 +3930,14 @@
 				F4C0DFED1BE9EF3A000615CF /* PIEFeedbackViewController.h */,
 				F4C0DFEE1BE9EF3A000615CF /* PIEFeedbackViewController.m */,
 				F4C0DFEF1BE9EF3A000615CF /* PIEFeedbackViewController.xib */,
+				90F4014E1C5084BB00B39CEB /* PIEMyWalletViewController.h */,
+				90F4014F1C5084BB00B39CEB /* PIEMyWalletViewController.m */,
+				90F4015D1C50A1BD00B39CEB /* PIECashFlowDetailsViewController.h */,
+				90F4015E1C50A1BD00B39CEB /* PIECashFlowDetailsViewController.m */,
+				90F401601C50C55100B39CEB /* PIEBindWeixinPaymentViewController.h */,
+				90F401611C50C55100B39CEB /* PIEBindWeixinPaymentViewController.m */,
+				90F401631C50DE6600B39CEB /* PIEFinishWithdralViewController.h */,
+				90F401641C50DE6600B39CEB /* PIEFinishWithdralViewController.m */,
 			);
 			name = settings;
 			sourceTree = "<group>";
@@ -4901,6 +4921,7 @@
 				F4FABAFD1BAA593C00F47064 /* PIERefreshCollectionView.m in Sources */,
 				F4206FE71BF0929C00C9B339 /* KVCMutableArray.m in Sources */,
 				F4EC111C1BCE6B9A002D1DCF /* PIENotificationManager.m in Sources */,
+				90F401621C50C55100B39CEB /* PIEBindWeixinPaymentViewController.m in Sources */,
 				F45FF9AF1BB65BE6009C4203 /* PIEPageLikeButton.m in Sources */,
 				E94289871B5B32A200ED26E4 /* TSMessage.m in Sources */,
 				5C8D4ACD1ADE484A00B158AE /* PIEFriendFollowingViewController.m in Sources */,
@@ -4922,6 +4943,7 @@
 				5C561A8B1AB857870052D4D5 /* NSString+Tupai.m in Sources */,
 				F43930401BE4BD75006C9437 /* MRProgressView.m in Sources */,
 				E93D23871B3FA6FB0081F632 /* DDMySettingsManager.m in Sources */,
+				90F4015F1C50A1BD00B39CEB /* PIECashFlowDetailsViewController.m in Sources */,
 				F41BA0C81C0EDCE800979D43 /* MJRefreshAutoGifFooter.m in Sources */,
 				E95691B71B22E88300DA84BB /* NSValueTransformer+MTLInversionAdditions.m in Sources */,
 				F4F0A1C91C437F1C000DDEBB /* QBImagePickerController.m in Sources */,
@@ -4954,6 +4976,7 @@
 				0E354D3E1C340D660035785A /* UINavigationBar+Awesome.m in Sources */,
 				F4092DDD1C3A3D3B003A3AD7 /* UIResponder+SLKAdditions.m in Sources */,
 				0E0DDC8D1C1A64BC009A66C4 /* PIEChannelActivityViewController.m in Sources */,
+				90F401651C50DE6600B39CEB /* PIEFinishWithdralViewController.m in Sources */,
 				E90C7C5D1B20726400CF0E6A /* PWMascotAnimationImageView.m in Sources */,
 				5C4C70C51AB6BC5200358989 /* DDBaseService.m in Sources */,
 				F46117DD1BAD1101001A6F1A /* IQSegmentedNextPrevious.m in Sources */,
@@ -5043,6 +5066,7 @@
 				F4F72BEE1BCB4EF7002FF05A /* FXBlurView.m in Sources */,
 				F44FAA3E1C3FAF9300AC60B2 /* LeesinUploadManager.m in Sources */,
 				E9CBFF4C1B5214FB00DC8ED4 /* SIAlertView.m in Sources */,
+				90F401501C5084BB00B39CEB /* PIEMyWalletViewController.m in Sources */,
 				5C561A501AB7C8210052D4D5 /* PIEModelImageInfo.m in Sources */,
 				F4C705E21C0998750057AA6A /* PIEImageView_blur.m in Sources */,
 				F4AE73BD1BBA770000734BCB /* PIEFriendViewController.m in Sources */,
