@@ -23,7 +23,7 @@
 #import "PIEMyLikedPagesViewController.h"
 #import "PIEFeedbackViewController.h"
 #import "PIEAboutUsViewController.h"
-#import "UMCheckUpdate.h"
+//#import "UMCheckUpdate.h"
 #import "PIELaunchViewController_Black.h"
 #import "PIEBindCellphoneViewController.h"
 

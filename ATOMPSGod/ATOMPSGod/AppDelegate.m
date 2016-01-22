@@ -23,7 +23,6 @@
 #import "PIECommentViewController.h"
 #import "PIENotificationViewController.h"
 #import "MobClick.h"
-#import "UMCheckUpdate.h"
 
 @interface AppDelegate ()
 //@property (nonatomic, strong) UINavigationController *baseNav;
@@ -71,9 +70,9 @@
     [MobClick setCrashReportEnabled:YES];
     [MobClick setEncryptEnabled:YES];
     [MobClick setLogEnabled:NO];
-    [UMCheckUpdate checkUpdateWithAppkey:@"55b1ecdbe0f55a1de9001164" channel:nil];
-    NSNumber *version =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    [UMCheckUpdate setVersion:[version integerValue]];
+//    [UMCheckUpdate checkUpdateWithAppkey:@"55b1ecdbe0f55a1de9001164" channel:nil];
+//    NSNumber *version =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+//    [UMCheckUpdate setVersion:[version integerValue]];
 }
 - (void)setupBarButtonItem {
     NSShadow *shadow    = [[NSShadow alloc] init];

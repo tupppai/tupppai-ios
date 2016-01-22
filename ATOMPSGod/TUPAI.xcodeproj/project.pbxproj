@@ -356,6 +356,7 @@
 		F4275A1A1BE0B9E400BBE7E4 /* PIEMyFansViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4275A191BE0B9E400BBE7E4 /* PIEMyFansViewController.m */; };
 		F4275A1D1BE0B9ED00BBE7E4 /* PIEMyFollowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4275A1C1BE0B9ED00BBE7E4 /* PIEMyFollowViewController.m */; };
 		F42799431C4C90BC004CFBBE /* PIEBlurAnimateImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F42799421C4C90BC004CFBBE /* PIEBlurAnimateImageView.m */; };
+		F427999B1C51C566004CFBBE /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F42799981C51C566004CFBBE /* libMobClickLibrary.a */; };
 		F428F01E1BD331EF00318AC2 /* PIELaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F428F01C1BD331EF00318AC2 /* PIELaunchViewController.m */; };
 		F428F01F1BD331EF00318AC2 /* PIELaunchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F428F01D1BD331EF00318AC2 /* PIELaunchViewController.xib */; };
 		F42ED3B11BC4FC2D0052A0BF /* PIEMeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42ED3B01BC4FC2D0052A0BF /* PIEMeViewController.m */; };
@@ -434,7 +435,6 @@
 		F47EF0871C031FF500BFB442 /* VVBlurPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = F47EF0811C031FF500BFB442 /* VVBlurPresenter.m */; };
 		F47EF0881C031FF500BFB442 /* VVBlurTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = F47EF0831C031FF500BFB442 /* VVBlurTransitioning.m */; };
 		F47EF0891C031FF500BFB442 /* VVBlurViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F47EF0851C031FF500BFB442 /* VVBlurViewController.m */; };
-		F49160931BEC4D0800BAFB65 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F49160901BEC4D0800BAFB65 /* libMobClickLibrary.a */; };
 		F49160941BEC4DFA00BAFB65 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F45D8FB11BD87F01005946E8 /* AdSupport.framework */; };
 		F4993CEA1BE5B32C007F9BE4 /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4993CD91BE5B32C007F9BE4 /* AFNetworkActivityIndicatorManager.m */; };
 		F4993CEB1BE5B32C007F9BE4 /* UIActivityIndicatorView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = F4993CDB1BE5B32C007F9BE4 /* UIActivityIndicatorView+AFNetworking.m */; };
@@ -530,7 +530,6 @@
 		F4EF1AA61C44845A005B86AE /* NSNumber+leesinDone.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EF1AA51C44845A005B86AE /* NSNumber+leesinDone.m */; };
 		F4EF1AAC1C44E026005B86AE /* QBAlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EF1AAB1C44E026005B86AE /* QBAlbumCell.m */; };
 		F4EF1AAF1C44E05D005B86AE /* QBCheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EF1AAE1C44E05D005B86AE /* QBCheckmarkView.m */; };
-		F4F006D81BFD8ED000FD7078 /* libUMCheckUpdate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4F006D61BFD8ECF00FD7078 /* libUMCheckUpdate.a */; };
 		F4F0A1941C409EE3000DDEBB /* LeesinSwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0A1931C409EE3000DDEBB /* LeesinSwipeView.m */; };
 		F4F0A1C11C437F1C000DDEBB /* QBImagePicker.strings in Resources */ = {isa = PBXBuildFile; fileRef = F4F0A1A51C437F1C000DDEBB /* QBImagePicker.strings */; };
 		F4F0A1C41C437F1C000DDEBB /* QBAlbumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0A1AF1C437F1C000DDEBB /* QBAlbumsViewController.m */; };
@@ -1383,6 +1382,9 @@
 		F4275A1C1BE0B9ED00BBE7E4 /* PIEMyFollowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEMyFollowViewController.m; sourceTree = "<group>"; };
 		F42799411C4C90BC004CFBBE /* PIEBlurAnimateImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEBlurAnimateImageView.h; sourceTree = "<group>"; };
 		F42799421C4C90BC004CFBBE /* PIEBlurAnimateImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEBlurAnimateImageView.m; sourceTree = "<group>"; };
+		F42799981C51C566004CFBBE /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
+		F42799991C51C566004CFBBE /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
+		F427999A1C51C566004CFBBE /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
 		F428F01B1BD331EF00318AC2 /* PIELaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIELaunchViewController.h; sourceTree = "<group>"; };
 		F428F01C1BD331EF00318AC2 /* PIELaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIELaunchViewController.m; sourceTree = "<group>"; };
 		F428F01D1BD331EF00318AC2 /* PIELaunchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIELaunchViewController.xib; sourceTree = "<group>"; };
@@ -1539,9 +1541,6 @@
 		F47EF0831C031FF500BFB442 /* VVBlurTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VVBlurTransitioning.m; sourceTree = "<group>"; };
 		F47EF0841C031FF500BFB442 /* VVBlurViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VVBlurViewController.h; sourceTree = "<group>"; };
 		F47EF0851C031FF500BFB442 /* VVBlurViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VVBlurViewController.m; sourceTree = "<group>"; };
-		F49160901BEC4D0800BAFB65 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
-		F49160911BEC4D0800BAFB65 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
-		F49160921BEC4D0800BAFB65 /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
 		F4993CD81BE5B32C007F9BE4 /* AFNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkActivityIndicatorManager.h; sourceTree = "<group>"; };
 		F4993CD91BE5B32C007F9BE4 /* AFNetworkActivityIndicatorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkActivityIndicatorManager.m; sourceTree = "<group>"; };
 		F4993CDA1BE5B32C007F9BE4 /* UIActivityIndicatorView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActivityIndicatorView+AFNetworking.h"; sourceTree = "<group>"; };
@@ -1710,8 +1709,6 @@
 		F4EF1AAB1C44E026005B86AE /* QBAlbumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBAlbumCell.m; sourceTree = "<group>"; };
 		F4EF1AAD1C44E05D005B86AE /* QBCheckmarkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBCheckmarkView.h; sourceTree = "<group>"; };
 		F4EF1AAE1C44E05D005B86AE /* QBCheckmarkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBCheckmarkView.m; sourceTree = "<group>"; };
-		F4F006D61BFD8ECF00FD7078 /* libUMCheckUpdate.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMCheckUpdate.a; sourceTree = "<group>"; };
-		F4F006D71BFD8ECF00FD7078 /* UMCheckUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMCheckUpdate.h; sourceTree = "<group>"; };
 		F4F0A1921C409EE3000DDEBB /* LeesinSwipeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeesinSwipeView.h; sourceTree = "<group>"; };
 		F4F0A1931C409EE3000DDEBB /* LeesinSwipeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeesinSwipeView.m; sourceTree = "<group>"; };
 		F4F0A1A61C437F1C000DDEBB /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
@@ -1811,18 +1808,17 @@
 				F44A52791C0BF91500707281 /* libxml2.2.tbd in Frameworks */,
 				E99C51481B85ADF9004CA47B /* ImageIO.framework in Frameworks */,
 				E99C51461B85ADEF004CA47B /* JavaScriptCore.framework in Frameworks */,
+				F427999B1C51C566004CFBBE /* libMobClickLibrary.a in Frameworks */,
 				E99C51441B85ADE9004CA47B /* libstdc++.dylib in Frameworks */,
 				E99C51421B85ADD5004CA47B /* libicucore.dylib in Frameworks */,
 				F45D8FA81BD87CFD005946E8 /* libWeChatSDK.a in Frameworks */,
 				E99C51171B85A4CB004CA47B /* libz.dylib in Frameworks */,
 				F49160941BEC4DFA00BAFB65 /* AdSupport.framework in Frameworks */,
-				F4F006D81BFD8ED000FD7078 /* libUMCheckUpdate.a in Frameworks */,
 				F45D8FA91BD87CFD005946E8 /* MOBFoundation.framework in Frameworks */,
 				F45D8FAC1BD87CFD005946E8 /* ShareSDKConnector.framework in Frameworks */,
 				E99C51151B85A40E004CA47B /* libsqlite3.0.dylib in Frameworks */,
 				F45D8FB01BD87CFD005946E8 /* ShareSDKUI.framework in Frameworks */,
 				E99C51131B85A40A004CA47B /* libc++.dylib in Frameworks */,
-				F49160931BEC4D0800BAFB65 /* libMobClickLibrary.a in Frameworks */,
 				F45D8FAB1BD87CFD005946E8 /* ShareSDK.framework in Frameworks */,
 				F45D8FA61BD87CFD005946E8 /* libWeiboSDK.a in Frameworks */,
 				90F566491C45EF50000BC3E2 /* Result.framework in Frameworks */,
@@ -2528,6 +2524,7 @@
 		5CDB05EC1AA400410089121E /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				F42799971C51C566004CFBBE /* UMAnalytics_Sdk_3.6.7 */,
 				905DC1AF1C4F518000596B0E /* TTTAttributedLabel */,
 				F4092DC21C3A3D3B003A3AD7 /* slack */,
 				F4F28EFA1C23AE9B0067F2E4 /* SDWebImage */,
@@ -2536,7 +2533,6 @@
 				F44A526E1C0BF83000707281 /* TFHpple */,
 				F47EF07D1C031FF500BFB442 /* VVBlur */,
 				F4F9FFC61BFC849A00032FDE /* SMPageControl */,
-				F491608F1BEC4D0800BAFB65 /* UMAnalytics_Sdk_3.6.4 */,
 				F43930121BE4BD75006C9437 /* MRProgress */,
 				F4BDF4C81BDF345100DA3575 /* BBBadgeBarButtonItem */,
 				F41FF0D61BDDFCE800566A12 /* JTS */,
@@ -3458,6 +3454,16 @@
 			name = system;
 			sourceTree = "<group>";
 		};
+		F42799971C51C566004CFBBE /* UMAnalytics_Sdk_3.6.7 */ = {
+			isa = PBXGroup;
+			children = (
+				F42799981C51C566004CFBBE /* libMobClickLibrary.a */,
+				F42799991C51C566004CFBBE /* MobClick.h */,
+				F427999A1C51C566004CFBBE /* MobClickSocialAnalytics.h */,
+			);
+			path = UMAnalytics_Sdk_3.6.7;
+			sourceTree = "<group>";
+		};
 		F428F01A1BD331DD00318AC2 /* launch */ = {
 			isa = PBXGroup;
 			children = (
@@ -3858,18 +3864,6 @@
 				F47EF0851C031FF500BFB442 /* VVBlurViewController.m */,
 			);
 			path = VVBlur;
-			sourceTree = "<group>";
-		};
-		F491608F1BEC4D0800BAFB65 /* UMAnalytics_Sdk_3.6.4 */ = {
-			isa = PBXGroup;
-			children = (
-				F49160901BEC4D0800BAFB65 /* libMobClickLibrary.a */,
-				F4F006D61BFD8ECF00FD7078 /* libUMCheckUpdate.a */,
-				F4F006D71BFD8ECF00FD7078 /* UMCheckUpdate.h */,
-				F49160911BEC4D0800BAFB65 /* MobClick.h */,
-				F49160921BEC4D0800BAFB65 /* MobClickSocialAnalytics.h */,
-			);
-			path = UMAnalytics_Sdk_3.6.4;
 			sourceTree = "<group>";
 		};
 		F4993CD71BE5B32C007F9BE4 /* UIKit+AFNetworking */ = {
@@ -5270,6 +5264,7 @@
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/SinaWeiboSDK",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/WeChatSDK",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/UMAnalytics_Sdk_3.6.4",
+					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/UMAnalytics_Sdk_3.6.7",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -5320,6 +5315,7 @@
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/SinaWeiboSDK",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/WeChatSDK",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/UMAnalytics_Sdk_3.6.4",
+					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/UMAnalytics_Sdk_3.6.7",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -5450,6 +5446,7 @@
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/SinaWeiboSDK",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/WeChatSDK",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/UMAnalytics_Sdk_3.6.4",
+					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/UMAnalytics_Sdk_3.6.7",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
