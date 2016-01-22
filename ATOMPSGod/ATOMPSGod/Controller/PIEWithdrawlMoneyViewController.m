@@ -126,15 +126,17 @@
         textField.textAlignment = NSTextAlignmentRight;
 
         textField.leftViewMode  = UITextFieldViewModeAlways;
-        textField.rightViewMode = UITextFieldViewModeWhileEditing;
+        textField.rightViewMode = UITextFieldViewModeAlways;
         
-        UILabel *leftViewLabel  = [[UILabel alloc] init];
+        UILabel *leftViewLabel  = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
         leftViewLabel.text = @"提现金额";
         leftViewLabel.font = [UIFont lightTupaiFontOfSize:10];
         leftViewLabel.textColor = [UIColor blackColor];
         
-        UILabel *rightViewLabel = [[UILabel alloc] init];
+        
+        UILabel *rightViewLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
         rightViewLabel.text = @"元";
+        rightViewLabel.textAlignment = NSTextAlignmentCenter;
         rightViewLabel.font = [UIFont lightTupaiFontOfSize:10];
         rightViewLabel.textColor = [UIColor blackColor];
         

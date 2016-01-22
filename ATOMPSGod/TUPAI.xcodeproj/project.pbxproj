@@ -30,6 +30,8 @@
 		0E5CE0BB1C22E1BF000A5B55 /* PIEEliteHotViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E5CE0BA1C22E1BF000A5B55 /* PIEEliteHotViewController.m */; };
 		0E5CE0BE1C22E1D4000A5B55 /* PIEEliteFollowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E5CE0BD1C22E1D4000A5B55 /* PIEEliteFollowViewController.m */; };
 		0E6F79031C16EE5C002F9FB6 /* PIEChannelDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E6F79011C16EE5C002F9FB6 /* PIEChannelDetailViewController.m */; };
+		0EA9EE281C5241B700CEC2E3 /* PIEChannelTutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA9EE271C5241B700CEC2E3 /* PIEChannelTutorialViewController.m */; };
+		0EA9EE371C52452600CEC2E3 /* PIEChannelTutorialModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA9EE361C52452600CEC2E3 /* PIEChannelTutorialModel.m */; };
 		0EAB36851C51D9B500F90FAA /* PIEWithdrawlMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EAB36841C51D9B500F90FAA /* PIEWithdrawlMoneyViewController.m */; };
 		0ECED3461C17CC4E00D3F097 /* PIEChannelDetailAskPSItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECED3451C17CC4E00D3F097 /* PIEChannelDetailAskPSItemView.m */; };
 		0EE7588E1C51CD4500A9F59E /* PIEChargeMoneyPanelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE7588D1C51CD4500A9F59E /* PIEChargeMoneyPanelView.m */; };
@@ -763,6 +765,10 @@
 		0E5CE0BD1C22E1D4000A5B55 /* PIEEliteFollowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteFollowViewController.m; sourceTree = "<group>"; };
 		0E6F79001C16EE5C002F9FB6 /* PIEChannelDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelDetailViewController.h; sourceTree = "<group>"; };
 		0E6F79011C16EE5C002F9FB6 /* PIEChannelDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelDetailViewController.m; sourceTree = "<group>"; };
+		0EA9EE261C5241B700CEC2E3 /* PIEChannelTutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelTutorialViewController.h; sourceTree = "<group>"; };
+		0EA9EE271C5241B700CEC2E3 /* PIEChannelTutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelTutorialViewController.m; sourceTree = "<group>"; };
+		0EA9EE351C52452600CEC2E3 /* PIEChannelTutorialModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIEChannelTutorialModel.h; path = ATOMPSGod/Controller/Channel/Controllers/PIEChannelTutorialModel.h; sourceTree = SOURCE_ROOT; };
+		0EA9EE361C52452600CEC2E3 /* PIEChannelTutorialModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIEChannelTutorialModel.m; path = ATOMPSGod/Controller/Channel/Controllers/PIEChannelTutorialModel.m; sourceTree = SOURCE_ROOT; };
 		0EAB36831C51D9B500F90FAA /* PIEWithdrawlMoneyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEWithdrawlMoneyViewController.h; sourceTree = "<group>"; };
 		0EAB36841C51D9B500F90FAA /* PIEWithdrawlMoneyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEWithdrawlMoneyViewController.m; sourceTree = "<group>"; };
 		0ECE8FB11C16AB4500E98CB5 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
@@ -2012,6 +2018,8 @@
 				0E6F79011C16EE5C002F9FB6 /* PIEChannelDetailViewController.m */,
 				0E0DDC8B1C1A64BC009A66C4 /* PIEChannelActivityViewController.h */,
 				0E0DDC8C1C1A64BC009A66C4 /* PIEChannelActivityViewController.m */,
+				0EA9EE261C5241B700CEC2E3 /* PIEChannelTutorialViewController.h */,
+				0EA9EE271C5241B700CEC2E3 /* PIEChannelTutorialViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2019,6 +2027,8 @@
 		0EF2F5B91C1549A900F27D61 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				0EA9EE351C52452600CEC2E3 /* PIEChannelTutorialModel.h */,
+				0EA9EE361C52452600CEC2E3 /* PIEChannelTutorialModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -4818,6 +4828,7 @@
 				5C0D282D1ACA333200491452 /* PIECommentManager.m in Sources */,
 				0E5CE0BE1C22E1D4000A5B55 /* PIEEliteFollowViewController.m in Sources */,
 				F4D015BB1BA6AF7200A28329 /* PIEThumbAnimateView.m in Sources */,
+				0EA9EE281C5241B700CEC2E3 /* PIEChannelTutorialViewController.m in Sources */,
 				5CE4082F1ACE94D600A56E4B /* UIViewController+ATOMTracking.m in Sources */,
 				F4F28F241C23AE9B0067F2E4 /* SDWebImagePrefetcher.m in Sources */,
 				F4D368771BA9629800E6C91C /* CHTCollectionViewWaterfallLayout.m in Sources */,
@@ -4938,6 +4949,7 @@
 				90F401621C50C55100B39CEB /* PIEBindWeixinPaymentViewController.m in Sources */,
 				F45FF9AF1BB65BE6009C4203 /* PIEPageLikeButton.m in Sources */,
 				E94289871B5B32A200ED26E4 /* TSMessage.m in Sources */,
+				0EA9EE371C52452600CEC2E3 /* PIEChannelTutorialModel.m in Sources */,
 				5C8D4ACD1ADE484A00B158AE /* PIEFriendFollowingViewController.m in Sources */,
 				E99D2F581B1C7E8D000D7784 /* UIImage+Reflection.m in Sources */,
 				0E54C7911C1E8F5E00F431AC /* PIEProceedingToHelpTableViewCell.m in Sources */,
