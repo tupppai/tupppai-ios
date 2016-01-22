@@ -28,7 +28,7 @@
                         <constraint firstItem="u0s-LW-xjQ" firstAttribute="centerX" secondItem="6ov-rw-tEG" secondAttribute="centerX" id="hF3-pe-ik0"/>
                     </constraints>
                 </view>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="￥1.00" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RJb-eK-C1V">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="￥1.00" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RJb-eK-C1V">
                     <rect key="frame" x="30" y="91" width="240" height="36"/>
                     <color key="textColor" red="1" green="0.35686274509803922" blue="0.24705882352941178" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="30"/>

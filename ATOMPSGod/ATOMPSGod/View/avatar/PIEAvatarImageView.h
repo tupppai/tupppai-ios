@@ -10,7 +10,7 @@
 
 @interface PIEAvatarImageView : UIImageView
 
-@property (nonatomic, assign)BOOL isV;
+@property (nonatomic, assign) BOOL isV;
 
 
 @end

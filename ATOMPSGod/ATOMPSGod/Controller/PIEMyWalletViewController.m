@@ -13,6 +13,8 @@
 #import "ReactiveCocoa/ReactiveCocoa.h"
 #import "PIEFinishWithdralViewController.h"
 #import "PIEChargeMoneyPanelView.h"
+#import "PIEWithdrawlMoneyViewController.h"
+#import "LxDBAnything.h"
 
 @interface PIEMyWalletViewController ()
 
@@ -41,12 +43,17 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     self.view.backgroundColor = [UIColor colorWithHex:0xF8F8F8];
     [self setupNavBar];
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+    
+    
 }
 
 #pragma mark - UI components setup
@@ -208,10 +215,15 @@
     });
     [[withdrawFromWeixinButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
         @strongify(self);
-        PIEBindWeixinPaymentViewController *bindWeixinPaymentVC =
-        [PIEBindWeixinPaymentViewController new];
-        [self.navigationController pushViewController:bindWeixinPaymentVC
-                                             animated:YES];
+//        PIEBindWeixinPaymentViewController *bindWeixinPaymentVC =
+//        [PIEBindWeixinPaymentViewController new];
+//        [self.navigationController pushViewController:bindWeixinPaymentVC
+//                                             animated:YES];
+        
+        PIEWithdrawlMoneyViewController *withDrawlVC =
+        [[PIEWithdrawlMoneyViewController alloc] init];
+        [self.navigationController pushViewController:withDrawlVC animated:YES];
+        
         
     }];
     
@@ -278,9 +290,9 @@
         make.center.equalTo(self.view);
     }];
     
-    [UIView animateWithDuration:0.3 animations:^{
-        [self.view layoutIfNeeded];
-    }];
+    [self.view layoutIfNeeded];
+    
+    [self.chargeMoneyPanelView.moneyCountTextField becomeFirstResponder];
     
 }
 
