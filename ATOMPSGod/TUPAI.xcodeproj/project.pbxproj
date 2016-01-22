@@ -30,6 +30,8 @@
 		0E5CE0BE1C22E1D4000A5B55 /* PIEEliteFollowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E5CE0BD1C22E1D4000A5B55 /* PIEEliteFollowViewController.m */; };
 		0E6F79031C16EE5C002F9FB6 /* PIEChannelDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E6F79011C16EE5C002F9FB6 /* PIEChannelDetailViewController.m */; };
 		0ECED3461C17CC4E00D3F097 /* PIEChannelDetailAskPSItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECED3451C17CC4E00D3F097 /* PIEChannelDetailAskPSItemView.m */; };
+		0EE7588E1C51CD4500A9F59E /* PIEChargeMoneyPanelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE7588D1C51CD4500A9F59E /* PIEChargeMoneyPanelView.m */; };
+		0EE7589C1C51CD5700A9F59E /* PIEChargeMoneyPanelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EE7589B1C51CD5700A9F59E /* PIEChargeMoneyPanelView.xib */; };
 		0EF2F5C51C154A5700F27D61 /* PIEChannelBannerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF2F5C01C154A5700F27D61 /* PIEChannelBannerCell.m */; };
 		0EF2F5C61C154A5700F27D61 /* PIEChannelBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EF2F5C11C154A5700F27D61 /* PIEChannelBannerCell.xib */; };
 		0EF2F5C71C154A5700F27D61 /* PIEChannelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF2F5C31C154A5700F27D61 /* PIEChannelTableViewCell.m */; };
@@ -761,6 +763,9 @@
 		0ECE8FB11C16AB4500E98CB5 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
 		0ECED3441C17CC4E00D3F097 /* PIEChannelDetailAskPSItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelDetailAskPSItemView.h; sourceTree = "<group>"; };
 		0ECED3451C17CC4E00D3F097 /* PIEChannelDetailAskPSItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelDetailAskPSItemView.m; sourceTree = "<group>"; };
+		0EE7588C1C51CD4500A9F59E /* PIEChargeMoneyPanelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChargeMoneyPanelView.h; sourceTree = "<group>"; };
+		0EE7588D1C51CD4500A9F59E /* PIEChargeMoneyPanelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChargeMoneyPanelView.m; sourceTree = "<group>"; };
+		0EE7589B1C51CD5700A9F59E /* PIEChargeMoneyPanelView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEChargeMoneyPanelView.xib; sourceTree = "<group>"; };
 		0EF2F5BF1C154A5700F27D61 /* PIEChannelBannerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelBannerCell.h; sourceTree = "<group>"; };
 		0EF2F5C01C154A5700F27D61 /* PIEChannelBannerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelBannerCell.m; sourceTree = "<group>"; };
 		0EF2F5C11C154A5700F27D61 /* PIEChannelBannerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEChannelBannerCell.xib; sourceTree = "<group>"; };
@@ -3932,6 +3937,9 @@
 				F4C0DFEF1BE9EF3A000615CF /* PIEFeedbackViewController.xib */,
 				90F4014E1C5084BB00B39CEB /* PIEMyWalletViewController.h */,
 				90F4014F1C5084BB00B39CEB /* PIEMyWalletViewController.m */,
+				0EE7588C1C51CD4500A9F59E /* PIEChargeMoneyPanelView.h */,
+				0EE7588D1C51CD4500A9F59E /* PIEChargeMoneyPanelView.m */,
+				0EE7589B1C51CD5700A9F59E /* PIEChargeMoneyPanelView.xib */,
 				90F4015D1C50A1BD00B39CEB /* PIECashFlowDetailsViewController.h */,
 				90F4015E1C50A1BD00B39CEB /* PIECashFlowDetailsViewController.m */,
 				90F401601C50C55100B39CEB /* PIEBindWeixinPaymentViewController.h */,
@@ -4586,6 +4594,7 @@
 				5C6CE6B91ADBE8A10035F522 /* EmojisList.plist in Resources */,
 				E942897F1B5B32A200ED26E4 /* NotificationBackgroundWarning@2x.png in Resources */,
 				E942897A1B5B32A200ED26E4 /* NotificationBackgroundSuccess.png in Resources */,
+				0EE7589C1C51CD5700A9F59E /* PIEChargeMoneyPanelView.xib in Resources */,
 				3B2D90FF1BA03FB000D6A243 /* LICENSE in Resources */,
 				F465C6FD1C294EAE00D8A410 /* PIEChannelDetailLatestPSCell.xib in Resources */,
 				E942897C1B5B32A200ED26E4 /* NotificationBackgroundSuccessIcon.png in Resources */,
@@ -4832,6 +4841,7 @@
 				5CDB06341AA428BD0089121E /* NSArray+MASAdditions.m in Sources */,
 				E9FF94AC1B7476FC00F06819 /* HMSegmentedControl.m in Sources */,
 				F43930431BE4BD75006C9437 /* MRProgressOverlayView+AFNetworking.m in Sources */,
+				0EE7588E1C51CD4500A9F59E /* PIEChargeMoneyPanelView.m in Sources */,
 				5C83A88D1AC66F910071A024 /* POPBasicAnimation.mm in Sources */,
 				F4F28F2A1C23AE9B0067F2E4 /* UIImageView+WebCache.m in Sources */,
 				F4EC11111BCE5A73002D1DCF /* PIENotificationReplyTableViewCell.m in Sources */,

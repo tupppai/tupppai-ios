@@ -12,11 +12,12 @@
 #import "PIEBindWeixinPaymentViewController.h"
 #import "ReactiveCocoa/ReactiveCocoa.h"
 #import "PIEFinishWithdralViewController.h"
-
-
-
+#import "PIEChargeMoneyPanelView.h"
 
 @interface PIEMyWalletViewController ()
+
+@property (nonatomic, strong) UIView *transparentBlackMask;
+@property (nonatomic, strong) PIEChargeMoneyPanelView *chargeMoneyPanelView;
 
 @end
 
@@ -179,6 +180,11 @@
         button;
     });
     
+    [[chargeMoneyButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
+        @strongify(self);
+        [self setupUiForChargingMoney];
+    }];
+    
     // 微信提现 button
 
     UIButton *withdrawFromWeixinButton = ({
@@ -259,14 +265,69 @@
                                          animated:YES];
 }
 
+- (void)setupUiForChargingMoney{
+    [self.view addSubview:self.transparentBlackMask];
+    [self.view addSubview:self.chargeMoneyPanelView];
+    
+    [self.transparentBlackMask mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
+    
+    [self.chargeMoneyPanelView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(300, 200));
+        make.center.equalTo(self.view);
+    }];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.view layoutIfNeeded];
+    }];
+    
+}
+
+- (void)restoreUi{
+    [self.transparentBlackMask removeFromSuperview];
+    [self.chargeMoneyPanelView removeFromSuperview];
+    
+    self.transparentBlackMask = nil;
+    self.chargeMoneyPanelView = nil;
+}
 
 #pragma mark - touching methods
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+//- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+//{
+//    PIEFinishWithdralViewController *finishWithdrawlVC =
+//    [[PIEFinishWithdralViewController alloc] init];
+//    
+//    [self.navigationController pushViewController:finishWithdrawlVC
+//                                         animated:YES];
+//}
+
+#pragma mark - Lazy loadings
+- (UIView *)transparentBlackMask
 {
-    PIEFinishWithdralViewController *finishWithdrawlVC =
-    [[PIEFinishWithdralViewController alloc] init];
-    
-    [self.navigationController pushViewController:finishWithdrawlVC
-                                         animated:YES];
+    if (_transparentBlackMask == nil) {
+        _transparentBlackMask = [[UIView alloc] init];
+        _transparentBlackMask.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+        _transparentBlackMask.backgroundColor = [UIColor blackColor];
+        _transparentBlackMask.alpha = 0.3;
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                       initWithTarget:self
+                                       action:@selector(restoreUi)];
+        
+        [_transparentBlackMask addGestureRecognizer:tap];
+        
+    }
+    return _transparentBlackMask;
 }
+
+- (PIEChargeMoneyPanelView *)chargeMoneyPanelView
+{
+    if (_chargeMoneyPanelView == nil) {
+        _chargeMoneyPanelView = [PIEChargeMoneyPanelView chargeMoneyPanel];
+    }
+    
+    return _chargeMoneyPanelView;
+}
+
 @end

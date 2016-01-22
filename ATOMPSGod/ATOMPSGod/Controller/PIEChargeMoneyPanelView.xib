@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="OMd-E5-deP" customClass="PIEChargeMoneyPanelView">
+            <rect key="frame" x="0.0" y="0.0" width="300" height="200"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6ov-rw-tEG">
+                    <rect key="frame" x="0.0" y="0.0" width="300" height="57"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请输入充值金额（元）" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u0s-LW-xjQ">
+                            <rect key="frame" x="70" y="19" width="160" height="20"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="1" green="0.93725490196078431" blue="0.015686274509803921" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="u0s-LW-xjQ" firstAttribute="centerY" secondItem="6ov-rw-tEG" secondAttribute="centerY" id="0Mx-hm-UZq"/>
+                        <constraint firstAttribute="height" constant="57" id="L6p-O6-qb0"/>
+                        <constraint firstItem="u0s-LW-xjQ" firstAttribute="centerX" secondItem="6ov-rw-tEG" secondAttribute="centerX" id="hF3-pe-ik0"/>
+                    </constraints>
+                </view>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="￥1.00" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RJb-eK-C1V">
+                    <rect key="frame" x="30" y="91" width="240" height="36"/>
+                    <color key="textColor" red="1" green="0.35686274509803922" blue="0.24705882352941178" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vJZ-7b-Dah">
+                    <rect key="frame" x="130" y="150" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="8cO-WO-2JF"/>
+                        <constraint firstAttribute="height" constant="40" id="DUt-rt-VQc"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <state key="normal" title="确定">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="vJZ-7b-Dah" secondAttribute="bottom" constant="10" id="Grg-E2-Zhv"/>
+                <constraint firstItem="vJZ-7b-Dah" firstAttribute="centerX" secondItem="OMd-E5-deP" secondAttribute="centerX" id="VeD-dI-kGG"/>
+                <constraint firstItem="6ov-rw-tEG" firstAttribute="top" secondItem="OMd-E5-deP" secondAttribute="top" id="XDc-rW-eXu"/>
+                <constraint firstItem="RJb-eK-C1V" firstAttribute="top" secondItem="6ov-rw-tEG" secondAttribute="bottom" constant="34" id="XZv-H6-JCg"/>
+                <constraint firstAttribute="trailing" secondItem="6ov-rw-tEG" secondAttribute="trailing" id="p2k-ir-rry"/>
+                <constraint firstAttribute="trailing" secondItem="RJb-eK-C1V" secondAttribute="trailing" constant="30" id="rJS-xE-gMN"/>
+                <constraint firstItem="RJb-eK-C1V" firstAttribute="leading" secondItem="OMd-E5-deP" secondAttribute="leading" constant="30" id="wjM-et-bbv"/>
+                <constraint firstItem="6ov-rw-tEG" firstAttribute="leading" secondItem="OMd-E5-deP" secondAttribute="leading" id="xwJ-27-nOy"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="confirmButton" destination="vJZ-7b-Dah" id="bLN-79-yNt"/>
+                <outlet property="moneyCountTextField" destination="RJb-eK-C1V" id="8Oy-qy-8GX"/>
+            </connections>
+            <point key="canvasLocation" x="627" y="320"/>
+        </view>
+    </objects>
+</document>
