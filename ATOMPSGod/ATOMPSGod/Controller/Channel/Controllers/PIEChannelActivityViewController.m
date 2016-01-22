@@ -379,7 +379,7 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     
     CGPoint location = [gesture locationInView:self.tableView];
     _selectedIndexPath = [self.tableView indexPathForRowAtPoint:location];
-    if (_selectedIndexPath) {
+    if (_selectedIndexPath == nil) {
         return;
     }
         _selectedReplyCell = [self.tableView cellForRowAtIndexPath:_selectedIndexPath];

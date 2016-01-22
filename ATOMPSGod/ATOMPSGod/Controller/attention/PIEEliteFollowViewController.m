@@ -458,7 +458,7 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
     CGPoint location = [gesture locationInView:self.tableFollow];
     _selectedIndexPath_follow = [self.tableFollow indexPathForRowAtPoint:location];
 
-    if (_selectedIndexPath_follow) {
+    if (_selectedIndexPath_follow == nil) {
         return;
     }
     _selectedVM = _sourceFollow[_selectedIndexPath_follow.row];

@@ -120,11 +120,17 @@ static NSString * const NotificationViewControllerDefaultCellIdentifier =
     CGPoint location = [gesture locationInView:self.tableView];
     NSIndexPath* selectedIndexPath = [self.tableView indexPathForRowAtPoint:location];
 
+    if (selectedIndexPath == nil) {
+        return;
+    }
     /*
         消息正文部分
      */
     if (selectedIndexPath.section == 1) {
         PIENotificationVM* vm = [_source objectAtIndex:selectedIndexPath.row];
+        if (vm == nil) {
+            return;
+        }
         PIEPageVM* pageVM = [self transformNotificationVMToPageVM:vm];
         _selectedVM = vm;
         
