@@ -7,6 +7,7 @@
 //
 
 #import "PIEBaseModel.h"
+#import "PIEChannelTutorialImageModel.h"
 
 @interface PIEChannelTutorialModel : PIEBaseModel
 
@@ -22,7 +23,7 @@
 /** 该教程的标题 */
 @property (nonatomic, copy  ) NSString  *title;
 
-/** 该教程的副描述（左边有一个竖线，在markdown里用 > 表示的那种） */
+/** 该教程的副描述（左边有一个竖线，类似markdown里用 > 表示的那种） */
 @property (nonatomic, copy  ) NSString  *subTitle;
 
 /** 其他用户对这个教程的总点赞数 */
@@ -35,7 +36,7 @@
 @property (nonatomic, assign) NSInteger reply_count;
 
 /** 该教程的图片。未分享到朋友圈，或者没给钱（打赏），则只返回两张图片 */
-@property (nonatomic, strong) NSArray   *tutorial_images;
+@property (nonatomic, strong) NSArray<PIEChannelTutorialImageModel *>   *tutorial_images;
 
 /** 之前用户是否有分享到微信页面，0： false， 1： true */
 @property (nonatomic, assign) BOOL      hasSharedToWechat;

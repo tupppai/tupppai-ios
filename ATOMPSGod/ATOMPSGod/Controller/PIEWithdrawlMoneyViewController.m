@@ -124,20 +124,23 @@
         textField.borderStyle   = UITextBorderStyleNone;
         textField.placeholder   = @"请输入提现金额";
         textField.textAlignment = NSTextAlignmentRight;
+        textField.font          = [UIFont lightTupaiFontOfSize:15];
 
         textField.leftViewMode  = UITextFieldViewModeAlways;
         textField.rightViewMode = UITextFieldViewModeAlways;
         
-        UILabel *leftViewLabel  = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+        UILabel *leftViewLabel  =
+        [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
         leftViewLabel.text = @"提现金额";
-        leftViewLabel.font = [UIFont lightTupaiFontOfSize:10];
+        leftViewLabel.font = [UIFont lightTupaiFontOfSize:15];
         leftViewLabel.textColor = [UIColor blackColor];
         
         
-        UILabel *rightViewLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+        UILabel *rightViewLabel = [[UILabel alloc]
+                                   initWithFrame:CGRectMake(0, 0, 20, 20)];
         rightViewLabel.text = @"元";
         rightViewLabel.textAlignment = NSTextAlignmentCenter;
-        rightViewLabel.font = [UIFont lightTupaiFontOfSize:10];
+        rightViewLabel.font = [UIFont lightTupaiFontOfSize:15];
         rightViewLabel.textColor = [UIColor blackColor];
         
         textField.leftView = leftViewLabel;
@@ -145,8 +148,8 @@
         
         [self.view addSubview:textField];
         [textField mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.view);
-            make.right.equalTo(self.view);
+            make.left.equalTo(self.view).with.offset(21);
+            make.right.equalTo(self.view).with.offset(-10);
             make.top.equalTo(lineSeparator1.mas_bottom);
             make.height.mas_equalTo(55);
         }];

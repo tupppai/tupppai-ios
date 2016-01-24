@@ -7,8 +7,13 @@
 //
 
 #import "PIECashFlowDetailsViewController.h"
+#import "PIERefreshTableView.h"
 
 @interface PIECashFlowDetailsViewController ()
+<
+    UITableViewDelegate,UITableViewDataSource,
+    PWRefreshBaseTableViewDelegate
+>
 
 @end
 
@@ -17,6 +22,8 @@
 #pragma mark - UI life cycles
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self setupSubviews];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,6 +48,40 @@
 {
     self.navigationItem.title = @"零钱明细";
 }
+
+- (void)setupSubviews
+{
+    PIERefreshTableView *tableView = ({
+        PIERefreshTableView *tableView = [[PIERefreshTableView alloc] init];
+        
+        
+        
+        
+        tableView.delegate   = self;
+        tableView.dataSource = self;
+        
+        [self.view addSubview:tableView];
+        [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self.view);
+        }];
+        
+        tableView;
+    });
+}
+
+#pragma mark - <UITableViewDataSource>
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return nil;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 0;
+}
+
+#pragma mark - <UITableViewDelegate>
+
 
 
 @end
