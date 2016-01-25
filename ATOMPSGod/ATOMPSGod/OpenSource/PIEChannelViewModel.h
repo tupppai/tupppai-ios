@@ -11,6 +11,7 @@
 typedef NS_ENUM(NSInteger, PIEChannelType) {
     PIEChannelTypeChannel = 0,
     PIEChannelTypeActivity ,
+    PIEChannelTypeTutorial,
 };
 
 @interface PIEChannelViewModel : NSObject

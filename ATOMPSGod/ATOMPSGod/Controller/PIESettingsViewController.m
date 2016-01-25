@@ -26,6 +26,7 @@
 #import "UMCheckUpdate.h"
 #import "PIELaunchViewController_Black.h"
 #import "PIEBindCellphoneViewController.h"
+#import "PIEMyWalletViewController.h"
 
 
 @interface PIESettingsViewController () <UITableViewDelegate, UITableViewDataSource>
@@ -49,11 +50,9 @@
 }
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-//    self.navigationController.navigationBar.backgroundColor = [UIColor colorWithHex:0xffffff andAlpha:0.9];
 }
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-//    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
 }
 
 -(UITableView *)tableView {
@@ -84,7 +83,7 @@
     if (section == 0) {
         return 2;
     } else if (section == 1) {
-        return 3;
+        return 4;
     } else if (section ==2) {
         return 2;
     } else if (section ==3) {
@@ -94,9 +93,6 @@
 }
 
 #pragma mark - UITableViewDelegate
-
-
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 3 && indexPath.row == 2) {
         return 72;
@@ -122,7 +118,6 @@
         if (!cell) {
             cell = [[PIESettingsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AccountSettingCell"];
         }
-        
         NSInteger section = indexPath.section;
         NSInteger row = indexPath.row;
         if (section == 0) {
@@ -134,10 +129,12 @@
         }
         else if (section == 1) {
             if (row == 0) {
-                cell.textLabel.text = @"消息通知";
+                cell.textLabel.text = @"我的零钱";
             } else if (row == 1) {
-                cell.textLabel.text = @"我赞过的";
+                cell.textLabel.text = @"消息通知";
             } else if (row == 2) {
+                cell.textLabel.text = @"我赞过的";
+            } else if (row == 3){
                 cell.textLabel.text = @"我评论过的";
             }
         }
@@ -145,12 +142,7 @@
             if (row == 0) {
                 cell.textLabel.text = @"清理缓存";
             }
-//            else if (row == 1) {
-//                cell.textLabel.text = @"清理缓存";
-//            }
-//            else if (row == 2) {
-//                cell.textLabel.text = @"推荐应用给好友";
-//            }
+
             else if (row == 1) {
                 cell.textLabel.text = @"给图派评分";
             }
@@ -175,7 +167,6 @@
     NSInteger row = indexPath.row;
     if (section == 0) {
         if (row == 0) {
-            
             /* if isTourist, please finish binding cellphone first */
             if ([self isTourist]) {
                 PIEBindCellphoneViewController *bindCellphoneVC =
@@ -193,13 +184,19 @@
         }
     } else if (section == 1) {
         if (row == 0) {
+            // 我的零钱
+            PIEMyWalletViewController *myWalletVC = [PIEMyWalletViewController new];
+            [self.navigationController pushViewController:myWalletVC
+                                                 animated:YES];
+        } else if (row == 1) {
+            //消息通知
             PIEMessagePushSettingViewController *mrvc = [PIEMessagePushSettingViewController new];
             [self.navigationController pushViewController:mrvc animated:YES];
-        } else if (row == 1) {
+        } else if (row == 2) {
             //我赞过的
             PIEMyLikedPagesViewController * vc = [PIEMyLikedPagesViewController new];
             [self.navigationController pushViewController:vc animated:YES];
-        } else if (row == 2) {
+        }else if (row == 3){
             //我评论过的
             PIEMyCommentedPageViewController* vc = [PIEMyCommentedPageViewController new];
             [self.navigationController pushViewController:vc animated:YES];

@@ -18,6 +18,7 @@
 #import "PIEChannelActivityViewController.h"
 #import "DeviceUtil.h"
 #import "ReactiveCocoa/ReactiveCocoa.h"
+#import "PIEChannelTutorialViewController.h"
 
 
 /* Protocols */
@@ -115,6 +116,8 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 1)
     {
+        
+        
         
         PIEChannelViewModel *channelViewModel = _source[indexPath.row];
         
@@ -333,7 +336,7 @@
 #pragma mark - private helper
 
 /**
- *  根据ChannelViewModel，跳转到对应的ViewController中（活动or频道详情）
+ *  根据ChannelViewModel，跳转到对应的ViewController中（活动,频道详情或者是教程）
  *
  */
 - (void)pushNextViewControllerWithViewModel:(PIEChannelViewModel *)channelViewModel
@@ -365,6 +368,18 @@
          pushViewController:channelActivityViewController
          animated:YES];
         
+    }
+    else if (channelViewModel.channelType == PIEChannelTypeTutorial){
+        /* push to ChannelTutorial */
+        
+        PIEChannelTutorialViewController *channelTutorialViewController =
+        [[PIEChannelTutorialViewController alloc] init];
+        
+        channelTutorialViewController.currentChannelViewModel = channelViewModel;
+        
+        [self.navigationController
+         pushViewController:channelTutorialViewController
+         animated:YES];
     }
     else
     {

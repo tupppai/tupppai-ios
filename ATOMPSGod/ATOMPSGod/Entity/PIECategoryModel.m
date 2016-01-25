@@ -29,7 +29,8 @@
 + (NSValueTransformer *)typeJSONTransformer {
     return [NSValueTransformer mtl_valueMappingTransformerWithDictionary:@{
                                                                            @"channel": @(PIECategoryTypeChannel),
-                                                                           @"activity": @(PIECategoryTypeActivity)
+                                                                           @"activity": @(PIECategoryTypeActivity),
+                                                                           @"tutorial": @(PIECategoryTypeTutorial),
                                                                            }];
 }
 

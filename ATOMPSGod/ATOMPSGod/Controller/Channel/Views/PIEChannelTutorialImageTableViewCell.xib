@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="265" id="KGk-i7-Jjw" customClass="PIEChannelTutorialImageTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="483" height="265"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="483" height="264.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="d0j-a3-DqH">
+                        <rect key="frame" x="14" y="18" width="455" height="241"/>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fe9-NV-Ec4">
+                        <rect key="frame" x="0.0" y="259" width="483" height="5"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="5" id="QK2-Mk-03P"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="d0j-a3-DqH" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="18" id="0xa-cH-C3F"/>
+                    <constraint firstItem="fe9-NV-Ec4" firstAttribute="top" secondItem="d0j-a3-DqH" secondAttribute="bottom" id="KNb-Hc-aWS"/>
+                    <constraint firstAttribute="trailing" secondItem="fe9-NV-Ec4" secondAttribute="trailing" id="YwZ-wT-NVs"/>
+                    <constraint firstItem="d0j-a3-DqH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="14" id="egx-D9-Ife"/>
+                    <constraint firstAttribute="trailing" secondItem="d0j-a3-DqH" secondAttribute="trailing" constant="14" id="lod-KD-Xgt"/>
+                    <constraint firstItem="fe9-NV-Ec4" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="nbV-8I-loG"/>
+                    <constraint firstAttribute="bottom" secondItem="fe9-NV-Ec4" secondAttribute="bottom" id="xr9-mO-kRG"/>
+                </constraints>
+            </tableViewCellContentView>
+            <point key="canvasLocation" x="287.5" y="316.5"/>
+        </tableViewCell>
+    </objects>
+</document>
