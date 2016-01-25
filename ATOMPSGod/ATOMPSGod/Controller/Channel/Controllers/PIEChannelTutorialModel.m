@@ -14,7 +14,9 @@
 {
     return @{
              @"ID":@"id",
-             @"ask_id": @"ask_id",
+             @"ask_id":@"ask_id",
+             @"userName":@"nickname",
+             @"avatarUrl":@"avatar",
              @"publishTime": @"create_time",
              @"title": @"title",
              @"subTitle":@"description",
@@ -30,6 +32,14 @@
 + (NSValueTransformer *)tutorial_imagesJSONTransformer{
     return
     [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[PIEChannelTutorialImageModel class]];
+}
+
+/** 暗度陈仓： 使用胖model，在model这里设置日期 */
+- (NSString *)publishTime{
+    
+    NSDate *publishDate = [NSDate dateWithTimeIntervalSince1970:[_publishTime doubleValue]];
+    
+    return  [Util formatPublishTime:publishDate];
 }
 
 @end

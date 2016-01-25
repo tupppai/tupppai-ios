@@ -103,7 +103,6 @@
                 <constraint firstItem="VkU-lM-ntz" firstAttribute="top" secondItem="wAi-JX-F7v" secondAttribute="bottom" constant="22" id="1EN-LE-6Ep"/>
                 <constraint firstItem="0n7-yl-Zbl" firstAttribute="leading" secondItem="fvg-Bp-zwB" secondAttribute="trailing" constant="15" id="7wy-76-aTA"/>
                 <constraint firstItem="Un2-It-TTL" firstAttribute="leading" secondItem="VkU-lM-ntz" secondAttribute="leading" id="8g1-UL-JEd"/>
-                <constraint firstItem="9kg-Vq-HXH" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="9ic-gX-r2w"/>
                 <constraint firstItem="Mid-kU-4vb" firstAttribute="centerY" secondItem="69A-An-WHp" secondAttribute="centerY" id="9zX-CB-SW8"/>
                 <constraint firstAttribute="trailing" secondItem="VkU-lM-ntz" secondAttribute="trailing" constant="16" id="AeQ-5v-1Ba"/>
                 <constraint firstItem="6Lk-ud-96F" firstAttribute="leading" secondItem="0n7-yl-Zbl" secondAttribute="trailing" constant="15" id="Ejq-N1-wyN"/>
@@ -125,11 +124,6 @@
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="9ic-gX-r2w"/>
-                </mask>
-            </variation>
             <point key="canvasLocation" x="334.5" y="136"/>
         </view>
     </objects>

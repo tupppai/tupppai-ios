@@ -17,6 +17,12 @@
 /** 因为教程本质上是一个求P（ask），所以传了一个ask_id 回来。这个字段与ID值是一样的 */
 @property (nonatomic, assign) NSInteger ask_id;
 
+/** 用户名 */
+@property (nonatomic, strong) NSString  *userName;
+
+/** 用户头像URL */
+@property (nonatomic, strong) NSString  *avatarUrl;
+
 /** 该教程的发布时间 */
 @property (nonatomic, copy  ) NSString  *publishTime;
 

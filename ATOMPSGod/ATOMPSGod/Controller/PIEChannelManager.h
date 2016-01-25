@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 @class PIEChannelViewModel;
 @class PIEPageVM;
+@class PIEChannelTutorialModel;
+
 @interface PIEChannelManager : NSObject
 
 + (void)getSource_Channel:(NSDictionary *)params
@@ -19,5 +21,11 @@
                                 (NSMutableArray<PIEPageVM *>
                                  *pageArray))resultBlock
                     completion:(void (^)(void))completionBlock;
+
+
+
++ (void)getSource_channelTutorialList:(NSDictionary *)params
+                                block:(void (^)(NSArray<PIEChannelTutorialModel *> *retArray))block
+                         failureBlock:(void (^)(void))failure;
 @end
 

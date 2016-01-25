@@ -7,17 +7,44 @@
 //
 
 #import "PIEChannelTutorialListCell.h"
+#import "PIEAvatarView.h"
+#import "PIEChannelTutorialModel.h"
+
 
 @implementation PIEChannelTutorialListCell
 
 - (void)awakeFromNib {
     // Initialization code
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)injectModel:(PIEChannelTutorialModel *)tutorialModel
+{
+    // 使用教程图片的第一张图片作为List的封面
+    
+    NSString *firstTutorialImageUrlStr = [tutorialModel.tutorial_images firstObject].imageURL;
+    
+    [self.tutorialImageView sd_setImageWithURL:[NSURL URLWithString:firstTutorialImageUrlStr]];
+    
+    [self.avatarView.avatarImageView sd_setImageWithURL:
+     [NSURL URLWithString:tutorialModel.avatarUrl]];
+    
+    self.userNameLabel.text   = tutorialModel.userName;
+
+    self.tutorialTitle.text   = tutorialModel.title;
+
+    self.loveCountLabel.text  = [@(tutorialModel.love_count) stringValue];
+
+    self.clickCountLabel.text = [@(tutorialModel.click_count) stringValue];
+
+    self.replyCountLabel.text = [@(tutorialModel.reply_count) stringValue];
+    
 }
 
 @end

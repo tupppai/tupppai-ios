@@ -7,7 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+@class PIEAvatarView;
+@class PIEChannelTutorialModel;
 
 @interface PIEChannelTutorialListCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIImageView   *tutorialImageView;
+@property (weak, nonatomic) IBOutlet UILabel       *tutorialTitle;
+@property (weak, nonatomic) IBOutlet PIEAvatarView *avatarView;
+@property (weak, nonatomic) IBOutlet UILabel       *userNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel       *loveCountLabel;
+@property (weak, nonatomic) IBOutlet UILabel       *clickCountLabel;
+@property (weak, nonatomic) IBOutlet UILabel       *replyCountLabel;
+
+
+- (void)injectModel:(PIEChannelTutorialModel *)tutorialModel;
+
 
 @end
