@@ -8,7 +8,7 @@
 
 #import "DDCollectManager.h"
 #import "PIECommentManager.h"
-
+#import "PIECommentModel.h"
 @interface PIEPageVM ()
 
 @end
@@ -58,7 +58,26 @@
     }
     return self;
 }
-
+- (instancetype)initWithCommentModel:(PIECommentModel *)model {
+    self = [self init];
+    if (self) {
+        _model = [PIEPageModel new];
+        
+        [_model addObserver:self forKeyPath:@"loveStatus" options:NSKeyValueObservingOptionNew context:NULL];
+        [_model addObserver:self forKeyPath:@"totalPraiseNumber" options:NSKeyValueObservingOptionNew context:NULL];
+        [_model addObserver:self forKeyPath:@"followed" options:NSKeyValueObservingOptionNew context:NULL];
+        [_model addObserver:self forKeyPath:@"collected" options:NSKeyValueObservingOptionNew context:NULL];
+        [_model addObserver:self forKeyPath:@"collectCount" options:NSKeyValueObservingOptionNew context:NULL];
+        [_model addObserver:self forKeyPath:@"totalShareNumber" options:NSKeyValueObservingOptionNew context:NULL];
+        [_model addObserver:self forKeyPath:@"totalCommentNumber" options:NSKeyValueObservingOptionNew context:NULL];
+        
+        
+        _model.uid = model.uid;
+        _model.avatar = model.avatar;
+        _model.nickname = model.nickname;
+    }
+    return self;
+}
 
 - (instancetype)initWithUserModel:(PIEUserModel *)model {
     self = [self init];

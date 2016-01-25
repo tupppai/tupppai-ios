@@ -19,6 +19,8 @@ typedef enum {
 
 
 @interface PIEUserModel : PIEBaseModel <MTLFMDBSerializing>
+
+-(instancetype)initWithDictionary:(NSDictionary*)dictionary;
 /**
  *  用户唯一ID
  */

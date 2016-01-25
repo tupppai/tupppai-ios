@@ -80,6 +80,20 @@
              };
 }
 
+-(instancetype)initWithDictionary:(NSDictionary*)dictionary {
+    self = [super init];
+    if (self) {
+        for (NSString *fieldName in dictionary) {
+            id value = [dictionary objectForKey:fieldName];
+            if (value == [NSNull null]) {
+                continue;
+            }
+            [self setValue:value forKey:fieldName];
+        }
+    }
+    return self;
+    
+}
 + (NSArray *)FMDBPrimaryKeys {
     return @[@"uid"];
 }

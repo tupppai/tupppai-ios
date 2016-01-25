@@ -43,6 +43,8 @@
 @property (nonatomic, copy) NSString *commentCount;
 @property (nonatomic, copy) NSString *replyCount;
 @property (nonatomic, copy) NSString *collectCount;
+
+
 @property (nonatomic, assign) PIEPageLoveStatus loveStatus;
 
 
@@ -54,6 +56,7 @@
 
 - (instancetype)initWithPageEntity:(PIEPageModel *)entity ;
 - (instancetype)initWithUserModel:(PIEUserModel *)model;
+- (instancetype)initWithCommentModel:(PIECommentModel *)model;
 - (void)increaseLoveStatus;
 - (void)decreaseLoveStatus;
 - (void)revertStatus ;

@@ -85,6 +85,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.edgesForExtendedLayout = UIRectEdgeAll;
     _isFirstLoading = YES;
     [self setupNavBar];
     
@@ -545,15 +546,13 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.avatarView.frame, p)) {
             PIEFriendViewController *opvc = [PIEFriendViewController new];
-            PIEPageVM* vm = [PIEPageVM new];
-            vm.userID = model.uid;
-            vm.username = model.username;
+            PIEPageVM* vm = [[PIEPageVM alloc]initWithCommentModel:model.model];;
             opvc.pageVM = vm;
             [self.navigationController pushViewController:opvc animated:YES];
         }
         else if (CGRectContainsPoint(cell.usernameLabel.frame, p)) {
             PIEFriendViewController *opvc = [PIEFriendViewController new];
-            PIEPageVM* vm = [PIEPageVM new];
+            PIEPageVM* vm = [[PIEPageVM alloc]initWithCommentModel:model.model];;
             vm.userID = model.uid;
             vm.username = model.username;
             opvc.pageVM = vm;

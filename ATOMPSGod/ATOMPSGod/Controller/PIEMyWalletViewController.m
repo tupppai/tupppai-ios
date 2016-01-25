@@ -114,14 +114,17 @@
     // 我的零钱－确切数量 label
     UILabel *myCashCountLabel = ({
         UILabel *label = [[UILabel alloc] init];
-        NSLog(@"余额%f",[DDUserManager currentUser].balance);
-        label.text = [NSString stringWithFormat:@"%f",[DDUserManager currentUser].balance];
+        label.text = [NSString stringWithFormat:@"%.2f",[DDUserManager currentUser].balance];
         label.font = [UIFont mediumTupaiFontOfSize:45];
         label.textColor = [UIColor colorWithHex:0xFF5B38];
+        label.adjustsFontSizeToFitWidth = YES;
+        label.minimumScaleFactor = 0.5;
+        label.textAlignment = NSTextAlignmentCenter;
         [self.view addSubview:label];
         
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(self.view);
+//            make.centerX.equalTo(self.view);
+            make.leading.and.trailing.equalTo(self.view);
             make.top.equalTo(myMoneyLabel.mas_bottom).with.offset(14);
         }];
         label;
