@@ -552,7 +552,6 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
         }
     }];
     
-    [self getRemoteSourceBanner];
 }
 
 - (void)getMoreRemoteSourceHot {
