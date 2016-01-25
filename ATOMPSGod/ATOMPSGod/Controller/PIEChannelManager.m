@@ -17,7 +17,7 @@
                    url:URL_ChannelHomeThreads
                  block:^(id responseObject) {
                      
-                     
+
                      if (responseObject) {
                          NSMutableArray* retArray = [NSMutableArray new];
                          NSArray* categories      = [responseObject objectForKey:@"data"];
@@ -42,6 +42,10 @@
                              else if ([category_type isEqualToString:@"channel"])
                              {
                                  vm.channelType = PIEChannelTypeChannel;
+                             }
+                             else if ([category_type isEqualToString:@"tutorial"])
+                             {
+                                 vm.channelType = PIEChannelTypeTutorial;
                              }
                              
                              

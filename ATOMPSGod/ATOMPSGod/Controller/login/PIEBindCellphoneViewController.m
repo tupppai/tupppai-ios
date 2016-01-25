@@ -421,7 +421,7 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
                               user.token = responseObject[@"token"];
                               
                               // 将用户信息存入沙盒
-                              [DDUserManager updateCurrentUserFromUser:user];
+                              [DDUserManager updateCurrentUserFromUserModel:user];
                               
                               // 完成临时用户转换成正式用户的转正过程，将删除掉本地的“临时身份证”，即openid
                               [[NSUserDefaults standardUserDefaults]
@@ -494,7 +494,7 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
                               user.token = responseObject[@"token"];
                               
                               // 将用户信息存入沙盒
-                              [DDUserManager updateCurrentUserFromUser:user];
+                              [DDUserManager updateCurrentUserFromUserModel:user];
                               
                               // 完成临时用户转换成正式用户的转正过程，将删除掉本地的“临时身份证”，即openid
                               [[NSUserDefaults standardUserDefaults]

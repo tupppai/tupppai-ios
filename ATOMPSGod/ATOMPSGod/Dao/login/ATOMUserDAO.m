@@ -18,13 +18,16 @@
     return self;
 }
 
-+ (void)insertUser:(PIEUserModel *)user {
++ (void)insertUser:(PIEUserModel *)user completion:(void (^)(BOOL success))block {
     dispatch_queue_t q = dispatch_queue_create("insert", NULL);
     dispatch_async(q, ^{
         [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
             NSString *stmt = [MTLFMDBAdapter insertStatementForModel:user];
             NSArray *param = [MTLFMDBAdapter columnValues:user];
             BOOL flag = [db executeUpdate:stmt withArgumentsInArray:param];
+            if (block) {
+                block(flag);
+            }
             if (flag) {
                 NSLog(@"insert user into DB succeed");
             } else {
@@ -55,18 +58,17 @@
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
         NSString *stmt = @"select * from PIEUserTable";
         FMResultSet *rs = [db executeQuery:stmt];
-//        int n = 0;
         while ([rs next]) {
-            user = [MTLJSONAdapter modelOfClass:[PIEUserModel class] fromJSONDictionary:[rs resultDictionary] error:NULL];
-            break;
-//            n++;
+            user = [MTLFMDBAdapter modelOfClass:[PIEUserModel class] fromFMResultSet:rs error:NULL];
+            NSLog(@"[rs resultDictionary] %@",[rs resultDictionary]);
+            NSLog(@"user!! %@",user);
+
+//            break;
         }
         [rs close];
     }];
-    if (user && block) {
+    if (block) {
         block(user);
-    } else if (block) {
-        block(nil);
     }
 }
 

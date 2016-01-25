@@ -44,7 +44,7 @@
 {
     [super layoutSubviews];
     
-   
+    
     CGFloat psGodViewW = self.frame.size.width * 0.5;
     CGFloat psGodViewH = self.frame.size.height * 0.5;
     CGFloat psGodViewX = self.frame.size.width - psGodViewW;
@@ -62,22 +62,22 @@
         psGodView.contentMode = UIViewContentModeScaleAspectFit;
         [self addSubview:psGodView];
         _psGodView = psGodView;
-
+        
         /*
-             severe bug in PIECommentReplyHeaderView:
-             可能是因为自动布局产生的影响；最后改用手写frame布局，问题引刃而解。
+         severe bug in PIECommentReplyHeaderView:
+         可能是因为自动布局产生的影响；最后改用手写frame布局，问题引刃而解。
          */
-//        [psGodView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.width.equalTo(self.mas_width).multipliedBy(0.5);
-//            make.height.equalTo(self.mas_height).multipliedBy(0.5);
-//            make.centerX.equalTo(self.mas_right).with.offset(-4);
-//            make.centerY.equalTo(self.mas_bottom).with.offset(-3);
-//        }];
+        //        [psGodView mas_makeConstraints:^(MASConstraintMaker *make) {
+        //            make.width.equalTo(self.mas_width).multipliedBy(0.5);
+        //            make.height.equalTo(self.mas_height).multipliedBy(0.5);
+        //            make.centerX.equalTo(self.mas_right).with.offset(-4);
+        //            make.centerY.equalTo(self.mas_bottom).with.offset(-3);
+        //        }];
         
-//        [self layoutIfNeeded];
+        //        [self layoutIfNeeded];
         
-
-
+        
+        
         
     }
     

@@ -17,6 +17,7 @@
         _nickname = @"";
         _token = @"";
         _blocked = NO;
+        _balance = 0.0;
     }
     return self;
 }
@@ -45,6 +46,7 @@
              @"token":@"token",
              @"blocked": @"is_block",
              @"isV":@"is_star",
+             @"balance":@"balance",
              };
 }
 + (NSDictionary *)FMDBColumnsByPropertyKey {
@@ -74,6 +76,7 @@
              @"likedCount":@"likedCount",
              @"blocked":@"blocked",
              @"isV":@"isV",
+             @"balance":@"balance",
              };
 }
 

@@ -119,9 +119,8 @@
     
     
     // ## Step 1: 先尝试在本地沙盒加载用户的数据...
-    [DDUserManager fetchUserInDBToCurrentUser:^(BOOL success) {
+    [DDUserManager getMyProfileFromDatabase:^(BOOL success) {
         if (success) {
-
             self.window.rootViewController = self.mainTabBarController;
         } else {
             
@@ -214,15 +213,7 @@
               }
           }
      ];
-    
-    PayReq* req = [[PayReq alloc] init];
-    req.partnerId   = @"19022";
-    req.prepayId    = @"2212";
-    req.nonceStr    = @"ddwdwdwqdq";
-    req.timeStamp   = 212121221; //时间戳
-    req.package     = @"dwkqmwk21n2j1n1n12j";  //扩展字段
-//    req.sign        = dict[@"entity"][@"sign"];  //签名
-    [WXApi sendReq:req];
+
 }
 
 

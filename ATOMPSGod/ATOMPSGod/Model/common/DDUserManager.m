@@ -13,13 +13,7 @@
 @implementation DDUserManager
 
 
-//- (instancetype)init
-//{
-//    self = [super init];
-//    if (self) {
-//    }
-//    return self;
-//}
+
 static  PIEUserModel* shareUser = nil;
 
 + (PIEUserModel *)currentUser {
@@ -66,18 +60,20 @@ Will be executed only once when the function gets called for first time.
     self.currentUser.bindQQ          = user.bindQQ;
     self.currentUser.token           = user.token;
     self.currentUser.isV             = user.isV;
+    self.currentUser.balance             = user.balance;
 }
 
-//embarrassing
+
+
 + (void)updateCurrentUserInDatabase {
 
     [ATOMUserDAO updateUser:self.currentUser];
 }
 
 
-+ (void)updateCurrentUserFromUser:(PIEUserModel *)user {
++ (void)updateCurrentUserFromUserModel:(PIEUserModel *)user {
     [ATOMUserDAO clearUsers];
-    [ATOMUserDAO insertUser:user];
+    [ATOMUserDAO insertUser:user completion:nil];
     self.currentUser = user;
 }
 
@@ -88,7 +84,7 @@ Will be executed only once when the function gets called for first time.
 }
 
 
-+(void)fetchUserInDBToCurrentUser:(void (^)(BOOL))block {
++(void)getMyProfileFromDatabase:(void (^)(BOOL))block {
   [ATOMUserDAO fetchUser:^(PIEUserModel *user) {
       if (user) {
           self.currentUser = user;
@@ -103,14 +99,14 @@ Will be executed only once when the function gets called for first time.
    }];
 }
 
-+ (void)DDGetUserInfoAndUpdateMe:(void (^)(BOOL success))block {
++ (void)getUserInfoFromServerToUpdateUserDatabase:(void (^)(BOOL success))block {
     
     [DDBaseService GET:nil url:@"view/info" block:^(id responseObject) {
         NSDictionary* data = [responseObject objectForKey:@"data"];
         PIEUserModel* user = [MTLJSONAdapter modelOfClass:[PIEUserModel class] fromJSONDictionary:data error:NULL];
         user.token = [responseObject objectForKey:@"token"];
         if (user) {
-            [self updateCurrentUserFromUser:user];
+            [self updateCurrentUserFromUserModel:user];
             if (block) {
                 block (YES);
             }
@@ -126,7 +122,7 @@ Will be executed only once when the function gets called for first time.
         if (data) {
             PIEUserModel* user = [MTLJSONAdapter modelOfClass:[PIEUserModel class] fromJSONDictionary:data error:NULL];
             user.token = [responseObject objectForKey:@"token"];
-            [self updateCurrentUserFromUser:user];
+            [self updateCurrentUserFromUserModel:user];
 
             if (block) { block(YES); }
         } else {
@@ -147,7 +143,7 @@ Will be executed only once when the function gets called for first time.
                     PIEUserModel* user = [MTLJSONAdapter modelOfClass:[PIEUserModel class] fromJSONDictionary:data error:nil];
                     //保存更新数据库的user,并更新currentUser
                     user.token = [responseObject objectForKey:@"token"];
-                    [self updateCurrentUserFromUser:user];
+                    [self updateCurrentUserFromUserModel:user];
 
                     if (block) {block(YES);}
                 } else if (status == 2) {
@@ -176,7 +172,7 @@ Will be executed only once when the function gets called for first time.
                 //已经注册，抓取服务器存储的user对象，更新本地user.
                 PIEUserModel* user = [MTLJSONAdapter modelOfClass:[PIEUserModel class] fromJSONDictionary:userObject error:NULL];
                 user.token = [responseObject objectForKey:@"token"];
-                [self updateCurrentUserFromUser:user];
+                [self updateCurrentUserFromUserModel:user];
 
                 block(YES,@"登录成功");
             } else if (isRegistered == NO){

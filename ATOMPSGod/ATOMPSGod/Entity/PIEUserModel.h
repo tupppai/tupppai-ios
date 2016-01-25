@@ -89,4 +89,6 @@ typedef enum {
  */
 @property (nonatomic, assign) NSInteger attentionWorkNumber;
 
+@property (nonatomic, assign) CGFloat balance;
+
 @end

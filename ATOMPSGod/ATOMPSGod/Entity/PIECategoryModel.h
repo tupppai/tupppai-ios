@@ -11,13 +11,13 @@
 typedef NS_ENUM(NSInteger, PIECategoryType) {
     PIECategoryTypeChannel = 0,
     PIECategoryTypeActivity ,
+    PIECategoryTypeTutorial,
 };
 @class PIEPageVM;
 @interface PIECategoryModel : PIEBaseModel
 @property (nonatomic,assign ) NSNumber       * ID;
 @property (nonatomic,assign ) NSNumber       * askID;
 @property (nonatomic,assign ) PIECategoryType type;
-
 @property (nonatomic,copy   ) NSString       * imageUrl;
 @property (nonatomic,copy   ) NSString       * iconUrl;
 @property (nonatomic,copy   ) NSString       * url;

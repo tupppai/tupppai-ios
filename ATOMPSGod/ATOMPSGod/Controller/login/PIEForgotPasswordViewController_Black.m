@@ -271,7 +271,7 @@
                               
                               user.token = responseObject[@"token"];
                               
-                              [DDUserManager updateCurrentUserFromUser:user];
+                              [DDUserManager updateCurrentUserFromUserModel:user];
                               
                               
                               // switch to mainVC
