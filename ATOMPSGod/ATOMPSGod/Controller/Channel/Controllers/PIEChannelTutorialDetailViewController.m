@@ -18,6 +18,7 @@
 
 #import "PIERefreshTableView.h"
 #import "PIEChannelManager.h"
+#import "PIEChannelTutorialDetailToolbar.h"
 
 
 
@@ -45,6 +46,8 @@
 @property (nonatomic, strong) PIEChannelTutorialModel *source_tutorialModel;
 
 @property (nonatomic, strong) NSMutableArray<PIECommentModel *> *source_tutorialComment;
+
+@property (nonatomic, strong) PIEChannelTutorialDetailToolbar *toolBar;
 
 @end
 
@@ -133,6 +136,22 @@ static NSString *PIEChannelTutorialImageTableViewCelIdentifier =
     });
     
     self.tableView = tableView;
+    
+    PIEChannelTutorialDetailToolbar *toolBar = ({
+        PIEChannelTutorialDetailToolbar *toolBar =
+        [PIEChannelTutorialDetailToolbar toolbar];
+        
+        [self.view addSubview:toolBar];
+        
+        [toolBar mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(44);
+            make.left.bottom.right.equalTo(self.view);
+        }];
+        
+        toolBar;
+    });
+    
+    self.toolBar = toolBar;
 }
 
 - (void)setupData
