@@ -27,5 +27,10 @@
 + (void)getSource_channelTutorialList:(NSDictionary *)params
                                 block:(void (^)(NSArray<PIEChannelTutorialModel *> *retArray))block
                          failureBlock:(void (^)(void))failure;
+
++ (void)getSource_channelTutorialDetail:(NSDictionary *)params
+                                  block:(void(^)(PIEChannelTutorialModel *model))block
+                           failureBlock:(void (^)(void))failure;
+
 @end
 

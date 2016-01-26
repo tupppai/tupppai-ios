@@ -17,6 +17,7 @@
 #import "PIEChannelTutorialImageTableViewCell.h"
 
 #import "PIERefreshTableView.h"
+#import "PIEChannelManager.h"
 
 
 
@@ -31,6 +32,16 @@
 
 @property (nonatomic, strong) PIERefreshTableView *tableView;
 
+
+/** something to say:
+    1. 因为thread/tutorials_list 和 thread/tutorial_details这两个接口返回的数据太相似，我并没有特地为前者做一个"listModel"的东西，
+       所以统一用PIEChannelTutorialModel。前者接口返回一个PIEChannelTutorialModel的数组，后者仅返回一个PIEChannelTutorialModel。
+    2. 前者返回的模型数组中，ask_uploads数组为空；后者的ask_uploads才开始有值。
+    3. 前控制器传给了后控制器一整个PIEChannelTutorialModel , 而不是单单一个tutorial_id, 因为考虑到界面初始化的时候title和一些其它的东西，所以
+       把这一个比较累赘的self.currentChannelTutorialModel留着了。
+    4. 感觉这应该是后台接口设计冗余的问题？
+ 
+ */
 @property (nonatomic, strong) PIEChannelTutorialModel *source_tutorialModel;
 
 @property (nonatomic, strong) NSMutableArray<PIECommentModel *> *source_tutorialComment;
@@ -60,6 +71,8 @@ static NSString *PIEChannelTutorialImageTableViewCelIdentifier =
     [self setupData];
     
     [self setupSubviews];
+    
+    [self.tableView.mj_header beginRefreshing];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -124,11 +137,7 @@ static NSString *PIEChannelTutorialImageTableViewCelIdentifier =
 
 - (void)setupData
 {
-    
-    
-    
     _source_tutorialComment = [NSMutableArray<PIECommentModel *> new];
-    
 }
 
 #pragma mark - Data setup
@@ -144,17 +153,32 @@ static NSString *PIEChannelTutorialImageTableViewCelIdentifier =
     switch (section) {
         case 0:
         {
-            return 1;
+            if (self.source_tutorialModel == nil) {
+                return 0;
+            }
+            else{
+                return 1;
+
+            }
             break;
         }
         case 1:
         {
-            return 1;
+            if (self.source_tutorialModel == nil) {
+                return 0;
+            }
+            else{
+                return 1;
+            }
             break;
         }
         case 2:
         {
-            return self.currentTutorialModel.tutorial_images.count;
+            if (self.source_tutorialModel == nil) {
+                return 0;
+            }else{
+                return self.source_tutorialModel.tutorial_images.count;
+            }
             break;
         }
     }
@@ -169,7 +193,8 @@ static NSString *PIEChannelTutorialImageTableViewCelIdentifier =
         PIEChannelTutorialTeacherDescTableViewCell *teacherDescCell =
         [tableView dequeueReusableCellWithIdentifier:
          PIEChannelTutorialTeacherDescTableViewCellIdentifier];
-        [teacherDescCell injectModel:self.currentTutorialModel];
+        
+        [teacherDescCell injectModel:self.source_tutorialModel];
         
         return teacherDescCell;
     }
@@ -178,7 +203,7 @@ static NSString *PIEChannelTutorialImageTableViewCelIdentifier =
         [tableView dequeueReusableCellWithIdentifier:
          PIEChannelTutorialPrefaceTableViewCellIdentifier];
         
-        [prefaceCell injectModel:self.currentTutorialModel];
+        [prefaceCell injectModel:self.source_tutorialModel];
         
         return prefaceCell;
     }
@@ -188,7 +213,7 @@ static NSString *PIEChannelTutorialImageTableViewCelIdentifier =
          PIEChannelTutorialImageTableViewCelIdentifier];
         
         PIEChannelTutorialImageModel *imageModel =
-        self.currentTutorialModel.tutorial_images[indexPath.row];
+        self.source_tutorialModel.tutorial_images[indexPath.row];
         
         [tutorialImageCell injectImageModel:imageModel];
         
@@ -209,7 +234,7 @@ static NSString *PIEChannelTutorialImageTableViewCelIdentifier =
     if (indexPath.section == 2) {
         /* tutorial images */
         PIEChannelTutorialImageModel *imageModel =
-        self.currentTutorialModel.tutorial_images[indexPath.row];
+        self.source_tutorialModel.tutorial_images[indexPath.row];
         CGFloat imageHeight =
         imageModel.imageHeight * (SCREEN_WIDTH / imageModel.imageWidth);
         return imageHeight;
@@ -253,9 +278,22 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 #pragma mark - Network request 
 - (void)loadNewTutorialDetails
 {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.tableView.mj_header endRefreshing];
-    });
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"tutorial_id"] = [@(self.currentTutorialModel.ask_id) stringValue];
+    
+    [PIEChannelManager
+     getSource_channelTutorialDetail:params
+     block:^(PIEChannelTutorialModel *model) {
+         [_tableView.mj_header endRefreshing];
+         _source_tutorialModel = [model copy];
+         [_tableView reloadData];
+         
+     } failureBlock:^{
+         [_tableView.mj_header endRefreshing];
+         
+     }];
+    
 }
 
 - (void)loadMoreTutorialDetails

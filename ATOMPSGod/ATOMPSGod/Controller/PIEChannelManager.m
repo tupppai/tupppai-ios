@@ -136,4 +136,29 @@
                  }];
 }
 
+
+
++ (void)getSource_channelTutorialDetail:(NSDictionary *)params
+                                  block:(void (^)(PIEChannelTutorialModel *model))block
+                           failureBlock:(void (^)(void))failure{
+    [DDBaseService GET:params
+                   url:@"thread/tutorial_details"
+                 block:^(id responseObject) {
+                     if (responseObject == nil) {
+                         if (failure != nil) {
+                             failure();
+                         }
+                     }
+                     else{
+                         NSDictionary *dataDict = responseObject[@"data"];
+                         PIEChannelTutorialModel *tutorialModel =
+                         [MTLJSONAdapter modelOfClass:[PIEChannelTutorialModel class]
+                                   fromJSONDictionary:dataDict error:nil];
+                         if (block != nil) {
+                             block(tutorialModel);
+                         }
+                     }
+                 }];
+}
+
 @end

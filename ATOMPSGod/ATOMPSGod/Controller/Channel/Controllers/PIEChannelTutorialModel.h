@@ -47,13 +47,16 @@
 /** 该教程的封面（目前是tutorial_images的第一张图片，但是服务器返回的时候顺便放到了最外层了 */
 @property (nonatomic, strong) NSString  *coverImageUrl;
 
-/** 之前用户是否有分享到微信页面，0： false， 1： true */
-@property (nonatomic, assign) BOOL      hasSharedToWechat;
+///** 之前用户是否有分享到微信页面，0： false， 1： true */
+//@property (nonatomic, assign) BOOL      hasSharedToWechat;
 
-/** 当前用户对这个教程已经打赏了多少钱， -1： 从来都没有打赏过
-    Warning： 永远都不要对浮点数判断等值（== -1），
-             直接用（payment < 0）来判断用户是否有打赏过金额。*/
-@property (nonatomic, assign) double    paidAmount;
+///** 当前用户对这个教程已经打赏了多少钱， -1： 从来都没有打赏过
+//    Warning： 永远都不要对浮点数判断等值（== -1），
+//             直接用（payment < 0）来判断用户是否有打赏过金额。*/
+//@property (nonatomic, assign) double    paidAmount;
+
+/** 判断是否购买过该教程的用has_bought, 0是未购买（或分享到朋友圈， 下同），1是已购买  */
+@property (nonatomic, assign) BOOL hasBought;
 
 
 @end
