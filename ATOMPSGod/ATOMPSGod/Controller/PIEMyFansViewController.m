@@ -88,10 +88,7 @@
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.userHeaderButton.frame, p) || CGRectContainsPoint(cell.userNameLabel.frame, p)) {
             PIEFriendViewController *opvc = [PIEFriendViewController new];
-            PIEPageVM* vm = [PIEPageVM new];
-            vm.userID = viewModel.model.uid;
-            vm.username = viewModel.username;
-            vm.avatarURL = viewModel.avatar;
+            PIEPageVM* vm = [[PIEPageVM alloc]initWithUserModel:viewModel.model];
             opvc.pageVM = vm;
             [self.navigationController pushViewController:opvc animated:YES];
         }
@@ -100,9 +97,8 @@
             cell.attentionButton.selected = !cell.attentionButton.selected;
             NSMutableDictionary* param = [NSMutableDictionary new];
             [param setObject:@(cell.viewModel.model.uid) forKey:@"uid"];
-            if (!cell.attentionButton.selected) {
-                [param setObject:@0 forKey:@"status"];
-            }
+            [param setObject:@(cell.attentionButton.selected) forKey:@"status"];
+
             [DDService follow:param withBlock:^(BOOL success) {
                 if (!success) {
                     cell.attentionButton.selected = !cell.attentionButton.selected;

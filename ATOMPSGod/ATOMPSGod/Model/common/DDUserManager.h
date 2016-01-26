@@ -90,11 +90,11 @@
 //+ (NSMutableDictionary *)convertCurrentUserToDic;
 
 //+ (void)setCurrentUser:(PIEUserModel *)user ;
-+ (void)updateCurrentUserFromUser:(PIEUserModel *)user;
-+(void)fetchUserInDBToCurrentUser:(void (^)(BOOL))block;
++ (void)updateCurrentUserFromUserModel:(PIEUserModel *)user;
++(void)getMyProfileFromDatabase:(void (^)(BOOL))block;
 +(void)clearCurrentUser ;
 + (void)updateCurrentUserInDatabase;
-+ (void)DDGetUserInfoAndUpdateMe:(void (^)(BOOL success))block;
++ (void)getUserInfoFromServerToUpdateUserDatabase:(void (^)(BOOL success))block;
 + (void )DDRegister:(NSDictionary *)param withBlock:(void (^)(BOOL success))block ;
 + (void )DDLogin:(NSDictionary*)param withBlock:(void (^)(BOOL succeed))block ;
 + (void)DD3PartyAuth:(NSDictionary *)param AndType:(NSString *)type withBlock:(void (^)(bool isRegistered,NSString* info))block;

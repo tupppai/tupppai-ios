@@ -8,7 +8,7 @@
 
 #import "DDCollectManager.h"
 #import "PIECommentManager.h"
-
+#import "PIECommentModel.h"
 @interface PIEPageVM ()
 
 @end
@@ -31,7 +31,6 @@
     [_model removeObserver:self forKeyPath:@"collectCount"];
     [_model removeObserver:self forKeyPath:@"totalShareNumber"];
     [_model removeObserver:self forKeyPath:@"totalCommentNumber"];
-
 }
 
 - (instancetype)initWithPageEntity:(PIEPageModel *)entity {
@@ -59,7 +58,51 @@
     }
     return self;
 }
+- (instancetype)initWithCommentModel:(PIECommentModel *)model {
+    self = [self init];
+    if (self) {
+        _model = [PIEPageModel new];
+        
+        [_model addObserver:self forKeyPath:@"loveStatus" options:NSKeyValueObservingOptionNew context:NULL];
+        [_model addObserver:self forKeyPath:@"totalPraiseNumber" options:NSKeyValueObservingOptionNew context:NULL];
+        [_model addObserver:self forKeyPath:@"followed" options:NSKeyValueObservingOptionNew context:NULL];
+        [_model addObserver:self forKeyPath:@"collected" options:NSKeyValueObservingOptionNew context:NULL];
+        [_model addObserver:self forKeyPath:@"collectCount" options:NSKeyValueObservingOptionNew context:NULL];
+        [_model addObserver:self forKeyPath:@"totalShareNumber" options:NSKeyValueObservingOptionNew context:NULL];
+        [_model addObserver:self forKeyPath:@"totalCommentNumber" options:NSKeyValueObservingOptionNew context:NULL];
+        
+        
+        _model.uid = model.uid;
+        _model.avatar = model.avatar;
+        _model.nickname = model.nickname;
+    }
+    return self;
+}
 
+- (instancetype)initWithUserModel:(PIEUserModel *)model {
+    self = [self init];
+    if (self) {
+        _model = [PIEPageModel new];
+        
+        [_model addObserver:self forKeyPath:@"loveStatus" options:NSKeyValueObservingOptionNew context:NULL];
+        [_model addObserver:self forKeyPath:@"totalPraiseNumber" options:NSKeyValueObservingOptionNew context:NULL];
+        [_model addObserver:self forKeyPath:@"followed" options:NSKeyValueObservingOptionNew context:NULL];
+        [_model addObserver:self forKeyPath:@"collected" options:NSKeyValueObservingOptionNew context:NULL];
+        [_model addObserver:self forKeyPath:@"collectCount" options:NSKeyValueObservingOptionNew context:NULL];
+        [_model addObserver:self forKeyPath:@"totalShareNumber" options:NSKeyValueObservingOptionNew context:NULL];
+        [_model addObserver:self forKeyPath:@"totalCommentNumber" options:NSKeyValueObservingOptionNew context:NULL];
+
+        
+        _model.uid = model.uid;
+        _model.avatar = model.avatar;
+        _model.nickname = model.nickname;
+        _model.isV = model.isV;
+        _model.totalPraiseNumber = model.likedCount;
+        _likeCount = [self transfromRawToViewData:model.likedCount];
+        _replyCount = [self transfromRawToViewData:model.uploadNumber];
+    }
+    return self;
+}
 
 - (void)increaseLoveStatus {
     if (self.model.loveStatus == PIEPageLoveStatus3) {
@@ -131,12 +174,6 @@
     [DDService follow:param withBlock:^(BOOL success) {
         if (!success) {
             self.model.followed = !self.model.followed;
-        } else {
-            if ([followStatus integerValue] == 1) {
-                [DDUserManager currentUser].attentionNumber++;
-            } else {
-                [DDUserManager currentUser].attentionNumber--;
-            }
         }
     }];
 }
@@ -144,9 +181,10 @@
 - (void)collect:(void(^)(BOOL success))block
 {
     
+    self.model.collected = !self.model.collected;
     NSMutableDictionary *param = [NSMutableDictionary new];
     
-    if (self.collected) {
+    if (!self.model.collected) {
         //取消收藏
         [param setObject:@(0) forKey:@"status"];
     } else {
@@ -160,13 +198,11 @@
      withID:self.ID withBlock:^(NSError *error) {
          if (error == nil) {
              
-             if (!self.collected) {
+             if (self.model.collected) {
                  [Hud text:@"收藏成功" backgroundColor:[UIColor colorWithHex:0x00000 andAlpha:0.3] margin:16 cornerRadius:8];
                  self.model.collectCount++;
-                 self.model.collected = YES;
              } else {
                  [Hud text:@"取消收藏成功" backgroundColor:[UIColor colorWithHex:0x00000 andAlpha:0.3] margin:16 cornerRadius:8];
-                 self.model.collected = NO;
                  self.model.collectCount--;
              }
              
@@ -174,6 +210,8 @@
                  block(YES);
              }
          } else {
+             
+             self.model.collected = !self.model.collected;
              if (block) {
                  block(NO);
              }
@@ -262,6 +300,9 @@
     } else     if ([keyPath isEqualToString:@"totalCommentNumber"]) {
         NSInteger value = [[change objectForKey:@"new"]integerValue];
         self.commentCount = [self transfromRawToViewData:value];
+    } else     if ([keyPath isEqualToString:@"followed"]) {
+        BOOL value = [[change objectForKey:@"new"]boolValue];
+        self.followed = value;
     }
 }
 

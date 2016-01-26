@@ -7,7 +7,7 @@
 //
 
 #import "PIESignUpView.h"
-#import "AppDelegate.h"
+
 #import "POP.h"
 @implementation PIESignUpView
 

@@ -57,13 +57,8 @@ static FMDatabaseQueue *_fmQueue = nil;
         NSString* version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
         NSString* currentVersionHasUpdatedTablesKey = [version stringByAppendingString:@"hasUpdatedTables"];
         [[NSUserDefaults standardUserDefaults]setObject:@(YES) forKey:currentVersionHasUpdatedTablesKey];
-        BOOL flag;
-        flag = [db executeUpdate:[ATOMCreateTable updateUser]];
-        if (flag) {
-            NSLog(@"update user success");
-        } else {
-            NSLog(@"update user fail");
-        }
+        [db executeUpdate:[ATOMCreateTable statamentForAddColumnForTable:@"PIEUserTable" column:@"isV" dataType:@"bool"]];
+        [db executeUpdate:[ATOMCreateTable statamentForAddColumnForTable:@"PIEUserTable" column:@"balance" dataType:@"real"]];
     }];
 }
 - (void)createTable {

@@ -110,9 +110,17 @@
     }];
 }
 + (void) follow :(NSDictionary*)param withBlock:(void (^)(BOOL success))block {
+    BOOL status = [[param objectForKey:@"status"]boolValue];
     [[self class]POST:param url:URL_PFFollow block:^(id responseObject) {
         if (responseObject) {
             if (block) { block(YES); }
+            if (status) {
+                [Hud text:@"成功关注"];
+                [DDUserManager currentUser].attentionNumber++;
+            } else {
+                [Hud text:@"取消关注成功"];
+                [DDUserManager currentUser].attentionNumber--;
+            }
         } else {
             if (block) { block(NO); }
         }

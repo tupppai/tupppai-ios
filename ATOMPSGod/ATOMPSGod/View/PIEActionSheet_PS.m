@@ -7,7 +7,7 @@
 //
 
 #import "PIEActionSheet_PS.h"
-#import "AppDelegate.h"
+
 #import "PIECategoryModel.h"
 @implementation PIEActionSheet_PS
 

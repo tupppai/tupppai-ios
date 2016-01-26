@@ -9,7 +9,7 @@
 #import "PIECommentTableHeaderView_Reply.h"
 #import "PIEModelImage.h"
 #import "FXBlurView.h"
-#import <ReactiveCocoa/ReactiveCocoa.h>
+
 
 #define MAXHEIGHT (SCREEN_WIDTH-kPadding15*2)*4/3
 

@@ -19,6 +19,8 @@ typedef enum {
 
 
 @interface PIEUserModel : PIEBaseModel <MTLFMDBSerializing>
+
+-(instancetype)initWithDictionary:(NSDictionary*)dictionary;
 /**
  *  用户唯一ID
  */
@@ -88,5 +90,7 @@ typedef enum {
  *  关注作品数
  */
 @property (nonatomic, assign) NSInteger attentionWorkNumber;
+
+@property (nonatomic, assign) CGFloat balance;
 
 @end

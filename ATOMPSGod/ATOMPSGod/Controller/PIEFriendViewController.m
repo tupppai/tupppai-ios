@@ -17,7 +17,7 @@
 #import "PIECarouselViewController2.h"
 #import "FXBlurView.h"
 #import "PIEActionSheet_UserAbuse.h"
-#import "AppDelegate.h"
+
 #import "PIEAvatarImageView.h"
 #import "PIEAvatarView.h"
 #import "UINavigationBar+Awesome.h"

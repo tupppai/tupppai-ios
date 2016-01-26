@@ -17,7 +17,7 @@
 #import "PIEChannelDetailViewController.h"
 #import "PIEChannelActivityViewController.h"
 #import "DeviceUtil.h"
-#import "ReactiveCocoa/ReactiveCocoa.h"
+
 #import "PIEChannelTutorialViewController.h"
 
 

@@ -7,8 +7,8 @@
 //
 
 #import "PIEForgotPasswordViewController_Black.h"
-#import "ReactiveCocoa/ReactiveCocoa.h"
-#import "AppDelegate.h"
+
+
 #import "DDUserManager.h"
 #import "DDBaseService.h"
 #import "PIEUserModel.h"
@@ -271,7 +271,7 @@
                               
                               user.token = responseObject[@"token"];
                               
-                              [DDUserManager updateCurrentUserFromUser:user];
+                              [DDUserManager updateCurrentUserFromUserModel:user];
                               
                               
                               // switch to mainVC

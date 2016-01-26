@@ -9,7 +9,7 @@
 #import "PIETextView_linkDetection.h"
 #import "PIEWebViewViewController.h"
 #import "DDNavigationController.h"
-#import "AppDelegate.h"
+
 @implementation PIETextView_linkDetection
 
 -(void)awakeFromNib {

@@ -34,7 +34,6 @@
 @property (nonatomic, assign) BOOL isV;
 
 @property (nonatomic, strong) NSArray <PIEModelImage*> *models_image;
-//@property (nonatomic, strong) NSArray <PIECommentModel*> *models_comment;
 @property (nonatomic, strong) NSArray <PIECategoryModel*> *models_catogory;
 
 
@@ -44,6 +43,8 @@
 @property (nonatomic, copy) NSString *commentCount;
 @property (nonatomic, copy) NSString *replyCount;
 @property (nonatomic, copy) NSString *collectCount;
+
+
 @property (nonatomic, assign) PIEPageLoveStatus loveStatus;
 
 
@@ -54,6 +55,8 @@
 
 
 - (instancetype)initWithPageEntity:(PIEPageModel *)entity ;
+- (instancetype)initWithUserModel:(PIEUserModel *)model;
+- (instancetype)initWithCommentModel:(PIECommentModel *)model;
 - (void)increaseLoveStatus;
 - (void)decreaseLoveStatus;
 - (void)revertStatus ;

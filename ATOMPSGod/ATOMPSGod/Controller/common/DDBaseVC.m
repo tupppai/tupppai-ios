@@ -10,7 +10,7 @@
 #import "DDBaseVC.h"
 #import "ATOMUserDAO.h"
 #import "DDLoginNavigationController.h"
-#import "AppDelegate.h"
+
 #import "SIAlertView.h"
 //#import "PIELaunchViewController.h"
 #import "PIELaunchViewController_Black.h"

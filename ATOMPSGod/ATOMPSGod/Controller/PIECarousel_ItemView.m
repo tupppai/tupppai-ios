@@ -12,9 +12,9 @@
 #import "PIEFriendViewController.h"
 #import "DDNavigationController.h"
 #import "PIECommentViewController.h"
-#import "AppDelegate.h"
+
 #import "PIEActionSheet_PS.h"
-#import <ReactiveCocoa/ReactiveCocoa.h>
+
 @interface PIECarousel_ItemView()
 //@property (nonatomic, strong) NSMutableArray *source_newComment;
 @property (nonatomic, strong)  PIEActionSheet_PS * psActionSheet;

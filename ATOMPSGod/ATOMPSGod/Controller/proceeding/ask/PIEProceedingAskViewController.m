@@ -110,7 +110,6 @@ static NSString *PIEProceedingAskTableViewCell_NoGapIdentifier =
     _askTableView.rowHeight            = UITableViewAutomaticDimension;
     _askTableView.separatorStyle       = UITableViewCellSeparatorStyleNone;
     
-
     
     UINib* nib2 = [UINib nibWithNibName:@"PIEProceedingAskTableViewCell_NoGap" bundle:nil];
     [_askTableView registerNib:nib2 forCellReuseIdentifier:PIEProceedingAskTableViewCell_NoGapIdentifier];
@@ -134,16 +133,20 @@ static NSString *PIEProceedingAskTableViewCell_NoGapIdentifier =
 - (void)longPressOnAsk:(UILongPressGestureRecognizer *)gesture {
     CGPoint location = [gesture locationInView:_askTableView];
     NSIndexPath *indexPath = [_askTableView indexPathForRowAtPoint:location];
+    
+    //if tableView has zero row , then indexPath = nil;
+    if (indexPath == nil) {
+        return;
+    }
     _selectedIndexPath_ask = indexPath;
     
     
-    /* Bug fixed! */
     _selectedVM = [[_sourceAsk objectAtIndex:indexPath.row] firstObject];
-    
-    if (indexPath) {
-        //点击图片
-        [self showShareViewWithToHideDeleteButton:YES];
+    if (_selectedVM == nil) {
+        return;
     }
+    
+    [self showShareViewWithToHideDeleteButton:YES];
 }
 
 #pragma mark - Public methods
@@ -190,8 +193,6 @@ static NSString *PIEProceedingAskTableViewCell_NoGapIdentifier =
 }
 
 
-#pragma mark - <UITableViewDelegate>
-/* nothing yet. */
 
 
 #pragma mark - fetching remote data
@@ -239,7 +240,6 @@ static NSString *PIEProceedingAskTableViewCell_NoGapIdentifier =
         [ws.askTableView reloadData];
         [ws.askTableView.mj_footer endRefreshing];
     }];
-    
 }
 
 #pragma mark - <PIEProceedingShareViewDelegate>
@@ -307,7 +307,6 @@ static NSString *PIEProceedingAskTableViewCell_NoGapIdentifier =
 
 -(BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
     if (_isfirstLoadingAsk) {
-        /* 假如是因为第一次打开这个页面而没有数据的话，不要显示这个emptyDataSet */
         return NO;
     }
     else{

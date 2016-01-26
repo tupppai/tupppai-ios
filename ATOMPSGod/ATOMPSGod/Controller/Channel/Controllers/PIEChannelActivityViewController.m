@@ -23,7 +23,7 @@
 #import "PIEWebViewViewController.h"
 #import "DDSessionManager.h"
 #import "DDNavigationController.h"
-#import "PIECellIconStatusChangedNotificationKey.h"
+
 #import "PIEPageManager.h"
 
 #import "LeesinViewController.h"
@@ -107,10 +107,6 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     
     // setup data
     [self setupData];
-    
-    // setup Notification Observer
-    [self setupNotificationObserver];
-    
     // configure subviews
     [self configureTableView];
     [self configureGoPsButton];
@@ -140,8 +136,6 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:PIESharedIconStatusChangedNotification
-                                                  object:nil];
 }
 #pragma mark - UI components setup
 - (void)configureTableView
@@ -185,13 +179,6 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     _progressView.progressTintColor = [UIColor colorWithHex:0x4a4a4a andAlpha:0.93];
 }
 
-#pragma mark - Notification Observer setup
-- (void)setupNotificationObserver
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updateShareStatus)
-                                                 name:PIESharedIconStatusChangedNotification object:nil];
-}
 
 #pragma mark - LeesinViewController delegate
 -(void)leesinViewController:(LeesinViewController *)leesinViewController uploadPercentage:(CGFloat)percentage uploadSucceed:(BOOL)success {
@@ -392,7 +379,9 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     
     CGPoint location = [gesture locationInView:self.tableView];
     _selectedIndexPath = [self.tableView indexPathForRowAtPoint:location];
-    if (_selectedIndexPath) {
+    if (_selectedIndexPath == nil) {
+        return;
+    }
         _selectedReplyCell = [self.tableView cellForRowAtIndexPath:_selectedIndexPath];
         _selectedVM = self.source_reply[_selectedIndexPath.row];
         CGPoint p = [gesture locationInView:_selectedReplyCell];
@@ -459,7 +448,6 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 //            vc.pageVM = _selectedVM;
 //            [self.navigationController pushViewController:vc animated:YES];
 //        }
-    }
     
 }
 - (void)longPressOnReply:(UILongPressGestureRecognizer *)gesture {

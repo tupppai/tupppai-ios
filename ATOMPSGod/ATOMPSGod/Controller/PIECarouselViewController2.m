@@ -64,7 +64,7 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"进入滚动详情页"];
-
+    
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -80,6 +80,7 @@
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    self.view.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.7];
 }
 -(void)setupData {
     _askCount = 0;
