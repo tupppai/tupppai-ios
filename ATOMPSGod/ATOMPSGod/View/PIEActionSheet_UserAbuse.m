@@ -8,7 +8,7 @@
 
 #import "PIEActionSheet_UserAbuse.h"
 #import "ATOMReportModel.h"
-#import "AppDelegate.h"
+
 
 
 @implementation PIEActionSheet_UserAbuse

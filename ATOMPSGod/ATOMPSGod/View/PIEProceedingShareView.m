@@ -7,7 +7,7 @@
 //
 
 #import "PIEProceedingShareView.h"
-#import "AppDelegate.h"
+
 #import "POP.h"
 #define height_sheet 251.0f
 

@@ -20,7 +20,7 @@
 #import "PIEReplyCollectionViewController.h"
 #import "DDCollectManager.h"
 #import "DDNavigationController.h"
-#import "AppDelegate.h"
+
 #import "PIEToHelpViewController.h"
 
 #import "LeesinViewController.h"

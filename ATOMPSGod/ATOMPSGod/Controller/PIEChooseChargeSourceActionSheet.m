@@ -12,9 +12,10 @@
 
 + (PIEChooseChargeSourceActionSheet *)actionSheet
 {
-    return [[[NSBundle mainBundle]
-             loadNibNamed:@"PIEChooseChargeSourceActionSheet"
-             owner:nil options:nil] lastObject];
+    PIEChooseChargeSourceActionSheet *sheet = [[[NSBundle mainBundle]
+                                                loadNibNamed:@"PIEChooseChargeSourceActionSheet"
+                                                owner:nil options:nil] lastObject];
+    return sheet;
 }
 
 @end

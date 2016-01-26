@@ -17,7 +17,7 @@
 #import "PIEEliteManager.h"
 #import "PIECarouselViewController2.h"
 #import "PIEFriendViewController.h"
-#import "AppDelegate.h"
+
 #import "PIECommentViewController.h"
 #import "PIEReplyCollectionViewController.h"
 

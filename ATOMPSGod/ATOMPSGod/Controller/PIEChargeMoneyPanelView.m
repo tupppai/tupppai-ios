@@ -7,7 +7,7 @@
 //
 
 #import "PIEChargeMoneyPanelView.h"
-#import "ReactiveCocoa/ReactiveCocoa.h"
+
 
 @interface PIEChargeMoneyPanelView ()
 
@@ -24,10 +24,14 @@
     [self commonInit];
 }
 
+
 #pragma mark - UI components setup
 
 - (void)commonInit
 {
+    
+    _minimumTextFieldWidth = 40;
+    
     self.moneyCountTextField.placeholder = @"0.00";
     
     

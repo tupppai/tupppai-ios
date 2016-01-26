@@ -7,7 +7,7 @@
 //
 
 #import "PWMascotAnimationImageView.h"
-#import "AppDelegate.h"
+
 @implementation PWMascotAnimationView
 - (instancetype)init {
     self = [super init];

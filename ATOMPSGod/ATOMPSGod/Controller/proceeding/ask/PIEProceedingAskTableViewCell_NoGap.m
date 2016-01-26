@@ -9,7 +9,7 @@
 #import "PIEProceedingAskTableViewCell_NoGap.h"
 #import "PIECarouselViewController2.h"
 #import "DDNavigationController.h"
-#import "AppDelegate.h"
+
 #import "PIECommentViewController.h"
 #import "PIECategoryModel.h"
 #import "PIEReplyCollectionViewController.h"

@@ -15,7 +15,7 @@
 #import "PIECommentViewController.h"
 #import "DDNavigationController.h"
 #import "PIECarouselViewController2.h"
-#import "AppDelegate.h"
+
 //#import "PIEUploadVC.h"
 #import "PIEProceedingManager.h"
 #import "PIEUploadManager.h"

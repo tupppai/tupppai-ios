@@ -14,13 +14,12 @@
 @class PIEPageVM;
 @protocol PIEShareViewDelegate <NSObject>
 
-@required
+@optional
 
 - (void)shareViewDidShare:(nonnull PIEShareView *)shareView;
 - (void)shareViewDidCancel:(nonnull PIEShareView *)shareView;
 
 /* 以下代理方法仅在EliteViewController中实现，因为只有那里的replyCell，askCell有一个星星需要刷新（UI刷新） */
-@optional
 - (void)shareViewDidCollect:(nonnull PIEShareView *)shareView;
 @end
 

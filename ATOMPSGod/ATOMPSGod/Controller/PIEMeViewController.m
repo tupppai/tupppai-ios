@@ -24,7 +24,7 @@
 #import "UINavigationBar+Awesome.h"
 #import "PIEModifyProfileViewController.h"
 #import "DDNavigationController.h"
-#import <ReactiveCocoa/ReactiveCocoa.h>
+
 
 typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     PIEMeViewControllerNavigationBarStyleTranslucentStyle,

@@ -14,7 +14,7 @@
 #import "ATOMUserDAO.h"
 #import "PIEPageDAO.h"
 #import "DDLoginNavigationController.h"
-#import "AppDelegate.h"
+
 #import "SIAlertView.h"
 #import "PIEPageManager.h"
 #import "PIEModifyProfileViewController.h"

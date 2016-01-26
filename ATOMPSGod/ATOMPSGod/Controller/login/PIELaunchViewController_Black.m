@@ -7,10 +7,10 @@
 //
 
 #import "PIELaunchViewController_Black.h"
-#import "ReactiveCocoa/ReactiveCocoa.h"
+
 #import "DDBaseService.h"
 #import "DDUserManager.h"
-#import "AppDelegate.h"
+
 #import "PIEUserModel.h"
 #import "MTLJSONAdapter.h"
 #import "PIEForgotPasswordViewController_Black.h"

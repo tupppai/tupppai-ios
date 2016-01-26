@@ -12,7 +12,7 @@
 #import "PIEMyCollectionTableViewCell.h"
 #import "PIECarouselViewController2.h"
 #import "DDNavigationController.h"
-#import "AppDelegate.h"
+
 #import "DeviceUtil.h"
 #import "PIECommentViewController.h"
 @interface PIEMyCollectionViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>

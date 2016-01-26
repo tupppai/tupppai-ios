@@ -9,7 +9,7 @@
 #import "PIEBindWeixinPaymentViewController.h"
 
 
-#import "ReactiveCocoa/ReactiveCocoa.h"
+
 
 @interface PIEBindWeixinPaymentViewController ()
 

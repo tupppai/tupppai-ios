@@ -467,6 +467,8 @@
 		F47EF0871C031FF500BFB442 /* VVBlurPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = F47EF0811C031FF500BFB442 /* VVBlurPresenter.m */; };
 		F47EF0881C031FF500BFB442 /* VVBlurTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = F47EF0831C031FF500BFB442 /* VVBlurTransitioning.m */; };
 		F47EF0891C031FF500BFB442 /* VVBlurViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F47EF0851C031FF500BFB442 /* VVBlurViewController.m */; };
+		F483B33D1C5714CC00AD9FEF /* PIEChargeMoneyView.m in Sources */ = {isa = PBXBuildFile; fileRef = F483B33C1C5714CC00AD9FEF /* PIEChargeMoneyView.m */; };
+		F483B34C1C573AE100AD9FEF /* PIEChooseChargeSourceView.m in Sources */ = {isa = PBXBuildFile; fileRef = F483B34B1C573AE100AD9FEF /* PIEChooseChargeSourceView.m */; };
 		F49160941BEC4DFA00BAFB65 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F45D8FB11BD87F01005946E8 /* AdSupport.framework */; };
 		F4993CEA1BE5B32C007F9BE4 /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4993CD91BE5B32C007F9BE4 /* AFNetworkActivityIndicatorManager.m */; };
 		F4993CEB1BE5B32C007F9BE4 /* UIActivityIndicatorView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = F4993CDB1BE5B32C007F9BE4 /* UIActivityIndicatorView+AFNetworking.m */; };
@@ -1624,6 +1626,10 @@
 		F47EF0831C031FF500BFB442 /* VVBlurTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VVBlurTransitioning.m; sourceTree = "<group>"; };
 		F47EF0841C031FF500BFB442 /* VVBlurViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VVBlurViewController.h; sourceTree = "<group>"; };
 		F47EF0851C031FF500BFB442 /* VVBlurViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VVBlurViewController.m; sourceTree = "<group>"; };
+		F483B33B1C5714CC00AD9FEF /* PIEChargeMoneyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChargeMoneyView.h; sourceTree = "<group>"; };
+		F483B33C1C5714CC00AD9FEF /* PIEChargeMoneyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChargeMoneyView.m; sourceTree = "<group>"; };
+		F483B34A1C573AE100AD9FEF /* PIEChooseChargeSourceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChooseChargeSourceView.h; sourceTree = "<group>"; };
+		F483B34B1C573AE100AD9FEF /* PIEChooseChargeSourceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChooseChargeSourceView.m; sourceTree = "<group>"; };
 		F4993CD81BE5B32C007F9BE4 /* AFNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkActivityIndicatorManager.h; sourceTree = "<group>"; };
 		F4993CD91BE5B32C007F9BE4 /* AFNetworkActivityIndicatorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkActivityIndicatorManager.m; sourceTree = "<group>"; };
 		F4993CDA1BE5B32C007F9BE4 /* UIActivityIndicatorView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActivityIndicatorView+AFNetworking.h"; sourceTree = "<group>"; };
@@ -3631,6 +3637,10 @@
 				90F401611C50C55100B39CEB /* PIEBindWeixinPaymentViewController.m */,
 				90F401631C50DE6600B39CEB /* PIEFinishWithdralViewController.h */,
 				90F401641C50DE6600B39CEB /* PIEFinishWithdralViewController.m */,
+				F483B33B1C5714CC00AD9FEF /* PIEChargeMoneyView.h */,
+				F483B33C1C5714CC00AD9FEF /* PIEChargeMoneyView.m */,
+				F483B34A1C573AE100AD9FEF /* PIEChooseChargeSourceView.h */,
+				F483B34B1C573AE100AD9FEF /* PIEChooseChargeSourceView.m */,
 			);
 			name = Wallet;
 			sourceTree = "<group>";
@@ -4893,6 +4903,7 @@
 				F499E45A1BD0F6A100E5F178 /* PIEEliteFollowAskTableViewCell.m in Sources */,
 				F41BA0C91C0EDCE800979D43 /* MJRefreshAutoNormalFooter.m in Sources */,
 				903D51EC1C3A67710020D5BF /* PIELaunchViewController_Black.m in Sources */,
+				F483B34C1C573AE100AD9FEF /* PIEChooseChargeSourceView.m in Sources */,
 				5CDB06711AA47E760089121E /* DDAuthcodeVC.m in Sources */,
 				90FA11711C1FDB8900D8B602 /* DeviceUtil.m in Sources */,
 				E99D2F5F1B1C7E8D000D7784 /* NYXImagesHelper.m in Sources */,
@@ -5038,6 +5049,7 @@
 				F40207311BA7C17C0007CE02 /* PIECameraViewController.m in Sources */,
 				E9F8908F1B86C4AB0057ECBF /* FMDatabaseAdditions.m in Sources */,
 				F4AE73C31BBA90D800734BCB /* PIEFriendAskViewController.m in Sources */,
+				F483B33D1C5714CC00AD9FEF /* PIEChargeMoneyView.m in Sources */,
 				0E6F79031C16EE5C002F9FB6 /* PIEChannelDetailViewController.m in Sources */,
 				F40207421BA7C4160007CE02 /* PIETransitioning_CarouselHome.m in Sources */,
 				F41BA0CE1C0EDCE800979D43 /* MJRefreshGifHeader.m in Sources */,

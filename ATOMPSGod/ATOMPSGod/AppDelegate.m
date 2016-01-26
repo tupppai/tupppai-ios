@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "AppDelegate.h"
+
 //#import "PIELaunchViewController.h"
 #import "PIELaunchViewController_Black.h"
 #import "DDNavigationController.h"

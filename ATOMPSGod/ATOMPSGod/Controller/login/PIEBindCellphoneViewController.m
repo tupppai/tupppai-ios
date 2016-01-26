@@ -7,12 +7,12 @@
 //
 
 #import "PIEBindCellphoneViewController.h"
-#import "ReactiveCocoa/ReactiveCocoa.h"
+
 #import "PIEFurtherRegistrationView.h"
 #import "PIELaunchNextStepButton.h"
 #import "PIELaunchTextField.h"
 #import "PIEVerificationCodeCountdownButton.h"
-#import "AppDelegate.h"
+
 
 
 /* Variables */

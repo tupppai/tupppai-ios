@@ -7,7 +7,7 @@
 //
 
 #import "KShareManager.h"
-#import "AppDelegate.h"
+
 @implementation KShareManager
 static dispatch_once_t onceToken;
 static dispatch_once_t onceToken2;

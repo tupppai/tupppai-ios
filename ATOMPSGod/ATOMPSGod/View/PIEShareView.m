@@ -7,7 +7,7 @@
 //
 
 #import "PIEShareView.h"
-#import "AppDelegate.h"
+
 //#import "POP.h"
 #import "DDCollectManager.h"
 //
@@ -142,6 +142,7 @@
     {
         [_delegate shareViewDidCancel:self];
     }
+    
 }
 
 #pragma mark - public methods

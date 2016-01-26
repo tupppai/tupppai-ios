@@ -12,7 +12,7 @@
 #import "PIERefreshCollectionView.h"
 #import "DDPageManager.h"
 #import "PIETabBarController.h"
-#import "AppDelegate.h"
+
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "PIEMyReplyCollectionViewCell.h"
 

@@ -57,10 +57,9 @@
 #import "PIEPageVM.h"
 #import "UIButton+Pop.h"
 #import "NYXImagesKit.h"
-
-
+#import "AppDelegate.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
 #import "UIImageView+WebCache.h"
-//#import <ReactiveCocoa/EXTScope.h>
 #endif
 
 

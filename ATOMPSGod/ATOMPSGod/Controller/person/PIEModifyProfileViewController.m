@@ -13,7 +13,7 @@
 #import "PIEUploadManager.h"
 #import "PIEModelImageInfo.h"
 #import "JGActionSheet.h"
-#import "AppDelegate.h"
+
 #import "DDNavigationController.h"
 #import "PIEMeViewController.h"
 

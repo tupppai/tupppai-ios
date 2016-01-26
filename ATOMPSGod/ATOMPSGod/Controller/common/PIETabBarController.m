@@ -13,7 +13,7 @@
 #import "PIEMeViewController.h"
 #import "PIECameraViewController.h"
 #import "PIEProceedingViewController.h"
-#import "AppDelegate.h"
+
 #import "DDLoginNavigationController.h"
 #import "ATOMUserDAO.h"
 #import "PIEUploadManager.h"
@@ -23,7 +23,7 @@
 #import "PIEEliteViewController.h"
 #import "PIELaunchViewController_Black.h"
 #import "PIEBindCellphoneViewController.h"
-#import <ReactiveCocoa/ReactiveCocoa.h>
+
 
 @interface PIETabBarController ()<UITabBarControllerDelegate>
 @property (nonatomic, strong) DDNavigationController *navigation_new;

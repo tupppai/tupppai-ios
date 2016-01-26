@@ -10,7 +10,7 @@
 #import "PIECommentTableCell.h"
 #import "PIECommentTextView.h"
 #import "PIECommentVM.h"
-#import "AppDelegate.h"
+
 #import "PIEFriendViewController.h"
 #import "PIECommentModel.h"
 #import "PIECommentManager.h"

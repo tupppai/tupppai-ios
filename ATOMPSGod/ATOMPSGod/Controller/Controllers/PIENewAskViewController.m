@@ -16,7 +16,7 @@
 #import "PIECommentViewController.h"
 #import "PIEFriendViewController.h"
 #import "PIEActionSheet_PS.h"
-#import "AppDelegate.h"
+
 #import "MRNavigationBarProgressView.h"
 #import "PIEUploadManager.h"
 #import "DDCollectManager.h"
