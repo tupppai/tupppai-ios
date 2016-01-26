@@ -32,5 +32,10 @@
                                   block:(void(^)(PIEChannelTutorialModel *model))block
                            failureBlock:(void (^)(void))failure;
 
+/*
+    TODO: rollDiceReward的处理未知，先在外面写好了之后再refactor
+ */
+//+ (void)rollDiceReward:(NSDictionary *)params
+
 @end
 

@@ -188,6 +188,8 @@
 		90C60B271C2FD9A300D7F51D /* PIEAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90C60B261C2FD9A300D7F51D /* PIEAvatarView.m */; };
 		90C8FAFC1C48AF4900F536D7 /* PIEProceedingToHelpHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90C8FAFB1C48AF4900F536D7 /* PIEProceedingToHelpHeaderView.m */; };
 		90C8FB0A1C48AF6800F536D7 /* PIEProceedingToHelpHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90C8FB091C48AF6800F536D7 /* PIEProceedingToHelpHeaderView.xib */; };
+		90D6FE721C5781670060B92F /* PIEChannelTutorialLockedUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D6FE711C5781670060B92F /* PIEChannelTutorialLockedUpView.m */; };
+		90D6FE801C5781720060B92F /* PIEChannelTutorialLockedUpView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90D6FE7F1C5781720060B92F /* PIEChannelTutorialLockedUpView.xib */; };
 		90EC3D5C1C2A78D10085A7BE /* PIEProceedingToHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EC3D5B1C2A78D10085A7BE /* PIEProceedingToHelpViewController.m */; };
 		90EC3D5F1C2A78E20085A7BE /* PIEProceedingAskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EC3D5E1C2A78E20085A7BE /* PIEProceedingAskViewController.m */; };
 		90EC3D621C2A79030085A7BE /* PIEProceedingViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EC3D611C2A79030085A7BE /* PIEProceedingViewController2.m */; };
@@ -1118,6 +1120,9 @@
 		90C8FAFA1C48AF4900F536D7 /* PIEProceedingToHelpHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEProceedingToHelpHeaderView.h; sourceTree = "<group>"; };
 		90C8FAFB1C48AF4900F536D7 /* PIEProceedingToHelpHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEProceedingToHelpHeaderView.m; sourceTree = "<group>"; };
 		90C8FB091C48AF6800F536D7 /* PIEProceedingToHelpHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEProceedingToHelpHeaderView.xib; sourceTree = "<group>"; };
+		90D6FE701C5781670060B92F /* PIEChannelTutorialLockedUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelTutorialLockedUpView.h; sourceTree = "<group>"; };
+		90D6FE711C5781670060B92F /* PIEChannelTutorialLockedUpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelTutorialLockedUpView.m; sourceTree = "<group>"; };
+		90D6FE7F1C5781720060B92F /* PIEChannelTutorialLockedUpView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEChannelTutorialLockedUpView.xib; sourceTree = "<group>"; };
 		90EC3D5A1C2A78D10085A7BE /* PIEProceedingToHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEProceedingToHelpViewController.h; sourceTree = "<group>"; };
 		90EC3D5B1C2A78D10085A7BE /* PIEProceedingToHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEProceedingToHelpViewController.m; sourceTree = "<group>"; };
 		90EC3D5D1C2A78E20085A7BE /* PIEProceedingAskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEProceedingAskViewController.h; sourceTree = "<group>"; };
@@ -2155,6 +2160,9 @@
 				9061EA771C55C8D50078374E /* PIEChannelTutorialRewardFailureView.h */,
 				9061EA781C55C8D50078374E /* PIEChannelTutorialRewardFailureView.m */,
 				9061EA7A1C55C8E10078374E /* PIEChannelTutorialRewardFailureView.xib */,
+				90D6FE701C5781670060B92F /* PIEChannelTutorialLockedUpView.h */,
+				90D6FE711C5781670060B92F /* PIEChannelTutorialLockedUpView.m */,
+				90D6FE7F1C5781720060B92F /* PIEChannelTutorialLockedUpView.xib */,
 				9061EA7C1C55ECE40078374E /* PIEChannelTutorialFinishUploadingHomeworkView.h */,
 				9061EA7D1C55ECE40078374E /* PIEChannelTutorialFinishUploadingHomeworkView.m */,
 				9061EA7F1C55ECF90078374E /* PIEChannelTutorialFinishUploadingHomeworkView.xib */,
@@ -4788,6 +4796,7 @@
 				E95691AC1B22E88300DA84BB /* Info.plist in Resources */,
 				90B3A2FC1C546BED00F059D1 /* PIECashFlowDetailsWithAvatarCell.xib in Resources */,
 				F41205B11C1986D500EE959F /* baozou.png in Resources */,
+				90D6FE801C5781720060B92F /* PIEChannelTutorialLockedUpView.xib in Resources */,
 				F499E4561BD0F69100E5F178 /* PIEEliteFollowReplyTableViewCell.xib in Resources */,
 				E94289761B5B32A200ED26E4 /* NotificationBackgroundErrorIcon.png in Resources */,
 				F402F0FE1BE8953F004988B4 /* PIESearchContentCollectionViewCell.xib in Resources */,
@@ -4898,6 +4907,7 @@
 				F4E5F5FB1BD9D2E100AB8B31 /* AFURLRequestSerialization.m in Sources */,
 				F4F0A1CA1C437F1C000DDEBB /* QBSlomoIconView.m in Sources */,
 				F4B02E181BECA7E200406A55 /* DDMsgPushSettingTableCell.m in Sources */,
+				90D6FE721C5781670060B92F /* PIEChannelTutorialLockedUpView.m in Sources */,
 				E9ED35861B80F62F00B93BE5 /* UIScrollView+EmptyDataSet.m in Sources */,
 				F4106CF91C3F8B66006A23B9 /* LeesinCheckmarkView.m in Sources */,
 				F4D9F6CF1BBFDDE10023A53B /* PIEBangView.m in Sources */,

@@ -17,6 +17,8 @@
              @"ask_id":@"ask_id",
              @"userName":@"nickname",
              @"avatarUrl":@"avatar",
+             @"isMyFan":@"is_fan",
+             @"isMyFollow":@"is_follow",
              @"publishTime": @"create_time",
              @"title": @"title",
              @"subTitle":@"description",

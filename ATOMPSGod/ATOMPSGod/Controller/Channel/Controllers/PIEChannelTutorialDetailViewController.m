@@ -19,8 +19,10 @@
 #import "PIERefreshTableView.h"
 #import "PIEChannelManager.h"
 #import "PIEChannelTutorialDetailToolbar.h"
+#import "PIEChannelTutorialLockedUpView.h"
 
 
+#import "ReactiveCocoa/ReactiveCocoa.h"
 
 
 @interface PIEChannelTutorialDetailViewController ()
@@ -32,7 +34,6 @@
 /* Variables */
 
 @property (nonatomic, strong) PIERefreshTableView *tableView;
-
 
 /** something to say:
     1. 因为thread/tutorials_list 和 thread/tutorial_details这两个接口返回的数据太相似，我并没有特地为前者做一个"listModel"的东西，
@@ -48,6 +49,8 @@
 @property (nonatomic, strong) NSMutableArray<PIECommentModel *> *source_tutorialComment;
 
 @property (nonatomic, strong) PIEChannelTutorialDetailToolbar *toolBar;
+
+@property (nonatomic, strong) PIEChannelTutorialLockedUpView *lockedUpView;
 
 @end
 
@@ -76,6 +79,8 @@ static NSString *PIEChannelTutorialImageTableViewCelIdentifier =
     [self setupSubviews];
     
     [self.tableView.mj_header beginRefreshing];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -152,6 +157,16 @@ static NSString *PIEChannelTutorialImageTableViewCelIdentifier =
     });
     
     self.toolBar = toolBar;
+    
+    @weakify(self);
+    [[toolBar.rollDiceButton
+     rac_signalForControlEvents:UIControlEventTouchUpInside]
+     subscribeNext:^(id x) {
+         @strongify(self);
+         
+         [self rollDiceReward];
+         
+    }];
 }
 
 - (void)setupData
@@ -236,6 +251,23 @@ static NSString *PIEChannelTutorialImageTableViewCelIdentifier =
         
         [tutorialImageCell injectImageModel:imageModel];
         
+        if ((indexPath.row == self.source_tutorialModel.tutorial_images.count - 1) &&
+            self.source_tutorialModel.hasBought == NO)
+        {
+            [Hud text:@"未解锁"];
+            [tutorialImageCell addSubview:self.lockedUpView];
+            
+            
+            
+            [self.lockedUpView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.edges.equalTo(tutorialImageCell);
+            }];
+            
+            [tutorialImageCell setNeedsLayout];
+            
+        }
+       
+        
         return tutorialImageCell;
     }
     
@@ -283,6 +315,8 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
     }
 }
 
+
+
 #pragma mark - <PWRefreshBaseTableViewDelegate>
 - (void)didPullRefreshDown:(UITableView *)tableView
 {
@@ -321,5 +355,46 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
         [self.tableView.mj_footer endRefreshing];
     });
 }
+
+- (void)rollDiceReward
+{
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    
+    params[@"ask_id"] = [@(self.source_tutorialModel.ask_id) stringValue];
+    
+    [DDBaseService
+     GET:params
+     url:@"thread/reward"
+     block:^(id responseObject) {
+         NSDictionary *dataDict = responseObject[@"data"];
+         long rollDiceStatus = [dataDict[@"type"] longValue];
+         double balance            = [dataDict[@"balance"] doubleValue];
+         double amount             = [dataDict[@"amount"] doubleValue];
+         
+         if (rollDiceStatus == -1){
+             NSString *prompt = [NSString stringWithFormat:@"支付失败：剩余余额%.2f, 需付款%.2f", balance,amount];
+             [Hud text:prompt];
+         }else if (rollDiceStatus == 1){
+             NSString *prompt = [NSString stringWithFormat:@"支付%.2f元，剩余%.2f元", amount, balance];
+             [Hud text:prompt];
+             
+         }else{
+             NSString *prompt = [NSString stringWithFormat:@"type == %ld", (long)rollDiceStatus];
+             [Hud error:prompt];
+         }
+     }];
+    
+}
+
+#pragma mark - Lazy loadings
+- (PIEChannelTutorialLockedUpView *)lockedUpView
+{
+    if (_lockedUpView == nil) {
+        _lockedUpView =  [PIEChannelTutorialLockedUpView lockedUpView];
+    }
+    
+    return _lockedUpView;
+}
+
 
 @end
