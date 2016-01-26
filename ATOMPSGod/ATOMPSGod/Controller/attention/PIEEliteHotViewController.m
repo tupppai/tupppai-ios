@@ -16,17 +16,16 @@
 #import "SMPageControl.h"
 #import "PIEEliteHotReplyTableViewCell.h"
 #import "PIEEliteHotAskTableViewCell.h"
-#import "DeviceUtil.h"
+//#import "DeviceUtil.h"
 #import "PIEEliteManager.h"
 #import "PIECarouselViewController2.h"
 #import "PIEFriendViewController.h"
-#import "AppDelegate.h"
+
 #import "PIECommentViewController.h"
 #import "PIEReplyCollectionViewController.h"
-#import "DDCollectManager.h"
-#import "PIECellIconStatusChangedNotificationKey.h"
 #import "PIEPageManager.h"
-/* Variables */
+
+
 @interface PIEEliteHotViewController ()
 
 @property (nonatomic, strong) PIERefreshTableView *tableHot;
@@ -102,7 +101,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     
     [self configureSwipeView];
 
-    
+
     
 }
 
@@ -121,16 +120,6 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 -(void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNavigation_Elite_Hot" object:nil];
     
-
-//    
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:PIECollectedIconStatusChangedNotification
-//                                                  object:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:PIESharedIconStatusChangedNotification
-                                                  object:nil];
-    
-    
 }
 
 #pragma mark - data setup
@@ -143,21 +132,22 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     _isfirstLoadingHot      = YES;
     
     _sourceHot              = [NSMutableArray<PIEPageVM *> new];
-
+    
+    [[RACObserve(self, sourceHot)
+      filter:^BOOL(id value) {
+          NSArray *array = value;
+          return array.count>0;
+      }]
+     subscribeNext:^(id x) {
+         [self.tableHot reloadData];
+     }];
     
 }
 
 #pragma mark - Notification setup
 - (void)setupNotificationObserver
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_Elite_Hot" object:nil];
-    
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updateShareStatus)
-                                                 name:PIESharedIconStatusChangedNotification
-                                               object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_Elite_Hot" object:nil];    
 
 }
 
@@ -174,14 +164,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
         make.edges.equalTo(weakSelf.view);
     }];
     
-   
-    /*
-        我靠，SwipeView你够了喔！你他丫的竟然在delegate的setter方法里reload自己！
-        我一开始是在swipeView的懒加载方法里放创建并设置swipeView，在懒加载那里设置delegate & dataSource不过分吧？
-        你好学不学竟然在delegate的setter方法里做手脚reload自己，我数据源返回得到数据之后再reload又没反应。东搞西搞把下面两句
-        放到tableView的configure方法底下，swipeView就刷出数据了！这是闹哪样？
-     
-     */
+
     self.swipeView.dataSource = self;
     self.swipeView.delegate = self;
 }
@@ -202,27 +185,6 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 
 
 
-
-//- (void)collectedIconStatusDidChanged:(NSNotification *)notification
-//{
-////    NSLog(@"%s, %@", __func__, notification.userInfo);
-//    
-//    if (_selectedIndexPath_hot) {
-//        
-////        BOOL isCollected = [notification.userInfo[PIECollectedIconIsCollectedKey] boolValue];
-////        NSString *collectedCount = notification.userInfo[PIECollectedIconCollectedCountKey];
-//        /* 取得PIEEliteHotReplyTableViewCell的实例，修改星星的状态和个数 */
-//        PIEPageVM* vm = [_sourceHot objectAtIndex:_selectedIndexPath_hot.row];
-//        if (vm.type == PIEPageTypeReply) {
-//            PIEEliteHotReplyTableViewCell *cell =
-//            [self.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
-//            cell.collectView.highlighted  = vm.collected;
-//            cell.collectView.numberString = vm.collectCount;
-//        }
-//    }
-//
-//
-//}
 
 #pragma mark - <SwipeViewDataSource>
 - (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
@@ -246,11 +208,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     for (UIView *subView in view.subviews){
         if([subView isKindOfClass:[UIImageView class]]){
             UIImageView *imageView = (UIImageView *)subView;
-            //            imageView.image = tabbar.avatarImage;
-            //            NSLog(@"[DDUserManager currentUser].avatar]%@",[DDUserManager currentUser].avatar);
-//            [imageView setImageWithURL:[NSURL URLWithString:vm.imageUrl]];
             [imageView sd_setImageWithURL:[NSURL URLWithString:vm.imageUrl]];
-
         }
     }
 
@@ -290,31 +248,16 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 }
 
 
-#pragma mark - <UITableViewDelegate>
 
-/* nothing yet. */
 
 #pragma mark - <PIEShareViewDelegate> and its related methods
 
-- (void)shareViewDidShare:(PIEShareView *)shareView
-{
-    // refresh ui element on main thread after successful sharing, do nothing otherwise.
-//    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-//        [self updateShareStatus];
-//    }];
-}
 
 - (void)shareViewDidCancel:(PIEShareView *)shareView
 {
     [shareView dismiss];
 }
 
-
-// @optional的代理方法：仅在EliteViewController才有星星需要更新状态
-- (void)shareViewDidCollect:(PIEShareView *)shareView
-{
-    // do nothing now: use notification instead.
-}
 
 
 
@@ -402,7 +345,6 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
             if (CGRectContainsPoint(cell.blurAnimateView.frame, p)) {
                 [self showShareView:_selectedVM];
             } else if (CGRectContainsPoint(cell.likeView.frame, p)) {
-//                [PIEPageManager love:cell.likeView viewModel:_selectedVM revert:YES];
                 [_selectedVM love:YES];
             }
 
@@ -412,64 +354,66 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 }
 
 - (void)tapGestureHot:(UITapGestureRecognizer *)gesture {
-        CGPoint location = [gesture locationInView:self.tableHot];
-        _selectedIndexPath_hot = [self.tableHot indexPathForRowAtPoint:location];
-        if (_selectedIndexPath_hot) {
-            //关注  求p
-            _selectedVM = _sourceHot[_selectedIndexPath_hot.row];
+    CGPoint location = [gesture locationInView:self.tableHot];
+    _selectedIndexPath_hot = [self.tableHot indexPathForRowAtPoint:location];
+    
+    if (_selectedIndexPath_hot == nil) {
+        return;
+    }
+    _selectedVM = _sourceHot[_selectedIndexPath_hot.row];
+    
+    if (_selectedVM == nil) {
+        return;
+    }
+    
+    if (_selectedVM.type == PIEPageTypeAsk) {
+        
+        PIEEliteHotAskTableViewCell* cell = [self.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
+        CGPoint p = [gesture locationInView:cell];
+        if (CGRectContainsPoint(cell.theImageView.frame, p)) {
+            //进入热门详情
+            PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+            vc.pageVM = _selectedVM;
+            [self presentViewController:vc animated:YES completion:nil];
             
-            if (_selectedVM.type == PIEPageTypeAsk) {
-                
-                PIEEliteHotAskTableViewCell* cell = [self.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
-                CGPoint p = [gesture locationInView:cell];
-                //点击小图
-                //点击大图
-                if (CGRectContainsPoint(cell.theImageView.frame, p)) {
-                    //进入热门详情
-                    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-                    //                    _selectedVM.image = cell.theImageView.image;
-                    vc.pageVM = _selectedVM;
-                    [self presentViewController:vc animated:YES completion:nil];
-                    
-                }
-                //点击头像
-                else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
-                    PIEFriendViewController * friendVC = [PIEFriendViewController new];
-                    friendVC.pageVM = _selectedVM;
-                    [self.navigationController pushViewController:friendVC animated:YES];
-                }
-                //点击用户名
-                else if (CGRectContainsPoint(cell.nameLabel.frame, p)) {
-                    PIEFriendViewController * friendVC = [PIEFriendViewController new];
-                    friendVC.pageVM = _selectedVM;
-                    [self.navigationController pushViewController:friendVC animated:YES];
-                }
-                else if (CGRectContainsPoint(cell.bangView.frame, p)) {
-                    self.psActionSheet.vm = _selectedVM;
-                    [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
-                }
-                else if (CGRectContainsPoint(cell.followView.frame, p)) {
-//                    [self follow:cell.followView];
-                    [_selectedVM follow];
-                }
-                else if (CGRectContainsPoint(cell.shareView.frame, p)) {
-                    [self showShareView:_selectedVM];
-                }
-                
-                else if ((CGRectContainsPoint(cell.commentView.frame, p))||(CGRectContainsPoint(cell.commentLabel1.frame, p))||(CGRectContainsPoint(cell.commentLabel2.frame, p)) ) {
-                    PIECommentViewController* vc = [PIECommentViewController new];
-                    vc.vm = _selectedVM;
-                    vc.shouldShowHeaderView = NO;
-                    [self.navigationController pushViewController:vc animated:YES];
-                }
-                else if (CGRectContainsPoint(cell.allWorkView.frame, p)) {
-                    PIEReplyCollectionViewController* vc = [PIEReplyCollectionViewController new];
-                    vc.pageVM = _selectedVM;
-                    [self.navigationController pushViewController:vc animated:YES];
-                }
-                
-            }
-            
+        }
+        //点击头像
+        else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
+            PIEFriendViewController * friendVC = [PIEFriendViewController new];
+            friendVC.pageVM = _selectedVM;
+            [self.navigationController pushViewController:friendVC animated:YES];
+        }
+        //点击用户名
+        else if (CGRectContainsPoint(cell.nameLabel.frame, p)) {
+            PIEFriendViewController * friendVC = [PIEFriendViewController new];
+            friendVC.pageVM = _selectedVM;
+            [self.navigationController pushViewController:friendVC animated:YES];
+        }
+        else if (CGRectContainsPoint(cell.bangView.frame, p)) {
+            self.psActionSheet.vm = _selectedVM;
+            [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
+        }
+        else if (CGRectContainsPoint(cell.followView.frame, p)) {
+            [_selectedVM follow];
+        }
+        else if (CGRectContainsPoint(cell.shareView.frame, p)) {
+            [self showShareView:_selectedVM];
+        }
+        
+        else if ((CGRectContainsPoint(cell.commentView.frame, p))||(CGRectContainsPoint(cell.commentLabel1.frame, p))||(CGRectContainsPoint(cell.commentLabel2.frame, p)) ) {
+            PIECommentViewController* vc = [PIECommentViewController new];
+            vc.vm = _selectedVM;
+            vc.shouldShowHeaderView = NO;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        else if (CGRectContainsPoint(cell.allWorkView.frame, p)) {
+            PIEReplyCollectionViewController* vc = [PIEReplyCollectionViewController new];
+            vc.pageVM = _selectedVM;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        
+    }
+    
             
             else {
                 PIEEliteHotReplyTableViewCell* cell = [self.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
@@ -481,17 +425,12 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
                         [cell animateWithType:PIEThumbAnimateViewTypeLeft];
                     }
                     
-                    //只有一张图的时候 只能点到rightView
                     else if (CGRectContainsPoint(cell.blurAnimateView.thumbView.rightView.frame,pp)) {
                         [cell animateWithType:PIEThumbAnimateViewTypeRight];
                     }
                     
-                    //点击大图
                     else  if (CGRectContainsPoint(cell.blurAnimateView.imageView.frame, p)) {
-                        //进入热门详情
                         PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-                        
-                        //                    _selectedVM.image = cell.theImageView.image;
                         vc.pageVM = _selectedVM;
                         [self presentViewController:vc animated:YES completion:nil];
                     }
@@ -511,22 +450,16 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
                 }
                 // 点赞
                 else if (CGRectContainsPoint(cell.likeView.frame, p)) {
-//                    [PIEPageManager love:cell.likeView viewModel:_selectedVM revert:NO];
                     [_selectedVM love:NO];
                 }
                 // 关注
                 else if (CGRectContainsPoint(cell.followView.frame, p)) {
-//                    [self follow:cell.followView];
                     [_selectedVM follow];
                 }
                 // 分享
                 else if (CGRectContainsPoint(cell.shareView.frame, p)) {
                     [self showShareView:_selectedVM];
                 }
-//                // 收藏
-//                else if (CGRectContainsPoint(cell.collectView.frame, p)) {
-//                    [self collect:cell.collectView shouldShowHud:NO];
-//                }
                 else if ((CGRectContainsPoint(cell.commentView.frame, p))||(CGRectContainsPoint(cell.commentLabel1.frame, p))||(CGRectContainsPoint(cell.commentLabel2.frame, p)) ) {                    PIECommentViewController* vc = [PIECommentViewController new];
                     vc.vm = _selectedVM;
                     vc.shouldShowHeaderView = NO;
@@ -538,40 +471,8 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
                     [self.navigationController pushViewController:vc animated:YES];
                 }
             }
-        }
 }
 
-#pragma mark - Gesture actions
-
-
-
-///** Cell-点击 － 关注 */
-//- (void)follow:(UIImageView*)followView {
-//    followView.highlighted = !followView.highlighted;
-//    NSMutableDictionary *param = [NSMutableDictionary new];
-//    [param setObject:@(_selectedVM.userID) forKey:@"uid"];
-//    if (followView.highlighted) {
-//        [param setObject:@1 forKey:@"status"];
-//    }
-//    else {
-//        [param setObject:@0 forKey:@"status"];
-//    }
-//    
-//    [DDService follow:param withBlock:^(BOOL success) {
-//        if (success) {
-//            _selectedVM.followed = followView.highlighted;
-//        } else {
-//            followView.highlighted = !followView.highlighted;
-//            [Hud text:@"网络异常，请稍后再试"];
-//        }
-//        
-//        if (followView.highlighted) {
-//            [Hud text:@"关注成功"];
-//        }else{
-//            [Hud text:@"已取消关注"];
-//        }
-//    }];
-//}
 
 
 #pragma mark - Notification methods
@@ -580,17 +481,6 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     if (self.tableHot.mj_header.isRefreshing == false) {
         [self.tableHot.mj_header beginRefreshing];
     }
-}
-
-
-- (void)updateShareStatus {
-    
-    if (_selectedIndexPath_hot != nil)
-    {
-        [self.tableHot reloadRowsAtIndexPaths:@[_selectedIndexPath_hot]
-                             withRowAnimation:UITableViewRowAnimationAutomatic];
-    }
-    
 }
 
 
@@ -633,7 +523,6 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 }
 
 - (void)getRemoteSourceHot:(void (^)(BOOL finished))block {
-    __weak typeof(self) weakSelf = self;
     
     [self.tableHot.mj_footer endRefreshing];
     _currentIndex_hot = 1;
@@ -647,26 +536,25 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     [param setObject:@(8) forKey:@"size"];
     
     [PIEEliteManager getHotPages:param withBlock:^(NSMutableArray *returnArray) {
-        weakSelf.isfirstLoadingHot = NO;
+        self.isfirstLoadingHot = NO;
         if (returnArray.count == 0) {
             _canRefreshFooterHot = NO;
         } else {
             _canRefreshFooterHot = YES;
-            [weakSelf.sourceHot removeAllObjects];
-            [weakSelf.sourceHot addObjectsFromArray:returnArray];
+            [self.sourceHot removeAllObjects];
+            
+            NSMutableArray *fromKVC = [self mutableArrayValueForKey:@"sourceHot"];
+            [fromKVC addObjectsFromArray:returnArray];
         }
-        [weakSelf.tableHot reloadData];
-        [weakSelf.tableHot.mj_header endRefreshing];
+        [self.tableHot.mj_header endRefreshing];
         if (block) {
             block(YES);
         }
     }];
     
-    [self getRemoteSourceBanner];
 }
 
 - (void)getMoreRemoteSourceHot {
-    __weak typeof(self) weakSelf = self;
     [self.tableHot.mj_header endRefreshing];
     _currentIndex_hot ++;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -683,9 +571,10 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
         } else {
             _canRefreshFooterHot = YES;
         }
-        [weakSelf.sourceHot addObjectsFromArray:returnArray];
-        [weakSelf.tableHot reloadData];
-        [weakSelf.tableHot.mj_footer endRefreshing];
+        
+        NSMutableArray *fromKVC = [self mutableArrayValueForKey:@"sourceHot"];
+        [fromKVC addObjectsFromArray:returnArray];
+        [self.tableHot.mj_footer endRefreshing];
     }];
 }
 

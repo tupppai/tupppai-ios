@@ -85,7 +85,7 @@
                         </constraints>
                     </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pieCommentLabelIndicator" translatesAutoresizingMaskIntoConstraints="NO" id="I1R-dy-cUb" userLabel="commentIndicator">
-                        <rect key="frame" x="12" y="520" width="12" height="12"/>
+                        <rect key="frame" x="12" y="522" width="12" height="12"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="12" id="fPG-1E-3VJ"/>
                             <constraint firstAttribute="height" constant="12" id="nOU-jB-6mq"/>
@@ -142,7 +142,7 @@
                     <constraint firstAttribute="bottomMargin" secondItem="hvb-nQ-yFa" secondAttribute="bottom" constant="6.5" id="6VD-Ip-fhb"/>
                     <constraint firstItem="O1g-xB-hP3" firstAttribute="leading" secondItem="r7k-a1-VTN" secondAttribute="leading" constant="12" id="79V-Xq-BB2"/>
                     <constraint firstItem="jz8-n6-016" firstAttribute="top" secondItem="Sgj-ub-LZu" secondAttribute="bottom" constant="17" id="7hE-wE-Zc7"/>
-                    <constraint firstItem="I1R-dy-cUb" firstAttribute="top" secondItem="Nz0-bb-Mel" secondAttribute="top" constant="4" id="9WA-J5-s0l"/>
+                    <constraint firstItem="I1R-dy-cUb" firstAttribute="top" secondItem="Nz0-bb-Mel" secondAttribute="top" constant="6" id="9WA-J5-s0l"/>
                     <constraint firstAttribute="trailing" secondItem="Jc3-XI-5t8" secondAttribute="trailing" constant="11" id="9hP-Wv-sEh"/>
                     <constraint firstItem="Nz0-bb-Mel" firstAttribute="leading" secondItem="I1R-dy-cUb" secondAttribute="trailing" constant="7" id="9nN-v1-bKB"/>
                     <constraint firstItem="hvb-nQ-yFa" firstAttribute="leading" secondItem="VBu-vK-E8O" secondAttribute="trailing" constant="15" id="ARY-F3-Lag"/>

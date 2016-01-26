@@ -9,9 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface ATOMCreateTable : NSObject
-
 + (NSString *)createUser;
-+ (NSString *)updateUser;
+
++ (NSString *)statamentForAddColumnForTable:(NSString*)tableStr column:(NSString*)columnStr dataType:(NSString*)dataType;
+
 
 
 @end

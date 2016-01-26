@@ -7,10 +7,10 @@
 //
 
 #import "PIELaunchViewController_Black.h"
-#import "ReactiveCocoa/ReactiveCocoa.h"
+
 #import "DDBaseService.h"
 #import "DDUserManager.h"
-#import "AppDelegate.h"
+
 #import "PIEUserModel.h"
 #import "MTLJSONAdapter.h"
 #import "PIEForgotPasswordViewController_Black.h"
@@ -459,7 +459,7 @@ PIEVerificationCodeCountdownButton *countdownButton;
                                       user.token = responseObject[@"token"];
                                       
                                       // 将用户信息存入沙盒
-                                      [DDUserManager updateCurrentUserFromUser:user];
+                                      [DDUserManager updateCurrentUserFromUserModel:user];
                                       
                                       // 跳转到主控制器
                                       [[AppDelegate APP] switchToMainTabbarController];
@@ -518,7 +518,7 @@ PIEVerificationCodeCountdownButton *countdownButton;
                  user.token = responseObject[@"token"];
                  
                  // 将用户信息存入沙盒
-                 [DDUserManager updateCurrentUserFromUser:user];
+                 [DDUserManager updateCurrentUserFromUserModel:user];
                  
                  // 跳转到主控制器
                  [[AppDelegate APP] switchToMainTabbarController];
@@ -670,7 +670,7 @@ PIEVerificationCodeCountdownButton *countdownButton;
                             }
                             
                             // 保存这个userModel到本地，并且直接跳入主页面, 不需要向后台发送openId
-                            [DDUserManager updateCurrentUserFromUser:userModel];
+                            [DDUserManager updateCurrentUserFromUserModel:userModel];
                             
                             // go back to main thread to update UI
                             [[NSOperationQueue mainQueue] addOperationWithBlock:^{

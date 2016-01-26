@@ -14,7 +14,7 @@
 #import "ATOMUserDAO.h"
 #import "PIEPageDAO.h"
 #import "DDLoginNavigationController.h"
-#import "AppDelegate.h"
+
 #import "SIAlertView.h"
 #import "PIEPageManager.h"
 #import "PIEModifyProfileViewController.h"
@@ -23,7 +23,7 @@
 #import "PIEMyLikedPagesViewController.h"
 #import "PIEFeedbackViewController.h"
 #import "PIEAboutUsViewController.h"
-#import "UMCheckUpdate.h"
+//#import "UMCheckUpdate.h"
 #import "PIELaunchViewController_Black.h"
 #import "PIEBindCellphoneViewController.h"
 #import "PIEMyWalletViewController.h"

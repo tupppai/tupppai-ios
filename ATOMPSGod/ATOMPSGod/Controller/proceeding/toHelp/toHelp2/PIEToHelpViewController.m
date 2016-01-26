@@ -15,7 +15,7 @@
 //#import "PIEFriendViewController.h"
 //#import "PIECarouselViewController2.h"
 //#import "DDNavigationController.h"
-//#import "AppDelegate.h"
+//
 ////#import "UITableView+FDTemplateLayoutCell.h"
 //#import "DeviceUtil.h"
 //#import "PIECategoryModel.h"

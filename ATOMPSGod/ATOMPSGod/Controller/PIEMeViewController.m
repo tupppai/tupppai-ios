@@ -24,7 +24,7 @@
 #import "UINavigationBar+Awesome.h"
 #import "PIEModifyProfileViewController.h"
 #import "DDNavigationController.h"
-#import <ReactiveCocoa/ReactiveCocoa.h>
+
 
 typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     PIEMeViewControllerNavigationBarStyleTranslucentStyle,
@@ -80,14 +80,16 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     [self setupPageMenu];
     [self updateUserViews];
     [self setupObserver];
-    
+    [self setupData];
     /* only for testing, discard while bind/unbind/ is finished. */
 //    [self sendUnbindCellphoneRequest];
     
 }
 
 
-
+- (void)setupData {
+    _timeStamp_updateCurrentUser = [[NSDate date] timeIntervalSince1970];
+}
 
 - (void)setupObserver {
     
@@ -230,29 +232,20 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     if ([DDUserManager currentUser].uid == kPIETouristUID) {
         return;
     }
-    
-    // 改写上面被注释的判断语句：
-    BOOL shouldUpdate = NO;
-    /*
-        假如是以下情况的任意一种，那么就更新用户数据：
-        － 之前没有更新过用户在个人主页中的UI数据，或者：
-        - 上次更新距离用户打开个人主页的当下时差有300
-     */
-    long long currentTimeStamp = [[NSDate date] timeIntervalSince1970];
-    if (_timeStamp_updateCurrentUser == 0 ||
-        (currentTimeStamp - _timeStamp_updateCurrentUser) > 300) {
-        shouldUpdate = YES;
-        _timeStamp_updateCurrentUser = currentTimeStamp;
-    }
-    
-    if (shouldUpdate) {
 
-        [DDUserManager DDGetUserInfoAndUpdateMe:^(BOOL success) {
-            if (success) {
-                [self updateUserViews];
-            }
-        }];
+    long long currentTimeStamp = [[NSDate date] timeIntervalSince1970];
+    
+    if ((currentTimeStamp - _timeStamp_updateCurrentUser) < 300) {
+        return;
     }
+    
+    _timeStamp_updateCurrentUser = currentTimeStamp;
+
+    [DDUserManager getUserInfoFromServerToUpdateUserDatabase:^(BOOL success) {
+        if (success) {
+            [self updateUserViews];
+        }
+    }];
 
 }
 

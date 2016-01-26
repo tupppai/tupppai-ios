@@ -86,21 +86,19 @@
         PIEFriendFollowingTableCell *cell = (PIEFriendFollowingTableCell *)[_tableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.userHeaderButton.frame, p) || CGRectContainsPoint(cell.userNameLabel.frame, p)) {
+
+            PIEPageVM* vm = [[PIEPageVM alloc]initWithUserModel:viewModel.model];
             PIEFriendViewController *opvc = [PIEFriendViewController new];
-            PIEPageVM* vm = [PIEPageVM new];
-            vm.userID = viewModel.model.uid;
-            vm.username = viewModel.username;
-            vm.avatarURL = viewModel.avatar;
             opvc.pageVM = vm;
             [self.navigationController pushViewController:opvc animated:YES];
+            
         }
         else if (CGRectContainsPoint(cell.attentionButton.frame, p)) {
             cell.attentionButton.selected = !cell.attentionButton.selected;
             NSMutableDictionary* param = [NSMutableDictionary new];
             [param setObject:@(cell.viewModel.model.uid) forKey:@"uid"];
-            if (!cell.attentionButton.selected) {
-                [param setObject:@0 forKey:@"status"];
-            }
+            [param setObject:@(cell.attentionButton.selected) forKey:@"status"];
+       
             [DDService follow:param withBlock:^(BOOL success) {
                 if (!success) {
                     cell.attentionButton.selected = !cell.attentionButton.selected;

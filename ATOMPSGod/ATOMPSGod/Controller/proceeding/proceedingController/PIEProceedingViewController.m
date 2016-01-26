@@ -21,7 +21,7 @@
 //#import "PIEProceedingAskTableViewCell.h"
 //#import "PIECarouselViewController2.h"
 //#import "DDNavigationController.h"
-//#import "AppDelegate.h"
+//
 //#import "PIEProceedingShareView.h"
 //#import "PIEProceedingAskTableViewCell_NoGap.h"
 ////#import "UITableView+FDTemplateLayoutCell.h"

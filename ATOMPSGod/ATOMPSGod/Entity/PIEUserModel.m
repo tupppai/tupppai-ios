@@ -17,6 +17,7 @@
         _nickname = @"";
         _token = @"";
         _blocked = NO;
+        _balance = 0.0;
     }
     return self;
 }
@@ -45,6 +46,7 @@
              @"token":@"token",
              @"blocked": @"is_block",
              @"isV":@"is_star",
+             @"balance":@"balance",
              };
 }
 + (NSDictionary *)FMDBColumnsByPropertyKey {
@@ -74,9 +76,24 @@
              @"likedCount":@"likedCount",
              @"blocked":@"blocked",
              @"isV":@"isV",
+             @"balance":@"balance",
              };
 }
 
+-(instancetype)initWithDictionary:(NSDictionary*)dictionary {
+    self = [super init];
+    if (self) {
+        for (NSString *fieldName in dictionary) {
+            id value = [dictionary objectForKey:fieldName];
+            if (value == [NSNull null]) {
+                continue;
+            }
+            [self setValue:value forKey:fieldName];
+        }
+    }
+    return self;
+    
+}
 + (NSArray *)FMDBPrimaryKeys {
     return @[@"uid"];
 }

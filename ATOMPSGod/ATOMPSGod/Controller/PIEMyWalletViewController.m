@@ -10,18 +10,16 @@
 #import "PIECashFlowDetailsViewController.h"
 #import "TTTAttributedLabel.h"
 #import "PIEBindWeixinPaymentViewController.h"
-#import "ReactiveCocoa/ReactiveCocoa.h"
+
 #import "PIEFinishWithdralViewController.h"
-#import "PIEChargeMoneyPanelView.h"
+#import "PIEChargeMoneyView.h"
 #import "PIEWithdrawlMoneyViewController.h"
 #import "LxDBAnything.h"
-#import "PIEChooseChargeSourceActionSheet.h"
+#import "PIEChooseChargeSourceView.h"
+@interface PIEMyWalletViewController ()<PIEChargeMoneyViewDelegate,PIEChooseChargeSourceViewDelegate>
 
-@interface PIEMyWalletViewController ()
-
-@property (nonatomic, strong) UIView *transparentBlackMask;
-@property (nonatomic, strong) PIEChargeMoneyPanelView *chargeMoneyPanelView;
-@property (nonatomic, strong) PIEChooseChargeSourceActionSheet *chooseChargeSourceactionSheet;
+@property (nonatomic, strong) PIEChargeMoneyView *chargeMoneyView;
+@property (nonatomic, strong) PIEChooseChargeSourceView *chooseChargeSourceView;
 
 @end
 
@@ -30,10 +28,7 @@
 #pragma mark - UI life cycles
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    
     [self setupSubViews];
     
 }
@@ -58,6 +53,57 @@
     
 }
 
+#pragma mark - target-actions
+- (void)rightBarButtonClicked:(UIBarButtonItem *)rightBarButton
+{
+    PIECashFlowDetailsViewController *cashFlowDetailsVC =
+    [PIECashFlowDetailsViewController new];
+    
+    [self.navigationController pushViewController:cashFlowDetailsVC
+                                         animated:YES];
+}
+
+
+-(void)chargeMoneyView:(PIEChargeMoneyView *)chargeMoneyView tapConfirmButtonWithAmount:(NSInteger)amount {
+    
+    NSString *chargeTypeStr = @"wechat";
+    if (self.chooseChargeSourceView.chargeType == PIEWalletChargeSourceTypeAlipay) {
+        chargeTypeStr = @"";
+    } else if (self.chooseChargeSourceView.chargeType == PIEWalletChargeSourceTypeWechat) {
+        chargeTypeStr = @"";
+    }
+    
+    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:@(amount),@"amount",chargeTypeStr,@"type",nil];
+
+    [DDService POST:param url:@"money/charge" block:^(id responseObject) {
+        NSLog(@"responseObject%@",responseObject);
+    }];
+}
+
+-(void)chooseChargeSourceView:(PIEChooseChargeSourceView *)chooseChargeSourceView tapButtonOfIndex:(NSInteger)index {
+    switch (index) {
+        case 0:
+            [self.chooseChargeSourceView dismiss];
+            self.chooseChargeSourceView.chargeType = PIEWalletChargeSourceTypeAlipay;
+            [self.chargeMoneyView show];
+            break;
+        case 1:
+            [self.chooseChargeSourceView dismiss];
+            self.chooseChargeSourceView.chargeType = PIEWalletChargeSourceTypeWechat;
+            [self.chargeMoneyView show];
+            break;
+        case 2:
+            [self.chooseChargeSourceView dismiss];
+            
+            break;
+            
+        default:
+            break;
+    }
+}
+
+
+
 #pragma mark - UI components setup
 - (void)setupNavBar{
     self.navigationItem.title = @"我的零钱";
@@ -75,7 +121,6 @@
 - (void)setupSubViews
 {
     // money icon
-    @weakify(self);
     UIImageView *moneyIconImageView = ({
         UIImageView *imageView = [[UIImageView alloc] init];
         
@@ -85,7 +130,6 @@
         [self.view addSubview:imageView];
         
         [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            @strongify(self);
             make.width.mas_equalTo(101);
             make.height.mas_equalTo(101);
             make.centerX.equalTo(self.view);
@@ -104,7 +148,6 @@
         [self.view addSubview:label];
         
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
-            @strongify(self);
             make.centerX.equalTo(self.view);
             make.top.equalTo(moneyIconImageView.mas_bottom).with.offset(26);
         }];
@@ -117,14 +160,17 @@
     // 我的零钱－确切数量 label
     UILabel *myCashCountLabel = ({
         UILabel *label = [[UILabel alloc] init];
-        
-        label.text = @"2.00";
+        label.text = [NSString stringWithFormat:@"%.2f",[DDUserManager currentUser].balance];
         label.font = [UIFont mediumTupaiFontOfSize:45];
         label.textColor = [UIColor colorWithHex:0xFF5B38];
+        label.adjustsFontSizeToFitWidth = YES;
+        label.minimumScaleFactor = 0.5;
+        label.textAlignment = NSTextAlignmentCenter;
         [self.view addSubview:label];
         
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(self.view);
+//            make.centerX.equalTo(self.view);
+            make.leading.and.trailing.equalTo(self.view);
             make.top.equalTo(myMoneyLabel.mas_bottom).with.offset(14);
         }];
         label;
@@ -179,7 +225,6 @@
         [self.view addSubview:button];
         
         [button mas_makeConstraints:^(MASConstraintMaker *make) {
-            @strongify(self);
             make.height.mas_equalTo(40);
             make.left.equalTo(self.view).with.offset(21);
             make.right.equalTo(self.view).with.offset(-21);
@@ -190,9 +235,7 @@
     });
     
     [[chargeMoneyButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
-        @strongify(self);
-//        [self setupUiForChargingMoney];
-        [self setupUiForChoosingChargeSource];
+        [self.chooseChargeSourceView show];
     }];
     
     // 微信提现 button
@@ -217,7 +260,6 @@
         button;
     });
     [[withdrawFromWeixinButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
-        @strongify(self);
 //        PIEBindWeixinPaymentViewController *bindWeixinPaymentVC =
 //        [PIEBindWeixinPaymentViewController new];
 //        [self.navigationController pushViewController:bindWeixinPaymentVC
@@ -260,7 +302,6 @@
         
         [self.view addSubview:label];
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
-            @strongify(self);
             make.centerX.equalTo(self.view);
             make.top.equalTo(lineSeparator.mas_bottom).with.offset(44);
         }];
@@ -270,126 +311,25 @@
     
 }
 
-#pragma mark - target-actions
-- (void)rightBarButtonClicked:(UIBarButtonItem *)rightBarButton
-{
-    PIECashFlowDetailsViewController *cashFlowDetailsVC =
-    [PIECashFlowDetailsViewController new];
-    
-    [self.navigationController pushViewController:cashFlowDetailsVC
-                                         animated:YES];
-}
-
-- (void)setupUiForChargingMoney{
-    [self.view addSubview:self.transparentBlackMask];
-    [self.view addSubview:self.chargeMoneyPanelView];
-    
-    [self.transparentBlackMask mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
-    }];
-    
-    [self.chargeMoneyPanelView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(300, 200));
-        make.center.equalTo(self.view);
-    }];
-    
-    [self.view layoutIfNeeded];
-    
-    [self.chargeMoneyPanelView.moneyCountTextField becomeFirstResponder];
-    
-}
-
-- (void)setupUiForChoosingChargeSource{
-    [self.view addSubview:self.transparentBlackMask];
-    [self.view addSubview:self.chooseChargeSourceactionSheet];
-    
-    [self.transparentBlackMask mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
-    }];
-    
-    [self.chooseChargeSourceactionSheet mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.height.mas_equalTo(150);
-        make.left.and.right.equalTo(self.view);
-        make.top.equalTo(self.view.mas_bottom);
-    }];
-    
-    [self.view layoutIfNeeded];
-    
-    [self.chooseChargeSourceactionSheet mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_bottom).with.offset(-150);
-    }];
-    
-    [UIView animateWithDuration:0.15
-                     animations:^{
-                         [self.view layoutIfNeeded];
-                     }];
-
-}
-
-- (void)restoreUi{
-    [self.transparentBlackMask removeFromSuperview];
-    [self.chargeMoneyPanelView removeFromSuperview];
-    [self.chooseChargeSourceactionSheet removeFromSuperview];
-    
-    self.transparentBlackMask = nil;
-    self.chargeMoneyPanelView = nil;
-    [self.chooseChargeSourceactionSheet removeFromSuperview];
-}
 
 
 #pragma mark - Lazy loadings
-- (UIView *)transparentBlackMask
-{
-    if (_transparentBlackMask == nil) {
-        _transparentBlackMask = [[UIView alloc] init];
-        _transparentBlackMask.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-        _transparentBlackMask.backgroundColor = [UIColor blackColor];
-        _transparentBlackMask.alpha = 0.3;
-        
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
-                                       initWithTarget:self
-                                       action:@selector(restoreUi)];
-        
-        [_transparentBlackMask addGestureRecognizer:tap];
-        
+
+-(PIEChargeMoneyView *)chargeMoneyView {
+    if (_chargeMoneyView == nil) {
+        _chargeMoneyView = [PIEChargeMoneyView new];
+        _chargeMoneyView.delegate = self;
     }
-    return _transparentBlackMask;
+    return _chargeMoneyView;
+}
+-(PIEChooseChargeSourceView *)chooseChargeSourceView {
+    if (_chooseChargeSourceView == nil) {
+        _chooseChargeSourceView = [PIEChooseChargeSourceView new];
+        _chooseChargeSourceView.delegate = self;
+    }
+    return _chooseChargeSourceView;
 }
 
-- (PIEChargeMoneyPanelView *)chargeMoneyPanelView
-{
-    if (_chargeMoneyPanelView == nil) {
-        _chargeMoneyPanelView = [PIEChargeMoneyPanelView chargeMoneyPanel];
-    }
-    
-    return _chargeMoneyPanelView;
-}
 
-- (PIEChooseChargeSourceActionSheet *)chooseChargeSourceactionSheet
-{
-    if (_chooseChargeSourceactionSheet == nil) {
-        _chooseChargeSourceactionSheet = [PIEChooseChargeSourceActionSheet actionSheet];
-        
-        [[_chooseChargeSourceactionSheet.zhifubaoButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
-            [Hud text:@"转入支付宝支付"];
-        }];
-        
-        [[_chooseChargeSourceactionSheet.wechatButton
-          rac_signalForControlEvents:UIControlEventTouchUpInside]
-         subscribeNext:^(id x) {
-             [Hud text:@"转入微信支付"];
-         }];
-        
-        @weakify(self);
-        [[_chooseChargeSourceactionSheet.cancelButton
-          rac_signalForControlEvents:UIControlEventTouchUpInside]
-         subscribeNext:^(id x) {
-             @strongify(self);
-             [self restoreUi];
-         }];
-    }
-    
-    return _chooseChargeSourceactionSheet;
-}
 
 @end

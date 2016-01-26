@@ -11,7 +11,7 @@
 
 @interface ATOMUserDAO : ATOMBaseDAO
 
-+ (void)insertUser:(PIEUserModel *)user;
++ (void)insertUser:(PIEUserModel *)user completion:(void (^)(BOOL success))block;
 + (PIEUserModel *)selectUserByUID:(NSInteger)uid;
 + (BOOL)isExistUser:(PIEUserModel *)user;
 + (void)updateUser:(PIEUserModel *)user;

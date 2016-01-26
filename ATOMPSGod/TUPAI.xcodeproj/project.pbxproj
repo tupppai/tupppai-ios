@@ -177,7 +177,6 @@
 		90A56E4B1C54B0D10079B3D3 /* PIEChannelTutorialListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90A56E491C54B0D10079B3D3 /* PIEChannelTutorialListCell.xib */; };
 		90A56E601C54C0170079B3D3 /* PIEChannelTutorialPrefaceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A56E5E1C54C0170079B3D3 /* PIEChannelTutorialPrefaceTableViewCell.m */; };
 		90A56E611C54C0170079B3D3 /* PIEChannelTutorialPrefaceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90A56E5F1C54C0170079B3D3 /* PIEChannelTutorialPrefaceTableViewCell.xib */; };
-		90B3A07C1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B3A07B1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m */; };
 		90B3A2F21C545D0E00F059D1 /* PIEChannelTutorialImageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B3A2F11C545D0E00F059D1 /* PIEChannelTutorialImageModel.m */; };
 		90B3A2F61C546BD000F059D1 /* PIECashFlowDetailsNormalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B3A2F41C546BD000F059D1 /* PIECashFlowDetailsNormalCell.m */; };
 		90B3A2F71C546BD000F059D1 /* PIECashFlowDetailsNormalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90B3A2F51C546BD000F059D1 /* PIECashFlowDetailsNormalCell.xib */; };
@@ -386,6 +385,15 @@
 		F4275A1A1BE0B9E400BBE7E4 /* PIEMyFansViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4275A191BE0B9E400BBE7E4 /* PIEMyFansViewController.m */; };
 		F4275A1D1BE0B9ED00BBE7E4 /* PIEMyFollowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4275A1C1BE0B9ED00BBE7E4 /* PIEMyFollowViewController.m */; };
 		F42799431C4C90BC004CFBBE /* PIEBlurAnimateImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F42799421C4C90BC004CFBBE /* PIEBlurAnimateImageView.m */; };
+		F427999B1C51C566004CFBBE /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F42799981C51C566004CFBBE /* libMobClickLibrary.a */; };
+		F4279A0E1C55F0C3004CFBBE /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F4279A071C55F0C3004CFBBE /* AlipaySDK.bundle */; };
+		F4279A0F1C55F0C3004CFBBE /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4279A081C55F0C3004CFBBE /* AlipaySDK.framework */; };
+		F4279A101C55F0C3004CFBBE /* libUPPayPlugin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4279A091C55F0C3004CFBBE /* libUPPayPlugin.a */; };
+		F4279A111C55F0C3004CFBBE /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4279A0A1C55F0C3004CFBBE /* libWeChatSDK.a */; };
+		F4279A121C55F0C3004CFBBE /* libpingpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4279A0B1C55F0C3004CFBBE /* libpingpp.a */; };
+		F4279A131C55F0C3004CFBBE /* Pingpp.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F4279A0C1C55F0C3004CFBBE /* Pingpp.bundle */; };
+		F4279A151C55F0EA004CFBBE /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4279A141C55F0EA004CFBBE /* CFNetwork.framework */; };
+		F4279A1B1C55F17C004CFBBE /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F4279A1A1C55F17C004CFBBE /* libsqlite3.0.tbd */; };
 		F428F01E1BD331EF00318AC2 /* PIELaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F428F01C1BD331EF00318AC2 /* PIELaunchViewController.m */; };
 		F428F01F1BD331EF00318AC2 /* PIELaunchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F428F01D1BD331EF00318AC2 /* PIELaunchViewController.xib */; };
 		F42ED3B11BC4FC2D0052A0BF /* PIEMeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42ED3B01BC4FC2D0052A0BF /* PIEMeViewController.m */; };
@@ -464,7 +472,8 @@
 		F47EF0871C031FF500BFB442 /* VVBlurPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = F47EF0811C031FF500BFB442 /* VVBlurPresenter.m */; };
 		F47EF0881C031FF500BFB442 /* VVBlurTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = F47EF0831C031FF500BFB442 /* VVBlurTransitioning.m */; };
 		F47EF0891C031FF500BFB442 /* VVBlurViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F47EF0851C031FF500BFB442 /* VVBlurViewController.m */; };
-		F49160931BEC4D0800BAFB65 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F49160901BEC4D0800BAFB65 /* libMobClickLibrary.a */; };
+		F483B33D1C5714CC00AD9FEF /* PIEChargeMoneyView.m in Sources */ = {isa = PBXBuildFile; fileRef = F483B33C1C5714CC00AD9FEF /* PIEChargeMoneyView.m */; };
+		F483B34C1C573AE100AD9FEF /* PIEChooseChargeSourceView.m in Sources */ = {isa = PBXBuildFile; fileRef = F483B34B1C573AE100AD9FEF /* PIEChooseChargeSourceView.m */; };
 		F49160941BEC4DFA00BAFB65 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F45D8FB11BD87F01005946E8 /* AdSupport.framework */; };
 		F4993CEA1BE5B32C007F9BE4 /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4993CD91BE5B32C007F9BE4 /* AFNetworkActivityIndicatorManager.m */; };
 		F4993CEB1BE5B32C007F9BE4 /* UIActivityIndicatorView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = F4993CDB1BE5B32C007F9BE4 /* UIActivityIndicatorView+AFNetworking.m */; };
@@ -560,7 +569,6 @@
 		F4EF1AA61C44845A005B86AE /* NSNumber+leesinDone.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EF1AA51C44845A005B86AE /* NSNumber+leesinDone.m */; };
 		F4EF1AAC1C44E026005B86AE /* QBAlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EF1AAB1C44E026005B86AE /* QBAlbumCell.m */; };
 		F4EF1AAF1C44E05D005B86AE /* QBCheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EF1AAE1C44E05D005B86AE /* QBCheckmarkView.m */; };
-		F4F006D81BFD8ED000FD7078 /* libUMCheckUpdate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4F006D61BFD8ECF00FD7078 /* libUMCheckUpdate.a */; };
 		F4F0A1941C409EE3000DDEBB /* LeesinSwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0A1931C409EE3000DDEBB /* LeesinSwipeView.m */; };
 		F4F0A1C11C437F1C000DDEBB /* QBImagePicker.strings in Resources */ = {isa = PBXBuildFile; fileRef = F4F0A1A51C437F1C000DDEBB /* QBImagePicker.strings */; };
 		F4F0A1C41C437F1C000DDEBB /* QBAlbumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0A1AF1C437F1C000DDEBB /* QBAlbumsViewController.m */; };
@@ -1090,8 +1098,6 @@
 		90A56E5D1C54C0170079B3D3 /* PIEChannelTutorialPrefaceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelTutorialPrefaceTableViewCell.h; sourceTree = "<group>"; };
 		90A56E5E1C54C0170079B3D3 /* PIEChannelTutorialPrefaceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelTutorialPrefaceTableViewCell.m; sourceTree = "<group>"; };
 		90A56E5F1C54C0170079B3D3 /* PIEChannelTutorialPrefaceTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEChannelTutorialPrefaceTableViewCell.xib; sourceTree = "<group>"; };
-		90B3A07A1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECellIconStatusChangedNotificationKey.h; sourceTree = "<group>"; };
-		90B3A07B1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECellIconStatusChangedNotificationKey.m; sourceTree = "<group>"; };
 		90B3A2F01C545D0E00F059D1 /* PIEChannelTutorialImageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIEChannelTutorialImageModel.h; path = ATOMPSGod/Controller/Channel/Controllers/PIEChannelTutorialImageModel.h; sourceTree = SOURCE_ROOT; };
 		90B3A2F11C545D0E00F059D1 /* PIEChannelTutorialImageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIEChannelTutorialImageModel.m; path = ATOMPSGod/Controller/Channel/Controllers/PIEChannelTutorialImageModel.m; sourceTree = SOURCE_ROOT; };
 		90B3A2F31C546BD000F059D1 /* PIECashFlowDetailsNormalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECashFlowDetailsNormalCell.h; sourceTree = "<group>"; };
@@ -1463,6 +1469,20 @@
 		F4275A1C1BE0B9ED00BBE7E4 /* PIEMyFollowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEMyFollowViewController.m; sourceTree = "<group>"; };
 		F42799411C4C90BC004CFBBE /* PIEBlurAnimateImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEBlurAnimateImageView.h; sourceTree = "<group>"; };
 		F42799421C4C90BC004CFBBE /* PIEBlurAnimateImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEBlurAnimateImageView.m; sourceTree = "<group>"; };
+		F42799981C51C566004CFBBE /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
+		F42799991C51C566004CFBBE /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
+		F427999A1C51C566004CFBBE /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
+		F4279A071C55F0C3004CFBBE /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
+		F4279A081C55F0C3004CFBBE /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
+		F4279A091C55F0C3004CFBBE /* libUPPayPlugin.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUPPayPlugin.a; sourceTree = "<group>"; };
+		F4279A0A1C55F0C3004CFBBE /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		F4279A0B1C55F0C3004CFBBE /* libpingpp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpingpp.a; sourceTree = "<group>"; };
+		F4279A0C1C55F0C3004CFBBE /* Pingpp.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Pingpp.bundle; sourceTree = "<group>"; };
+		F4279A0D1C55F0C3004CFBBE /* Pingpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pingpp.h; sourceTree = "<group>"; };
+		F4279A141C55F0EA004CFBBE /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		F4279A161C55F105004CFBBE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		F4279A181C55F114004CFBBE /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		F4279A1A1C55F17C004CFBBE /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		F428F01B1BD331EF00318AC2 /* PIELaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIELaunchViewController.h; sourceTree = "<group>"; };
 		F428F01C1BD331EF00318AC2 /* PIELaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIELaunchViewController.m; sourceTree = "<group>"; };
 		F428F01D1BD331EF00318AC2 /* PIELaunchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIELaunchViewController.xib; sourceTree = "<group>"; };
@@ -1619,9 +1639,10 @@
 		F47EF0831C031FF500BFB442 /* VVBlurTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VVBlurTransitioning.m; sourceTree = "<group>"; };
 		F47EF0841C031FF500BFB442 /* VVBlurViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VVBlurViewController.h; sourceTree = "<group>"; };
 		F47EF0851C031FF500BFB442 /* VVBlurViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VVBlurViewController.m; sourceTree = "<group>"; };
-		F49160901BEC4D0800BAFB65 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
-		F49160911BEC4D0800BAFB65 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
-		F49160921BEC4D0800BAFB65 /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
+		F483B33B1C5714CC00AD9FEF /* PIEChargeMoneyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChargeMoneyView.h; sourceTree = "<group>"; };
+		F483B33C1C5714CC00AD9FEF /* PIEChargeMoneyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChargeMoneyView.m; sourceTree = "<group>"; };
+		F483B34A1C573AE100AD9FEF /* PIEChooseChargeSourceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChooseChargeSourceView.h; sourceTree = "<group>"; };
+		F483B34B1C573AE100AD9FEF /* PIEChooseChargeSourceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChooseChargeSourceView.m; sourceTree = "<group>"; };
 		F4993CD81BE5B32C007F9BE4 /* AFNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkActivityIndicatorManager.h; sourceTree = "<group>"; };
 		F4993CD91BE5B32C007F9BE4 /* AFNetworkActivityIndicatorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkActivityIndicatorManager.m; sourceTree = "<group>"; };
 		F4993CDA1BE5B32C007F9BE4 /* UIActivityIndicatorView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActivityIndicatorView+AFNetworking.h"; sourceTree = "<group>"; };
@@ -1790,8 +1811,6 @@
 		F4EF1AAB1C44E026005B86AE /* QBAlbumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBAlbumCell.m; sourceTree = "<group>"; };
 		F4EF1AAD1C44E05D005B86AE /* QBCheckmarkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBCheckmarkView.h; sourceTree = "<group>"; };
 		F4EF1AAE1C44E05D005B86AE /* QBCheckmarkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBCheckmarkView.m; sourceTree = "<group>"; };
-		F4F006D61BFD8ECF00FD7078 /* libUMCheckUpdate.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMCheckUpdate.a; sourceTree = "<group>"; };
-		F4F006D71BFD8ECF00FD7078 /* UMCheckUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMCheckUpdate.h; sourceTree = "<group>"; };
 		F4F0A1921C409EE3000DDEBB /* LeesinSwipeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeesinSwipeView.h; sourceTree = "<group>"; };
 		F4F0A1931C409EE3000DDEBB /* LeesinSwipeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeesinSwipeView.m; sourceTree = "<group>"; };
 		F4F0A1A61C437F1C000DDEBB /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
@@ -1888,25 +1907,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4279A1B1C55F17C004CFBBE /* libsqlite3.0.tbd in Frameworks */,
+				F4279A151C55F0EA004CFBBE /* CFNetwork.framework in Frameworks */,
 				F44A52791C0BF91500707281 /* libxml2.2.tbd in Frameworks */,
 				E99C51481B85ADF9004CA47B /* ImageIO.framework in Frameworks */,
 				E99C51461B85ADEF004CA47B /* JavaScriptCore.framework in Frameworks */,
+				F427999B1C51C566004CFBBE /* libMobClickLibrary.a in Frameworks */,
 				E99C51441B85ADE9004CA47B /* libstdc++.dylib in Frameworks */,
 				E99C51421B85ADD5004CA47B /* libicucore.dylib in Frameworks */,
+				F4279A0F1C55F0C3004CFBBE /* AlipaySDK.framework in Frameworks */,
+				F4279A121C55F0C3004CFBBE /* libpingpp.a in Frameworks */,
 				F45D8FA81BD87CFD005946E8 /* libWeChatSDK.a in Frameworks */,
 				E99C51171B85A4CB004CA47B /* libz.dylib in Frameworks */,
 				F49160941BEC4DFA00BAFB65 /* AdSupport.framework in Frameworks */,
-				F4F006D81BFD8ED000FD7078 /* libUMCheckUpdate.a in Frameworks */,
+				F4279A101C55F0C3004CFBBE /* libUPPayPlugin.a in Frameworks */,
 				F45D8FA91BD87CFD005946E8 /* MOBFoundation.framework in Frameworks */,
 				F45D8FAC1BD87CFD005946E8 /* ShareSDKConnector.framework in Frameworks */,
 				E99C51151B85A40E004CA47B /* libsqlite3.0.dylib in Frameworks */,
 				F45D8FB01BD87CFD005946E8 /* ShareSDKUI.framework in Frameworks */,
 				E99C51131B85A40A004CA47B /* libc++.dylib in Frameworks */,
-				F49160931BEC4D0800BAFB65 /* libMobClickLibrary.a in Frameworks */,
 				F45D8FAB1BD87CFD005946E8 /* ShareSDK.framework in Frameworks */,
 				F45D8FA61BD87CFD005946E8 /* libWeiboSDK.a in Frameworks */,
 				90F566491C45EF50000BC3E2 /* Result.framework in Frameworks */,
 				F45D8FAD1BD87CFD005946E8 /* ShareSDKExtension.framework in Frameworks */,
+				F4279A111C55F0C3004CFBBE /* libWeChatSDK.a in Frameworks */,
 				5CDF82401AC2BEEA00321694 /* SystemConfiguration.framework in Frameworks */,
 				90F566451C45EF4A000BC3E2 /* ReactiveCocoa.framework in Frameworks */,
 				F45D8FA41BD87CFD005946E8 /* TencentOpenAPI.framework in Frameworks */,
@@ -2634,6 +2658,8 @@
 		5CDB05EC1AA400410089121E /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				F42799F81C55F0B6004CFBBE /* ping++ */,
+				F42799971C51C566004CFBBE /* UMAnalytics_Sdk_3.6.7 */,
 				905DC1AF1C4F518000596B0E /* TTTAttributedLabel */,
 				F4092DC21C3A3D3B003A3AD7 /* slack */,
 				F4F28EFA1C23AE9B0067F2E4 /* SDWebImage */,
@@ -2642,7 +2668,6 @@
 				F44A526E1C0BF83000707281 /* TFHpple */,
 				F47EF07D1C031FF500BFB442 /* VVBlur */,
 				F4F9FFC61BFC849A00032FDE /* SMPageControl */,
-				F491608F1BEC4D0800BAFB65 /* UMAnalytics_Sdk_3.6.4 */,
 				F43930121BE4BD75006C9437 /* MRProgress */,
 				F4BDF4C81BDF345100DA3575 /* BBBadgeBarButtonItem */,
 				F41FF0D61BDDFCE800566A12 /* JTS */,
@@ -2685,8 +2710,6 @@
 				5C561A431AB7C51F0052D4D5 /* MTLFMDBAdapter */,
 				5C9BDA5D1AA88BD900715698 /* BJImageCropper */,
 				90FA116C1C1FDB8900D8B602 /* DeviceUtil */,
-				90B3A07A1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.h */,
-				90B3A07B1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m */,
 				5C6CEF281AF18BA800F06213 /* ATOMConstant.h */,
 				5C6CEF291AF18BA800F06213 /* ATOMConstant.m */,
 				5CDB06081AA4078E0089121E /* MacroUtils.h */,
@@ -2890,6 +2913,10 @@
 		94794CACC85CA9D698472166 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F4279A1A1C55F17C004CFBBE /* libsqlite3.0.tbd */,
+				F4279A181C55F114004CFBBE /* libc++.tbd */,
+				F4279A161C55F105004CFBBE /* Security.framework */,
+				F4279A141C55F0EA004CFBBE /* CFNetwork.framework */,
 				F4F0A4581C43939E000DDEBB /* AVFoundation.framework */,
 				F44A527A1C0BF96000707281 /* libxml2.tbd */,
 				F44A52781C0BF91500707281 /* libxml2.2.tbd */,
@@ -3566,6 +3593,79 @@
 			name = system;
 			sourceTree = "<group>";
 		};
+		F42799971C51C566004CFBBE /* UMAnalytics_Sdk_3.6.7 */ = {
+			isa = PBXGroup;
+			children = (
+				F42799981C51C566004CFBBE /* libMobClickLibrary.a */,
+				F42799991C51C566004CFBBE /* MobClick.h */,
+				F427999A1C51C566004CFBBE /* MobClickSocialAnalytics.h */,
+			);
+			path = UMAnalytics_Sdk_3.6.7;
+			sourceTree = "<group>";
+		};
+		F42799F81C55F0B6004CFBBE /* ping++ */ = {
+			isa = PBXGroup;
+			children = (
+				F4279A051C55F0C3004CFBBE /* lib */,
+			);
+			name = "ping++";
+			sourceTree = "<group>";
+		};
+		F4279A051C55F0C3004CFBBE /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				F4279A061C55F0C3004CFBBE /* Channels */,
+				F4279A0B1C55F0C3004CFBBE /* libpingpp.a */,
+				F4279A0C1C55F0C3004CFBBE /* Pingpp.bundle */,
+				F4279A0D1C55F0C3004CFBBE /* Pingpp.h */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		F4279A061C55F0C3004CFBBE /* Channels */ = {
+			isa = PBXGroup;
+			children = (
+				F4279A071C55F0C3004CFBBE /* AlipaySDK.bundle */,
+				F4279A081C55F0C3004CFBBE /* AlipaySDK.framework */,
+				F4279A091C55F0C3004CFBBE /* libUPPayPlugin.a */,
+				F4279A0A1C55F0C3004CFBBE /* libWeChatSDK.a */,
+			);
+			path = Channels;
+			sourceTree = "<group>";
+		};
+		F4279A1C1C55FD77004CFBBE /* Wallet */ = {
+			isa = PBXGroup;
+			children = (
+				90F4014E1C5084BB00B39CEB /* PIEMyWalletViewController.h */,
+				90F4014F1C5084BB00B39CEB /* PIEMyWalletViewController.m */,
+				903E62FB1C54A538008F9A28 /* PIEChooseChargeSourceActionSheet.h */,
+				903E62FC1C54A538008F9A28 /* PIEChooseChargeSourceActionSheet.m */,
+				903E630A1C54A556008F9A28 /* PIEChooseChargeSourceActionSheet.xib */,
+				0EAB36831C51D9B500F90FAA /* PIEWithdrawlMoneyViewController.h */,
+				0EAB36841C51D9B500F90FAA /* PIEWithdrawlMoneyViewController.m */,
+				0EE7588C1C51CD4500A9F59E /* PIEChargeMoneyPanelView.h */,
+				0EE7588D1C51CD4500A9F59E /* PIEChargeMoneyPanelView.m */,
+				0EE7589B1C51CD5700A9F59E /* PIEChargeMoneyPanelView.xib */,
+				90F4015D1C50A1BD00B39CEB /* PIECashFlowDetailsViewController.h */,
+				90F4015E1C50A1BD00B39CEB /* PIECashFlowDetailsViewController.m */,
+				90B3A2F31C546BD000F059D1 /* PIECashFlowDetailsNormalCell.h */,
+				90B3A2F41C546BD000F059D1 /* PIECashFlowDetailsNormalCell.m */,
+				90B3A2F51C546BD000F059D1 /* PIECashFlowDetailsNormalCell.xib */,
+				90B3A2F81C546BED00F059D1 /* PIECashFlowDetailsWithAvatarCell.h */,
+				90B3A2F91C546BED00F059D1 /* PIECashFlowDetailsWithAvatarCell.m */,
+				90B3A2FA1C546BED00F059D1 /* PIECashFlowDetailsWithAvatarCell.xib */,
+				90F401601C50C55100B39CEB /* PIEBindWeixinPaymentViewController.h */,
+				90F401611C50C55100B39CEB /* PIEBindWeixinPaymentViewController.m */,
+				90F401631C50DE6600B39CEB /* PIEFinishWithdralViewController.h */,
+				90F401641C50DE6600B39CEB /* PIEFinishWithdralViewController.m */,
+				F483B33B1C5714CC00AD9FEF /* PIEChargeMoneyView.h */,
+				F483B33C1C5714CC00AD9FEF /* PIEChargeMoneyView.m */,
+				F483B34A1C573AE100AD9FEF /* PIEChooseChargeSourceView.h */,
+				F483B34B1C573AE100AD9FEF /* PIEChooseChargeSourceView.m */,
+			);
+			name = Wallet;
+			sourceTree = "<group>";
+		};
 		F428F01A1BD331DD00318AC2 /* launch */ = {
 			isa = PBXGroup;
 			children = (
@@ -3968,18 +4068,6 @@
 			path = VVBlur;
 			sourceTree = "<group>";
 		};
-		F491608F1BEC4D0800BAFB65 /* UMAnalytics_Sdk_3.6.4 */ = {
-			isa = PBXGroup;
-			children = (
-				F49160901BEC4D0800BAFB65 /* libMobClickLibrary.a */,
-				F4F006D61BFD8ECF00FD7078 /* libUMCheckUpdate.a */,
-				F4F006D71BFD8ECF00FD7078 /* UMCheckUpdate.h */,
-				F49160911BEC4D0800BAFB65 /* MobClick.h */,
-				F49160921BEC4D0800BAFB65 /* MobClickSocialAnalytics.h */,
-			);
-			path = UMAnalytics_Sdk_3.6.4;
-			sourceTree = "<group>";
-		};
 		F4993CD71BE5B32C007F9BE4 /* UIKit+AFNetworking */ = {
 			isa = PBXGroup;
 			children = (
@@ -4008,6 +4096,7 @@
 		F499E4461BD0E3E000E5F178 /* settings */ = {
 			isa = PBXGroup;
 			children = (
+				F4279A1C1C55FD77004CFBBE /* Wallet */,
 				F45ECF461BD1DC0A00417A75 /* MyCommented */,
 				F45ECF4F1BD1E39500417A75 /* PIEMyLikedPagesViewController.h */,
 				F45ECF501BD1E39500417A75 /* PIEMyLikedPagesViewController.m */,
@@ -4021,28 +4110,6 @@
 				F4C0DFED1BE9EF3A000615CF /* PIEFeedbackViewController.h */,
 				F4C0DFEE1BE9EF3A000615CF /* PIEFeedbackViewController.m */,
 				F4C0DFEF1BE9EF3A000615CF /* PIEFeedbackViewController.xib */,
-				90F4014E1C5084BB00B39CEB /* PIEMyWalletViewController.h */,
-				90F4014F1C5084BB00B39CEB /* PIEMyWalletViewController.m */,
-				903E62FB1C54A538008F9A28 /* PIEChooseChargeSourceActionSheet.h */,
-				903E62FC1C54A538008F9A28 /* PIEChooseChargeSourceActionSheet.m */,
-				903E630A1C54A556008F9A28 /* PIEChooseChargeSourceActionSheet.xib */,
-				0EAB36831C51D9B500F90FAA /* PIEWithdrawlMoneyViewController.h */,
-				0EAB36841C51D9B500F90FAA /* PIEWithdrawlMoneyViewController.m */,
-				0EE7588C1C51CD4500A9F59E /* PIEChargeMoneyPanelView.h */,
-				0EE7588D1C51CD4500A9F59E /* PIEChargeMoneyPanelView.m */,
-				0EE7589B1C51CD5700A9F59E /* PIEChargeMoneyPanelView.xib */,
-				90F4015D1C50A1BD00B39CEB /* PIECashFlowDetailsViewController.h */,
-				90F4015E1C50A1BD00B39CEB /* PIECashFlowDetailsViewController.m */,
-				90B3A2F31C546BD000F059D1 /* PIECashFlowDetailsNormalCell.h */,
-				90B3A2F41C546BD000F059D1 /* PIECashFlowDetailsNormalCell.m */,
-				90B3A2F51C546BD000F059D1 /* PIECashFlowDetailsNormalCell.xib */,
-				90B3A2F81C546BED00F059D1 /* PIECashFlowDetailsWithAvatarCell.h */,
-				90B3A2F91C546BED00F059D1 /* PIECashFlowDetailsWithAvatarCell.m */,
-				90B3A2FA1C546BED00F059D1 /* PIECashFlowDetailsWithAvatarCell.xib */,
-				90F401601C50C55100B39CEB /* PIEBindWeixinPaymentViewController.h */,
-				90F401611C50C55100B39CEB /* PIEBindWeixinPaymentViewController.m */,
-				90F401631C50DE6600B39CEB /* PIEFinishWithdralViewController.h */,
-				90F401641C50DE6600B39CEB /* PIEFinishWithdralViewController.m */,
 			);
 			name = settings;
 			sourceTree = "<group>";
@@ -4676,6 +4743,7 @@
 				F4E72E791C070D6A0056791D /* PIECarousel_ItemView.xib in Resources */,
 				F4EC112B1BCF5604002D1DCF /* PIENotificationReplyTableViewCell.xib in Resources */,
 				F4F0A1C81C437F1C000DDEBB /* QBImagePicker.storyboard in Resources */,
+				F4279A131C55F0C3004CFBBE /* Pingpp.bundle in Resources */,
 				F4E5F5CD1BD923E000AB8B31 /* PIEEliteHotAskTableViewCell.xib in Resources */,
 				F4106CFB1C3F8B66006A23B9 /* LeesinMissionCell.xib in Resources */,
 				90104B491C4B627900E389F4 /* PIESearchUserTableViewCell.xib in Resources */,
@@ -4699,6 +4767,7 @@
 				E942897C1B5B32A200ED26E4 /* NotificationBackgroundSuccessIcon.png in Resources */,
 				F4C0DFEC1BE9D45F000615CF /* PIEWebViewViewController.xib in Resources */,
 				F41366951BBE73D900EE0C4E /* PIEReplyCollectionCell.xib in Resources */,
+				F4279A0E1C55F0C3004CFBBE /* AlipaySDK.bundle in Resources */,
 				F4F0A1C11C437F1C000DDEBB /* QBImagePicker.strings in Resources */,
 				F4D368731BA9552B00E6C91C /* PIENewAskCollectionCell.xib in Resources */,
 				F4EC11291BCF55F7002D1DCF /* PIENotificationSystemTableViewCell.xib in Resources */,
@@ -4840,7 +4909,6 @@
 				5C54DF261AB97B8400BDE34D /* PIECommentModel.m in Sources */,
 				F4993CF11BE5B32C007F9BE4 /* UIWebView+AFNetworking.m in Sources */,
 				F41FF0E71BDDFCE800566A12 /* UIApplication+JTSImageViewController.m in Sources */,
-				90B3A07C1C2790F700068007 /* PIECellIconStatusChangedNotificationKey.m in Sources */,
 				5C54DF1F1AB9738E00BDE34D /* DDNavigationController.m in Sources */,
 				5C83A8971AC66F910071A024 /* TransformationMatrix.cpp in Sources */,
 				5CEAC0331AD4F9540058037C /* DDMyCollectionManager.m in Sources */,
@@ -4858,6 +4926,7 @@
 				F499E45A1BD0F6A100E5F178 /* PIEEliteFollowAskTableViewCell.m in Sources */,
 				F41BA0C91C0EDCE800979D43 /* MJRefreshAutoNormalFooter.m in Sources */,
 				903D51EC1C3A67710020D5BF /* PIELaunchViewController_Black.m in Sources */,
+				F483B34C1C573AE100AD9FEF /* PIEChooseChargeSourceView.m in Sources */,
 				5CDB06711AA47E760089121E /* DDAuthcodeVC.m in Sources */,
 				90FA11711C1FDB8900D8B602 /* DeviceUtil.m in Sources */,
 				E99D2F5F1B1C7E8D000D7784 /* NYXImagesHelper.m in Sources */,
@@ -5002,6 +5071,7 @@
 				F40207311BA7C17C0007CE02 /* PIECameraViewController.m in Sources */,
 				E9F8908F1B86C4AB0057ECBF /* FMDatabaseAdditions.m in Sources */,
 				F4AE73C31BBA90D800734BCB /* PIEFriendAskViewController.m in Sources */,
+				F483B33D1C5714CC00AD9FEF /* PIEChargeMoneyView.m in Sources */,
 				0E6F79031C16EE5C002F9FB6 /* PIEChannelDetailViewController.m in Sources */,
 				F40207421BA7C4160007CE02 /* PIETransitioning_CarouselHome.m in Sources */,
 				9061EA791C55C8D50078374E /* PIEChannelTutorialRewardFailureView.m in Sources */,
@@ -5417,6 +5487,7 @@
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/QQSDK",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/Reveal",
 					"$(PROJECT_DIR)/ATOMPSGod/Vendor/Reveal",
+					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/lib/Channels",
 				);
 				GCC_PREFIX_HEADER = ./ATOMPSGod/psgod.pch;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
@@ -5430,6 +5501,9 @@
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/SinaWeiboSDK",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/WeChatSDK",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/UMAnalytics_Sdk_3.6.4",
+					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/UMAnalytics_Sdk_3.6.7",
+					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/lib/Channels",
+					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/lib",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -5467,6 +5541,7 @@
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/QQSDK",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/Reveal",
 					"$(PROJECT_DIR)/ATOMPSGod/Vendor/Reveal",
+					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/lib/Channels",
 				);
 				GCC_PREFIX_HEADER = ./ATOMPSGod/psgod.pch;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
@@ -5480,6 +5555,9 @@
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/SinaWeiboSDK",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/WeChatSDK",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/UMAnalytics_Sdk_3.6.4",
+					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/UMAnalytics_Sdk_3.6.7",
+					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/lib/Channels",
+					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/lib",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -5597,6 +5675,7 @@
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/QQSDK",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/Reveal",
 					"$(PROJECT_DIR)/ATOMPSGod/Vendor/Reveal",
+					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/lib/Channels",
 				);
 				GCC_PREFIX_HEADER = ./ATOMPSGod/psgod.pch;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
@@ -5610,6 +5689,9 @@
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/SinaWeiboSDK",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/WeChatSDK",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/UMAnalytics_Sdk_3.6.4",
+					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/UMAnalytics_Sdk_3.6.7",
+					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/lib/Channels",
+					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/lib",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (

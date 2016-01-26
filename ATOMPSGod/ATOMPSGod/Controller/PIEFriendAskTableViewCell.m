@@ -9,7 +9,7 @@
 #import "PIEFriendAskTableViewCell.h"
 #import "DDNavigationController.h"
 #import "PIECarouselViewController2.h"
-#import "AppDelegate.h"
+
 #import "PIECommentViewController.h"
 
 @interface PIEFriendAskTableViewCell()

@@ -9,7 +9,7 @@
 //#import "PIECameraViewController.h"
 ////#import "QBImagePicker.h"
 //#import "PIEUploadVC.h"
-//#import "AppDelegate.h"
+//
 //#import "PIETabBarController.h"
 //#import "DDNavigationController.h"
 //#import "PIEToHelpViewController.h"

@@ -15,7 +15,7 @@
 #import "PIECommentViewController.h"
 #import "DDNavigationController.h"
 #import "PIECarouselViewController2.h"
-#import "AppDelegate.h"
+
 //#import "PIEUploadVC.h"
 #import "PIEProceedingManager.h"
 #import "PIEUploadManager.h"
@@ -181,6 +181,9 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
 - (void)tapToHelpTableViewGesture:(UITapGestureRecognizer *)gesture {
     CGPoint location = [gesture locationInView:_toHelpTableView];
     NSIndexPath *indexPath = [_toHelpTableView indexPathForRowAtPoint:location];
+    if (indexPath == nil) {
+        return;
+    }
     _selectedIndexPath_toHelp = indexPath;
     
     PIEPageVM *vm;
@@ -190,6 +193,9 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
        vm = [_sourceToHelp_done objectAtIndex:indexPath.row];
     }
     
+    if (vm == nil) {
+        return;
+    }
     _selectedVM = vm;
     if (indexPath) {
         PIEProceedingToHelpTableViewCell *cell = (PIEProceedingToHelpTableViewCell *)
@@ -197,17 +203,13 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
         CGPoint p = [gesture locationInView:cell];
         //点击图片
         if (CGRectContainsPoint(cell.uploadView.frame, p)) {
-//            
-//            self.QBImagePickerController = nil;
-//            [self presentViewController:self.QBImagePickerController animated:YES completion:nil];
+
             LeesinViewController* vc = [LeesinViewController new];
             vc.delegate = self;
             vc.type = LeesinViewControllerTypeReplyNoMissionSelection;
             vc.ask_id = vm.askID;
             vc.channel_id = vm.model.channelID;
-            
-//            vc.channel_id = _selectedVM 
-//            vc.channelViewModel = [[PIEChannelViewModel alloc]initWithModel:model];
+
             [self presentViewController:vc animated:YES completion:nil];
             
         }
@@ -273,6 +275,7 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     if (success) {
         if (leesinViewController.type == LeesinViewControllerTypeReplyNoMissionSelection) {
             [self getRemoteSourceToHelp];
+            [self getMoreRemoteSourceToHelp_done];
         }
     }
 }
@@ -408,13 +411,14 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (section == 0) {
-        return 0;
-    }else if (section == 1){
-        return 32;
-    }else{
-        return 0;
+  
+    if (section == 1){
+        if (_sourceToHelp_done.count>0) {
+            return 32;
+        }
     }
+    
+        return 0;
 }
 
 #pragma mark - Fetch remote data
@@ -434,6 +438,7 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
         ws.isfirstLoadingToHelp = NO;
         if (resultArray.count == 0) {
             _canRefreshToHelpFooter = NO;
+            [ws.sourceToHelp removeAllObjects];
         } else {
             _canRefreshToHelpFooter = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
@@ -500,6 +505,9 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     [param setObject:@(_timeStamp_toHelp) forKey:@"last_updated"];
     [param setObject:@(20) forKey:@"size"];
     
+    
+    _currentIndex_ToHelp_done++;
+
     [PIEProceedingManager getMyDone:param
                           withBlock:^(NSMutableArray *dataArray) {
                               if (dataArray.count == 0) {
@@ -530,7 +538,6 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
                           }];
     
     
-    _currentIndex_ToHelp_done ++;
     
 }
 
@@ -573,7 +580,6 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
         vm = [_sourceToHelp_done objectAtIndex:_selectedIndexPath_toHelp.row];
     }
     
-    NSLog(@"tapShare7%@",vm);
     [self deleteOneToHelp:_selectedIndexPath_toHelp ID:vm.ID];
 }
 

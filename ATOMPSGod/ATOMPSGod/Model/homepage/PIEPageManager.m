@@ -40,6 +40,7 @@
             NSMutableArray *returnArray = [NSMutableArray array];
             for (int i = 0; i < data.count; i++) {
                 PIEPageModel *entity = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:data[i] error:NULL];
+//                PIEPageModel* entity2 = [PIEPageModel modelWithDictionary:data[i] error:NULL];
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 [returnArray addObject:vm];
             }

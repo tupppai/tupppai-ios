@@ -64,12 +64,13 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"进入滚动详情页"];
-
+    
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"离开滚动详情页"];
+    self.view.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.7];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -79,7 +80,7 @@
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    self.view.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
+    self.view.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.7];
 }
 -(void)setupData {
     _askCount = 0;
@@ -113,7 +114,6 @@
 - (void)setupViews {
     self.edgesForExtendedLayout = UIRectEdgeAll;
     [self setModalPresentationStyle:UIModalPresentationOverCurrentContext];
-//    [self setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     _dataSource = [NSMutableArray array];
     [self.view addSubview:self.carousel];
     UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture_SwipeUp:)];
@@ -163,7 +163,7 @@ CGFloat startPanLocationY;
                 CGRect frame = self.carousel.currentItemView.frame;
                 frame.origin.y = -6;
                 self.carousel.currentItemView.frame = frame;
-                self.view.backgroundColor = [UIColor clearColor];
+                self.view.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.7];
             }];
         });
     } completion:^(BOOL finished) {
@@ -259,7 +259,6 @@ CGFloat startPanLocationY;
             if ([subview isKindOfClass:[PIECarousel_ItemView class]]) {
                 PIECarousel_ItemView* itemView = subview;
                 itemView.vm = vm;
-                NSLog(@"set data done vm %@",vm);
 
             }
         }
@@ -347,7 +346,6 @@ CGFloat startPanLocationY;
     [param setObject:@(_currentPage) forKey:@"page"];
     [param setObject:@(100) forKey:@"size"];
     DDHotDetailManager *manager = [DDHotDetailManager new];
-    
     NSInteger ID;
     if (_pageVM.askID) {
         ID = _pageVM.askID;
@@ -359,9 +357,9 @@ CGFloat startPanLocationY;
         _askCount = askArray.count;
         _replyCount = replyArray.count;
         
-            [self.dataSource removeAllObjects];
-            [self.dataSource addObjectsFromArray:askArray];
-            [self.dataSource addObjectsFromArray: replyArray];
+        [self.dataSource removeAllObjects];
+        [self.dataSource addObjectsFromArray:askArray];
+        [self.dataSource addObjectsFromArray: replyArray];
         if (self.dataSource.count > 0) {
             [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
                 _view_placeHoder.alpha = 0;
@@ -403,12 +401,12 @@ CGFloat startPanLocationY;
     //初始化，把传进来的vm重组，放在原图的下一位，被滚动到此位置。
     BOOL shouldScroll = NO;
     for (int i =0; i < _dataSource.count; i++) {
+        
         PIEPageVM* vm = [_dataSource objectAtIndex:i];
         //找出与传进来的pageVM匹配的vm
         
         if (vm.ID == _pageVM.ID && vm.type == _pageVM.type ) {
             //为了数据能够同步
-
             [_dataSource replaceObjectAtIndex:i withObject:_pageVM];
 
             if (_pageVM.type == PIEPageTypeReply) {
@@ -416,6 +414,7 @@ CGFloat startPanLocationY;
                 if (_dataSource.count >= 2) {
                     shouldScroll = YES;
                     PIEPageVM* vmToCheck = [_dataSource objectAtIndex:1];
+                    PIEPageVM* vm =[_dataSource objectAtIndex:i];
                     [_dataSource removeObjectAtIndex:i];
                     if (vmToCheck.type == PIEPageTypeAsk) {
                         [_dataSource insertObject:vm atIndex:2];

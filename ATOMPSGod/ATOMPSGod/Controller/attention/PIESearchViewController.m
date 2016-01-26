@@ -10,7 +10,7 @@
 #import "PIESearchPageViewController.h"
 #import "PIESearchUserViewController.h"
 #import "CAPSPageMenu.h"
-#import "ReactiveCocoa/ReactiveCocoa.h"
+
 #import "LxDBAnything.h"
 
 @interface PIESearchViewController ()

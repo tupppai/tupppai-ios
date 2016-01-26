@@ -9,7 +9,7 @@
 #import "PIELaunchViewController.h"
 #import "DDCreateProfileVC.h"
 #import "PIELoginViewController.h"
-#import "AppDelegate.h"
+
 #import "PIESignUpView.h"
 @interface PIELaunchViewController ()<PIESignUpViewDelegate>
 @property (weak, nonatomic) IBOutlet UIView *weiboContainerView;

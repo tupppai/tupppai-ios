@@ -9,7 +9,7 @@
 #import "PIEProceedingAskTableViewCell_NoGap.h"
 #import "PIECarouselViewController2.h"
 #import "DDNavigationController.h"
-#import "AppDelegate.h"
+
 #import "PIECommentViewController.h"
 #import "PIECategoryModel.h"
 #import "PIEReplyCollectionViewController.h"
@@ -85,16 +85,16 @@
             if the textField.text remains unchanged, do not send any requeest.
          */
         
+        _editButton.selected = NO;
+        _contentTextField.enabled = NO;
         if ([_previousTextFieldText isEqualToString:_contentTextField.text]) {
-            [Hud text:@"请修改描述"];
+//            [Hud text:@"请修改描述"];
         }
-        else{
-            _editButton.selected = NO;
-            _contentTextField.enabled = NO;
+        else    {
             NSMutableDictionary* param = [NSMutableDictionary new];
             [param setObject:_contentTextField.text forKey:@"desc"];
             [param setObject:@(_vmAsk1.askID) forKey:@"ask_id"];
-            [Hud activity:@"修改描述中..."];
+//            [Hud activity:@"修改描述中..."];
             [DDService editAsk:param withBlock:^(BOOL success) {
                 
                 [Hud dismiss];

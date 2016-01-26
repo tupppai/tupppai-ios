@@ -9,7 +9,7 @@
 #import "PIEMyAskViewController.h"
 #import "DDPageManager.h"
 #import "PIETabBarController.h"
-#import "AppDelegate.h"
+
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "PIEImageCollectionViewCell.h"
 #import "PIECarouselViewController2.h"

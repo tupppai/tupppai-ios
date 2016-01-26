@@ -7,10 +7,10 @@
 //
 
 #import "PIEShareView.h"
-#import "AppDelegate.h"
+
 //#import "POP.h"
 #import "DDCollectManager.h"
-//#import "PIECellIconStatusChangedNotificationKey.h"
+//
 
 #define height_sheet 251.0f
 @interface PIEShareView ()
@@ -142,6 +142,7 @@
     {
         [_delegate shareViewDidCancel:self];
     }
+    
 }
 
 #pragma mark - public methods
