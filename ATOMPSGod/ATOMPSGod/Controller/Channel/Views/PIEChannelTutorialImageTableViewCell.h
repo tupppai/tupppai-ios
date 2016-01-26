@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+@class PIEChannelTutorialImageModel;
 
 @interface PIEChannelTutorialImageTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIImageView *tutorialImageView;
+
+- (void)injectImageModel:(PIEChannelTutorialImageModel *)tutorialImageModel;
 
 @end

@@ -44,6 +44,9 @@
 /** 该教程的图片。未分享到朋友圈，或者没给钱（打赏），则只返回两张图片 */
 @property (nonatomic, strong) NSArray<PIEChannelTutorialImageModel *>   *tutorial_images;
 
+/** 该教程的封面（目前是tutorial_images的第一张图片，但是服务器返回的时候顺便放到了最外层了 */
+@property (nonatomic, strong) NSString  *coverImageUrl;
+
 /** 之前用户是否有分享到微信页面，0： false， 1： true */
 @property (nonatomic, assign) BOOL      hasSharedToWechat;
 

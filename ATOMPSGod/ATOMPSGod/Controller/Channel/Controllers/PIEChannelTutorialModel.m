@@ -24,6 +24,7 @@
              @"click_count":@"click_count",
              @"reply_count":@"reply_count",
              @"tutorial_images":@"ask_uploads",
+             @"coverImageUrl":@"image_url",
              @"hasSharedToWechat":@"has_shared_to_wechat",
              @"paidAmount": @"paid_amount"
              };

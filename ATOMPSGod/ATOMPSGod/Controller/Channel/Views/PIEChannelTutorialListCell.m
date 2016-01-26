@@ -28,7 +28,9 @@
 {
     // 使用教程图片的第一张图片作为List的封面
     
-    NSString *firstTutorialImageUrlStr = [tutorialModel.tutorial_images firstObject].imageURL;
+//    NSString *firstTutorialImageUrlStr = [tutorialModel.tutorial_images firstObject].imageURL;
+    
+    NSString *firstTutorialImageUrlStr = tutorialModel.coverImageUrl;
     
     [self.tutorialImageView sd_setImageWithURL:[NSURL URLWithString:firstTutorialImageUrlStr]];
     

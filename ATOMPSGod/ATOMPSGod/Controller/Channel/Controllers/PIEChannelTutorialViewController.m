@@ -13,6 +13,7 @@
 #import "PIEChannelTutorialListCell.h"
 #import "PIEChannelManager.h"
 #import "LxDBAnything.h"
+#import "PIEChannelTutorialDetailViewController.h"
 
 
 @interface PIEChannelTutorialViewController ()
@@ -177,7 +178,17 @@ static NSString *PIEChannelTutorialListCellIdentifier =
 
 
 #pragma mark - <UITableViewDelegate>
-/* nothing yet */
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEChannelTutorialDetailViewController *tutorialDetailVC =
+    [[PIEChannelTutorialDetailViewController alloc] init];
+    
+    tutorialDetailVC.currentTutorialModel = _source_tutorial[indexPath.row];
+    
+
+    
+    [self.navigationController pushViewController:tutorialDetailVC animated:YES];
+}
 
 
 #pragma mark - <PWRefreshBaseDelegate>
