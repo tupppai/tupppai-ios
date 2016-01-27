@@ -54,16 +54,16 @@
 }
 
 + (void)fetchUser:(void (^)(PIEUserModel*))block {
+    __block PIEUserModel *user;
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
         NSString *stmt = @"select * from PIEUserTable";
         FMResultSet *rs = [db executeQuery:stmt];
         while ([rs next]) {
-            PIEUserModel * user = [[PIEUserModel alloc]initWithDictionary:[rs resultDictionary]];
-            if (block) {
-                block(user);
-            }
-
+            user = [[PIEUserModel alloc]initWithDictionary:[rs resultDictionary]];
             break;
+        }
+        if (block) {
+            block(user);
         }
         [rs close];
     }];
@@ -74,8 +74,6 @@
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
         NSString *stmt = @"select * from PIEUserTable where uid = ?";
         NSNumber* uid = [NSNumber numberWithInteger:user.uid];
-//        NSArray *param = @[uid];
-//        FMResultSet *rs = [db executeQuery:stmt withArgumentsInArray:param];
         FMResultSet *rs = [db executeQuery:stmt,uid];
         while ([rs next]) {
             PIEUserModel * user = [[PIEUserModel alloc]initWithDictionary:[rs resultDictionary]];
