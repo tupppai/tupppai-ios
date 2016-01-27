@@ -117,6 +117,11 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [self dismissViewControllerAnimated:NO completion:nil];
 }
 - (void)popSelf {
+    if (_delegate != nil &&
+        [_delegate respondsToSelector:@selector(ATOMViewControllerPopedFromNav)]) {
+        [_delegate ATOMViewControllerPopedFromNav];
+    }
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 

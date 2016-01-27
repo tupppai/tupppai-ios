@@ -28,13 +28,16 @@
 
 #import "PIECommentVM.h"
 #import "PIECommentManager.h"
+#import "PIECommentViewController.h"
+#import "LxDBAnything.h"
 
 
 @interface PIEChannelTutorialDetailViewController ()
 <
     /* Protocols */
     UITableViewDelegate, UITableViewDataSource,
-    PWRefreshBaseTableViewDelegate
+    PWRefreshBaseTableViewDelegate,
+    ATOMViewControllerDelegate
 >
 /* Variables */
 
@@ -91,10 +94,11 @@ static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
     
     [self setupSubviews];
     
+    [self setupRAC];
+    
     [self.tableView.mj_header beginRefreshing];
+    
     [self loadMoreTutorialComments];
-    
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -177,21 +181,57 @@ static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
             make.left.bottom.right.equalTo(self.view);
         }];
         
+        toolBar.hasBought = self.currentTutorialModel.hasBought;
+        
         toolBar;
     });
     
     self.toolBar = toolBar;
     
+    
+}
+
+- (void)setupRAC
+{
     @weakify(self);
-    [[toolBar.rollDiceButton
-     rac_signalForControlEvents:UIControlEventTouchUpInside]
+    [[self.toolBar.rollDiceButton
+      rac_signalForControlEvents:UIControlEventTouchUpInside]
      subscribeNext:^(id x) {
          @strongify(self);
          
          [Hud activity:@"随机打赏中..."];
          [self rollDiceReward];
          
+     }];
+    
+    [[self.toolBar.commentButton
+      rac_signalForControlEvents:UIControlEventTouchUpInside]
+     subscribeNext:^(id x) {
+         @strongify(self);
+         
+         PIECommentViewController *commentVC = [[PIECommentViewController alloc] init];
+         commentVC.vm = [self.source_tutorialModel piePageVM];
+         commentVC.shouldShowHeaderView = NO;
+         commentVC.delegate = self;
+         [self.navigationController pushViewController:commentVC animated:YES];
+     }];
+    
+    [[self.toolBar.shareButton
+      rac_signalForControlEvents:UIControlEventTouchUpInside]
+     subscribeNext:^(id x) {
+         [Hud text:@"show shareView"];
+     }];
+    
+    [[self rac_signalForSelector:@selector(ATOMViewControllerPopedFromNav) fromProtocol:@protocol(ATOMViewControllerDelegate)] subscribeNext:^(id x) {
+        @strongify(self);
+        /* TODO: 优化，不应该是commentViewController曾经发过新的评论，并且返回才需要重刷数据 */
+        [self loadNewTutorialComments];
     }];
+    
+    /* while push back from commentVC */
+//    [self loadMoreTutorialComments];
+    
+    
 }
 
 #pragma mark - Data setup
@@ -400,6 +440,40 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
     
 }
 
+- (void)loadNewTutorialComments
+{
+    _currentCommentIndex = 1;
+    
+    PIECommentManager *commentManager = [PIECommentManager new];
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    
+    params[@"page"]      = @(_currentCommentIndex);
+    params[@"size"]      = @(10);
+    params[@"type"]      = @(1);        /* 1: ask_id; 2: reply_id */
+    params[@"target_id"] = [@(self.currentTutorialModel.ask_id) stringValue];
+    
+    @weakify(self);
+    [commentManager
+     ShowDetailOfComment:params
+     withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
+         @strongify(self);
+         [self.tableView.mj_footer endRefreshing];
+         if (error != nil) {
+             [Hud error:error.domain];
+         }else{
+             [self.source_tutorialCommentVM removeAllObjects];
+             [self.source_tutorialCommentVM addObjectsFromArray:recentCommentArray];
+             
+             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                 [self.tableView reloadData];
+             }];
+         }
+         
+     }];
+
+}
+
 - (void)loadMoreTutorialComments
 {
     _currentCommentIndex ++;
@@ -460,6 +534,9 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
              // 支付成功，遂重刷UI
              [self loadNewTutorialDetails];
              
+             // 心形满格
+             self.toolBar.hasBought = YES;
+             
          }else{
              NSString *prompt = [NSString stringWithFormat:@"type == %ld", (long)rollDiceStatus];
              [Hud error:prompt];
@@ -468,7 +545,7 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
     
 }
 
-#pragma mark - Lazy loadings
+
 
 
 

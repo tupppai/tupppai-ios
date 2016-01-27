@@ -15,4 +15,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *commentButton;
 @property (weak, nonatomic) IBOutlet UIButton *rollDiceButton;
 
+@property (assign, nonatomic) BOOL hasBought;
+
 @end

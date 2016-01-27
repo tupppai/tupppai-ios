@@ -7,7 +7,10 @@
 //
 
 #import "PIEBaseModel.h"
-#import "PIEChannelTutorialImageModel.h"
+//#import "PIEChannelTutorialImageModel.h"
+@class PIEChannelTutorialImageModel;
+@class PIEPageVM;
+
 
 @interface PIEChannelTutorialModel : PIEBaseModel
 
@@ -20,6 +23,12 @@
 /** 用户名 */
 @property (nonatomic, strong) NSString  *userName;
 
+/** 发布教程的用户的UID */
+@property (nonatomic, assign) NSInteger uid;
+
+/** 该用户是否是VIP用户 */
+@property (nonatomic, assign) BOOL isV;
+
 /** 该用户是否是我的粉丝 */
 @property (nonatomic, assign) BOOL isMyFan;
 
@@ -29,8 +38,11 @@
 /** 用户头像URL */
 @property (nonatomic, strong) NSString  *avatarUrl;
 
-/** 该教程的发布时间 */
+/** 该教程的发布时间(human-readable) */
 @property (nonatomic, copy  ) NSString  *publishTime;
+
+/** unix时间戳 */
+@property (nonatomic, assign) long long uploadTime;
 
 /** 该教程的标题 */
 @property (nonatomic, copy  ) NSString  *title;
@@ -59,5 +71,8 @@
 /** 判断是否购买过该教程的用has_bought, 0是未购买（或分享到朋友圈， 下同），1是已购买  */
 @property (nonatomic, assign) BOOL hasBought;
 
+
+/** PIEChannelTutorialModel -> PIEPageVM  */
+- (PIEPageVM *)piePageVM;
 
 @end
