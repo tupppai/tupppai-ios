@@ -57,7 +57,7 @@
 
 @property (nonatomic, strong) PIEChannelTutorialDetailToolbar *toolBar;
 
-@property (nonatomic, strong) PIEChannelTutorialLockedUpView *lockedUpView;
+
 
 @end
 
@@ -188,6 +188,7 @@ static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
      subscribeNext:^(id x) {
          @strongify(self);
          
+         [Hud activity:@"随机打赏中..."];
          [self rollDiceReward];
          
     }];
@@ -285,13 +286,7 @@ static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
         if ((indexPath.row == self.source_tutorialModel.tutorial_images.count - 1) &&
             self.source_tutorialModel.hasBought == NO)
         {
-            [tutorialImageCell addSubview:self.lockedUpView];
-            
-            [self.lockedUpView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.edges.equalTo(tutorialImageCell);
-            }];
-            
-            [tutorialImageCell setNeedsLayout];
+            tutorialImageCell.locked = YES;
         }
         return tutorialImageCell;
     }
@@ -368,11 +363,10 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 - (void)didPullRefreshDown:(UITableView *)tableView
 {
     /*
-        开启两个线程，异步加载两种数据。（刷新UI放到主线程里应该就不会冲突，最多不久加载两次咯）
+        开启两个线程，异步加载两种数据。（刷新UI放到主线程里应该就不会冲突，最多不就刷新两次tableView咯）
      */
     [self loadNewTutorialDetails];
     [self loadMoreTutorialComments];
-
 }
 
 - (void)didPullRefreshUp:(UITableView *)tableView
@@ -383,7 +377,6 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 #pragma mark - Network request 
 - (void)loadNewTutorialDetails
 {
-    
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     params[@"tutorial_id"] = [@(self.currentTutorialModel.ask_id) stringValue];
     
@@ -450,6 +443,8 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
      GET:params
      url:@"thread/reward"
      block:^(id responseObject) {
+         [Hud dismiss];
+         
          NSDictionary *dataDict = responseObject[@"data"];
          long rollDiceStatus    = [dataDict[@"type"] longValue];
          double balance         = [dataDict[@"balance"] doubleValue];
@@ -462,6 +457,9 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
              NSString *prompt = [NSString stringWithFormat:@"支付%.2f元，剩余%.2f元", amount, balance];
              [Hud text:prompt];
              
+             // 支付成功，遂重刷UI
+             [self loadNewTutorialDetails];
+             
          }else{
              NSString *prompt = [NSString stringWithFormat:@"type == %ld", (long)rollDiceStatus];
              [Hud error:prompt];
@@ -471,14 +469,7 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 }
 
 #pragma mark - Lazy loadings
-- (PIEChannelTutorialLockedUpView *)lockedUpView
-{
-    if (_lockedUpView == nil) {
-        _lockedUpView =  [PIEChannelTutorialLockedUpView lockedUpView];
-    }
-    
-    return _lockedUpView;
-}
+
 
 
 @end
