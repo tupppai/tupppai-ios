@@ -58,13 +58,17 @@
     [[[self class] sharedFMQueue] inDatabase:^(FMDatabase *db) {
         NSString *stmt = @"select * from PIEUserTable";
         FMResultSet *rs = [db executeQuery:stmt];
-        while ([rs next]) {
+        if ([rs next]) {
             user = [[PIEUserModel alloc]initWithDictionary:[rs resultDictionary]];
-            break;
+            if (block) {
+                block(user);
+            }
+        } else {
+            if (block) {
+                block(nil);
+            }
         }
-        if (block) {
-            block(user);
-        }
+        
         [rs close];
     }];
 }
