@@ -236,7 +236,8 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     NSArray* assetCollectionSubtypes = @[
                                      @(PHAssetCollectionSubtypeSmartAlbumRecentlyAdded),
                                      @(PHAssetCollectionSubtypeSmartAlbumUserLibrary),
-                                     @(PHAssetCollectionSubtypeSmartAlbumFavorites)                                     ];
+                                     @(PHAssetCollectionSubtypeSmartAlbumFavorites),
+                                     ];
     NSMutableDictionary *smartAlbums = [NSMutableDictionary dictionaryWithCapacity:assetCollectionSubtypes.count];
     
         [smartAlbum enumerateObjectsUsingBlock:^(PHAssetCollection *assetCollection, NSUInteger index, BOOL *stop) {

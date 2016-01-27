@@ -96,7 +96,6 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
    
     [self getSourceIfEmpty_hot:nil];
     
-    [self getSourceIfEmpty_banner];
    
     
     [self configureSwipeView];
@@ -550,6 +549,9 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
         if (block) {
             block(YES);
         }
+        
+        [self getSourceIfEmpty_banner];
+
     }];
     
 }
