@@ -25,6 +25,7 @@
              @"love_count":@"love_count",
              @"click_count":@"click_count",
              @"reply_count":@"reply_count",
+             @"comment_count":@"comment_count",
              @"tutorial_images":@"ask_uploads",
              @"coverImageUrl":@"image_url",
              @"hasBought":@"has_bought"

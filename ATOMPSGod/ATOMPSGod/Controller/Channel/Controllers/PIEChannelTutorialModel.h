@@ -47,6 +47,9 @@
 /** 其他用户上缴的作业的总数（有多少人完成了PS教程的作业并上传） */
 @property (nonatomic, assign) NSInteger reply_count;
 
+/** 其它用户对这个教程的总评论 */
+@property (nonatomic, assign) NSInteger comment_count;
+
 /** 该教程的图片。未分享到朋友圈，或者没给钱（打赏），则只返回两张图片 */
 @property (nonatomic, strong) NSArray<PIEChannelTutorialImageModel *>   *tutorial_images;
 

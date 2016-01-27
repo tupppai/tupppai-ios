@@ -188,6 +188,10 @@
 		90C60B271C2FD9A300D7F51D /* PIEAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90C60B261C2FD9A300D7F51D /* PIEAvatarView.m */; };
 		90C8FAFC1C48AF4900F536D7 /* PIEProceedingToHelpHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90C8FAFB1C48AF4900F536D7 /* PIEProceedingToHelpHeaderView.m */; };
 		90C8FB0A1C48AF6800F536D7 /* PIEProceedingToHelpHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90C8FB091C48AF6800F536D7 /* PIEProceedingToHelpHeaderView.xib */; };
+		90D01BCF1C58966F0035F959 /* PIEChannelTutorialCommentsCountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D01BCD1C58966F0035F959 /* PIEChannelTutorialCommentsCountTableViewCell.m */; };
+		90D01BD01C58966F0035F959 /* PIEChannelTutorialCommentsCountTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90D01BCE1C58966F0035F959 /* PIEChannelTutorialCommentsCountTableViewCell.xib */; };
+		90D01BD41C5896800035F959 /* PIEChannelTutorialCommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D01BD21C5896800035F959 /* PIEChannelTutorialCommentTableViewCell.m */; };
+		90D01BD51C5896800035F959 /* PIEChannelTutorialCommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90D01BD31C5896800035F959 /* PIEChannelTutorialCommentTableViewCell.xib */; };
 		90D6FE721C5781670060B92F /* PIEChannelTutorialLockedUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D6FE711C5781670060B92F /* PIEChannelTutorialLockedUpView.m */; };
 		90D6FE801C5781720060B92F /* PIEChannelTutorialLockedUpView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90D6FE7F1C5781720060B92F /* PIEChannelTutorialLockedUpView.xib */; };
 		90EC3D5C1C2A78D10085A7BE /* PIEProceedingToHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EC3D5B1C2A78D10085A7BE /* PIEProceedingToHelpViewController.m */; };
@@ -1120,6 +1124,12 @@
 		90C8FAFA1C48AF4900F536D7 /* PIEProceedingToHelpHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEProceedingToHelpHeaderView.h; sourceTree = "<group>"; };
 		90C8FAFB1C48AF4900F536D7 /* PIEProceedingToHelpHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEProceedingToHelpHeaderView.m; sourceTree = "<group>"; };
 		90C8FB091C48AF6800F536D7 /* PIEProceedingToHelpHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEProceedingToHelpHeaderView.xib; sourceTree = "<group>"; };
+		90D01BCC1C58966F0035F959 /* PIEChannelTutorialCommentsCountTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelTutorialCommentsCountTableViewCell.h; sourceTree = "<group>"; };
+		90D01BCD1C58966F0035F959 /* PIEChannelTutorialCommentsCountTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelTutorialCommentsCountTableViewCell.m; sourceTree = "<group>"; };
+		90D01BCE1C58966F0035F959 /* PIEChannelTutorialCommentsCountTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEChannelTutorialCommentsCountTableViewCell.xib; sourceTree = "<group>"; };
+		90D01BD11C5896800035F959 /* PIEChannelTutorialCommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelTutorialCommentTableViewCell.h; sourceTree = "<group>"; };
+		90D01BD21C5896800035F959 /* PIEChannelTutorialCommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelTutorialCommentTableViewCell.m; sourceTree = "<group>"; };
+		90D01BD31C5896800035F959 /* PIEChannelTutorialCommentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEChannelTutorialCommentTableViewCell.xib; sourceTree = "<group>"; };
 		90D6FE701C5781670060B92F /* PIEChannelTutorialLockedUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelTutorialLockedUpView.h; sourceTree = "<group>"; };
 		90D6FE711C5781670060B92F /* PIEChannelTutorialLockedUpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelTutorialLockedUpView.m; sourceTree = "<group>"; };
 		90D6FE7F1C5781720060B92F /* PIEChannelTutorialLockedUpView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEChannelTutorialLockedUpView.xib; sourceTree = "<group>"; };
@@ -2169,6 +2179,12 @@
 				9013E9BC1C575EDD00459905 /* PIEChannelTutorialDetailToolbar.h */,
 				9013E9BD1C575EDD00459905 /* PIEChannelTutorialDetailToolbar.m */,
 				9013E9CB1C575EF600459905 /* PIEChannelTutorialDetailToolbar.xib */,
+				90D01BCC1C58966F0035F959 /* PIEChannelTutorialCommentsCountTableViewCell.h */,
+				90D01BCD1C58966F0035F959 /* PIEChannelTutorialCommentsCountTableViewCell.m */,
+				90D01BCE1C58966F0035F959 /* PIEChannelTutorialCommentsCountTableViewCell.xib */,
+				90D01BD11C5896800035F959 /* PIEChannelTutorialCommentTableViewCell.h */,
+				90D01BD21C5896800035F959 /* PIEChannelTutorialCommentTableViewCell.m */,
+				90D01BD31C5896800035F959 /* PIEChannelTutorialCommentTableViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4780,6 +4796,7 @@
 				0EE7589C1C51CD5700A9F59E /* PIEChargeMoneyPanelView.xib in Resources */,
 				3B2D90FF1BA03FB000D6A243 /* LICENSE in Resources */,
 				F465C6FD1C294EAE00D8A410 /* PIEChannelDetailLatestPSCell.xib in Resources */,
+				90D01BD01C58966F0035F959 /* PIEChannelTutorialCommentsCountTableViewCell.xib in Resources */,
 				E942897C1B5B32A200ED26E4 /* NotificationBackgroundSuccessIcon.png in Resources */,
 				F4C0DFEC1BE9D45F000615CF /* PIEWebViewViewController.xib in Resources */,
 				F41366951BBE73D900EE0C4E /* PIEReplyCollectionCell.xib in Resources */,
@@ -4811,6 +4828,7 @@
 				E900AB5B1B450E970019BAEA /* Images.xcassets in Resources */,
 				F4F72C001BCB6CD6002FF05A /* PIEMyCollectionTableViewCell.xib in Resources */,
 				F4EA4DB21BF477E400486304 /* intro3.png in Resources */,
+				90D01BD51C5896800035F959 /* PIEChannelTutorialCommentTableViewCell.xib in Resources */,
 				90C8FB0A1C48AF6800F536D7 /* PIEProceedingToHelpHeaderView.xib in Resources */,
 				F46FB6DF1C102F9400FEB2E7 /* intro2.png in Resources */,
 				F42100EE1BF5E76A00CFD82E /* intro1.xib in Resources */,
@@ -4979,6 +4997,7 @@
 				E9A5B66D1B9040310059754C /* DDServiceConstants.m in Sources */,
 				F4275A1A1BE0B9E400BBE7E4 /* PIEMyFansViewController.m in Sources */,
 				F46117D81BAD1101001A6F1A /* IQUIView+Hierarchy.m in Sources */,
+				90D01BD41C5896800035F959 /* PIEChannelTutorialCommentTableViewCell.m in Sources */,
 				F4F28F1C1C23AE9B0067F2E4 /* MKAnnotationView+WebCache.m in Sources */,
 				5C83A8951AC66F910071A024 /* POPSpringAnimation.mm in Sources */,
 				F41BA0CA1C0EDCE800979D43 /* MJRefreshAutoStateFooter.m in Sources */,
@@ -5125,6 +5144,7 @@
 				F46117DB1BAD1101001A6F1A /* IQKeyboardManager.m in Sources */,
 				906F87EC1C3FBDE200318DBB /* PIEFurtherRegistrationView.m in Sources */,
 				F4E5F5FA1BD9D2E100AB8B31 /* AFURLConnectionOperation.m in Sources */,
+				90D01BCF1C58966F0035F959 /* PIEChannelTutorialCommentsCountTableViewCell.m in Sources */,
 				F47EF0891C031FF500BFB442 /* VVBlurViewController.m in Sources */,
 				F4FABAFD1BAA593C00F47064 /* PIERefreshCollectionView.m in Sources */,
 				90A56E601C54C0170079B3D3 /* PIEChannelTutorialPrefaceTableViewCell.m in Sources */,

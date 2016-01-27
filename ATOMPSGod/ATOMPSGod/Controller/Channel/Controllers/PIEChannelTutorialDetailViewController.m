@@ -16,13 +16,18 @@
 #import "PIEChannelTutorialPrefaceTableViewCell.h"
 #import "PIEChannelTutorialImageTableViewCell.h"
 
+#import "PIEChannelTutorialCommentsCountTableViewCell.h"
+#import "PIEChannelTutorialCommentTableViewCell.h"
+
+
 #import "PIERefreshTableView.h"
 #import "PIEChannelManager.h"
 #import "PIEChannelTutorialDetailToolbar.h"
 #import "PIEChannelTutorialLockedUpView.h"
 
 
-#import "ReactiveCocoa/ReactiveCocoa.h"
+#import "PIECommentVM.h"
+#import "PIECommentManager.h"
 
 
 @interface PIEChannelTutorialDetailViewController ()
@@ -46,7 +51,9 @@
  */
 @property (nonatomic, strong) PIEChannelTutorialModel *source_tutorialModel;
 
-@property (nonatomic, strong) NSMutableArray<PIECommentModel *> *source_tutorialComment;
+@property (nonatomic, strong) NSMutableArray<PIECommentVM *> *source_tutorialCommentVM;
+
+@property (nonatomic, assign) NSInteger currentCommentIndex;
 
 @property (nonatomic, strong) PIEChannelTutorialDetailToolbar *toolBar;
 
@@ -65,6 +72,12 @@ static NSString *PIEChannelTutorialPrefaceTableViewCellIdentifier =
 static NSString *PIEChannelTutorialImageTableViewCelIdentifier =
 @"PIEChannelTutorialImageTableViewCell";
 
+static NSString *PIEChannelTutorialCommentsCountTableViewCellIdentifier =
+@"PIEChannelTutorialCommentsCountTableViewCell";
+
+static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
+@"PIEChannelTutorialCommentTableViewCell";
+
 #pragma mark - UI life cycles
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -79,6 +92,7 @@ static NSString *PIEChannelTutorialImageTableViewCelIdentifier =
     [self setupSubviews];
     
     [self.tableView.mj_header beginRefreshing];
+    [self loadMoreTutorialComments];
     
     
 }
@@ -119,6 +133,7 @@ static NSString *PIEChannelTutorialImageTableViewCelIdentifier =
        
         tableView.estimatedRowHeight = 60;
         
+        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
         [tableView registerNib:[UINib nibWithNibName:@"PIEChannelTutorialTeacherDescTableViewCell"
                                               bundle:nil]
@@ -130,7 +145,16 @@ static NSString *PIEChannelTutorialImageTableViewCelIdentifier =
         [tableView registerNib:[UINib nibWithNibName:@"PIEChannelTutorialImageTableViewCell" bundle:nil]
         forCellReuseIdentifier:PIEChannelTutorialImageTableViewCelIdentifier];
         
+        [tableView registerNib:[UINib nibWithNibName:@"PIEChannelTutorialCommentsCountTableViewCell"
+                                              bundle:nil]
+        forCellReuseIdentifier:PIEChannelTutorialCommentsCountTableViewCellIdentifier];
+        
+        [tableView registerNib:[UINib nibWithNibName:@"PIEChannelTutorialCommentTableViewCell"
+                                              bundle:nil]
+        forCellReuseIdentifier:PIEChannelTutorialCommentTableViewCellIdentifier];
+        
         [self.view addSubview:tableView];
+        
         
         [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self.view);
@@ -169,17 +193,20 @@ static NSString *PIEChannelTutorialImageTableViewCelIdentifier =
     }];
 }
 
+#pragma mark - Data setup
 - (void)setupData
 {
-    _source_tutorialComment = [NSMutableArray<PIECommentModel *> new];
+    _source_tutorialCommentVM = [NSMutableArray<PIECommentVM *> array];
+
+    _currentCommentIndex      = 0;
+    
 }
 
-#pragma mark - Data setup
 
 #pragma mark - <UITableViewDataSource>
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -213,6 +240,10 @@ static NSString *PIEChannelTutorialImageTableViewCelIdentifier =
             }else{
                 return self.source_tutorialModel.tutorial_images.count;
             }
+            break;
+        }
+        case 3:{
+            return self.source_tutorialCommentVM.count + 1;
             break;
         }
     }
@@ -254,23 +285,36 @@ static NSString *PIEChannelTutorialImageTableViewCelIdentifier =
         if ((indexPath.row == self.source_tutorialModel.tutorial_images.count - 1) &&
             self.source_tutorialModel.hasBought == NO)
         {
-            [Hud text:@"未解锁"];
             [tutorialImageCell addSubview:self.lockedUpView];
-            
-            
             
             [self.lockedUpView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.edges.equalTo(tutorialImageCell);
             }];
             
             [tutorialImageCell setNeedsLayout];
-            
         }
-       
-        
         return tutorialImageCell;
     }
-    
+    else if(indexPath.section == 3){
+        /* 第一个row：commentCount;其它是comment */
+        if (indexPath.row == 0) {
+            PIEChannelTutorialCommentsCountTableViewCell *commentCountsCell =
+            [tableView dequeueReusableCellWithIdentifier:
+             PIEChannelTutorialCommentsCountTableViewCellIdentifier];
+            [commentCountsCell injectCommentCount:self.currentTutorialModel.comment_count];
+            return commentCountsCell;
+            
+        }else{
+            PIEChannelTutorialCommentTableViewCell *commentCell =
+            [tableView dequeueReusableCellWithIdentifier:
+             PIEChannelTutorialCommentTableViewCellIdentifier];
+            
+            [commentCell injectVM:self.source_tutorialCommentVM[indexPath.row - 1]];
+            
+            return commentCell;
+        }
+        
+    }
     return nil;
 }
 
@@ -310,7 +354,10 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
     }else if (indexPath.section == 2){
         /* tutorial images */
         return 190;
-    }else{
+    }else if (indexPath.section == 3)
+        /* comments */
+        return 80;
+    else{
         return 0;
     }
 }
@@ -320,12 +367,17 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 #pragma mark - <PWRefreshBaseTableViewDelegate>
 - (void)didPullRefreshDown:(UITableView *)tableView
 {
+    /*
+        开启两个线程，异步加载两种数据。（刷新UI放到主线程里应该就不会冲突，最多不久加载两次咯）
+     */
     [self loadNewTutorialDetails];
+    [self loadMoreTutorialComments];
+
 }
 
 - (void)didPullRefreshUp:(UITableView *)tableView
 {
-    [self loadMoreTutorialDetails];
+    [self loadMoreTutorialComments];
 }
 
 #pragma mark - Network request 
@@ -338,22 +390,54 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
     [PIEChannelManager
      getSource_channelTutorialDetail:params
      block:^(PIEChannelTutorialModel *model) {
-         [_tableView.mj_header endRefreshing];
          _source_tutorialModel = [model copy];
-         [_tableView reloadData];
+         
+         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+             [_tableView.mj_header endRefreshing];
+             [_tableView reloadData];
+         }];
+         
          
      } failureBlock:^{
-         [_tableView.mj_header endRefreshing];
+         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+             [_tableView.mj_header endRefreshing];
+         }];
          
      }];
     
 }
 
-- (void)loadMoreTutorialDetails
+- (void)loadMoreTutorialComments
 {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.tableView.mj_footer endRefreshing];
-    });
+    _currentCommentIndex ++;
+    
+    PIECommentManager *commentManager = [PIECommentManager new];
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    
+    params[@"page"]      = @(_currentCommentIndex);
+    params[@"size"]      = @(10);
+    params[@"type"]      = @(1);        /* 1: ask_id; 2: reply_id */
+    params[@"target_id"] = [@(self.currentTutorialModel.ask_id) stringValue];
+    
+    @weakify(self);
+    [commentManager
+     ShowDetailOfComment:params
+     withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
+         @strongify(self);
+         [self.tableView.mj_footer endRefreshing];
+         if (error != nil) {
+             [Hud error:error.domain];
+         }else{
+             [self.source_tutorialCommentVM addObjectsFromArray:recentCommentArray];
+             
+             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                 [self.tableView reloadData];
+             }];
+         }
+         
+     }];
+    
 }
 
 - (void)rollDiceReward
@@ -367,9 +451,9 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
      url:@"thread/reward"
      block:^(id responseObject) {
          NSDictionary *dataDict = responseObject[@"data"];
-         long rollDiceStatus = [dataDict[@"type"] longValue];
-         double balance            = [dataDict[@"balance"] doubleValue];
-         double amount             = [dataDict[@"amount"] doubleValue];
+         long rollDiceStatus    = [dataDict[@"type"] longValue];
+         double balance         = [dataDict[@"balance"] doubleValue];
+         double amount          = [dataDict[@"amount"] doubleValue];
          
          if (rollDiceStatus == -1){
              NSString *prompt = [NSString stringWithFormat:@"支付失败：剩余余额%.2f, 需付款%.2f", balance,amount];
