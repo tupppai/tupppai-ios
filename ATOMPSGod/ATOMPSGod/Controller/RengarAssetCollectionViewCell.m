@@ -1,21 +1,20 @@
 //
-//  QBAssetCell.m
-//  QBImagePicker
+//  RengarAssetCellCollectionViewCell.m
+//  TUPAI
 //
-//  Created by Katsuma Tanaka on 2015/04/03.
-//  Copyright (c) 2015 Katsuma Tanaka. All rights reserved.
+//  Created by chenpeiwei on 1/27/16.
+//  Copyright © 2016 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "QBAssetCell.h"
+#import "RengarAssetCollectionViewCell.h"
 #import "QBCheckmarkView.h"
-@interface QBAssetCell ()
 
+@interface RengarAssetCollectionViewCell()
+@property (weak, nonatomic) IBOutlet QBCheckmarkView *checkmarkView;
 @property (weak, nonatomic) IBOutlet UIView *overlayView;
-@property (weak, nonatomic) IBOutlet QBCheckmarkView *checkmark;
 
 @end
-
-@implementation QBAssetCell
+@implementation RengarAssetCollectionViewCell
 
 -(void)awakeFromNib {
     [super awakeFromNib];
@@ -29,11 +28,7 @@
 {
     [super setSelected:selected];
 
-
     self.overlayView.hidden = selected ? NO:YES;
-    self.checkmark.selected = selected;
-    
-    
+    self.checkmarkView.selected = selected;
 }
-
 @end

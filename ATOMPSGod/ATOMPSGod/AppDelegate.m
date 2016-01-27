@@ -134,11 +134,9 @@
                 [[NSUserDefaults standardUserDefaults] setBool:YES forKey:launchKey];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 DDIntroVC* vc = [DDIntroVC new];
-//                self.baseNav  = [[DDLoginNavigationController alloc] initWithRootViewController:vc];
                 self.window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:vc];
             } else {
                 PIELaunchViewController_Black *lvc = [[PIELaunchViewController_Black alloc] init];
-//                self.baseNav = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
                 self.window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
             }
         }

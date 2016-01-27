@@ -162,9 +162,9 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
 - (void)setAssetCollection:(PHAssetCollection *)assetCollection
 {
     _assetCollection = assetCollection;
-    
-    [self updateFetchRequest];
-    [self.collectionView reloadData];
+        [self updateFetchRequest];
+        [self.collectionView reloadData];
+
 }
 
 - (PHCachingImageManager *)imageManager
@@ -252,9 +252,8 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
             default:
                 break;
         }
-        
         self.fetchResult = [PHAsset fetchAssetsInAssetCollection:self.assetCollection options:options];
-        
+
         if ([self isAutoDeselectEnabled] && self.imagePickerController.selectedAssets.count > 0) {
             // Get index of previous selected asset
             PHAsset *asset = [self.imagePickerController.selectedAssets firstObject];
@@ -459,6 +458,8 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
     CGSize itemSize = [(UICollectionViewFlowLayout *)collectionView.collectionViewLayout itemSize];
     CGSize targetSize = CGSizeScale(itemSize, [[UIScreen mainScreen] scale]);
     
+    PHImageRequestOptions *option = [[PHImageRequestOptions alloc]init];
+    option.deliveryMode = PHImageRequestOptionsDeliveryModeFastFormat;
     [self.imageManager requestImageForAsset:asset
                                  targetSize:targetSize
                                 contentMode:PHImageContentModeAspectFill
