@@ -64,6 +64,9 @@
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="goChargeMoneyButton" destination="BKI-gj-RtC" id="p9A-zP-m1P"/>
+            </connections>
             <point key="canvasLocation" x="459.5" y="212.5"/>
         </view>
     </objects>

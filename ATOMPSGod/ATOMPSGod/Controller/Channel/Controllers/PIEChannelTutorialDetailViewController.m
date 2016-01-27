@@ -30,6 +30,7 @@
 #import "PIECommentManager.h"
 #import "PIECommentViewController.h"
 #import "LxDBAnything.h"
+#import "PIEChannelTutorialRewardFailedView.h"
 
 
 @interface PIEChannelTutorialDetailViewController ()
@@ -525,8 +526,15 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
          double amount          = [dataDict[@"amount"] doubleValue];
          
          if (rollDiceStatus == -1){
-             NSString *prompt = [NSString stringWithFormat:@"支付失败：剩余余额%.2f, 需付款%.2f", balance,amount];
-             [Hud text:prompt];
+//             NSString *prompt = [NSString stringWithFormat:@"支付失败：剩余余额%.2f, 需付款%.2f", balance,amount];
+//             [Hud text:prompt];
+//
+             PIEChannelTutorialRewardFailedView *rewardFailedView =
+             [PIEChannelTutorialRewardFailedView new];
+             
+             [rewardFailedView show];
+             
+             
          }else if (rollDiceStatus == 1){
              NSString *prompt = [NSString stringWithFormat:@"支付%.2f元，剩余%.2f元", amount, balance];
              [Hud text:prompt];
@@ -540,6 +548,8 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
          }else{
              NSString *prompt = [NSString stringWithFormat:@"type == %ld", (long)rollDiceStatus];
              [Hud error:prompt];
+             
+             
          }
      }];
     

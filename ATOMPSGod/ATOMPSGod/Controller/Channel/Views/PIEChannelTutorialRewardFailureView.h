@@ -11,5 +11,6 @@
 @interface PIEChannelTutorialRewardFailureView : UIView
 
 + (PIEChannelTutorialRewardFailureView *)rewardFailureView;
+@property (weak, nonatomic) IBOutlet UIButton *goChargeMoneyButton;
 
 @end
