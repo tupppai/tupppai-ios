@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 @class PIEChannelViewModel;
 @class PIEPageVM;
+@class PIEChannelTutorialModel;
+
 @interface PIEChannelManager : NSObject
 
 + (void)getSource_Channel:(NSDictionary *)params
@@ -19,5 +21,21 @@
                                 (NSMutableArray<PIEPageVM *>
                                  *pageArray))resultBlock
                     completion:(void (^)(void))completionBlock;
+
+
+
++ (void)getSource_channelTutorialList:(NSDictionary *)params
+                                block:(void (^)(NSArray<PIEChannelTutorialModel *> *retArray))block
+                         failureBlock:(void (^)(void))failure;
+
++ (void)getSource_channelTutorialDetail:(NSDictionary *)params
+                                  block:(void(^)(PIEChannelTutorialModel *model))block
+                           failureBlock:(void (^)(void))failure;
+
+/*
+    TODO: rollDiceReward的处理未知，先在外面写好了之后再refactor
+ */
+//+ (void)rollDiceReward:(NSDictionary *)params
+
 @end
 

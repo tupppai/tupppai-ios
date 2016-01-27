@@ -12,11 +12,11 @@
 
 @property (nonatomic, copy)  NSString  *imageURL;
 
-@property (nonatomic, assign) CGFloat  *imageHeight;
+@property (nonatomic, assign) NSInteger imageHeight;
 
-@property (nonatomic, assign) CGFloat  *imageWidth;
+@property (nonatomic, assign) NSInteger imageWidth;
 
-@property (nonatomic, assign) CGFloat  *imageRatio;
+@property (nonatomic, assign) CGFloat   imageRatio;
 
 
 @end

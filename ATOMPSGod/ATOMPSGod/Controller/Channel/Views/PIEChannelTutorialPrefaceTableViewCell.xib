@@ -121,7 +121,14 @@ CPP服务端收到请求返回数据，返回类型为“Response”，里面包
                     <constraint firstItem="u2f-LL-94m" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="zRM-MU-S7B"/>
                 </constraints>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="132.5" y="222"/>
+            <connections>
+                <outlet property="clickCountLabel" destination="5lF-OC-Vt8" id="ftu-G2-yrP"/>
+                <outlet property="loveCountLabel" destination="poN-Ib-3T9" id="wOS-MN-moq"/>
+                <outlet property="replyCountLabel" destination="ocn-HT-4b2" id="OAC-lH-aiZ"/>
+                <outlet property="tutorialSubtitleLabel" destination="304-ql-cJf" id="FdG-Hx-us3"/>
+                <outlet property="tutorialTitleLabel" destination="u2f-LL-94m" id="Ffb-ib-Ose"/>
+            </connections>
+            <point key="canvasLocation" x="56.5" y="260"/>
         </tableViewCell>
     </objects>
     <resources>

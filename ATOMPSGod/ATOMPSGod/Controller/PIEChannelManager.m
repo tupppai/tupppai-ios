@@ -10,6 +10,7 @@
 #import "PIEChannelViewModel.h"
 #import "PIEModelImage.h"
 #import "PIEChannelViewModel.h"
+#import "PIEChannelTutorialModel.h"
 @implementation PIEChannelManager
 + (void)getSource_Channel:(NSDictionary *)params
                     block:(void (^)(NSMutableArray<PIEChannelViewModel *> *))block {
@@ -108,5 +109,56 @@
                  }];
 }
 
++ (void)getSource_channelTutorialList:(NSDictionary *)params
+                                block:(void (^)(NSArray<PIEChannelTutorialModel *> *))block
+                         failureBlock:(void (^)(void))failure{
+    [DDBaseService GET:params
+                   url:@"thread/tutorials_list"
+                 block:^(id responseObject) {
+                     if (responseObject == nil) {
+                         if (failure != nil) {
+                             failure();
+                         }
+                     }
+                     else{
+                         NSArray<PIEChannelTutorialModel *> *retArray =
+                         [NSArray<PIEChannelTutorialModel *> array];
+                         NSDictionary *dataDict = responseObject[@"data"];
+                         NSArray<NSDictionary *> *tutorials = dataDict[@"tutorials"];
+                         retArray =
+                         [MTLJSONAdapter modelsOfClass:[PIEChannelTutorialModel class]
+                                         fromJSONArray:tutorials
+                                                 error:nil];
+                         if (block != nil) {
+                             block(retArray);
+                         }
+                     }
+                 }];
+}
+
+
+
++ (void)getSource_channelTutorialDetail:(NSDictionary *)params
+                                  block:(void (^)(PIEChannelTutorialModel *model))block
+                           failureBlock:(void (^)(void))failure{
+    [DDBaseService GET:params
+                   url:@"thread/tutorial_details"
+                 block:^(id responseObject) {
+                     if (responseObject == nil) {
+                         if (failure != nil) {
+                             failure();
+                         }
+                     }
+                     else{
+                         NSDictionary *dataDict = responseObject[@"data"];
+                         PIEChannelTutorialModel *tutorialModel =
+                         [MTLJSONAdapter modelOfClass:[PIEChannelTutorialModel class]
+                                   fromJSONDictionary:dataDict error:nil];
+                         if (block != nil) {
+                             block(tutorialModel);
+                         }
+                     }
+                 }];
+}
 
 @end

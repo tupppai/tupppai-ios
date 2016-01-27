@@ -7,11 +7,13 @@
 //
 
 #import "PIEChannelTutorialImageTableViewCell.h"
+#import "PIEChannelTutorialImageModel.h"
 
 @implementation PIEChannelTutorialImageTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -19,5 +21,16 @@
 
     // Configure the view for the selected state
 }
+
+- (void)injectImageModel:(PIEChannelTutorialImageModel *)tutorialImageModel
+{
+    [self.tutorialImageView
+     sd_setImageWithURL:[NSURL URLWithString:tutorialImageModel.imageURL]];
+    
+    /*
+        layout the cell or something?
+     */
+}
+
 
 @end
