@@ -180,14 +180,7 @@ static NSString *PIEChannelTutorialListCellIdentifier =
 #pragma mark - <UITableViewDelegate>
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    PIEChannelTutorialDetailViewController *tutorialDetailVC =
-//    [[PIEChannelTutorialDetailViewController alloc] init];
-//    
-//    tutorialDetailVC.currentTutorialModel = _source_tutorial[indexPath.row];
-//    
-//
-//    
-//    [self.navigationController pushViewController:tutorialDetailVC animated:YES];
+
     
     PIEChannelTutorialContainerViewController *tutorialContainerVC =
     [[PIEChannelTutorialContainerViewController alloc] init];
@@ -195,6 +188,7 @@ static NSString *PIEChannelTutorialListCellIdentifier =
     tutorialContainerVC.currentTutorialModel = _source_tutorial[indexPath.row];
     
     [self.navigationController pushViewController:tutorialContainerVC animated:YES];
+ 
     
 }
 

@@ -11,10 +11,18 @@
 #import "PIEChannelTutorialHomeworkViewController.h"
 #import "HMSegmentedControl.h"
 #import "PIEChannelTutorialModel.h"
+#import "RengarViewController.h"
+
+#import "LxDBAnything.h"
+
+#import "PIEChannelTutorialShareHomeworkPanelView.h"
+
+
 
 @interface PIEChannelTutorialContainerViewController ()
 <
-    UIScrollViewDelegate
+    UIScrollViewDelegate,
+    RengarViewControllerDelegate
 >
 
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
@@ -55,8 +63,6 @@ typedef NS_ENUM(NSUInteger, PIEChannelTutorialControllerType) {
     
     [self addSubViewControllers];
     
-    [self setupRAC];
-    
     // call the first view controller to start refreshing & fetch data
     // ...
 }
@@ -65,7 +71,6 @@ typedef NS_ENUM(NSUInteger, PIEChannelTutorialControllerType) {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 
 - (void)dealloc
 {
@@ -85,7 +90,8 @@ typedef NS_ENUM(NSUInteger, PIEChannelTutorialControllerType) {
     PIEChannelTutorialDetailViewController *tutorialDetailViewController     = [PIEChannelTutorialDetailViewController new];
     PIEChannelTutorialHomeworkViewController *tutorialHomeworkViewController = [PIEChannelTutorialHomeworkViewController new];
     
-    tutorialDetailViewController.currentTutorialModel = self.currentTutorialModel;
+    tutorialDetailViewController.currentTutorialModel   = self.currentTutorialModel;
+    tutorialHomeworkViewController.currentTutorialModel = self.currentTutorialModel;
     
     [self.tutorialViewControllers addObject:tutorialDetailViewController];
     [self.tutorialViewControllers addObject:tutorialHomeworkViewController];
@@ -101,6 +107,7 @@ typedef NS_ENUM(NSUInteger, PIEChannelTutorialControllerType) {
             make.top.equalTo(self.scrollView);
             make.left.mas_equalTo(i * SCREEN_WIDTH);
         }];
+        [self addChildViewController:vc];
         [vc didMoveToParentViewController:self];
     }
 }
@@ -108,10 +115,24 @@ typedef NS_ENUM(NSUInteger, PIEChannelTutorialControllerType) {
 - (void)setupNavigationItem
 {
     self.navigationItem.titleView = self.segmentedControl;
+    
+    UIBarButtonItem *uploadHomeworkBarButton =
+    [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"pie_channelTutorial_uploadHomeworkButton"]
+                                     style:UIBarButtonItemStylePlain
+                                    target:self action:@selector(uploadHomework)];
+    self.navigationItem.rightBarButtonItem = uploadHomeworkBarButton;
+    
 }
 
-- (void)setupRAC
+#pragma nark - target-actions
+- (void)uploadHomework
 {
+    RengarViewController *rengarViewController = [[RengarViewController alloc] init];
+    
+    rengarViewController.delegate = self;
+    
+    [self.navigationController pushViewController:rengarViewController
+                                         animated:YES];
     
 }
 
@@ -148,6 +169,24 @@ typedef NS_ENUM(NSUInteger, PIEChannelTutorialControllerType) {
         // refresh if is first loaded
         
     }
+}
+
+#pragma mark - <RengarViewControllerDelegate>
+- (void)rengarViewController:(RengarViewController *)rengarViewController
+  didFinishPickingPhotoAsset:(PHAsset *)asset
+           descriptionString:(NSString *)descriptionString
+{
+    LxDBAnyVar(rengarViewController);
+    LxDBAnyVar(asset);
+    LxDBAnyVar(descriptionString);
+    
+    /*
+        POP OUT PIEChannelTutorialShareHomeworkPanelView
+     */
+    PIEChannelTutorialShareHomeworkPanelView *panelView =
+    [PIEChannelTutorialShareHomeworkPanelView new];
+    
+    [panelView show];
 }
 
 #pragma mark - lazy loadings

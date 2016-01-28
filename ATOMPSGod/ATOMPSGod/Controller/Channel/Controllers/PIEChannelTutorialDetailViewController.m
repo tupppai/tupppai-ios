@@ -214,7 +214,7 @@ static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
          commentVC.vm = [self.source_tutorialModel piePageVM];
          commentVC.shouldShowHeaderView = NO;
          commentVC.delegate = self;
-         [self.navigationController pushViewController:commentVC animated:YES];
+         [self.parentViewController.navigationController pushViewController:commentVC animated:YES];
      }];
     
     [[self.toolBar.shareButton
@@ -548,6 +548,7 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
      }];
     
 }
+
 
 
 

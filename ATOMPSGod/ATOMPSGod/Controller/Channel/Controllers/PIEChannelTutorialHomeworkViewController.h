@@ -7,7 +7,10 @@
 //
 
 #import "DDBaseVC.h"
+@class PIEChannelTutorialModel;
 
 @interface PIEChannelTutorialHomeworkViewController : DDBaseVC
+
+@property (nonatomic, strong) PIEChannelTutorialModel *currentTutorialModel;
 
 @end
