@@ -30,13 +30,10 @@
         // Set default values
         self.assetCollectionSubtypes = @[
                                          @(PHAssetCollectionSubtypeSmartAlbumUserLibrary),
-                                         @(PHAssetCollectionSubtypeAlbumMyPhotoStream),
-                                         @(PHAssetCollectionSubtypeSmartAlbumPanoramas),
-//                                         @(PHAssetCollectionSubtypeSmartAlbumVideos),
-                                         @(PHAssetCollectionSubtypeSmartAlbumBursts),
+                                         @(PHAssetCollectionSubtypeSmartAlbumRecentlyAdded),
                                          @(PHAssetCollectionSubtypeSmartAlbumSelfPortraits),
+                                         @(PHAssetCollectionSubtypeSmartAlbumFavorites),
                                          @(PHAssetCollectionSubtypeSmartAlbumScreenshots),
-
                                          ];
         self.minimumNumberOfSelection = 1;
         self.numberOfColumnsInPortrait = 4;
