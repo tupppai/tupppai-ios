@@ -18,11 +18,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="78" height="78"/>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p50-wc-lAe" customClass="QBCheckmarkView">
-                        <rect key="frame" x="55.5" y="4" width="18" height="18"/>
+                        <rect key="frame" x="53.5" y="4" width="20" height="20"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="18" id="4Ya-vE-icx"/>
-                            <constraint firstAttribute="width" constant="18" id="HJU-ad-N5T"/>
+                            <constraint firstAttribute="height" constant="20" id="4Ya-vE-icx"/>
+                            <constraint firstAttribute="width" constant="20" id="HJU-ad-N5T"/>
                         </constraints>
                     </view>
                     <view hidden="YES" alpha="0.30000001192092896" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jnA-g4-gi5">

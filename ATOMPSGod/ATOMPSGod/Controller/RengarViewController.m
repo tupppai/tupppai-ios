@@ -11,20 +11,27 @@
 #import "RengarPanelView.h"
 #import "RengarBottomBar.h"
 #import "RengarAssetCollectionViewCell.h"
-#import "MMPlaceHolder.h"
-@interface RengarViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
+#import "RengarAlbumsViewController.h"
+#import "DDNavigationController.h"
+@interface RengarViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,RengarAlbumsViewControllerDelegate>
+
+@property (nonatomic, strong) PHAssetCollection *assetCollection;
+@property (nonatomic, strong) PHFetchResult *fetchResult;
+@property (nonatomic, strong) NSMutableOrderedSet *assetOrderedSet;
+
 @property (nonatomic,strong) SZTextView *textView;
 @property (nonatomic,strong) RengarPanelView *panelView;
 @property (nonatomic,strong) UICollectionView *collectionView;
 @property (nonatomic,strong) RengarBottomBar *bottomBar;
 
-@property (nonatomic, strong) PHFetchResult *fetchResult;
-@property (nonatomic, strong) NSMutableOrderedSet *assetOrderedSet;
 
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
-@property (nonatomic, strong) MASConstraint *panelViewTopMarginContraint;
-@property (nonatomic, assign) CGFloat initialHeight;
-@property (nonatomic, assign) CGFloat expandedHeight;
+@property (nonatomic, strong) MASConstraint *collectionViewHeightConstraint;
+@property (nonatomic, strong) MASConstraint *panelTopMarginConstraint;
+
+@property (nonatomic, assign) CGFloat initialHeightOfCollectionView;
+@property (nonatomic, assign) CGFloat fullExpandedHeightOfCollectionView;
+@property (nonatomic, assign) CGFloat initalHeightOfCollectionViewBeforePanning;
 
 @end
 
@@ -34,11 +41,47 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     [self setupData];
     [self setupNavBar];
     [self setupViews];
-    [self.view showPlaceHolderWithAllSubviews];
+    [self setupPhotoSource];
+    [self setupEvents];
+}
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
+
+-(void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
     
+    if (_fullExpandedHeightOfCollectionView == 0) {
+        _fullExpandedHeightOfCollectionView = self.textView.frame.size.height + _initialHeightOfCollectionView;
+    }
+    if (_initialHeightOfCollectionView == 0) {
+        _initialHeightOfCollectionView = self.collectionView.frame.size.height;
+    }
+}
+-(void)setupData {
+    _assetOrderedSet = [NSMutableOrderedSet orderedSet];
+    _initialHeightOfCollectionView = SCREEN_WIDTH*2.0/3.0;
+}
+
+-(void)setupEvents {
+    [[self.bottomBar.button rac_signalForControlEvents:UIControlEventTouchDown]subscribeNext:^(id x) {
+        RengarAlbumsViewController *vc = [RengarAlbumsViewController new];
+        vc.delegate = self;
+        DDNavigationController *nav = [[DDNavigationController alloc]initWithRootViewController:vc];
+        [self.navigationController presentViewController:nav animated:YES completion:NULL];
+    }];
+    
+    UIPanGestureRecognizer *recognizer_Panel = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panOnPanelView:)];
+    [self.panelView addGestureRecognizer:recognizer_Panel];
+    self.panelView.userInteractionEnabled = YES;
+}
+
+-(void)setupPhotoSource {
     PHFetchResult *assetCollections = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeSmartAlbumUserLibrary options:nil];
     [assetCollections enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(PHAssetCollection *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         PHFetchOptions *options = [PHFetchOptions new];
@@ -49,24 +92,8 @@
         }];
     }];
 }
--(void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-}
 
-
--(void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    
-    if (_expandedHeight == 0) {
-        _expandedHeight = self.textView.frame.size.height + _initialHeight - 60;
-    }
-}
--(void)setupData {
-    _assetOrderedSet = [NSMutableOrderedSet orderedSet];
-    _initialHeight = SCREEN_WIDTH*2.0/3.0;
-}
-- (void)setAssetCollection:(PHAssetCollection *)assetCollection
-{
+- (void)updateCollectionViewWithAssetCollection:(PHAssetCollection*)assetCollection {
     _assetCollection = assetCollection;
     
     if (self.assetCollection) {
@@ -74,7 +101,7 @@
         options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeImage];
         
         [self.assetOrderedSet removeAllObjects];
-
+        
         PHFetchResult *fetchResult = [PHAsset fetchAssetsInAssetCollection:self.assetCollection options:options];
         [fetchResult enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             [self.assetOrderedSet addObject:obj];
@@ -85,6 +112,7 @@
     }
     
     [self.collectionView reloadData];
+    [self.collectionView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
 }
 
 -(void)setupNavBar {
@@ -98,15 +126,17 @@
     UIButton *barButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30, 30)];
     [barButton setTitle:@"发布" forState:UIControlStateNormal];
     [barButton setTitleColor:[UIColor colorWithHex:0x000000 andAlpha:0.6] forState:UIControlStateNormal];
-    [barButton addTarget:self action:@selector(tapNavBarRightBarButton)
-        forControlEvents:UIControlEventTouchUpInside];
+    [[barButton rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(id x) {
+        [self tapNavBarRightBarButton];
+    }];
     barButton.titleLabel.font = [UIFont lightTupaiFontOfSize:15];
 
     UIBarButtonItem *barButtonItem =
     [[UIBarButtonItem alloc] initWithCustomView:barButton];
 
     self.navigationItem.rightBarButtonItem = barButtonItem;
-
+    
+    
 }
 
 -(void)setupViews {
@@ -120,27 +150,36 @@
 
 
 -(void)setupViewContraints {
+    
+//    [self.textView setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisVertical];
+
     [self.textView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.and.leading.and.trailing.equalTo(self.view);
     }];
     [self.panelView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.textView.mas_bottom).with.offset(2);
+        self.panelTopMarginConstraint = make.top.equalTo(self.textView.mas_bottom).with.offset(2);
         make.leading.and.trailing.equalTo(self.view);
         make.height.equalTo(@30);
     }];
+    
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.panelView.mas_bottom);
         make.leading.and.trailing.equalTo(self.view);
-        self.panelViewTopMarginContraint = make.height.equalTo(@(self.initialHeight));
+        self.collectionViewHeightConstraint = make.height.equalTo(@(self.initialHeightOfCollectionView)).with.priorityLow();
+        make.height.greaterThanOrEqualTo(@(self.initialHeightOfCollectionView));
     }];
     [self.bottomBar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.collectionView.mas_bottom);
-        make.height.equalTo(@60);
+        make.height.equalTo(@45);
         make.leading.and.trailing.and.bottom.equalTo(self.view);
     }];
 }
 
 
+-(void)albumsViewController:(RengarAlbumsViewController *)albumsViewController didDismissWithAssetCollection:(PHAssetCollection *)assetCollection {
+    self.selectedIndexPath = nil;
+    [self updateCollectionViewWithAssetCollection:assetCollection];
+}
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
@@ -184,12 +223,15 @@
 }
 
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    
+    [self resignTextView];
     CGFloat startContentOffsetY = scrollView.contentOffset.y;
     
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         CGFloat distance = ABS(startContentOffsetY - scrollView.contentOffset.y);
-        if (distance < 100) {
+        
+        if (distance < 20) {
             return ;
         }
         if (startContentOffsetY > scrollView.contentOffset.y  ) {
@@ -206,23 +248,93 @@
 
 - (void)scrollViewDidScrollUp {
     [self resignTextView];
-    [self.panelViewTopMarginContraint setOffset:_expandedHeight];
-    [UIView animateWithDuration:0.5 animations:^{
+    [self.collectionViewHeightConstraint setOffset:_fullExpandedHeightOfCollectionView];
+    [UIView animateWithDuration:1.0 delay:0.0 usingSpringWithDamping:0.8 initialSpringVelocity:1.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
         [self.view layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        
     }];
 }
 - (void)scrollViewDidScrollDown {
     [self resignTextView];
-    [self.panelViewTopMarginContraint setOffset:_initialHeight];
-    [UIView animateWithDuration:0.5 animations:^{
+    [self.collectionViewHeightConstraint setOffset:_initialHeightOfCollectionView];
+    [UIView animateWithDuration:1.0 delay:0.0 usingSpringWithDamping:0.8 initialSpringVelocity:1.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
         [self.view layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        
     }];
 
 }
 -(void)tapNavBarRightBarButton {
+    
+    if (self.textView.text.length < 3) {
+        [Hud text:@"作业描述少于三个字符～"];
+        return;
+    }  else   if (self.selectedIndexPath == nil) {
+        [Hud text:@"还没有选择图片喔～"];
+        [self resignTextView];
+        return;
+    }
+    
     [self resignTextView];
+    
+    if (_delegate && [_delegate respondsToSelector:@selector(rengarViewController:didFinishPickingPhotoAsset:descriptionString:)]) {
+        [_delegate rengarViewController:self didFinishPickingPhotoAsset:[self.assetOrderedSet objectAtIndex:self.selectedIndexPath.row] descriptionString:self.textView.text];
+    }
+    
+    if (self.navigationController.viewControllers.count == 1) {
+        [self dismissViewControllerAnimated:YES completion:NULL];
+    } else if (self.navigationController.viewControllers.count > 1) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+
+}
+- (void)panOnPanelView:(id)sender {
+    [self resignTextView];
+        [self.view bringSubviewToFront:[(UIPanGestureRecognizer*)sender view]];
+        CGPoint translatedPoint = [(UIPanGestureRecognizer*)sender translationInView:self.view];
+        if ([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateBegan) {
+        }
+    
+        [self.collectionViewHeightConstraint setOffset:_initalHeightOfCollectionViewBeforePanning-translatedPoint.y];
+    
+        [self.view layoutIfNeeded];
+
+    
+        if ([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateEnded) {
+
+//            CGFloat velocityY = (0.2*[(UIPanGestureRecognizer*)sender velocityInView:self.view].y);
+//            
+//            CGFloat finalY = _startYOfPanning + translatedPoint.y + velocityY;;
+//            CGFloat finalHeight = _heightOfCollectionView - translatedPoint.y - velocityY;;
+//
+//            if (UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation])) {
+//                if (finalY < 0) {
+//                    finalY = 0;
+//                }
+//            }
+//            CGFloat animationDuration = (ABS(velocityY)*.0002)+.2;
+//            
+//            NSLog(@"the duration is: %f", animationDuration);
+//            
+//            [UIView beginAnimations:nil context:NULL];
+//            [UIView setAnimationDuration:animationDuration];
+//            [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+//            [UIView setAnimationDelegate:self];
+//            [UIView setAnimationDidStopSelector:@selector(animationDidFinish)];
+////            [[sender view] setCenter:CGPointMake(finalX, finalY)];
+//            [self.collectionViewHeightConstraint setOffset:finalHeight];
+//
+//            [UIView commitAnimations];
+            
+            
+            _initalHeightOfCollectionViewBeforePanning = self.collectionView.frame.size.height;
+        }
 }
 
+- (void)animationDidFinish {
+    
+}
 
 - (void)resignTextView {
     if ([self.textView isFirstResponder]) {
@@ -257,6 +369,10 @@
         _collectionView = [[UICollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:layout];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
+        _collectionView.alwaysBounceVertical = YES;
+        _collectionView.bounces = YES;
+        
+
         UINib *nib = [UINib nibWithNibName:@"RengarAssetCollectionViewCell" bundle:NULL];
         [_collectionView registerNib:nib forCellWithReuseIdentifier:@"RengarAssetCollectionViewCell"];
 

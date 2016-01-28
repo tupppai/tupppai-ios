@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface RengarBottomBar : UIView
-
+@property (nonatomic,strong) UIButton *button;
 @end
