@@ -6,17 +6,17 @@
 //  Copyright © 2016年 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "PIEChannelTutorialViewController.h"
+#import "PIEChannelTutorialsListViewController.h"
 #import "PIEChannelViewModel.h"
 #import "PIEChannelTutorialModel.h"
 #import "PIERefreshTableView.h"
 #import "PIEChannelTutorialListCell.h"
 #import "PIEChannelManager.h"
 #import "LxDBAnything.h"
-#import "PIEChannelTutorialDetailViewController.h"
+//#import "PIEChannelTutorialDetailViewController.h"
+#import "PIEChannelTutorialContainerViewController.h"
 
-
-@interface PIEChannelTutorialViewController ()
+@interface PIEChannelTutorialsListViewController ()
 <
     /* Protocols */
     UITableViewDelegate, UITableViewDataSource,
@@ -31,7 +31,7 @@
 
 @end
 
-@implementation PIEChannelTutorialViewController
+@implementation PIEChannelTutorialsListViewController
 
 static NSString *PIEChannelTutorialListCellIdentifier =
 @"PIEChannelTutorialListCell";
@@ -112,8 +112,8 @@ static NSString *PIEChannelTutorialListCellIdentifier =
 #pragma mark - data setup
 - (void)setupData
 {
-    _source_tutorial = [NSMutableArray<PIEChannelTutorialModel *> new];
-    
+    _source_tutorial  = [NSMutableArray<PIEChannelTutorialModel *> new];
+
     _currentPageIndex = 1;
     
 }
@@ -180,14 +180,22 @@ static NSString *PIEChannelTutorialListCellIdentifier =
 #pragma mark - <UITableViewDelegate>
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PIEChannelTutorialDetailViewController *tutorialDetailVC =
-    [[PIEChannelTutorialDetailViewController alloc] init];
+//    PIEChannelTutorialDetailViewController *tutorialDetailVC =
+//    [[PIEChannelTutorialDetailViewController alloc] init];
+//    
+//    tutorialDetailVC.currentTutorialModel = _source_tutorial[indexPath.row];
+//    
+//
+//    
+//    [self.navigationController pushViewController:tutorialDetailVC animated:YES];
     
-    tutorialDetailVC.currentTutorialModel = _source_tutorial[indexPath.row];
+    PIEChannelTutorialContainerViewController *tutorialContainerVC =
+    [[PIEChannelTutorialContainerViewController alloc] init];
     
-
+    tutorialContainerVC.currentTutorialModel = _source_tutorial[indexPath.row];
     
-    [self.navigationController pushViewController:tutorialDetailVC animated:YES];
+    [self.navigationController pushViewController:tutorialContainerVC animated:YES];
+    
 }
 
 
