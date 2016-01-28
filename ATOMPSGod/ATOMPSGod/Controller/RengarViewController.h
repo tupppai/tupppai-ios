@@ -9,8 +9,17 @@
 #import <UIKit/UIKit.h>
 #import <Photos/Photos.h>
 
+@class RengarViewController;
+
+@protocol RengarViewControllerDelegate <NSObject>
+@required
+- (void)rengarViewController:(RengarViewController *)rengarViewController didFinishPickingPhotoAsset:(PHAsset*)asset descriptionString:(NSString*)descriptionString;
+@end
+
+
 @interface RengarViewController : DDBaseVC
 
-@property (nonatomic, strong) PHAssetCollection *assetCollection;
+@property (nonatomic, weak) id<RengarViewControllerDelegate> delegate;
+
 
 @end

@@ -521,6 +521,9 @@
 		F4CAFD8E1C586F77000332C3 /* RengarBottomBar.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CAFD8D1C586F77000332C3 /* RengarBottomBar.m */; };
 		F4CAFD921C58A86D000332C3 /* RengarAssetCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CAFD901C58A86D000332C3 /* RengarAssetCollectionViewCell.m */; };
 		F4CAFD931C58A86D000332C3 /* RengarAssetCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4CAFD911C58A86D000332C3 /* RengarAssetCollectionViewCell.xib */; };
+		F4CB08641C59C45B007CB846 /* RengarAlbumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CB08631C59C45B007CB846 /* RengarAlbumsViewController.m */; };
+		F4CB08681C59E0B1007CB846 /* RengarAlbumTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CB08661C59E0B1007CB846 /* RengarAlbumTableViewCell.m */; };
+		F4CB08691C59E0B1007CB846 /* RengarAlbumTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4CB08671C59E0B1007CB846 /* RengarAlbumTableViewCell.xib */; };
 		F4D015BB1BA6AF7200A28329 /* PIEThumbAnimateView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D015BA1BA6AF7200A28329 /* PIEThumbAnimateView.m */; };
 		F4D07A5D1BBA3AB70016A8B5 /* PIEEliteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D07A5C1BBA3AB70016A8B5 /* PIEEliteManager.m */; };
 		F4D368721BA9552B00E6C91C /* PIENewAskCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D368701BA9552B00E6C91C /* PIENewAskCollectionCell.m */; };
@@ -1730,6 +1733,11 @@
 		F4CAFD8F1C58A86D000332C3 /* RengarAssetCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RengarAssetCollectionViewCell.h; sourceTree = "<group>"; };
 		F4CAFD901C58A86D000332C3 /* RengarAssetCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RengarAssetCollectionViewCell.m; sourceTree = "<group>"; };
 		F4CAFD911C58A86D000332C3 /* RengarAssetCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RengarAssetCollectionViewCell.xib; sourceTree = "<group>"; };
+		F4CB08621C59C45B007CB846 /* RengarAlbumsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RengarAlbumsViewController.h; sourceTree = "<group>"; };
+		F4CB08631C59C45B007CB846 /* RengarAlbumsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RengarAlbumsViewController.m; sourceTree = "<group>"; };
+		F4CB08651C59E0B1007CB846 /* RengarAlbumTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RengarAlbumTableViewCell.h; sourceTree = "<group>"; };
+		F4CB08661C59E0B1007CB846 /* RengarAlbumTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RengarAlbumTableViewCell.m; sourceTree = "<group>"; };
+		F4CB08671C59E0B1007CB846 /* RengarAlbumTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RengarAlbumTableViewCell.xib; sourceTree = "<group>"; };
 		F4D015B91BA6AF7200A28329 /* PIEThumbAnimateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEThumbAnimateView.h; sourceTree = "<group>"; };
 		F4D015BA1BA6AF7200A28329 /* PIEThumbAnimateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEThumbAnimateView.m; sourceTree = "<group>"; };
 		F4D07A5B1BBA3AB70016A8B5 /* PIEEliteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteManager.h; sourceTree = "<group>"; };
@@ -4252,6 +4260,8 @@
 			children = (
 				F4CAFD821C586CC1000332C3 /* RengarViewController.h */,
 				F4CAFD831C586CC1000332C3 /* RengarViewController.m */,
+				F4CB08621C59C45B007CB846 /* RengarAlbumsViewController.h */,
+				F4CB08631C59C45B007CB846 /* RengarAlbumsViewController.m */,
 				F4CAFD861C586F39000332C3 /* RengarPanelView.h */,
 				F4CAFD871C586F39000332C3 /* RengarPanelView.m */,
 				F4CAFD8C1C586F77000332C3 /* RengarBottomBar.h */,
@@ -4259,6 +4269,9 @@
 				F4CAFD8F1C58A86D000332C3 /* RengarAssetCollectionViewCell.h */,
 				F4CAFD901C58A86D000332C3 /* RengarAssetCollectionViewCell.m */,
 				F4CAFD911C58A86D000332C3 /* RengarAssetCollectionViewCell.xib */,
+				F4CB08651C59E0B1007CB846 /* RengarAlbumTableViewCell.h */,
+				F4CB08661C59E0B1007CB846 /* RengarAlbumTableViewCell.m */,
+				F4CB08671C59E0B1007CB846 /* RengarAlbumTableViewCell.xib */,
 			);
 			name = Rengar;
 			sourceTree = "<group>";
@@ -4838,6 +4851,7 @@
 				E942897D1B5B32A200ED26E4 /* NotificationBackgroundSuccessIcon@2x.png in Resources */,
 				0EF2F5C81C154A5700F27D61 /* PIEChannelTableViewCell.xib in Resources */,
 				90B3A2F71C546BD000F059D1 /* PIECashFlowDetailsNormalCell.xib in Resources */,
+				F4CB08691C59E0B1007CB846 /* RengarAlbumTableViewCell.xib in Resources */,
 				E94289751B5B32A200ED26E4 /* NotificationBackgroundError@2x.png in Resources */,
 				E94289771B5B32A200ED26E4 /* NotificationBackgroundErrorIcon@2x.png in Resources */,
 				90104B441C4B5F8F00E389F4 /* PIESearchUserSimpleTableViewCell.xib in Resources */,
@@ -4981,6 +4995,7 @@
 				F4CAFD841C586CC1000332C3 /* RengarViewController.m in Sources */,
 				F4E530961BD4CFB800FAA65D /* PIELoginViewController.m in Sources */,
 				F4CAFD881C586F39000332C3 /* RengarPanelView.m in Sources */,
+				F4CB08681C59E0B1007CB846 /* RengarAlbumTableViewCell.m in Sources */,
 				5C4AE3EC1AAED60A0020E102 /* PIEFriendFansViewController.m in Sources */,
 				5C3101871AAE9B0F00EF529B /* PIEThirdPartyBindingViewController.m in Sources */,
 				0ECED3461C17CC4E00D3F097 /* PIEChannelDetailAskPSItemView.m in Sources */,
@@ -5183,6 +5198,7 @@
 				5C70715F1AC52656004B3A6A /* ATOMImageCropper.m in Sources */,
 				3BD5E16C1BA11E6B00C7383A /* CAPSPageMenu.m in Sources */,
 				E99D2F541B1C7E8D000D7784 /* UIImage+Blurring.m in Sources */,
+				F4CB08641C59C45B007CB846 /* RengarAlbumsViewController.m in Sources */,
 				F41BA0D21C0EDCE800979D43 /* MJRefreshConst.m in Sources */,
 				F4993CF01BE5B32C007F9BE4 /* UIRefreshControl+AFNetworking.m in Sources */,
 				90738B1B1C4763FE00EE6137 /* PIENotificationCommentOnImageTableViewCell.m in Sources */,
