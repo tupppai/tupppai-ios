@@ -60,6 +60,7 @@
                 <constraint firstAttribute="bottom" secondItem="BKI-gj-RtC" secondAttribute="bottom" constant="33" id="chr-CT-s3o"/>
                 <constraint firstItem="cmK-SQ-Exn" firstAttribute="top" secondItem="ap8-iF-j6u" secondAttribute="bottom" constant="33" id="eEo-Lq-Dwg"/>
                 <constraint firstItem="cmK-SQ-Exn" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="g5L-ha-nOJ"/>
+                <constraint firstItem="BKI-gj-RtC" firstAttribute="top" secondItem="6wm-1O-UdC" secondAttribute="bottom" constant="41.5" id="v2e-gV-h08"/>
                 <constraint firstItem="ap8-iF-j6u" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="vDX-MK-Ijk"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>

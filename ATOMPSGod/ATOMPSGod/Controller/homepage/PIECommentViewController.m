@@ -44,6 +44,19 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 @property (nonatomic, strong)  PIEActionSheet_PS * psActionSheet;
 @property (nonatomic, assign)  BOOL isFirstLoading;
 
+
+/**
+    全局状态量：标记用户是否有发出评论；用于退出navigationcontroller的stack之后
+            判断上一个控制器是否有需要重新刷新评论列表（目前用于PIEChannelTutorialDetailsViewController)
+ 
+    初始状态：NO
+    sendComment -> YES
+    
+    用于-dismiss方法中是否要通知代理
+ 
+ */
+@property (nonatomic, assign) BOOL hasSentComment;
+
 @end
 
 @implementation PIECommentViewController
@@ -89,12 +102,20 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     _isFirstLoading = YES;
     [self setupNavBar];
     
+    [self setupData];
+    
     [self configTableView];
     [self configFooterRefresh];
     [self configTextInput];
     [self addGestureToCommentTableView];
     [self getDataSource];
 
+}
+
+
+- (void)setupData
+{
+    _hasSentComment = NO;
 }
 
 - (void)setupNavBar {
@@ -117,10 +138,18 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [self dismissViewControllerAnimated:NO completion:nil];
 }
 - (void)popSelf {
+//    if (_delegate != nil &&
+//        [_delegate respondsToSelector:@selector(nil)]) {
+////        [_delegate ATOMViewControllerPopedFromNav];
+//    }
+    
     if (_delegate != nil &&
-        [_delegate respondsToSelector:@selector(ATOMViewControllerPopedFromNav)]) {
-        [_delegate ATOMViewControllerPopedFromNav];
+        _hasSentComment == YES &&
+        [_delegate respondsToSelector:@selector(ATOMViewControllerPopedFromNavAfterSendingCommment)]) {
+        
+        [_delegate ATOMViewControllerPopedFromNavAfterSendingCommment];
     }
+   
     
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -295,6 +324,8 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
         if (comment_id) {
             commentVM.ID = comment_id;
             self.vm.model.totalCommentNumber++;
+            
+            _hasSentComment = YES;
         }
     }];
     self.textView.text = @"";

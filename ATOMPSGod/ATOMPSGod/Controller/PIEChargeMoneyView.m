@@ -36,6 +36,8 @@
         make.centerX.equalTo(self);
         _panelViewMasConstraintCenterY = make.centerY.equalTo(self).with.offset(-SCREEN_HEIGHT);
     }];
+    
+
     [[_panelView.confirmButton rac_signalForControlEvents:UIControlEventTouchDown]subscribeNext:^(id x) {
         if (_delegate && [_delegate respondsToSelector:@selector(chargeMoneyView:tapConfirmButtonWithAmount:)]) {
                 [_delegate chargeMoneyView:self tapConfirmButtonWithAmount:[self.panelView.moneyCountTextField.text integerValue]];

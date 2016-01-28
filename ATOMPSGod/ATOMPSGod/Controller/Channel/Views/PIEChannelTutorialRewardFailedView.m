@@ -36,8 +36,12 @@
     [self addGestureRecognizer:tap];
     
     [self addSubview:self.panelView];
+    
+    @weakify(self);
     [self.panelView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(300, 350));
+        @strongify(self);
+        make.left.equalTo(self).with.offset(37);
+        make.right.equalTo(self).with.offset(-37);
         make.centerX.equalTo(self);
         _panelViewMasConstraintCenterY =
         make.centerY.equalTo(self).with.offset(-SCREEN_HEIGHT);

@@ -37,7 +37,7 @@
 - (void)ATOMViewControllerDismissWithInfo:(NSDictionary*)info;
 
 /** navigationController, pop out from stack */
-- (void)ATOMViewControllerPopedFromNav;
+- (void)ATOMViewControllerPopedFromNavAfterSendingCommment;
 @end
 
 @protocol PIEShareFunctionViewDelegate <NSObject>

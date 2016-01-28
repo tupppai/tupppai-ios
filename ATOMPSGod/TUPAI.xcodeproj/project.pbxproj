@@ -159,6 +159,7 @@
 		904D1E541C562AC1009DCEE3 /* PIEChannelTutorialDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 904D1E531C562AC1009DCEE3 /* PIEChannelTutorialDetailViewController.m */; };
 		904D1E641C563020009DCEE3 /* PIEChannelTutorialTeacherDescTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 904D1E621C563020009DCEE3 /* PIEChannelTutorialTeacherDescTableViewCell.m */; };
 		904D1E651C563020009DCEE3 /* PIEChannelTutorialTeacherDescTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 904D1E631C563020009DCEE3 /* PIEChannelTutorialTeacherDescTableViewCell.xib */; };
+		9053CA5C1C59C11E009F671F /* PIEChannelTutorialShareHomeworkPanelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9053CA5B1C59C11E009F671F /* PIEChannelTutorialShareHomeworkPanelView.m */; };
 		905DC1B21C4F518000596B0E /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 905DC1B11C4F518000596B0E /* TTTAttributedLabel.m */; };
 		9061EA691C55BCF80078374E /* PIEChannelTutorialImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9061EA671C55BCF80078374E /* PIEChannelTutorialImageTableViewCell.m */; };
 		9061EA6A1C55BCF80078374E /* PIEChannelTutorialImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9061EA681C55BCF80078374E /* PIEChannelTutorialImageTableViewCell.xib */; };
@@ -1075,6 +1076,8 @@
 		904D1E611C563020009DCEE3 /* PIEChannelTutorialTeacherDescTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelTutorialTeacherDescTableViewCell.h; sourceTree = "<group>"; };
 		904D1E621C563020009DCEE3 /* PIEChannelTutorialTeacherDescTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelTutorialTeacherDescTableViewCell.m; sourceTree = "<group>"; };
 		904D1E631C563020009DCEE3 /* PIEChannelTutorialTeacherDescTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEChannelTutorialTeacherDescTableViewCell.xib; sourceTree = "<group>"; };
+		9053CA5A1C59C11E009F671F /* PIEChannelTutorialShareHomeworkPanelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelTutorialShareHomeworkPanelView.h; sourceTree = "<group>"; };
+		9053CA5B1C59C11E009F671F /* PIEChannelTutorialShareHomeworkPanelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelTutorialShareHomeworkPanelView.m; sourceTree = "<group>"; };
 		905DC1B01C4F518000596B0E /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
 		905DC1B11C4F518000596B0E /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
 		9061EA661C55BCF80078374E /* PIEChannelTutorialImageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelTutorialImageTableViewCell.h; sourceTree = "<group>"; };
@@ -2175,15 +2178,9 @@
 				9061EA661C55BCF80078374E /* PIEChannelTutorialImageTableViewCell.h */,
 				9061EA671C55BCF80078374E /* PIEChannelTutorialImageTableViewCell.m */,
 				9061EA681C55BCF80078374E /* PIEChannelTutorialImageTableViewCell.xib */,
-				9061EA771C55C8D50078374E /* PIEChannelTutorialRewardFailureView.h */,
-				9061EA781C55C8D50078374E /* PIEChannelTutorialRewardFailureView.m */,
-				9061EA7A1C55C8E10078374E /* PIEChannelTutorialRewardFailureView.xib */,
 				90D6FE701C5781670060B92F /* PIEChannelTutorialLockedUpView.h */,
 				90D6FE711C5781670060B92F /* PIEChannelTutorialLockedUpView.m */,
 				90D6FE7F1C5781720060B92F /* PIEChannelTutorialLockedUpView.xib */,
-				9061EA7C1C55ECE40078374E /* PIEChannelTutorialFinishUploadingHomeworkView.h */,
-				9061EA7D1C55ECE40078374E /* PIEChannelTutorialFinishUploadingHomeworkView.m */,
-				9061EA7F1C55ECF90078374E /* PIEChannelTutorialFinishUploadingHomeworkView.xib */,
 				9013E9BC1C575EDD00459905 /* PIEChannelTutorialDetailToolbar.h */,
 				9013E9BD1C575EDD00459905 /* PIEChannelTutorialDetailToolbar.m */,
 				9013E9CB1C575EF600459905 /* PIEChannelTutorialDetailToolbar.xib */,
@@ -2195,6 +2192,14 @@
 				90D01BD31C5896800035F959 /* PIEChannelTutorialCommentTableViewCell.xib */,
 				909E2E361C58DBDC000EA0EC /* PIEChannelTutorialRewardFailedView.h */,
 				909E2E371C58DBDC000EA0EC /* PIEChannelTutorialRewardFailedView.m */,
+				9061EA771C55C8D50078374E /* PIEChannelTutorialRewardFailureView.h */,
+				9061EA781C55C8D50078374E /* PIEChannelTutorialRewardFailureView.m */,
+				9061EA7A1C55C8E10078374E /* PIEChannelTutorialRewardFailureView.xib */,
+				9061EA7C1C55ECE40078374E /* PIEChannelTutorialFinishUploadingHomeworkView.h */,
+				9061EA7D1C55ECE40078374E /* PIEChannelTutorialFinishUploadingHomeworkView.m */,
+				9061EA7F1C55ECF90078374E /* PIEChannelTutorialFinishUploadingHomeworkView.xib */,
+				9053CA5A1C59C11E009F671F /* PIEChannelTutorialShareHomeworkPanelView.h */,
+				9053CA5B1C59C11E009F671F /* PIEChannelTutorialShareHomeworkPanelView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4840,7 +4845,6 @@
 				F4EC11271BCF55EC002D1DCF /* PIENotificationLikeTableViewCell.xib in Resources */,
 				E900AB5B1B450E970019BAEA /* Images.xcassets in Resources */,
 				F4F72C001BCB6CD6002FF05A /* PIEMyCollectionTableViewCell.xib in Resources */,
-				F4EA4DB21BF477E400486304 /* intro3.png in Resources */,
 				90D01BD51C5896800035F959 /* PIEChannelTutorialCommentTableViewCell.xib in Resources */,
 				90C8FB0A1C48AF6800F536D7 /* PIEProceedingToHelpHeaderView.xib in Resources */,
 				F42100EE1BF5E76A00CFD82E /* intro1.xib in Resources */,
@@ -5055,6 +5059,7 @@
 				F4F0A1C41C437F1C000DDEBB /* QBAlbumsViewController.m in Sources */,
 				F4C0DFEB1BE9D45F000615CF /* PIEWebViewViewController.m in Sources */,
 				5C83A8911AC66F910071A024 /* POPGeometry.mm in Sources */,
+				9053CA5C1C59C11E009F671F /* PIEChannelTutorialShareHomeworkPanelView.m in Sources */,
 				F41BA0CD1C0EDCE800979D43 /* MJRefreshBackStateFooter.m in Sources */,
 				F4DC3D3F1BC131BA00DCF72F /* PIEFriendAskTableViewCell.m in Sources */,
 				F40207411BA7C4160007CE02 /* PIEPresenter.m in Sources */,

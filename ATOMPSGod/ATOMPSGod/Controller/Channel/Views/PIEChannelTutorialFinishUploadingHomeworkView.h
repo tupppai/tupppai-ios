@@ -10,6 +10,19 @@
 
 @interface PIEChannelTutorialFinishUploadingHomeworkView : UIView
 
+@property (weak, nonatomic) IBOutlet UIButton *weiboButton;
+
+@property (weak, nonatomic) IBOutlet UIButton *qqzoneButton;
+
+@property (weak, nonatomic) IBOutlet UIButton *wechatMomentButton;
+
+@property (weak, nonatomic) IBOutlet UIButton *wechatButton;
+
+@property (weak, nonatomic) IBOutlet UIButton *qqFriendButton;
+
+@property (weak, nonatomic) IBOutlet UIButton *dismissButton;
+
+
 + (PIEChannelTutorialFinishUploadingHomeworkView *)finishUploadingHomeworkView;
 
 @end

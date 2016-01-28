@@ -223,15 +223,13 @@ static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
          [Hud text:@"show shareView"];
      }];
     
-    [[self rac_signalForSelector:@selector(ATOMViewControllerPopedFromNav) fromProtocol:@protocol(ATOMViewControllerDelegate)] subscribeNext:^(id x) {
+    [[self rac_signalForSelector:@selector(ATOMViewControllerPopedFromNavAfterSendingCommment)
+                    fromProtocol:@protocol(ATOMViewControllerDelegate)]
+     subscribeNext:^(id x) {
         @strongify(self);
-        /* TODO: 优化，不应该是commentViewController曾经发过新的评论，并且返回才需要重刷数据 */
+        /* commentViewController曾经发过新的评论，并且返回才需要重刷数据 */
         [self loadNewTutorialComments];
     }];
-    
-    /* while push back from commentVC */
-//    [self loadMoreTutorialComments];
-    
     
 }
 
@@ -526,15 +524,11 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
          double amount          = [dataDict[@"amount"] doubleValue];
          
          if (rollDiceStatus == -1){
-//             NSString *prompt = [NSString stringWithFormat:@"支付失败：剩余余额%.2f, 需付款%.2f", balance,amount];
-//             [Hud text:prompt];
-//
+
              PIEChannelTutorialRewardFailedView *rewardFailedView =
              [PIEChannelTutorialRewardFailedView new];
              
              [rewardFailedView show];
-             
-             
          }else if (rollDiceStatus == 1){
              NSString *prompt = [NSString stringWithFormat:@"支付%.2f元，剩余%.2f元", amount, balance];
              [Hud text:prompt];
