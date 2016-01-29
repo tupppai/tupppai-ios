@@ -31,6 +31,7 @@
 #import "PIECommentViewController.h"
 #import "LxDBAnything.h"
 #import "PIEChannelTutorialRewardFailedView.h"
+#import "PIEFriendViewController.h"
 
 
 @interface PIEChannelTutorialDetailViewController ()
@@ -60,7 +61,6 @@
 @property (nonatomic, assign) NSInteger currentCommentIndex;
 
 @property (nonatomic, strong) PIEChannelTutorialDetailToolbar *toolBar;
-
 
 
 @end
@@ -231,6 +231,8 @@ static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
         [self loadNewTutorialComments];
     }];
     
+    
+    
 }
 
 #pragma mark - Data setup
@@ -295,11 +297,33 @@ static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
+        
         PIEChannelTutorialTeacherDescTableViewCell *teacherDescCell =
         [tableView dequeueReusableCellWithIdentifier:
          PIEChannelTutorialTeacherDescTableViewCellIdentifier];
         
         [teacherDescCell injectModel:self.source_tutorialModel];
+        
+        /*
+         
+         setup rac for this cell (do not worry about the cell's been recycled.)
+         since all signals from the cell would stop sending anything upon its 'rac_prepareForReuseSignal'. while this cell is being reused,
+         it would re-bound the subcrber for the second time.
+         Result: only one subscriber, the block will only execute once  for every single 
+                 tapping.
+         
+         */
+        @weakify(self);
+        [teacherDescCell.tapOnAvatar subscribeNext:^(id x) {
+            @strongify(self);
+            [self pushToFriendViewController];
+            
+        }];
+        
+        [teacherDescCell.tapOnFollowButton subscribeNext:^(id x) {
+            @strongify(self);
+            [self pressOnFollowButton];
+        }];
         
         return teacherDescCell;
     }
@@ -397,12 +421,12 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 }
 
 
-
 #pragma mark - <PWRefreshBaseTableViewDelegate>
 - (void)didPullRefreshDown:(UITableView *)tableView
 {
     /*
         开启两个线程，异步加载两种数据。（刷新UI放到主线程里应该就不会冲突，最多不就刷新两次tableView咯）
+        不过为了避免race condition, reload data之类的UI更新操作还是统一放到了主队列里串行
      */
     [self loadNewTutorialDetails];
     [self loadMoreTutorialComments];
@@ -428,8 +452,6 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
              [_tableView.mj_header endRefreshing];
              [_tableView reloadData];
          }];
-         
-         
      } failureBlock:^{
          [[NSOperationQueue mainQueue] addOperationWithBlock:^{
              [_tableView.mj_header endRefreshing];
@@ -550,7 +572,28 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 }
 
 
+#pragma mark - private helpers
+- (void)pushToFriendViewController
+{
+    // fetch userid
+     PIEFriendViewController *friendVC =
+    [[PIEFriendViewController alloc] init];
+    
+    friendVC.pageVM = [self.currentTutorialModel piePageVM];
+    
+    // jump to FriendViewController
+    [self.parentViewController.navigationController pushViewController:friendVC
+                                                              animated:YES];
+    
+}
 
+- (void)pressOnFollowButton{
+    // send request
+    
+    // update UI
+    
+    [Hud text:@"follow"];
+}
 
 
 

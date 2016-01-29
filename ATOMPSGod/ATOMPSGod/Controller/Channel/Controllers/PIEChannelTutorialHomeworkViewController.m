@@ -7,10 +7,11 @@
 //
 
 #import "PIEChannelTutorialHomeworkViewController.h"
-#import "PIEEliteFollowReplyTableViewCell.h"
 #import "PIEPageManager.h"
 #import "PIERefreshTableView.h"
 #import "PIEChannelTutorialModel.h"
+#import "PIEEliteHotReplyTableViewCell.h"
+
 
 @interface PIEChannelTutorialHomeworkViewController ()
 <
@@ -24,7 +25,8 @@
 
 @implementation PIEChannelTutorialHomeworkViewController
 
-static NSString *PIEEliteFollowReplyTableViewCellIdentifier = @"PIEEliteFollowReplyTableViewCell";
+static NSString *PIEEliteHotReplyTableViewCellIdentifier =
+@"PIEEliteHotReplyTableViewCell";
 
 #pragma mark - UI life cycles
 - (void)viewDidLoad {
@@ -70,9 +72,9 @@ static NSString *PIEEliteFollowReplyTableViewCellIdentifier = @"PIEEliteFollowRe
         tableView.estimatedRowHeight   = SCREEN_WIDTH+155;
         tableView.rowHeight            = UITableViewAutomaticDimension;
         
-        [tableView registerNib:[UINib nibWithNibName:@"PIEEliteFollowReplyTableViewCell"
+        [tableView registerNib:[UINib nibWithNibName:@"PIEEliteHotReplyTableViewCell"
                                               bundle:nil]
-        forCellReuseIdentifier:PIEEliteFollowReplyTableViewCellIdentifier];
+        forCellReuseIdentifier:PIEEliteHotReplyTableViewCellIdentifier];
         
         [self.view addSubview:tableView];
         [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -144,11 +146,10 @@ static NSString *PIEEliteFollowReplyTableViewCellIdentifier = @"PIEEliteFollowRe
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PIEEliteFollowReplyTableViewCell *replyCell =
-    [tableView dequeueReusableCellWithIdentifier:PIEEliteFollowReplyTableViewCellIdentifier];
+    PIEEliteHotReplyTableViewCell *replyCell =
+    [tableView dequeueReusableCellWithIdentifier:PIEEliteHotReplyTableViewCellIdentifier];
     
     [replyCell injectSauce:_source_homework[indexPath.row]];
-    
     
     return replyCell;
 }

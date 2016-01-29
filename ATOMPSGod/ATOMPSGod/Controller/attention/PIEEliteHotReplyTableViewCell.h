@@ -17,6 +17,8 @@
 #import "PIEBlurAnimateImageView.h"
 #import "TTTAttributedLabel.h"
 
+@class RACSignal;
+
 @interface PIEEliteHotReplyTableViewCell : UITableViewCell
 
 @property (nonatomic,strong) PIEPageVM* vm;
@@ -40,6 +42,12 @@
 @property (weak, nonatomic) IBOutlet PIEBlurAnimateImageView *blurAnimateView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *followView;
+
+
+/*  RAC signals */
+
+
+
 - (void)injectSauce:(PIEPageVM *)viewModel;
 - (void)animateWithType:(PIEThumbAnimateViewType)type;
 @end
