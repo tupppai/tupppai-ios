@@ -565,7 +565,6 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
              NSString *prompt = [NSString stringWithFormat:@"type == %ld", (long)rollDiceStatus];
              [Hud error:prompt];
              
-             
          }
      }];
     

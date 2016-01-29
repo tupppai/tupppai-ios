@@ -45,8 +45,12 @@
 
 
 /*  RAC signals */
-
-
+@property (nonatomic, strong) RACSignal *tapOnAvatarOrUsernameSignal;
+@property (nonatomic, strong) RACSignal *tapOnFollowButtonSignal;
+@property (nonatomic, strong) RACSignal *tapOnAllWorkSignal;
+@property (nonatomic, strong) RACSignal *tapOnCommentSignal;
+@property (nonatomic, strong) RACSignal *tapOnShareSignal;
+@property (nonatomic, strong) RACSignal *tapOnLikeSignal;
 
 - (void)injectSauce:(PIEPageVM *)viewModel;
 - (void)animateWithType:(PIEThumbAnimateViewType)type;

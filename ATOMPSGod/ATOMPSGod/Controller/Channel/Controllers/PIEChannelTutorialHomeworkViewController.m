@@ -11,6 +11,7 @@
 #import "PIERefreshTableView.h"
 #import "PIEChannelTutorialModel.h"
 #import "PIEEliteHotReplyTableViewCell.h"
+#import "LxDBAnything.h"
 
 
 @interface PIEChannelTutorialHomeworkViewController ()
@@ -151,6 +152,41 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
     
     [replyCell injectSauce:_source_homework[indexPath.row]];
     
+    // setup RAC here
+    @weakify(self);
+    
+    [replyCell.tapOnAvatarOrUsernameSignal subscribeNext:^(id x) {
+        @strongify(self);
+        [self tapOnAvatarOrUsernameAtIndexPath:indexPath];
+    }];
+    
+    [replyCell.tapOnFollowButtonSignal subscribeNext:^(id x) {
+        @strongify(self);
+        [self tapOnFollowViewAtIndexPath:indexPath];
+    }];
+    
+    [replyCell.tapOnAllWorkSignal subscribeNext:^(id x) {
+        @strongify(self);
+        [self tapOnAllWorkAtIndexPath:indexPath];
+    }];
+    
+    [replyCell.tapOnShareSignal subscribeNext:^(id x) {
+        @strongify(self);
+        [self tapOnShareViewAtIndexPath:indexPath];
+    }];
+    
+    [replyCell.tapOnCommentSignal subscribeNext:^(id x) {
+        @strongify(self);
+        [self tapOnCommentViewAtIndexPath:indexPath];
+    }];
+    
+    [replyCell.tapOnLikeSignal subscribeNext:^(id x) {
+        @strongify(self);
+        [self tapOnLikeViewAtIndexPath:indexPath];
+    }];
+    
+    // ---- end of setting RAC
+    
     return replyCell;
 }
 
@@ -162,6 +198,44 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
 - (void)didPullRefreshUp:(UITableView *)tableView{
     [self loadMoreHomework];
 }
+
+#pragma mark - RAC response actions
+- (void)tapOnAvatarOrUsernameAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *prompt = [NSString stringWithFormat:@"avatar-%ld", indexPath.row];
+    [Hud text:prompt];
+}
+
+- (void)tapOnFollowViewAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *prompt = [NSString stringWithFormat:@"follow-%ld", indexPath.row];
+    [Hud text:prompt];
+}
+
+- (void)tapOnAllWorkAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *prompt = [NSString stringWithFormat:@"allWork-%ld", indexPath.row];
+    [Hud text:prompt];
+}
+
+- (void)tapOnShareViewAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *prompt = [NSString stringWithFormat:@"share-%ld", indexPath.row];
+    [Hud text:prompt];
+}
+
+- (void)tapOnCommentViewAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *prompt = [NSString stringWithFormat:@"comment-%ld", indexPath.row];
+    [Hud text:prompt];
+}
+
+- (void)tapOnLikeViewAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *prompt = [NSString stringWithFormat:@"like-%ld", indexPath.row];
+    [Hud text:prompt];
+}
+
 
 #pragma mark - lazy loadings
 
