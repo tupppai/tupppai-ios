@@ -32,6 +32,7 @@
 #import "LxDBAnything.h"
 #import "PIEChannelTutorialRewardFailedView.h"
 #import "PIEFriendViewController.h"
+#import "PIEShareView.h"
 
 
 @interface PIEChannelTutorialDetailViewController ()
@@ -39,7 +40,8 @@
     /* Protocols */
     UITableViewDelegate, UITableViewDataSource,
     PWRefreshBaseTableViewDelegate,
-    ATOMViewControllerDelegate
+    ATOMViewControllerDelegate,
+    PIEShareViewDelegate
 >
 /* Variables */
 
@@ -203,6 +205,7 @@ static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
          [Hud activity:@"随机打赏中..."];
          [self rollDiceReward];
          
+         
      }];
     
     [[self.toolBar.commentButton
@@ -220,7 +223,11 @@ static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
     [[self.toolBar.shareButton
       rac_signalForControlEvents:UIControlEventTouchUpInside]
      subscribeNext:^(id x) {
-         [Hud text:@"show shareView"];
+         @strongify(self);
+         PIEShareView *shareView = [[PIEShareView alloc] init];
+         shareView.delegate = self;
+         [shareView show:[self.currentTutorialModel piePageVM]];
+
      }];
     
     [[self rac_signalForSelector:@selector(ATOMViewControllerPopedFromNavAfterSendingCommment)
@@ -230,6 +237,13 @@ static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
         /* commentViewController曾经发过新的评论，并且返回才需要重刷数据 */
         [self loadNewTutorialComments];
     }];
+    
+    /* 不知道怎么搞的 tuple.second == 0 永远都不能运行 */
+//    [[self rac_signalForSelector:@selector(shareView:didShareWithType:)
+//                   fromProtocol:@protocol(PIEShareViewDelegate)] subscribeNext:^(id x) {
+//        
+//    }];
+//    
     
     
     
@@ -437,6 +451,17 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
     [self loadMoreTutorialComments];
 }
 
+#pragma mark - <PIEShareViewDelegate>
+
+/* 该死的RAC为啥tuple.second 不能判断 == 0??? */
+- (void)shareView:(PIEShareView *)shareView didShareWithType:(ATOMShareType)type
+{
+    if (type == ATOMShareTypeWechatMoments) {
+        [self unlockTutorial];
+    }
+    
+}
+
 #pragma mark - Network request 
 - (void)loadNewTutorialDetails
 {
@@ -555,11 +580,7 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
              NSString *prompt = [NSString stringWithFormat:@"支付%.2f元，剩余%.2f元", amount, balance];
              [Hud text:prompt];
              
-             // 支付成功，遂重刷UI
-             [self loadNewTutorialDetails];
-             
-             // 心形满格
-             self.toolBar.hasBought = YES;
+             [self unlockTutorial];
              
          }else{
              NSString *prompt = [NSString stringWithFormat:@"type == %ld", (long)rollDiceStatus];
@@ -594,6 +615,15 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
     [Hud text:@"follow"];
 }
 
+#pragma mark - private helpers
+- (void)unlockTutorial
+{
+    // 支付成功，遂重刷UI
+    [self loadNewTutorialDetails];
+    
+    // 心形满格
+    self.toolBar.hasBought = YES;
+}
 
 
 @end

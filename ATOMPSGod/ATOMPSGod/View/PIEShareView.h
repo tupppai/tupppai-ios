@@ -21,12 +21,15 @@
 
 /* 以下代理方法仅在EliteViewController中实现，因为只有那里的replyCell，askCell有一个星星需要刷新（UI刷新） */
 - (void)shareViewDidCollect:(nonnull PIEShareView *)shareView;
+
+- (void)shareView:(nonnull PIEShareView *)shareView didShareWithType:(ATOMShareType)type;
+
 @end
 
 @interface PIEShareView:UIView
 
 
-@property (nonatomic, weak           ) id<PIEShareViewDelegate > delegate;
+@property (nonatomic, weak) id<PIEShareViewDelegate > delegate;
 
 
 /**
