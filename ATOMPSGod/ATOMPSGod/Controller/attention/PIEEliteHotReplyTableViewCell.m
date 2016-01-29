@@ -17,14 +17,14 @@
 @property (nonatomic,strong) MASConstraint* thumbHC;
 
 /* for transmitting signal to RACSignal */
-@property (nonatomic, strong) UITapGestureRecognizer *tapOnAvatar;
-@property (nonatomic, strong) UITapGestureRecognizer *tapOnUsername;
-@property (nonatomic, strong) UITapGestureRecognizer *tapOnFollow;
-@property (nonatomic, strong) UITapGestureRecognizer *tapOnAllwork;
-@property (nonatomic, strong) UITapGestureRecognizer *tapOnShare;
-@property (nonatomic, strong) UITapGestureRecognizer *tapOnComment;
-@property (nonatomic, strong) UITapGestureRecognizer *tapOnLike;
-
+@property (nonatomic, strong) UITapGestureRecognizer       *tapOnAvatar;
+@property (nonatomic, strong) UITapGestureRecognizer       *tapOnUsername;
+@property (nonatomic, strong) UITapGestureRecognizer       *tapOnFollow;
+@property (nonatomic, strong) UITapGestureRecognizer       *tapOnAllwork;
+@property (nonatomic, strong) UITapGestureRecognizer       *tapOnShare;
+@property (nonatomic, strong) UITapGestureRecognizer       *tapOnComment;
+@property (nonatomic, strong) UITapGestureRecognizer       *tapOnLike;
+@property (nonatomic, strong) UILongPressGestureRecognizer *longPressOnLike;
 
 @end
 
@@ -99,6 +99,9 @@
     self.tapOnLike = [[UITapGestureRecognizer alloc] init];
     [self.likeView addGestureRecognizer:self.tapOnLike];
     self.likeView.userInteractionEnabled = YES;
+   
+    self.longPressOnLike = [[UILongPressGestureRecognizer alloc] init];
+    [self.likeView addGestureRecognizer:self.longPressOnLike];
     
     
 }
@@ -292,6 +295,16 @@
     }
     
     return _tapOnLikeSignal;
+}
+
+- (RACSignal *)longPressOnLikeSignal
+{
+    if (_longPressOnLikeSignal == nil) {
+        _longPressOnLikeSignal = [[self.longPressOnLike rac_gestureSignal]
+                                  takeUntil:self.rac_prepareForReuseSignal];
+    }
+    
+    return _longPressOnLikeSignal;
 }
 
 @end

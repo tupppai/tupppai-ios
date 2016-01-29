@@ -252,6 +252,10 @@
          if (success) {
              selectedVM.model.totalShareNumber++;
          }
+         
+         
+         // notify delegate with shareType that sharing has been successfully done.
+         
      }];
 }
 

@@ -51,6 +51,8 @@
 @property (nonatomic, strong) RACSignal *tapOnCommentSignal;
 @property (nonatomic, strong) RACSignal *tapOnShareSignal;
 @property (nonatomic, strong) RACSignal *tapOnLikeSignal;
+@property (nonatomic, strong) RACSignal *longPressOnLikeSignal;
+
 
 - (void)injectSauce:(PIEPageVM *)viewModel;
 - (void)animateWithType:(PIEThumbAnimateViewType)type;

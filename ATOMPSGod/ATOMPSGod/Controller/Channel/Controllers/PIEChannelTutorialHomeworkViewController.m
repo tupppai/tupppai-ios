@@ -12,6 +12,10 @@
 #import "PIEChannelTutorialModel.h"
 #import "PIEEliteHotReplyTableViewCell.h"
 #import "LxDBAnything.h"
+#import "PIEFriendViewController.h"
+#import "PIECommentViewController.h"
+#import "PIEReplyCollectionViewController.h"
+#import "PIEShareView.h"
 
 
 @interface PIEChannelTutorialHomeworkViewController ()
@@ -185,6 +189,12 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
         [self tapOnLikeViewAtIndexPath:indexPath];
     }];
     
+    [replyCell.longPressOnLikeSignal subscribeNext:^(id x) {
+        @strongify(self);
+
+        [self longPressOnLikeViewAtIndexPath:indexPath];
+    }];
+    
     // ---- end of setting RAC
     
     return replyCell;
@@ -202,41 +212,65 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
 #pragma mark - RAC response actions
 - (void)tapOnAvatarOrUsernameAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *prompt = [NSString stringWithFormat:@"avatar-%ld", indexPath.row];
-    [Hud text:prompt];
+    
+    PIEFriendViewController *friendVC = [PIEFriendViewController new];
+    friendVC.pageVM = [self.currentTutorialModel piePageVM];
+    
+    [self.parentViewController.navigationController pushViewController:friendVC
+                                                              animated:YES];
 }
 
 - (void)tapOnFollowViewAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *prompt = [NSString stringWithFormat:@"follow-%ld", indexPath.row];
-    [Hud text:prompt];
+    PIEPageVM *selectedVM = _source_homework[indexPath.row];
+    [selectedVM follow];
 }
 
 - (void)tapOnAllWorkAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *prompt = [NSString stringWithFormat:@"allWork-%ld", indexPath.row];
-    [Hud text:prompt];
+    PIEReplyCollectionViewController *replyCollectionVC =
+    [PIEReplyCollectionViewController new];
+    replyCollectionVC.pageVM = [self.currentTutorialModel piePageVM];
+    
+    [self.parentViewController.navigationController
+     pushViewController:replyCollectionVC animated:YES];
 }
 
 - (void)tapOnShareViewAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *prompt = [NSString stringWithFormat:@"share-%ld", indexPath.row];
-    [Hud text:prompt];
+    PIEShareView *shareView = [PIEShareView new];
+    
+    PIEPageVM *selectedVM = _source_homework[indexPath.row];
+    
+    [shareView show:selectedVM];
 }
 
 - (void)tapOnCommentViewAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *prompt = [NSString stringWithFormat:@"comment-%ld", indexPath.row];
-    [Hud text:prompt];
+    PIECommentViewController *commentVC =
+    [PIECommentViewController new];
+    
+    commentVC.vm = [self.currentTutorialModel piePageVM];
+    
+    [self.parentViewController.navigationController pushViewController:commentVC
+                                                              animated:YES];
 }
 
 - (void)tapOnLikeViewAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *prompt = [NSString stringWithFormat:@"like-%ld", indexPath.row];
-    [Hud text:prompt];
+    PIEPageVM *selectedVM = _source_homework[indexPath.row];
+    
+    // reverted == NO:  逐步加一
+    [selectedVM love:NO];
 }
 
-
+- (void)longPressOnLikeViewAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM = _source_homework[indexPath.row];
+    
+    // reverted == YES: 清空状态
+    [selectedVM love:YES];
+}
 #pragma mark - lazy loadings
 
 
