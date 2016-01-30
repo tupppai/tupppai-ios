@@ -43,7 +43,7 @@
                 [_delegate chargeMoneyView:self tapConfirmButtonWithAmount:[self.panelView.moneyCountTextField.text integerValue]];
         }
     }];
-    
+
 }
 
 - (void)tapOnSelf:(UITapGestureRecognizer*)recognizer {
@@ -55,7 +55,7 @@
     [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     [[AppDelegate APP].window addSubview:self];
     [self layoutIfNeeded];
-    [self.panelViewMasConstraintCenterY setOffset:0];
+    [self.panelViewMasConstraintCenterY setOffset:-60];
     
     [UIView animateWithDuration:0.35
                           delay:0

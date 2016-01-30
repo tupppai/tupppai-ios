@@ -33,15 +33,27 @@
 #import "PIEChannelTutorialRewardFailedView.h"
 #import "PIEFriendViewController.h"
 #import "PIEShareView.h"
+#import "PIEChooseChargeSourceView.h"
+#import "PIEChargeMoneyView.h"
+
 
 
 @interface PIEChannelTutorialDetailViewController ()
 <
     /* Protocols */
     UITableViewDelegate, UITableViewDataSource,
+
     PWRefreshBaseTableViewDelegate,
+
     ATOMViewControllerDelegate,
-    PIEShareViewDelegate
+
+    PIEShareViewDelegate,
+
+    PIEChannelTutorialRewardFailedViewDelegate,
+
+    PIEChooseChargeSourceViewDelegate,
+
+    PIEChargeMoneyViewDelegate
 >
 /* Variables */
 
@@ -63,6 +75,14 @@
 @property (nonatomic, assign) NSInteger currentCommentIndex;
 
 @property (nonatomic, strong) PIEChannelTutorialDetailToolbar *toolBar;
+
+@property (nonatomic, assign) PIEWalletChargeSourceType walletChargeSourceType;
+
+/** 代缴的摇摇乐总额 */
+@property (nonatomic, assign) double toBeRewardedAmount;
+
+/** 准备充值的钱(总额 - 当前余额) */
+@property (nonatomic, assign) double toBeRechargeAmount;
 
 
 @end
@@ -203,7 +223,7 @@ static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
          @strongify(self);
          
          [Hud activity:@"随机打赏中..."];
-         [self rollDiceReward];
+         [self rollDiceRewardRequest];
          
          
      }];
@@ -238,14 +258,72 @@ static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
         [self loadNewTutorialComments];
     }];
     
-    /* 不知道怎么搞的 tuple.second == 0 永远都不能运行 */
+    
+    // 搞明白了！是@(0) 和 0 的区别！
+    /* 不知道怎么搞的 tuple.second == 0 永远为false */
 //    [[self rac_signalForSelector:@selector(shareView:didShareWithType:)
 //                   fromProtocol:@protocol(PIEShareViewDelegate)] subscribeNext:^(id x) {
 //        
 //    }];
-//    
+//
     
+    // call-back hell begins
     
+    [[self rac_signalForSelector:@selector(rewardFailedViewDidTapGoChargeMoneyButton:)
+                   fromProtocol:@protocol(PIEChannelTutorialRewardFailedViewDelegate)]
+    subscribeNext:^(RACTuple *tuple) {
+        @strongify(self);
+        PIEChannelTutorialRewardFailedView *rewardFaildView = tuple.first;
+        [rewardFaildView dismiss];
+        
+        [self showChooseChargeMoneySourceView];
+    }];
+    
+    [[self rac_signalForSelector:@selector(chooseChargeSourceView:tapButtonOfIndex:)
+                    fromProtocol:@protocol(PIEChooseChargeSourceViewDelegate)]
+     subscribeNext:^(RACTuple *tuple) {
+        @strongify(self);
+        // take record of the source
+
+         PIEChooseChargeSourceView *chooseChargeSourceView =
+         (PIEChooseChargeSourceView *)tuple.first;
+         
+         NSInteger index = [tuple.second integerValue];
+         if (index == 0) {
+             self.walletChargeSourceType = PIEWalletChargeSourceTypeAlipay;
+         }else if (index == 1)
+         {
+             self.walletChargeSourceType = PIEWalletChargeSourceTypeWechat;
+         }
+         
+         [chooseChargeSourceView dismiss];
+         
+         [self showInputMoneyView];
+         
+        
+    }];
+    
+    [[self rac_signalForSelector:@selector(chargeMoneyView:tapConfirmButtonWithAmount:) fromProtocol:@protocol(PIEChargeMoneyViewDelegate)]
+    subscribeNext:^(RACTuple *tuple) {
+        @strongify(self);
+        
+        PIEChargeMoneyView *chargeMoneyView = tuple.first;
+        [chargeMoneyView dismiss];
+        
+        double amount = [tuple.second doubleValue];
+        if (amount < _toBeRechargeAmount) {
+            NSString *prompt =
+            [NSString stringWithFormat:@"至少要充值%f元", _toBeRechargeAmount];
+            [Hud error:prompt];
+        }else{
+            [self chargeMoneyRequestWithType:0 amount:([tuple.second doubleValue])];
+        }
+        
+    }];
+    
+    // 充值结束之后重新调用rollDice接口继续摇摇乐
+    
+    // --- call-back hell ends
     
 }
 
@@ -553,7 +631,7 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
     
 }
 
-- (void)rollDiceReward
+- (void)rollDiceRewardRequest
 {
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     
@@ -576,6 +654,13 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
              [PIEChannelTutorialRewardFailedView new];
              
              [rewardFailedView show];
+             rewardFailedView.delegate = self;
+             
+             // 记录差额与代缴的总额
+             self.toBeRechargeAmount = amount - balance;
+             self.toBeRewardedAmount = amount;
+             
+             
          }else if (rollDiceStatus == 1){
              NSString *prompt = [NSString stringWithFormat:@"支付%.2f元，剩余%.2f元", amount, balance];
              [Hud text:prompt];
@@ -590,6 +675,81 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
      }];
     
 }
+
+- (void)chargeMoneyRequestWithType:(PIEWalletChargeSourceType)sourceType amount:(double)amount
+{
+    NSString *prompt = [NSString stringWithFormat:@"%ld-%f", sourceType, amount];
+    [Hud text:prompt];
+    
+    
+}
+
+- (void)rewardWithConcreteAmount:(double)amount
+{
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    
+    params[@"ask_id"] = [@(self.source_tutorialModel.ask_id) stringValue];
+    params[@"amount"] = @(amount);
+    
+    [DDBaseService
+     GET:params
+     url:@"thread/reward"
+     block:^(id responseObject) {
+         [Hud dismiss];
+         
+         NSDictionary *dataDict = responseObject[@"data"];
+         long rollDiceStatus    = [dataDict[@"type"] longValue];
+         double balance         = [dataDict[@"balance"] doubleValue];
+         double amount          = [dataDict[@"amount"] doubleValue];
+         
+         
+         // 已经充值了还会导致余额不足的情况吗？
+         if (rollDiceStatus == -1){
+             
+             PIEChannelTutorialRewardFailedView *rewardFailedView =
+             [PIEChannelTutorialRewardFailedView new];
+             
+             [rewardFailedView show];
+             rewardFailedView.delegate = self;
+             
+             
+         }else if (rollDiceStatus == 1){
+             NSString *prompt = [NSString stringWithFormat:@"支付%.2f元，剩余%.2f元", amount, balance];
+             [Hud text:prompt];
+             
+             [self unlockTutorial];
+             
+         }else{
+             NSString *prompt = [NSString stringWithFormat:@"type == %ld", (long)rollDiceStatus];
+             [Hud error:prompt];
+             
+         }
+     }];
+}
+
+#pragma mark - RAC response methods
+- (void)showChooseChargeMoneySourceView
+{
+    // pop out the choosemoney source panel
+    PIEChooseChargeSourceView *chooseChargeSourceView = [PIEChooseChargeSourceView new];
+    
+    // become delegate, take response
+    chooseChargeSourceView.delegate = self;
+    
+    [chooseChargeSourceView show];
+    
+}
+
+- (void)showInputMoneyView
+{
+    PIEChargeMoneyView *chargeMoneyView = [PIEChargeMoneyView new];
+    
+    chargeMoneyView.delegate = self;
+    
+    [chargeMoneyView show];
+}
+
+
 
 
 #pragma mark - private helpers
@@ -612,7 +772,9 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
     
     // update UI
     
-    [Hud text:@"follow"];
+    [Hud text:@"follow好没想好怎么全局同步和刷新UI"];
+    
+    
 }
 
 #pragma mark - private helpers
