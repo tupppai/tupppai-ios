@@ -18,7 +18,7 @@
 #import "PIEChannelActivityViewController.h"
 #import "DeviceUtil.h"
 
-#import "PIEChannelTutorialViewController.h"
+#import "PIEChannelTutorialsListViewController.h"
 
 
 /* Protocols */
@@ -372,8 +372,8 @@
     else if (channelViewModel.channelType == PIEChannelTypeTutorial){
         /* push to ChannelTutorial */
         
-        PIEChannelTutorialViewController *channelTutorialViewController =
-        [[PIEChannelTutorialViewController alloc] init];
+        PIEChannelTutorialsListViewController *channelTutorialViewController =
+        [[PIEChannelTutorialsListViewController alloc] init];
         
         channelTutorialViewController.currentChannelViewModel = channelViewModel;
         

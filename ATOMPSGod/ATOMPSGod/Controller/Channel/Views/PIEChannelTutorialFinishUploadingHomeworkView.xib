@@ -9,17 +9,17 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="PIEChannelTutorialFinishUploadingHomeworkView">
-            <rect key="frame" x="0.0" y="0.0" width="301" height="362"/>
+            <rect key="frame" x="0.0" y="0.0" width="301" height="411"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我P了这个图片" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wAi-JX-F7v">
-                    <rect key="frame" x="16" y="23" width="152" height="27.5"/>
+                    <rect key="frame" x="16" y="23" width="152" height="60"/>
                     <fontDescription key="fontDescription" type="system" pointSize="23"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VkU-lM-ntz" userLabel="imageContainerView">
-                    <rect key="frame" x="16" y="73" width="269" height="118"/>
+                    <rect key="frame" x="16" y="105" width="269" height="118"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QkD-rP-LDP" userLabel="homeworkImage">
                             <rect key="frame" x="12" y="12" width="94" height="94"/>
@@ -28,7 +28,7 @@
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ChannelTutorialTitle" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2eB-R2-PAk">
-                            <rect key="frame" x="112" y="12" width="145" height="94"/>
+                            <rect key="frame" x="116" y="12" width="141" height="94"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -38,6 +38,7 @@
                     <constraints>
                         <constraint firstItem="QkD-rP-LDP" firstAttribute="top" secondItem="VkU-lM-ntz" secondAttribute="top" constant="12" id="6MS-gv-Sx6"/>
                         <constraint firstItem="QkD-rP-LDP" firstAttribute="leading" secondItem="VkU-lM-ntz" secondAttribute="leading" constant="12" id="LUO-ik-Yep"/>
+                        <constraint firstItem="2eB-R2-PAk" firstAttribute="leading" secondItem="QkD-rP-LDP" secondAttribute="trailing" constant="10" id="V4e-Ou-SOY"/>
                         <constraint firstItem="2eB-R2-PAk" firstAttribute="bottom" secondItem="QkD-rP-LDP" secondAttribute="bottom" id="Z1R-c8-KNW"/>
                         <constraint firstAttribute="trailing" secondItem="2eB-R2-PAk" secondAttribute="trailing" constant="12" id="ZWD-wf-huZ"/>
                         <constraint firstAttribute="width" secondItem="VkU-lM-ntz" secondAttribute="height" multiplier="538:236" id="ZaF-aR-Ove"/>
@@ -46,93 +47,97 @@
                     </constraints>
                 </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pie_channelTutorial_finishUploadHomework_separator" translatesAutoresizingMaskIntoConstraints="NO" id="Un2-It-TTL">
-                    <rect key="frame" x="16" y="214" width="269" height="11"/>
+                    <rect key="frame" x="16" y="246" width="269" height="11"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="11" id="2er-L3-pRQ"/>
                     </constraints>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9kg-Vq-HXH">
-                    <rect key="frame" x="30" y="306" width="241" height="34"/>
+                    <rect key="frame" x="30" y="355" width="241" height="34"/>
                     <state key="normal" title="算了我很低调">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fvg-Bp-zwB">
-                    <rect key="frame" x="56" y="246.5" width="27" height="22"/>
+                    <rect key="frame" x="16" y="278" width="54" height="40"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="27" id="RuB-OE-8w5"/>
-                        <constraint firstAttribute="height" constant="22" id="lME-UG-Skb"/>
+                        <constraint firstAttribute="height" constant="40" id="qga-OC-Tkb"/>
                     </constraints>
-                    <state key="normal" backgroundImage="pie_channelTutorial_weibo"/>
+                    <state key="normal" image="pie_share_sina"/>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0n7-yl-Zbl">
-                    <rect key="frame" x="98" y="245" width="26" height="25"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="26" id="Nwc-Ie-ube"/>
-                        <constraint firstAttribute="height" constant="25" id="PkP-72-hIP"/>
-                    </constraints>
-                    <state key="normal" backgroundImage="pie_channelTutorial_qqzone"/>
+                    <rect key="frame" x="70" y="278" width="53.5" height="40"/>
+                    <state key="normal" image="pie_share_qqzone"/>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Lk-ud-96F">
-                    <rect key="frame" x="139" y="246" width="23" height="23"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="23" id="M8l-YF-r7A"/>
-                        <constraint firstAttribute="width" constant="23" id="OrG-t6-Amu"/>
-                    </constraints>
-                    <state key="normal" backgroundImage="pie_channelTutorial_wechatMoment"/>
+                    <rect key="frame" x="123" y="278" width="53.5" height="40"/>
+                    <state key="normal" image="pie_share_wechatmoments"/>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69A-An-WHp">
-                    <rect key="frame" x="177" y="245" width="26" height="24"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="24" id="8fX-R5-xAa"/>
-                        <constraint firstAttribute="width" constant="26" id="xeN-NK-tC0"/>
-                    </constraints>
-                    <state key="normal" backgroundImage="pie_channelTutorial_wechat"/>
+                    <rect key="frame" x="177" y="278" width="54" height="40"/>
+                    <state key="normal" image="pie_share_wechatfriends"/>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mid-kU-4vb">
-                    <rect key="frame" x="218" y="246" width="21" height="23"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="23" id="jPU-CI-UpU"/>
-                        <constraint firstAttribute="width" constant="21" id="qv1-NN-Kwf"/>
-                    </constraints>
-                    <state key="normal" backgroundImage="pie_channelTutorial_qqFriend"/>
+                    <rect key="frame" x="231" y="278" width="54" height="40"/>
+                    <state key="normal" image="pie_share_qqfriends"/>
                 </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="0n7-yl-Zbl" firstAttribute="height" secondItem="fvg-Bp-zwB" secondAttribute="height" id="0h4-hm-S1r"/>
+                <constraint firstItem="6Lk-ud-96F" firstAttribute="height" secondItem="fvg-Bp-zwB" secondAttribute="height" id="0iV-5X-t3H"/>
                 <constraint firstItem="VkU-lM-ntz" firstAttribute="top" secondItem="wAi-JX-F7v" secondAttribute="bottom" constant="22" id="1EN-LE-6Ep"/>
-                <constraint firstItem="0n7-yl-Zbl" firstAttribute="leading" secondItem="fvg-Bp-zwB" secondAttribute="trailing" constant="15" id="7wy-76-aTA"/>
+                <constraint firstItem="Mid-kU-4vb" firstAttribute="top" secondItem="6Lk-ud-96F" secondAttribute="top" id="4Ww-4P-j8I"/>
+                <constraint firstItem="6Lk-ud-96F" firstAttribute="width" secondItem="fvg-Bp-zwB" secondAttribute="width" id="5L4-4j-L3K"/>
                 <constraint firstItem="Un2-It-TTL" firstAttribute="leading" secondItem="VkU-lM-ntz" secondAttribute="leading" id="8g1-UL-JEd"/>
-                <constraint firstItem="Mid-kU-4vb" firstAttribute="centerY" secondItem="69A-An-WHp" secondAttribute="centerY" id="9zX-CB-SW8"/>
                 <constraint firstAttribute="trailing" secondItem="VkU-lM-ntz" secondAttribute="trailing" constant="16" id="AeQ-5v-1Ba"/>
-                <constraint firstItem="6Lk-ud-96F" firstAttribute="leading" secondItem="0n7-yl-Zbl" secondAttribute="trailing" constant="15" id="Ejq-N1-wyN"/>
+                <constraint firstItem="Mid-kU-4vb" firstAttribute="bottom" secondItem="69A-An-WHp" secondAttribute="bottom" id="Dod-ZR-UYm"/>
+                <constraint firstItem="6Lk-ud-96F" firstAttribute="leading" secondItem="0n7-yl-Zbl" secondAttribute="trailing" id="G4K-Xt-xac"/>
+                <constraint firstItem="Mid-kU-4vb" firstAttribute="trailing" secondItem="Un2-It-TTL" secondAttribute="trailing" id="Gf1-Xo-U9b"/>
                 <constraint firstItem="Un2-It-TTL" firstAttribute="trailing" secondItem="VkU-lM-ntz" secondAttribute="trailing" id="ID3-rT-4ec"/>
-                <constraint firstItem="69A-An-WHp" firstAttribute="leading" secondItem="6Lk-ud-96F" secondAttribute="trailing" constant="15" id="PA3-3T-IeP"/>
-                <constraint firstItem="Mid-kU-4vb" firstAttribute="leading" secondItem="69A-An-WHp" secondAttribute="trailing" constant="15" id="S3l-2i-jwd"/>
+                <constraint firstItem="69A-An-WHp" firstAttribute="width" secondItem="fvg-Bp-zwB" secondAttribute="width" id="IcG-gb-JgS"/>
+                <constraint firstItem="0n7-yl-Zbl" firstAttribute="leading" secondItem="fvg-Bp-zwB" secondAttribute="trailing" id="NyK-LP-N2q"/>
+                <constraint firstItem="Mid-kU-4vb" firstAttribute="leading" secondItem="69A-An-WHp" secondAttribute="trailing" id="P7k-r7-mQe"/>
+                <constraint firstItem="69A-An-WHp" firstAttribute="height" secondItem="fvg-Bp-zwB" secondAttribute="height" id="PFC-I8-8fS"/>
                 <constraint firstItem="VkU-lM-ntz" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="V9H-Yw-idj"/>
-                <constraint firstItem="6Lk-ud-96F" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="XlU-46-lLn"/>
+                <constraint firstAttribute="bottom" secondItem="Mid-kU-4vb" secondAttribute="bottom" constant="93" id="Vmq-Yu-Gwg"/>
+                <constraint firstItem="Mid-kU-4vb" firstAttribute="width" secondItem="fvg-Bp-zwB" secondAttribute="width" id="ZzO-nO-tEk"/>
                 <constraint firstAttribute="bottom" secondItem="9kg-Vq-HXH" secondAttribute="bottom" constant="22" id="bAi-XV-Nby"/>
+                <constraint firstItem="9kg-Vq-HXH" firstAttribute="top" secondItem="fvg-Bp-zwB" secondAttribute="bottom" constant="37" id="cDc-hJ-QVJ"/>
                 <constraint firstItem="9kg-Vq-HXH" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="cWh-Ga-mbu"/>
-                <constraint firstItem="6Lk-ud-96F" firstAttribute="top" secondItem="Un2-It-TTL" secondAttribute="bottom" constant="21" id="eKp-Fk-RCv"/>
                 <constraint firstItem="wAi-JX-F7v" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="23" id="hbu-uv-rq4"/>
-                <constraint firstItem="0n7-yl-Zbl" firstAttribute="centerY" secondItem="6Lk-ud-96F" secondAttribute="centerY" id="ijL-Ya-qVP"/>
+                <constraint firstItem="Mid-kU-4vb" firstAttribute="height" secondItem="fvg-Bp-zwB" secondAttribute="height" id="hqP-iJ-QrP"/>
                 <constraint firstItem="Un2-It-TTL" firstAttribute="top" secondItem="VkU-lM-ntz" secondAttribute="bottom" constant="23" id="jsX-eg-6Ti"/>
+                <constraint firstItem="69A-An-WHp" firstAttribute="leading" secondItem="6Lk-ud-96F" secondAttribute="trailing" id="mAu-uL-noE"/>
                 <constraint firstItem="wAi-JX-F7v" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="pbe-mV-sgJ"/>
+                <constraint firstItem="fvg-Bp-zwB" firstAttribute="bottom" secondItem="0n7-yl-Zbl" secondAttribute="bottom" id="tIz-8O-75m"/>
+                <constraint firstItem="0n7-yl-Zbl" firstAttribute="width" secondItem="fvg-Bp-zwB" secondAttribute="width" id="u40-nU-HWV"/>
                 <constraint firstAttribute="trailing" secondItem="9kg-Vq-HXH" secondAttribute="trailing" constant="30" id="uz5-0d-HO2"/>
-                <constraint firstItem="69A-An-WHp" firstAttribute="centerY" secondItem="6Lk-ud-96F" secondAttribute="centerY" id="yaR-LC-bRC"/>
-                <constraint firstItem="fvg-Bp-zwB" firstAttribute="centerY" secondItem="0n7-yl-Zbl" secondAttribute="centerY" id="zUt-aB-FPr"/>
+                <constraint firstItem="Mid-kU-4vb" firstAttribute="top" secondItem="Un2-It-TTL" secondAttribute="bottom" constant="21" id="yA7-f6-Vhf"/>
+                <constraint firstItem="Mid-kU-4vb" firstAttribute="centerY" secondItem="0n7-yl-Zbl" secondAttribute="centerY" id="yBY-4K-i2S"/>
+                <constraint firstItem="fvg-Bp-zwB" firstAttribute="leading" secondItem="Un2-It-TTL" secondAttribute="leading" id="zbW-8S-IUd"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="334.5" y="136"/>
+            <connections>
+                <outlet property="descLabel" destination="2eB-R2-PAk" id="4G2-qe-iH0"/>
+                <outlet property="dismissButton" destination="9kg-Vq-HXH" id="23e-tG-nQj"/>
+                <outlet property="homeworkImageView" destination="QkD-rP-LDP" id="Cpt-fu-TxK"/>
+                <outlet property="qqFriendButton" destination="Mid-kU-4vb" id="ZXK-Sl-DIP"/>
+                <outlet property="qqzoneButton" destination="0n7-yl-Zbl" id="Ygl-JX-nwd"/>
+                <outlet property="wechatButton" destination="69A-An-WHp" id="iIl-EX-LhO"/>
+                <outlet property="wechatMomentButton" destination="6Lk-ud-96F" id="Rjc-uU-CeA"/>
+                <outlet property="weiboButton" destination="fvg-Bp-zwB" id="Kj5-Tt-YAO"/>
+            </connections>
+            <point key="canvasLocation" x="125.5" y="129.5"/>
         </view>
     </objects>
     <resources>
         <image name="pie_channelTutorial_finishUploadHomework_separator" width="55" height="13"/>
-        <image name="pie_channelTutorial_qqFriend" width="28" height="31"/>
-        <image name="pie_channelTutorial_qqzone" width="32" height="31"/>
-        <image name="pie_channelTutorial_wechat" width="36" height="31"/>
-        <image name="pie_channelTutorial_wechatMoment" width="31" height="31"/>
-        <image name="pie_channelTutorial_weibo" width="34" height="29"/>
+        <image name="pie_share_qqfriends" width="22" height="25"/>
+        <image name="pie_share_qqzone" width="26" height="26"/>
+        <image name="pie_share_sina" width="27" height="22"/>
+        <image name="pie_share_wechatfriends" width="27" height="22"/>
+        <image name="pie_share_wechatmoments" width="24" height="24"/>
     </resources>
 </document>

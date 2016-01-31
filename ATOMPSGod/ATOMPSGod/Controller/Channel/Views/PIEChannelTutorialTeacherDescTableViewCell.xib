@@ -59,9 +59,10 @@
             <connections>
                 <outlet property="avatarView" destination="9je-p7-PCG" id="AwL-po-ieN"/>
                 <outlet property="createdTimeLabel" destination="1Qi-rA-uMi" id="uzC-sC-JEW"/>
+                <outlet property="followButton" destination="txo-o9-ATz" id="DuN-CM-B0e"/>
                 <outlet property="userNameLabel" destination="OxO-k5-Cna" id="vzI-jH-0Cm"/>
             </connections>
-            <point key="canvasLocation" x="256" y="160.5"/>
+            <point key="canvasLocation" x="250" y="73.5"/>
         </tableViewCell>
     </objects>
     <resources>

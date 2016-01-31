@@ -15,13 +15,13 @@
 
 @optional
 
-- (void)chargeMoneyView:(nonnull PIEChargeMoneyView *)chargeMoneyView tapConfirmButtonWithAmount:(CGFloat)amount;
+- (void)chargeMoneyView:(nonnull PIEChargeMoneyView *)chargeMoneyView tapConfirmButtonWithAmount:(double)amount;
 - (void)chargeMoneyViewDidDismiss:(nonnull PIEChargeMoneyView *)chargeMoneyView ;
 
 @end
 
 @interface PIEChargeMoneyView : UIView
 @property (nonatomic, weak) id<PIEChargeMoneyViewDelegate> delegate;
-- (void)show;
--(void)dismiss;
+- (void)showWithAmoutToBeCharge:(double)amount;
+- (void)dismiss;
 @end

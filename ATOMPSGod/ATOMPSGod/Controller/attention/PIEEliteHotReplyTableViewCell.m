@@ -16,11 +16,25 @@
 @property (nonatomic,strong) MASConstraint* thumbWC;
 @property (nonatomic,strong) MASConstraint* thumbHC;
 
+/* for transmitting signal to RACSignal */
+@property (nonatomic, strong) UITapGestureRecognizer       *tapOnAvatar;
+@property (nonatomic, strong) UITapGestureRecognizer       *tapOnUsername;
+@property (nonatomic, strong) UITapGestureRecognizer       *tapOnFollow;
+@property (nonatomic, strong) UITapGestureRecognizer       *tapOnAllwork;
+@property (nonatomic, strong) UITapGestureRecognizer       *tapOnShare;
+@property (nonatomic, strong) UITapGestureRecognizer       *tapOnComment;
+@property (nonatomic, strong) UITapGestureRecognizer       *tapOnLike;
+@property (nonatomic, strong) UILongPressGestureRecognizer *longPressOnLike;
 
 @end
+
+
+
 @implementation PIEEliteHotReplyTableViewCell
 - (void)awakeFromNib {
     [self commonInit];
+    [self setupGesture];
+
 }
 
 
@@ -49,6 +63,47 @@
     TTTAttributedLabelVerticalAlignmentTop;
     _commentLabel2.verticalAlignment =
     TTTAttributedLabelVerticalAlignmentTop;
+    
+    
+}
+
+- (void)setupGesture
+{
+    
+    /* for the sake of RACSignal */
+    self.tapOnAvatar = [[UITapGestureRecognizer alloc] init];
+    [self.avatarView addGestureRecognizer:self.tapOnAvatar];
+    self.avatarView.userInteractionEnabled = YES;
+    self.avatarView.avatarImageView.userInteractionEnabled = YES;
+    
+    self.tapOnUsername = [[UITapGestureRecognizer alloc] init];
+    [self.nameLabel addGestureRecognizer:self.tapOnUsername];
+    self.nameLabel.userInteractionEnabled = YES;
+    
+    self.tapOnFollow = [[UITapGestureRecognizer alloc] init];
+    [self.followView addGestureRecognizer:self.tapOnFollow];
+    self.followView.userInteractionEnabled = YES;
+    
+    self.tapOnAllwork = [[UITapGestureRecognizer alloc] init];
+    [self.allWorkView addGestureRecognizer:self.tapOnAllwork];
+    self.allWorkView.userInteractionEnabled = YES;
+    
+    self.tapOnShare = [[UITapGestureRecognizer alloc] init];
+    [self.shareView addGestureRecognizer:self.tapOnShare];
+    self.shareView.userInteractionEnabled = YES;
+    
+    self.tapOnComment = [[UITapGestureRecognizer alloc] init];
+    [self.commentView addGestureRecognizer:self.tapOnComment];
+    self.commentView.userInteractionEnabled = YES;
+    
+    self.tapOnLike = [[UITapGestureRecognizer alloc] init];
+    [self.likeView addGestureRecognizer:self.tapOnLike];
+    self.likeView.userInteractionEnabled = YES;
+   
+    self.longPressOnLike = [[UILongPressGestureRecognizer alloc] init];
+    [self.likeView addGestureRecognizer:self.longPressOnLike];
+    
+    
 }
 
 
@@ -174,4 +229,82 @@
         self.commentView.numberString = value;
     }
 }
+
+#pragma mark - public RAC signal
+
+- (RACSignal *)tapOnAvatarOrUsernameSignal{
+    if (_tapOnAvatarOrUsernameSignal == nil) {
+        RACSignal *tapOnAvatarSignal = [self.tapOnAvatar rac_gestureSignal];
+        RACSignal *tapOnUsernameSignal = [self.tapOnUsername rac_gestureSignal];
+        
+        _tapOnAvatarOrUsernameSignal =
+        [[RACSignal merge:@[tapOnAvatarSignal, tapOnUsernameSignal]]
+         takeUntil:self.rac_prepareForReuseSignal];
+    }
+    
+    return _tapOnAvatarOrUsernameSignal;
+}
+
+- (RACSignal *)tapOnFollowButtonSignal
+{
+    if (_tapOnFollowButtonSignal == nil) {
+        _tapOnFollowButtonSignal = [[self.tapOnFollow rac_gestureSignal]
+                                    takeUntil:self.rac_prepareForReuseSignal];
+    }
+    
+    return _tapOnFollowButtonSignal;
+}
+
+
+- (RACSignal *)tapOnAllWorkSignal
+{
+    if (_tapOnAllWorkSignal == nil) {
+        _tapOnAllWorkSignal = [[self.tapOnAllwork rac_gestureSignal]
+                               takeUntil:self.rac_prepareForReuseSignal];
+    }
+    
+    return _tapOnAllWorkSignal;
+}
+
+- (RACSignal *)tapOnCommentSignal
+{
+    if (_tapOnCommentSignal == nil) {
+        _tapOnCommentSignal = [[self.tapOnComment rac_gestureSignal]
+                               takeUntil:self.rac_prepareForReuseSignal];
+    }
+    
+    return _tapOnCommentSignal;
+}
+
+
+- (RACSignal *)tapOnShareSignal
+{
+    if (_tapOnShareSignal == nil) {
+        _tapOnShareSignal = [[self.tapOnShare rac_gestureSignal]
+                             takeUntil:self.rac_prepareForReuseSignal];
+    }
+    
+    return _tapOnShareSignal;
+}
+
+- (RACSignal *)tapOnLikeSignal
+{
+    if (_tapOnLikeSignal == nil) {
+        _tapOnLikeSignal = [[self.tapOnLike rac_gestureSignal]
+                            takeUntil:self.rac_prepareForReuseSignal];
+    }
+    
+    return _tapOnLikeSignal;
+}
+
+- (RACSignal *)longPressOnLikeSignal
+{
+    if (_longPressOnLikeSignal == nil) {
+        _longPressOnLikeSignal = [[self.longPressOnLike rac_gestureSignal]
+                                  takeUntil:self.rac_prepareForReuseSignal];
+    }
+    
+    return _longPressOnLikeSignal;
+}
+
 @end

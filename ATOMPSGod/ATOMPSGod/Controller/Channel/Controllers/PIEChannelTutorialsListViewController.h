@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 @class PIEChannelViewModel;
-@interface PIEChannelTutorialViewController : DDBaseVC
+@interface PIEChannelTutorialsListViewController : DDBaseVC
 
 @property (nonatomic, strong) PIEChannelViewModel *currentChannelViewModel;
+
 
 @end

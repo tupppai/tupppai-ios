@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PIEChannelTutorialCommentsCountTableViewCell" rowHeight="71" id="KGk-i7-Jjw" customClass="PIEChannelTutorialCommentsCountTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="540" height="71"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="540" height="70.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pieCommentLabelIndicator" translatesAutoresizingMaskIntoConstraints="NO" id="rH8-H5-rV6">
+                        <rect key="frame" x="14" y="24" width="12" height="12"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="12" id="ZRG-EB-sc4"/>
+                            <constraint firstAttribute="width" constant="12" id="doV-od-sUX"/>
+                        </constraints>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3iw-Bz-OSd" userLabel="cellSeparator">
+                        <rect key="frame" x="0.0" y="0.0" width="540" height="10"/>
+                        <color key="backgroundColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="10" id="d1B-zq-fGG"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="coommentsCount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="myH-w2-3jv">
+                        <rect key="frame" x="35" y="24" width="115" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="3iw-Bz-OSd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="1i5-Fi-PRY"/>
+                    <constraint firstItem="myH-w2-3jv" firstAttribute="leading" secondItem="rH8-H5-rV6" secondAttribute="trailing" constant="9" id="3ep-UB-SSt"/>
+                    <constraint firstItem="myH-w2-3jv" firstAttribute="top" secondItem="rH8-H5-rV6" secondAttribute="top" id="A7M-ke-kfg"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="rH8-H5-rV6" secondAttribute="bottom" constant="17" id="HfB-tq-5bw"/>
+                    <constraint firstAttribute="trailing" secondItem="3iw-Bz-OSd" secondAttribute="trailing" id="JLy-ls-xzb"/>
+                    <constraint firstItem="rH8-H5-rV6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="14" id="Orq-CL-0xB"/>
+                    <constraint firstItem="rH8-H5-rV6" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="17" id="cXt-bU-Ho8"/>
+                    <constraint firstItem="3iw-Bz-OSd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="l9T-25-r9z"/>
+                    <constraint firstItem="rH8-H5-rV6" firstAttribute="top" secondItem="3iw-Bz-OSd" secondAttribute="bottom" constant="14" id="vBG-33-Th5"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="cXt-bU-Ho8"/>
+                    </mask>
+                </variation>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="commentCountLabel" destination="myH-w2-3jv" id="mO0-cH-bkQ"/>
+            </connections>
+            <point key="canvasLocation" x="415" y="194.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="pieCommentLabelIndicator" width="12" height="12"/>
+    </resources>
+</document>

@@ -10,7 +10,9 @@
 @class PIEChannelTutorialImageModel;
 
 @interface PIEChannelTutorialImageTableViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIImageView *tutorialImageView;
+@property (weak, nonatomic)   IBOutlet UIImageView *tutorialImageView;
+
+@property (assign, nonatomic) BOOL locked;
 
 - (void)injectImageModel:(PIEChannelTutorialImageModel *)tutorialImageModel;
 

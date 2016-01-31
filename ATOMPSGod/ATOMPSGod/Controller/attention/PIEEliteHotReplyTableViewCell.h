@@ -17,6 +17,8 @@
 #import "PIEBlurAnimateImageView.h"
 #import "TTTAttributedLabel.h"
 
+@class RACSignal;
+
 @interface PIEEliteHotReplyTableViewCell : UITableViewCell
 
 @property (nonatomic,strong) PIEPageVM* vm;
@@ -40,6 +42,18 @@
 @property (weak, nonatomic) IBOutlet PIEBlurAnimateImageView *blurAnimateView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *followView;
+
+
+/*  RAC signals */
+@property (nonatomic, strong) RACSignal *tapOnAvatarOrUsernameSignal;
+@property (nonatomic, strong) RACSignal *tapOnFollowButtonSignal;
+@property (nonatomic, strong) RACSignal *tapOnAllWorkSignal;
+@property (nonatomic, strong) RACSignal *tapOnCommentSignal;
+@property (nonatomic, strong) RACSignal *tapOnShareSignal;
+@property (nonatomic, strong) RACSignal *tapOnLikeSignal;
+@property (nonatomic, strong) RACSignal *longPressOnLikeSignal;
+
+
 - (void)injectSauce:(PIEPageVM *)viewModel;
 - (void)animateWithType:(PIEThumbAnimateViewType)type;
 @end
