@@ -110,6 +110,7 @@ typedef NS_ENUM(NSUInteger, PIEProceedingControllerType) {
             make.top.equalTo(self.scrollView);
             make.left.mas_equalTo(i * SCREEN_WIDTH);
         }];
+        [self addChildViewController:vc];
         [vc didMoveToParentViewController:self];
     }
         

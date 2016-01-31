@@ -10,11 +10,25 @@
 #import "PIEAvatarView.h"
 #import "PIEChannelTutorialModel.h"
 
+
+@interface PIEChannelTutorialTeacherDescTableViewCell ()
+
+@property (nonatomic, strong) UITapGestureRecognizer *tap;
+
+
+@end
+
 @implementation PIEChannelTutorialTeacherDescTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code
     self.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] init];
+    [self.avatarView addGestureRecognizer:tap];
+    self.avatarView.avatarImageView.userInteractionEnabled = YES;
+    self.avatarView.userInteractionEnabled                 = YES;
+    self.tap = tap;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -34,6 +48,37 @@
     
     /* model漏了两个属性：isMyFan, isMyFollow */
     
+    
+}
+
+- (void)prepareForReuse
+{
+    [super prepareForReuse];
+    
+
+}
+
+- (RACSignal *)tapOnAvatar
+{
+    
+    if (_tapOnAvatar == nil) {
+        _tapOnAvatar = [[self.tap rac_gestureSignal]
+                        takeUntil:self.rac_prepareForReuseSignal];
+    }
+    
+    return _tapOnAvatar;
+}
+
+- (RACSignal *)tapOnFollowButton
+{
+    if (_tapOnFollowButton == nil) {
+        _tapOnFollowButton =
+        [[self.followButton
+          rac_signalForControlEvents:UIControlEventTouchUpInside]
+         takeUntil:self.rac_prepareForReuseSignal];
+    }
+    
+    return  _tapOnFollowButton;
 }
 
 @end

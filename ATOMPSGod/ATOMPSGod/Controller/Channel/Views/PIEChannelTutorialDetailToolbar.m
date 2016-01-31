@@ -40,4 +40,14 @@
     self.rollDiceButton.adjustsImageWhenHighlighted = NO;
 }
 
+
+- (void)setHasBought:(BOOL)hasBought
+{
+    _hasBought = hasBought;
+    
+    if (hasBought) {
+        self.rollDiceButton.selected = YES;
+    }
+}
+
 @end

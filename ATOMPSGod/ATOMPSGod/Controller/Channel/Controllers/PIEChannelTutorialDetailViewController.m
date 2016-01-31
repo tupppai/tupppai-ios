@@ -16,20 +16,44 @@
 #import "PIEChannelTutorialPrefaceTableViewCell.h"
 #import "PIEChannelTutorialImageTableViewCell.h"
 
+#import "PIEChannelTutorialCommentsCountTableViewCell.h"
+#import "PIEChannelTutorialCommentTableViewCell.h"
+
+
 #import "PIERefreshTableView.h"
 #import "PIEChannelManager.h"
 #import "PIEChannelTutorialDetailToolbar.h"
 #import "PIEChannelTutorialLockedUpView.h"
 
 
-#import "ReactiveCocoa/ReactiveCocoa.h"
+#import "PIECommentVM.h"
+#import "PIECommentManager.h"
+#import "PIECommentViewController.h"
+#import "LxDBAnything.h"
+#import "PIEChannelTutorialRewardFailedView.h"
+#import "PIEFriendViewController.h"
+#import "PIEShareView.h"
+#import "PIEChooseChargeSourceView.h"
+#import "PIEChargeMoneyView.h"
+
 
 
 @interface PIEChannelTutorialDetailViewController ()
 <
     /* Protocols */
     UITableViewDelegate, UITableViewDataSource,
-    PWRefreshBaseTableViewDelegate
+
+    PWRefreshBaseTableViewDelegate,
+
+    ATOMViewControllerDelegate,
+
+    PIEShareViewDelegate,
+
+    PIEChannelTutorialRewardFailedViewDelegate,
+
+    PIEChooseChargeSourceViewDelegate,
+
+    PIEChargeMoneyViewDelegate
 >
 /* Variables */
 
@@ -46,11 +70,20 @@
  */
 @property (nonatomic, strong) PIEChannelTutorialModel *source_tutorialModel;
 
-@property (nonatomic, strong) NSMutableArray<PIECommentModel *> *source_tutorialComment;
+@property (nonatomic, strong) NSMutableArray<PIECommentVM *> *source_tutorialCommentVM;
+
+@property (nonatomic, assign) NSInteger currentCommentIndex;
 
 @property (nonatomic, strong) PIEChannelTutorialDetailToolbar *toolBar;
 
-@property (nonatomic, strong) PIEChannelTutorialLockedUpView *lockedUpView;
+@property (nonatomic, assign) PIEWalletChargeSourceType walletChargeSourceType;
+
+/** 代缴的摇摇乐总额 */
+@property (nonatomic, assign) double toBeRewardedAmount;
+
+/** 准备充值的钱(总额 - 当前余额) */
+@property (nonatomic, assign) double toBeRechargeAmount;
+
 
 @end
 
@@ -65,6 +98,12 @@ static NSString *PIEChannelTutorialPrefaceTableViewCellIdentifier =
 static NSString *PIEChannelTutorialImageTableViewCelIdentifier =
 @"PIEChannelTutorialImageTableViewCell";
 
+static NSString *PIEChannelTutorialCommentsCountTableViewCellIdentifier =
+@"PIEChannelTutorialCommentsCountTableViewCell";
+
+static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
+@"PIEChannelTutorialCommentTableViewCell";
+
 #pragma mark - UI life cycles
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -78,9 +117,11 @@ static NSString *PIEChannelTutorialImageTableViewCelIdentifier =
     
     [self setupSubviews];
     
+    [self setupRAC];
+    
     [self.tableView.mj_header beginRefreshing];
     
-    
+    [self loadMoreTutorialComments];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -119,6 +160,7 @@ static NSString *PIEChannelTutorialImageTableViewCelIdentifier =
        
         tableView.estimatedRowHeight = 60;
         
+        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
         [tableView registerNib:[UINib nibWithNibName:@"PIEChannelTutorialTeacherDescTableViewCell"
                                               bundle:nil]
@@ -130,7 +172,16 @@ static NSString *PIEChannelTutorialImageTableViewCelIdentifier =
         [tableView registerNib:[UINib nibWithNibName:@"PIEChannelTutorialImageTableViewCell" bundle:nil]
         forCellReuseIdentifier:PIEChannelTutorialImageTableViewCelIdentifier];
         
+        [tableView registerNib:[UINib nibWithNibName:@"PIEChannelTutorialCommentsCountTableViewCell"
+                                              bundle:nil]
+        forCellReuseIdentifier:PIEChannelTutorialCommentsCountTableViewCellIdentifier];
+        
+        [tableView registerNib:[UINib nibWithNibName:@"PIEChannelTutorialCommentTableViewCell"
+                                              bundle:nil]
+        forCellReuseIdentifier:PIEChannelTutorialCommentTableViewCellIdentifier];
+        
         [self.view addSubview:tableView];
+        
         
         [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self.view);
@@ -153,33 +204,143 @@ static NSString *PIEChannelTutorialImageTableViewCelIdentifier =
             make.left.bottom.right.equalTo(self.view);
         }];
         
+        toolBar.hasBought = self.currentTutorialModel.hasBought;
+        
         toolBar;
     });
     
     self.toolBar = toolBar;
     
+    
+}
+
+- (void)setupRAC
+{
     @weakify(self);
-    [[toolBar.rollDiceButton
-     rac_signalForControlEvents:UIControlEventTouchUpInside]
+    [[self.toolBar.rollDiceButton
+      rac_signalForControlEvents:UIControlEventTouchUpInside]
      subscribeNext:^(id x) {
          @strongify(self);
          
-         [self rollDiceReward];
+         [Hud activity:@"随机打赏中..."];
+         [self rollDiceRewardRequest];
          
-    }];
-}
+         
+     }];
+    
+    [[self.toolBar.commentButton
+      rac_signalForControlEvents:UIControlEventTouchUpInside]
+     subscribeNext:^(id x) {
+         @strongify(self);
+         
+         PIECommentViewController *commentVC = [[PIECommentViewController alloc] init];
+         commentVC.vm = [self.source_tutorialModel piePageVM];
+         commentVC.shouldShowHeaderView = NO;
+         commentVC.delegate = self;
+         [self.parentViewController.navigationController pushViewController:commentVC animated:YES];
+     }];
+    
+    [[self.toolBar.shareButton
+      rac_signalForControlEvents:UIControlEventTouchUpInside]
+     subscribeNext:^(id x) {
+         @strongify(self);
+         PIEShareView *shareView = [[PIEShareView alloc] init];
+         shareView.delegate = self;
+         [shareView show:[self.currentTutorialModel piePageVM]];
 
-- (void)setupData
-{
-    _source_tutorialComment = [NSMutableArray<PIECommentModel *> new];
+     }];
+    
+    [[self rac_signalForSelector:@selector(ATOMViewControllerPopedFromNavAfterSendingCommment)
+                    fromProtocol:@protocol(ATOMViewControllerDelegate)]
+     subscribeNext:^(id x) {
+        @strongify(self);
+        /* commentViewController曾经发过新的评论，并且返回才需要重刷数据 */
+        [self loadNewTutorialComments];
+    }];
+    
+    
+    // 搞明白了！是@(0) 和 0 的区别！
+    /* 不知道怎么搞的 tuple.second == 0 永远为false */
+//    [[self rac_signalForSelector:@selector(shareView:didShareWithType:)
+//                   fromProtocol:@protocol(PIEShareViewDelegate)] subscribeNext:^(id x) {
+//        
+//    }];
+//
+    
+    // call-back hell begins
+    
+    [[self rac_signalForSelector:@selector(rewardFailedViewDidTapGoChargeMoneyButton:)
+                   fromProtocol:@protocol(PIEChannelTutorialRewardFailedViewDelegate)]
+    subscribeNext:^(RACTuple *tuple) {
+        @strongify(self);
+        PIEChannelTutorialRewardFailedView *rewardFaildView = tuple.first;
+        [rewardFaildView dismiss];
+        
+        [self showChooseChargeMoneySourceView];
+    }];
+    
+    [[self rac_signalForSelector:@selector(chooseChargeSourceView:tapButtonOfIndex:)
+                    fromProtocol:@protocol(PIEChooseChargeSourceViewDelegate)]
+     subscribeNext:^(RACTuple *tuple) {
+        @strongify(self);
+        // take record of the source
+
+         PIEChooseChargeSourceView *chooseChargeSourceView =
+         (PIEChooseChargeSourceView *)tuple.first;
+         
+         NSInteger index = [tuple.second integerValue];
+         if (index == 0) {
+             self.walletChargeSourceType = PIEWalletChargeSourceTypeAlipay;
+         }else if (index == 1)
+         {
+             self.walletChargeSourceType = PIEWalletChargeSourceTypeWechat;
+         }
+         
+         [chooseChargeSourceView dismiss];
+         
+         
+         [self showInputMoneyView];
+         
+        
+    }];
+    
+    [[self rac_signalForSelector:@selector(chargeMoneyView:tapConfirmButtonWithAmount:) fromProtocol:@protocol(PIEChargeMoneyViewDelegate)]
+    subscribeNext:^(RACTuple *tuple) {
+        
+        @strongify(self);
+        PIEChargeMoneyView *chargeMoneyView = tuple.first;
+        [chargeMoneyView dismiss];
+        double amount = [tuple.second doubleValue];
+        if (amount < _toBeRechargeAmount) {
+            NSString *prompt =
+            [NSString stringWithFormat:@"至少要充值%.2f元", _toBeRechargeAmount];
+            [Hud error:prompt];
+        }else{
+            // 充值结束之后重新调用rollDice接口继续摇摇乐
+            [self chargeMoneyRequestWithType:_walletChargeSourceType
+                                      amount:([tuple.second doubleValue])];
+        }
+        
+    }];
+    
+    // --- call-back hell ends
+    
 }
 
 #pragma mark - Data setup
+- (void)setupData
+{
+    _source_tutorialCommentVM = [NSMutableArray<PIECommentVM *> array];
+
+    _currentCommentIndex      = 0;
+    
+}
+
 
 #pragma mark - <UITableViewDataSource>
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -215,6 +376,10 @@ static NSString *PIEChannelTutorialImageTableViewCelIdentifier =
             }
             break;
         }
+        case 3:{
+            return self.source_tutorialCommentVM.count + 1;
+            break;
+        }
     }
     
     return 0;
@@ -224,11 +389,33 @@ static NSString *PIEChannelTutorialImageTableViewCelIdentifier =
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
+        
         PIEChannelTutorialTeacherDescTableViewCell *teacherDescCell =
         [tableView dequeueReusableCellWithIdentifier:
          PIEChannelTutorialTeacherDescTableViewCellIdentifier];
         
         [teacherDescCell injectModel:self.source_tutorialModel];
+        
+        /*
+         
+         setup rac for this cell (do not worry about the cell's been recycled.)
+         since all signals from the cell would stop sending anything upon its 'rac_prepareForReuseSignal'. while this cell is being reused,
+         it would re-bound the subcrber for the second time.
+         Result: only one subscriber, the block will only execute once  for every single 
+                 tapping.
+         
+         */
+        @weakify(self);
+        [teacherDescCell.tapOnAvatar subscribeNext:^(id x) {
+            @strongify(self);
+            [self pushToFriendViewController];
+            
+        }];
+        
+        [teacherDescCell.tapOnFollowButton subscribeNext:^(id x) {
+            @strongify(self);
+            [self pressOnFollowButton];
+        }];
         
         return teacherDescCell;
     }
@@ -254,23 +441,30 @@ static NSString *PIEChannelTutorialImageTableViewCelIdentifier =
         if ((indexPath.row == self.source_tutorialModel.tutorial_images.count - 1) &&
             self.source_tutorialModel.hasBought == NO)
         {
-            [Hud text:@"未解锁"];
-            [tutorialImageCell addSubview:self.lockedUpView];
-            
-            
-            
-            [self.lockedUpView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.edges.equalTo(tutorialImageCell);
-            }];
-            
-            [tutorialImageCell setNeedsLayout];
-            
+            tutorialImageCell.locked = YES;
         }
-       
-        
         return tutorialImageCell;
     }
-    
+    else if(indexPath.section == 3){
+        /* 第一个row：commentCount;其它是comment */
+        if (indexPath.row == 0) {
+            PIEChannelTutorialCommentsCountTableViewCell *commentCountsCell =
+            [tableView dequeueReusableCellWithIdentifier:
+             PIEChannelTutorialCommentsCountTableViewCellIdentifier];
+            [commentCountsCell injectCommentCount:self.currentTutorialModel.comment_count];
+            return commentCountsCell;
+            
+        }else{
+            PIEChannelTutorialCommentTableViewCell *commentCell =
+            [tableView dequeueReusableCellWithIdentifier:
+             PIEChannelTutorialCommentTableViewCellIdentifier];
+            
+            [commentCell injectVM:self.source_tutorialCommentVM[indexPath.row - 1]];
+            
+            return commentCell;
+        }
+        
+    }
     return nil;
 }
 
@@ -310,53 +504,134 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
     }else if (indexPath.section == 2){
         /* tutorial images */
         return 190;
-    }else{
+    }else if (indexPath.section == 3)
+        /* comments */
+        return 80;
+    else{
         return 0;
     }
 }
 
 
-
 #pragma mark - <PWRefreshBaseTableViewDelegate>
 - (void)didPullRefreshDown:(UITableView *)tableView
 {
+    /*
+        开启两个线程，异步加载两种数据。（刷新UI放到主线程里应该就不会冲突，最多不就刷新两次tableView咯）
+        不过为了避免race condition, reload data之类的UI更新操作还是统一放到了主队列里串行
+     */
     [self loadNewTutorialDetails];
+    [self loadMoreTutorialComments];
 }
 
 - (void)didPullRefreshUp:(UITableView *)tableView
 {
-    [self loadMoreTutorialDetails];
+    [self loadMoreTutorialComments];
+}
+
+#pragma mark - <PIEShareViewDelegate>
+
+/* 该死的RAC为啥tuple.second 不能判断 == 0??? */
+- (void)shareView:(PIEShareView *)shareView didShareWithType:(ATOMShareType)type
+{
+    if (type == ATOMShareTypeWechatMoments) {
+        [self unlockTutorial];
+    }
+    
 }
 
 #pragma mark - Network request 
 - (void)loadNewTutorialDetails
 {
-    
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     params[@"tutorial_id"] = [@(self.currentTutorialModel.ask_id) stringValue];
     
     [PIEChannelManager
      getSource_channelTutorialDetail:params
      block:^(PIEChannelTutorialModel *model) {
-         [_tableView.mj_header endRefreshing];
          _source_tutorialModel = [model copy];
-         [_tableView reloadData];
          
+         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+             [_tableView.mj_header endRefreshing];
+             [_tableView reloadData];
+         }];
      } failureBlock:^{
-         [_tableView.mj_header endRefreshing];
+         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+             [_tableView.mj_header endRefreshing];
+         }];
          
      }];
     
 }
 
-- (void)loadMoreTutorialDetails
+- (void)loadNewTutorialComments
 {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.tableView.mj_footer endRefreshing];
-    });
+    _currentCommentIndex = 1;
+    
+    PIECommentManager *commentManager = [PIECommentManager new];
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    
+    params[@"page"]      = @(_currentCommentIndex);
+    params[@"size"]      = @(10);
+    params[@"type"]      = @(1);        /* 1: ask_id; 2: reply_id */
+    params[@"target_id"] = [@(self.currentTutorialModel.ask_id) stringValue];
+    
+    @weakify(self);
+    [commentManager
+     ShowDetailOfComment:params
+     withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
+         @strongify(self);
+         [self.tableView.mj_footer endRefreshing];
+         if (error != nil) {
+             [Hud error:error.domain];
+         }else{
+             [self.source_tutorialCommentVM removeAllObjects];
+             [self.source_tutorialCommentVM addObjectsFromArray:recentCommentArray];
+             
+             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                 [self.tableView reloadData];
+             }];
+         }
+         
+     }];
+
 }
 
-- (void)rollDiceReward
+- (void)loadMoreTutorialComments
+{
+    _currentCommentIndex ++;
+    
+    PIECommentManager *commentManager = [PIECommentManager new];
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    
+    params[@"page"]      = @(_currentCommentIndex);
+    params[@"size"]      = @(10);
+    params[@"type"]      = @(1);        /* 1: ask_id; 2: reply_id */
+    params[@"target_id"] = [@(self.currentTutorialModel.ask_id) stringValue];
+    
+    @weakify(self);
+    [commentManager
+     ShowDetailOfComment:params
+     withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
+         @strongify(self);
+         [self.tableView.mj_footer endRefreshing];
+         if (error != nil) {
+             [Hud error:error.domain];
+         }else{
+             [self.source_tutorialCommentVM addObjectsFromArray:recentCommentArray];
+             
+             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                 [self.tableView reloadData];
+             }];
+         }
+         
+     }];
+    
+}
+
+- (void)rollDiceRewardRequest
 {
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     
@@ -366,34 +641,167 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
      GET:params
      url:@"thread/reward"
      block:^(id responseObject) {
+         [Hud dismiss];
+         
          NSDictionary *dataDict = responseObject[@"data"];
-         long rollDiceStatus = [dataDict[@"type"] longValue];
-         double balance            = [dataDict[@"balance"] doubleValue];
-         double amount             = [dataDict[@"amount"] doubleValue];
+         long rollDiceStatus    = [dataDict[@"type"] longValue];
+         double balance         = [dataDict[@"balance"] doubleValue];
+         double amount          = [dataDict[@"amount"] doubleValue];
          
          if (rollDiceStatus == -1){
-             NSString *prompt = [NSString stringWithFormat:@"支付失败：剩余余额%.2f, 需付款%.2f", balance,amount];
-             [Hud text:prompt];
+
+             PIEChannelTutorialRewardFailedView *rewardFailedView =
+             [PIEChannelTutorialRewardFailedView new];
+             
+             [rewardFailedView show];
+             rewardFailedView.delegate = self;
+             
+             // 记录差额与代缴的总额
+             self.toBeRechargeAmount = amount - balance;
+             self.toBeRewardedAmount = amount;
+             
+             
          }else if (rollDiceStatus == 1){
              NSString *prompt = [NSString stringWithFormat:@"支付%.2f元，剩余%.2f元", amount, balance];
              [Hud text:prompt];
              
+             [self unlockTutorial];
+             
          }else{
              NSString *prompt = [NSString stringWithFormat:@"type == %ld", (long)rollDiceStatus];
              [Hud error:prompt];
+             
          }
      }];
     
 }
 
-#pragma mark - Lazy loadings
-- (PIEChannelTutorialLockedUpView *)lockedUpView
+- (void)chargeMoneyRequestWithType:(PIEWalletChargeSourceType)sourceType amount:(double)amount
 {
-    if (_lockedUpView == nil) {
-        _lockedUpView =  [PIEChannelTutorialLockedUpView lockedUpView];
+
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"amount"] = @(amount);
+    if (sourceType == PIEWalletChargeSourceTypeWechat) {
+        params[@"type"] = @"wx";
+    }else if (sourceType == PIEWalletChargeSourceTypeAlipay)
+    {
+        params[@"type"] = @"alipay";
     }
     
-    return _lockedUpView;
+    [DDBaseService
+     GET:params
+     url:@"money/charge"
+     block:^(id responseObject) {
+         // if success： go on and pay the debt from previous 'rollDiceReward'.
+         if (responseObject != nil) {
+             [self rewardWithConcreteAmount:_toBeRewardedAmount];
+         }
+     }];
+    
+}
+
+- (void)rewardWithConcreteAmount:(double)amount
+{
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    
+    params[@"ask_id"] = [@(self.source_tutorialModel.ask_id) stringValue];
+    params[@"amount"] = @(amount);
+    
+    [DDBaseService
+     GET:params
+     url:@"thread/reward"
+     block:^(id responseObject) {
+         [Hud dismiss];
+         
+         NSDictionary *dataDict = responseObject[@"data"];
+         long rollDiceStatus    = [dataDict[@"type"] longValue];
+         double balance         = [dataDict[@"balance"] doubleValue];
+         double amount          = [dataDict[@"amount"] doubleValue];
+         
+         
+         // 已经充值了还会导致余额不足的情况吗？
+         if (rollDiceStatus == -1){
+             
+             PIEChannelTutorialRewardFailedView *rewardFailedView =
+             [PIEChannelTutorialRewardFailedView new];
+             
+             [rewardFailedView show];
+             rewardFailedView.delegate = self;
+             
+             
+         }else if (rollDiceStatus == 1){
+             NSString *prompt = [NSString stringWithFormat:@"支付%.2f元，剩余%.2f元", amount, balance];
+             [Hud text:prompt];
+             
+             [self unlockTutorial];
+             
+         }else{
+             NSString *prompt = [NSString stringWithFormat:@"type == %ld", (long)rollDiceStatus];
+             [Hud error:prompt];
+             
+         }
+     }];
+}
+
+#pragma mark - RAC response methods
+- (void)showChooseChargeMoneySourceView
+{
+    // pop out the choosemoney source panel
+    PIEChooseChargeSourceView *chooseChargeSourceView = [PIEChooseChargeSourceView new];
+    
+    // become delegate, take response
+    chooseChargeSourceView.delegate = self;
+    
+    [chooseChargeSourceView show];
+    
+}
+
+- (void)showInputMoneyView
+{
+    PIEChargeMoneyView *chargeMoneyView = [PIEChargeMoneyView new];
+    
+    chargeMoneyView.delegate = self;
+    
+    
+    [chargeMoneyView showWithAmoutToBeCharge:_toBeRechargeAmount];
+}
+
+
+
+
+#pragma mark - private helpers
+- (void)pushToFriendViewController
+{
+    // fetch userid
+     PIEFriendViewController *friendVC =
+    [[PIEFriendViewController alloc] init];
+    
+    friendVC.pageVM = [self.currentTutorialModel piePageVM];
+    
+    // jump to FriendViewController
+    [self.parentViewController.navigationController pushViewController:friendVC
+                                                              animated:YES];
+    
+}
+
+- (void)pressOnFollowButton{
+    // send request
+    
+    // update UI
+    
+    [Hud text:@"follow好没想好怎么全局同步和刷新UI"];
+    
+    
+}
+
+#pragma mark - private helpers
+- (void)unlockTutorial
+{
+    // 支付成功，遂重刷UI
+    [self loadNewTutorialDetails];
+    
+    // 心形满格
+    self.toolBar.hasBought = YES;
 }
 
 

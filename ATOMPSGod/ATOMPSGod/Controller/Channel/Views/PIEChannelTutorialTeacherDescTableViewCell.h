@@ -9,12 +9,21 @@
 #import <UIKit/UIKit.h>
 @class PIEAvatarView;
 @class PIEChannelTutorialModel;
+
+@class RACSignal;
+
 @interface PIEChannelTutorialTeacherDescTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet PIEAvatarView *avatarView;
 @property (weak, nonatomic) IBOutlet UILabel       *userNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel       *createdTimeLabel;
+@property (weak, nonatomic) IBOutlet UIButton      *followButton;
+
 
 - (void)injectModel:(PIEChannelTutorialModel *)tutorialModel;
+
+@property (nonatomic, strong) RACSignal *tapOnAvatar;
+@property (nonatomic, strong) RACSignal *tapOnFollowButton;
+
 
 @end
