@@ -16,6 +16,8 @@
 #import "PIEWithdrawlMoneyViewController.h"
 #import "LxDBAnything.h"
 #import "PIEChooseChargeSourceView.h"
+
+#import "Pingpp.h"
 @interface PIEMyWalletViewController ()<PIEChargeMoneyViewDelegate,PIEChooseChargeSourceViewDelegate>
 
 @property (nonatomic, strong) PIEChargeMoneyView *chargeMoneyView;
@@ -64,19 +66,38 @@
 }
 
 
--(void)chargeMoneyView:(PIEChargeMoneyView *)chargeMoneyView tapConfirmButtonWithAmount:(NSInteger)amount {
+-(void)chargeMoneyView:(PIEChargeMoneyView *)chargeMoneyView tapConfirmButtonWithAmount:(CGFloat)amount {
     
-    NSString *chargeTypeStr = @"wechat";
+    NSString *chargeTypeStr = @"wx";
     if (self.chooseChargeSourceView.chargeType == PIEWalletChargeSourceTypeAlipay) {
-        chargeTypeStr = @"";
+        chargeTypeStr = @"alipay";
     } else if (self.chooseChargeSourceView.chargeType == PIEWalletChargeSourceTypeWechat) {
-        chargeTypeStr = @"";
+        chargeTypeStr = @"wx";
     }
-    
-    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:@(amount),@"amount",chargeTypeStr,@"type",nil];
+    NSString *amountString = [NSString stringWithFormat:@"%.2f", amount];
+
+    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:amountString,@"amount",chargeTypeStr,@"type",nil];
 
     [DDService POST:param url:@"money/charge" block:^(id responseObject) {
-        NSLog(@"responseObject%@",responseObject);
+        NSDictionary *dictionaryData = [responseObject objectForKey:@"data"];
+        if (dictionaryData == nil) {
+            return ;
+        }
+        NSData *data = [NSJSONSerialization dataWithJSONObject:dictionaryData options:NSJSONWritingPrettyPrinted error:nil];
+        NSString *jsonString = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+        [Pingpp createPayment:jsonString
+               viewController:self
+                 appURLScheme:nil
+               withCompletion:^(NSString *result, PingppError *error) {
+                   NSLog(@"%@ ",result);
+                   if ([result isEqualToString:@"success"]) {
+                       // 支付成功
+                   } else {
+                       // 支付失败或取消
+                       NSLog(@"Error: code=%lu msg=%@", error.code, [error getMsg]);
+                   }
+               }];
+
     }];
 }
 
