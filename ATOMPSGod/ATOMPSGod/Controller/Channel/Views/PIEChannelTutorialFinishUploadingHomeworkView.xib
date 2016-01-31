@@ -120,14 +120,16 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="descLabel" destination="2eB-R2-PAk" id="4G2-qe-iH0"/>
                 <outlet property="dismissButton" destination="9kg-Vq-HXH" id="23e-tG-nQj"/>
+                <outlet property="homeworkImageView" destination="QkD-rP-LDP" id="Cpt-fu-TxK"/>
                 <outlet property="qqFriendButton" destination="Mid-kU-4vb" id="ZXK-Sl-DIP"/>
                 <outlet property="qqzoneButton" destination="0n7-yl-Zbl" id="Ygl-JX-nwd"/>
                 <outlet property="wechatButton" destination="69A-An-WHp" id="iIl-EX-LhO"/>
                 <outlet property="wechatMomentButton" destination="6Lk-ud-96F" id="Rjc-uU-CeA"/>
                 <outlet property="weiboButton" destination="fvg-Bp-zwB" id="Kj5-Tt-YAO"/>
             </connections>
-            <point key="canvasLocation" x="233.5" y="138.5"/>
+            <point key="canvasLocation" x="125.5" y="129.5"/>
         </view>
     </objects>
     <resources>

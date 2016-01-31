@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class PHAsset;
+
 @class PIEChannelTutorialShareHomeworkPanelView;
 
 @protocol PIEChannelTutorialShareHomeworkPanelViewDelegate <NSObject>
@@ -21,9 +23,10 @@
 
 @property (nonatomic, weak) id<PIEChannelTutorialShareHomeworkPanelViewDelegate>delegate;
 
-- (void)show;
+- (void)showWithAsset:(PHAsset *)asset description:(NSString *)descriptionString;
 
 - (void)dismiss;
+
 
 
 @end

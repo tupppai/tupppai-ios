@@ -8,8 +8,7 @@
 
 #import "PIEChannelTutorialShareHomeworkPanelView.h"
 #import "PIEChannelTutorialFinishUploadingHomeworkView.h"
-
-
+#import <Photos/Photos.h>
 
 @interface PIEChannelTutorialShareHomeworkPanelView ()
 
@@ -125,28 +124,37 @@
 
 #pragma mark - public methods
 
-- (void)show
+
+- (void)showWithAsset:(PHAsset *)asset description:(NSString *)descriptionString
 {
+    
+    _panelView.descLabel.text = descriptionString;
+    
+    [self requestImageFromAsset:asset
+                    resultBlock:^(UIImage *homeworkImage) {
+                        _panelView.homeworkImageView.image = homeworkImage;
+                    }];
+    
     [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
-    [[AppDelegate APP].window addSubview:self];
-    [self layoutIfNeeded];
+        [[AppDelegate APP].window addSubview:self];
+        [self layoutIfNeeded];
     
-    [self.panelViewMasConstraintCenterY setOffset:0];
+        [self.panelViewMasConstraintCenterY setOffset:0];
     
-    [UIView animateWithDuration:0.35
-                          delay:0
-         usingSpringWithDamping:0.8
-          initialSpringVelocity:0.7
-                        options:0
-                     animations:^{
-                         self.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.6];
-                         [self.panelView layoutIfNeeded];
-                     } completion:^(BOOL finished) {
-                         if (finished) {
-                             [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+        [UIView animateWithDuration:0.35
+                              delay:0
+             usingSpringWithDamping:0.8
+              initialSpringVelocity:0.7
+                            options:0
+                         animations:^{
+                             self.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.6];
+                             [self.panelView layoutIfNeeded];
+                         } completion:^(BOOL finished) {
+                             if (finished) {
+                                 [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+                             }
                          }
-                     }
-     ];
+         ];
 }
 
 
@@ -174,6 +182,22 @@
     }
     
     return _panelView;
+}
+
+#pragma mark - private helpers
+- (void)requestImageFromAsset:(PHAsset *)asset
+                  resultBlock:(void(^)(UIImage *homeworkImage))retBlock{
+    PHImageManager *imageManager = [[PHImageManager alloc] init];
+    [imageManager
+     requestImageDataForAsset:asset
+     options:nil
+     resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+         
+         UIImage *homeworkImage = [UIImage imageWithData:imageData];
+         if (retBlock != nil) {
+             retBlock(homeworkImage);
+         }
+     }];
 }
 
 

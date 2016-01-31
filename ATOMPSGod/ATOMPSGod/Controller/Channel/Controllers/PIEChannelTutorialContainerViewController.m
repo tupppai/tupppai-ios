@@ -16,13 +16,16 @@
 #import "LxDBAnything.h"
 
 #import "PIEChannelTutorialShareHomeworkPanelView.h"
+#import "PIEShareView.h"
 
 
 
 @interface PIEChannelTutorialContainerViewController ()
 <
     UIScrollViewDelegate,
-    RengarViewControllerDelegate
+    RengarViewControllerDelegate,
+    PIEChannelTutorialShareHomeworkPanelViewDelegate,
+    PIEShareViewDelegate
 >
 
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
@@ -65,6 +68,8 @@ typedef NS_ENUM(NSUInteger, PIEChannelTutorialControllerType) {
     
     // call the first view controller to start refreshing & fetch data
     // ...
+    
+    [self setupRAC];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -124,6 +129,23 @@ typedef NS_ENUM(NSUInteger, PIEChannelTutorialControllerType) {
     
 }
 
+- (void)setupRAC
+{
+    @weakify(self);
+    [[self rac_signalForSelector:@selector(shareHomeworkPanelView:didShareHomeworkWithType:)
+                    fromProtocol:@protocol(PIEChannelTutorialShareHomeworkPanelViewDelegate)]
+    subscribeNext:^(RACTuple *value) {
+        [Hud text:@"show shareView"];
+        @strongify(self);
+        PIEShareView *shareView = [[PIEShareView alloc] init];
+        
+        shareView.delegate = self;
+    
+        // nothing to share, since no network request while uploading homework at RengarViewController
+        [shareView show:nil];
+    }];
+}
+
 #pragma nark - target-actions
 - (void)uploadHomework
 {
@@ -167,7 +189,7 @@ typedef NS_ENUM(NSUInteger, PIEChannelTutorialControllerType) {
         [self.segmentedControl setSelectedSegmentIndex:1 animated:YES];
         
         // refresh if is first loaded
-        
+
     }
 }
 
@@ -176,17 +198,12 @@ typedef NS_ENUM(NSUInteger, PIEChannelTutorialControllerType) {
   didFinishPickingPhotoAsset:(PHAsset *)asset
            descriptionString:(NSString *)descriptionString
 {
-    LxDBAnyVar(rengarViewController);
-    LxDBAnyVar(asset);
-    LxDBAnyVar(descriptionString);
-    
-    /*
-        POP OUT PIEChannelTutorialShareHomeworkPanelView
-     */
     PIEChannelTutorialShareHomeworkPanelView *panelView =
     [PIEChannelTutorialShareHomeworkPanelView new];
     
-    [panelView show];
+    panelView.delegate = self;
+    
+    [panelView showWithAsset:asset description:descriptionString];
 }
 
 #pragma mark - lazy loadings

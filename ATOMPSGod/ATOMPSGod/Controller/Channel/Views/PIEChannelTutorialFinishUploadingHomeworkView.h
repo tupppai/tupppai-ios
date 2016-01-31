@@ -22,6 +22,9 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *dismissButton;
 
+@property (weak, nonatomic) IBOutlet UILabel *descLabel;
+
+@property (weak, nonatomic) IBOutlet UIImageView *homeworkImageView;
 
 + (PIEChannelTutorialFinishUploadingHomeworkView *)finishUploadingHomeworkView;
 
