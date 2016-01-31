@@ -10,6 +10,7 @@
 #import "PIEChannelTutorialImageModel.h"
 #import "PIEChannelTutorialLockedUpView.h"
 
+
 @interface PIEChannelTutorialImageTableViewCell ()
 
 @property (nonatomic, strong) PIEChannelTutorialLockedUpView *lockedUpView;
@@ -57,6 +58,10 @@
         [self.lockedUpView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self);
         }];
+        
+        UIImage *blurImage = [self.tutorialImageView.image gaussianBlurWithBias:60];
+        self.tutorialImageView.image = blurImage;
+        [self setNeedsDisplay];
         
         [self setNeedsLayout];
     }
