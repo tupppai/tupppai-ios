@@ -242,10 +242,49 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     else {
         PIEEliteHotReplyTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:hotReplyIndentifier];
         [cell injectSauce:vm];
+        
+        
+        @weakify(self);
+        // beginning of RAC-binding
+        [cell.tapOnAvatarOrUsernameSignal subscribeNext:^(id x) {
+            @strongify(self);
+            [self tapOnAvatarOrUsernameLabelAtIndexPath:indexPath];
+        }];
+        
+        [cell.tapOnFollowButtonSignal subscribeNext:^(id x) {
+            @strongify(self);
+            [self tapOnFollowButtonAtIndexPath:indexPath];
+        }];
+        
+        [cell.tapOnAllWorkSignal subscribeNext:^(id x) {
+            @strongify(self);
+            [self tapOnAllworkButtonAtIndexPath:indexPath];
+        }];
+        
+        [cell.tapOnCommentSignal subscribeNext:^(id x) {
+            @strongify(self);
+            [self tapOnCommentPageButtonAtIndexPath:indexPath];
+        }];
+        
+        [cell.tapOnShareSignal subscribeNext:^(id x) {
+            @strongify(self);
+            [self tapOnSharePageButtonAtIndexPath:indexPath];
+        }];
+        
+        [cell.tapOnLikeSignal subscribeNext:^(id x) {
+            @strongify(self);
+            [self tapOnLikePageButtonAtIndexPath:indexPath];
+        }];
+        
+        [cell.longPressOnLikeSignal subscribeNext:^(id x) {
+            @strongify(self);
+            [self longPressOnLikePageButtonAtIndexPath:indexPath];
+        }];
+        // --- end of RAC-binding
+        
         return cell;
     }
 }
-
 
 
 
@@ -256,9 +295,6 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 {
     [shareView dismiss];
 }
-
-
-
 
 
 /** 分享当前pageVM对应的图片 */
@@ -343,11 +379,10 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
             //点击大图
             if (CGRectContainsPoint(cell.blurAnimateView.frame, p)) {
                 [self showShareView:_selectedVM];
-            } else if (CGRectContainsPoint(cell.likeView.frame, p)) {
-                [_selectedVM love:YES];
             }
-
-            
+//            else if (CGRectContainsPoint(cell.likeView.frame, p)) {
+//                [_selectedVM love:YES];
+//            }
         }
     }
 }
@@ -435,40 +470,42 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
                     }
                 }
               
-                //点击头像
-                else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
-                    PIEFriendViewController * friendVC = [PIEFriendViewController new];
-                    friendVC.pageVM = _selectedVM;
-                    [self.navigationController pushViewController:friendVC animated:YES];
-                }
-                //点击用户名
-                else if (CGRectContainsPoint(cell.nameLabel.frame, p)) {
-                    PIEFriendViewController * friendVC = [PIEFriendViewController new];
-                    friendVC.pageVM = _selectedVM;
-                    [self.navigationController pushViewController:friendVC animated:YES];
-                }
-                // 点赞
-                else if (CGRectContainsPoint(cell.likeView.frame, p)) {
-                    [_selectedVM love:NO];
-                }
-                // 关注
-                else if (CGRectContainsPoint(cell.followView.frame, p)) {
-                    [_selectedVM follow];
-                }
+//                //点击头像
+//                else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
+//                    PIEFriendViewController * friendVC = [PIEFriendViewController new];
+//                    friendVC.pageVM = _selectedVM;
+//                    [self.navigationController pushViewController:friendVC animated:YES];
+//                }
+//                //点击用户名
+//                else if (CGRectContainsPoint(cell.nameLabel.frame, p)) {
+//                    PIEFriendViewController * friendVC = [PIEFriendViewController new];
+//                    friendVC.pageVM = _selectedVM;
+//                    [self.navigationController pushViewController:friendVC animated:YES];
+//                }
+//                // 点赞
+//                else if (CGRectContainsPoint(cell.likeView.frame, p)) {
+//                    [_selectedVM love:NO];
+//                }
+//                // 关注
+//                else if (CGRectContainsPoint(cell.followView.frame, p)) {
+//                    [_selectedVM follow];
+//                }
                 // 分享
-                else if (CGRectContainsPoint(cell.shareView.frame, p)) {
-                    [self showShareView:_selectedVM];
-                }
-                else if ((CGRectContainsPoint(cell.commentView.frame, p))||(CGRectContainsPoint(cell.commentLabel1.frame, p))||(CGRectContainsPoint(cell.commentLabel2.frame, p)) ) {                    PIECommentViewController* vc = [PIECommentViewController new];
-                    vc.vm = _selectedVM;
-                    vc.shouldShowHeaderView = NO;
-                    [self.navigationController pushViewController:vc animated:YES];
-                }
-                else if (CGRectContainsPoint(cell.allWorkView.frame, p)) {
-                    PIEReplyCollectionViewController* vc = [PIEReplyCollectionViewController new];
-                    vc.pageVM = _selectedVM;
-                    [self.navigationController pushViewController:vc animated:YES];
-                }
+//                else if (CGRectContainsPoint(cell.shareView.frame, p)) {
+//                    [self showShareView:_selectedVM];
+//                }
+//                // 评论
+//                else if ((CGRectContainsPoint(cell.commentView.frame, p))||(CGRectContainsPoint(cell.commentLabel1.frame, p))||(CGRectContainsPoint(cell.commentLabel2.frame, p)) ) {                    PIECommentViewController* vc = [PIECommentViewController new];
+//                    vc.vm = _selectedVM;
+//                    vc.shouldShowHeaderView = NO;
+//                    [self.navigationController pushViewController:vc animated:YES];
+//                }
+//                 全部作品
+//                else if (CGRectContainsPoint(cell.allWorkView.frame, p)) {
+//                    PIEReplyCollectionViewController* vc = [PIEReplyCollectionViewController new];
+//                    vc.pageVM = _selectedVM;
+//                    [self.navigationController pushViewController:vc animated:YES];
+//                }
             }
 }
 
@@ -579,6 +616,56 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
         [self.tableHot.mj_footer endRefreshing];
     }];
 }
+
+#pragma mark - RAC signal response methods
+- (void)tapOnAvatarOrUsernameLabelAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEFriendViewController * friendVC = [PIEFriendViewController new];
+    friendVC.pageVM = _sourceHot[indexPath.row];
+    
+    [self.navigationController pushViewController:friendVC animated:YES];
+}
+
+- (void)tapOnFollowButtonAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM = _sourceHot[indexPath.row];
+    [selectedVM follow];
+}
+
+- (void)tapOnCommentPageButtonAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIECommentViewController* vc = [PIECommentViewController new];
+    vc.vm = _selectedVM;
+    vc.shouldShowHeaderView = NO;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)tapOnSharePageButtonAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM = _sourceHot[indexPath.row];
+    [self showShareView:selectedVM];
+}
+
+- (void)tapOnAllworkButtonAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM = _sourceHot[indexPath.row];
+    PIEReplyCollectionViewController* vc = [PIEReplyCollectionViewController new];
+    vc.pageVM = selectedVM;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)tapOnLikePageButtonAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM = _sourceHot[indexPath.row];
+    [selectedVM love:NO];
+}
+
+- (void)longPressOnLikePageButtonAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM = _sourceHot[indexPath.row];
+    [selectedVM love:YES];
+}
+
 
 
 #pragma mark - Lazy loadings
