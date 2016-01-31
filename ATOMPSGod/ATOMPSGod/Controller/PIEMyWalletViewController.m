@@ -85,12 +85,12 @@
         case 0:
             [self.chooseChargeSourceView dismiss];
             self.chooseChargeSourceView.chargeType = PIEWalletChargeSourceTypeAlipay;
-            [self.chargeMoneyView show];
+            [self.chargeMoneyView showWithAmoutToBeCharge:0.0];
             break;
         case 1:
             [self.chooseChargeSourceView dismiss];
             self.chooseChargeSourceView.chargeType = PIEWalletChargeSourceTypeWechat;
-            [self.chargeMoneyView show];
+            [self.chargeMoneyView showWithAmoutToBeCharge:0.0];
             break;
         case 2:
             [self.chooseChargeSourceView dismiss];

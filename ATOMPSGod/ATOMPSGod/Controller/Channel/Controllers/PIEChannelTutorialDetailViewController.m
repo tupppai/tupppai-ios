@@ -298,6 +298,7 @@ static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
          
          [chooseChargeSourceView dismiss];
          
+         
          [self showInputMoneyView];
          
         
@@ -305,23 +306,22 @@ static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
     
     [[self rac_signalForSelector:@selector(chargeMoneyView:tapConfirmButtonWithAmount:) fromProtocol:@protocol(PIEChargeMoneyViewDelegate)]
     subscribeNext:^(RACTuple *tuple) {
-        @strongify(self);
         
+        @strongify(self);
         PIEChargeMoneyView *chargeMoneyView = tuple.first;
         [chargeMoneyView dismiss];
-        
         double amount = [tuple.second doubleValue];
         if (amount < _toBeRechargeAmount) {
             NSString *prompt =
-            [NSString stringWithFormat:@"至少要充值%f元", _toBeRechargeAmount];
+            [NSString stringWithFormat:@"至少要充值%.2f元", _toBeRechargeAmount];
             [Hud error:prompt];
         }else{
-            [self chargeMoneyRequestWithType:0 amount:([tuple.second doubleValue])];
+            // 充值结束之后重新调用rollDice接口继续摇摇乐
+            [self chargeMoneyRequestWithType:_walletChargeSourceType
+                                      amount:([tuple.second doubleValue])];
         }
         
     }];
-    
-    // 充值结束之后重新调用rollDice接口继续摇摇乐
     
     // --- call-back hell ends
     
@@ -678,9 +678,25 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 
 - (void)chargeMoneyRequestWithType:(PIEWalletChargeSourceType)sourceType amount:(double)amount
 {
-    NSString *prompt = [NSString stringWithFormat:@"%ld-%f", sourceType, amount];
-    [Hud text:prompt];
+
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"amount"] = @(amount);
+    if (sourceType == PIEWalletChargeSourceTypeWechat) {
+        params[@"type"] = @"wx";
+    }else if (sourceType == PIEWalletChargeSourceTypeAlipay)
+    {
+        params[@"type"] = @"alipay";
+    }
     
+    [DDBaseService
+     GET:params
+     url:@"money/charge"
+     block:^(id responseObject) {
+         // if success： go on and pay the debt from previous 'rollDiceReward'.
+         if (responseObject != nil) {
+             [self rewardWithConcreteAmount:_toBeRewardedAmount];
+         }
+     }];
     
 }
 
@@ -746,7 +762,8 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
     
     chargeMoneyView.delegate = self;
     
-    [chargeMoneyView show];
+    
+    [chargeMoneyView showWithAmoutToBeCharge:_toBeRechargeAmount];
 }
 
 

@@ -40,7 +40,8 @@
 
     [[_panelView.confirmButton rac_signalForControlEvents:UIControlEventTouchDown]subscribeNext:^(id x) {
         if (_delegate && [_delegate respondsToSelector:@selector(chargeMoneyView:tapConfirmButtonWithAmount:)]) {
-                [_delegate chargeMoneyView:self tapConfirmButtonWithAmount:[self.panelView.moneyCountTextField.text integerValue]];
+                [_delegate chargeMoneyView:self
+                tapConfirmButtonWithAmount:[self.panelView.moneyCountTextField.text doubleValue]];
         }
     }];
 
@@ -51,7 +52,9 @@
         [self dismiss];
     }
 }
-- (void)show {
+- (void)showWithAmoutToBeCharge:(double)amount {
+    self.panelView.moneyCountTextField.text = [@(amount) stringValue];
+    
     [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     [[AppDelegate APP].window addSubview:self];
     [self layoutIfNeeded];
