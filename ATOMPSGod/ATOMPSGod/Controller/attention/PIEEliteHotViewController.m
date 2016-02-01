@@ -256,6 +256,16 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
             [self tapOnFollowButtonAtIndexPath:indexPath];
         }];
         
+        [cell.tapOnImageViewSignal subscribeNext:^(id x) {
+            @strongify(self);
+            [self tapOnImageViewAtIndexPath:indexPath];
+        }];
+        
+        [cell.longPressOnImageViewSignal subscribeNext:^(id x) {
+            @strongify(self);
+            [self longPressOnImageViewAtIndexPath:indexPath];
+        }];
+        
         [cell.tapOnAllWorkSignal subscribeNext:^(id x) {
             @strongify(self);
             [self tapOnAllworkButtonAtIndexPath:indexPath];
@@ -374,12 +384,12 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
         //关注  作品
         
         else {
-            PIEEliteHotReplyTableViewCell* cell = [self.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
-            CGPoint p = [gesture locationInView:cell];
-            //点击大图
-            if (CGRectContainsPoint(cell.blurAnimateView.frame, p)) {
-                [self showShareView:_selectedVM];
-            }
+//            PIEEliteHotReplyTableViewCell* cell = [self.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
+//            CGPoint p = [gesture locationInView:cell];
+//            //点击大图
+//            if (CGRectContainsPoint(cell.blurAnimateView.frame, p)) {
+//                [self showShareView:_selectedVM];
+//            }
 //            else if (CGRectContainsPoint(cell.likeView.frame, p)) {
 //                [_selectedVM love:YES];
 //            }
@@ -447,28 +457,26 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
         }
         
     }
-    
-            
             else {
-                PIEEliteHotReplyTableViewCell* cell = [self.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
-                CGPoint p = [gesture locationInView:cell];
-                //点击小图
-                if (CGRectContainsPoint(cell.blurAnimateView.frame, p)) {
-                    CGPoint pp = [gesture locationInView:cell.blurAnimateView.thumbView];
-                    if (CGRectContainsPoint(cell.blurAnimateView.thumbView.leftView.frame,pp)) {
-                        [cell animateWithType:PIEThumbAnimateViewTypeLeft];
-                    }
-                    
-                    else if (CGRectContainsPoint(cell.blurAnimateView.thumbView.rightView.frame,pp)) {
-                        [cell animateWithType:PIEThumbAnimateViewTypeRight];
-                    }
-                    
-                    else  if (CGRectContainsPoint(cell.blurAnimateView.imageView.frame, p)) {
-                        PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-                        vc.pageVM = _selectedVM;
-                        [self presentViewController:vc animated:YES completion:nil];
-                    }
-                }
+//                PIEEliteHotReplyTableViewCell* cell = [self.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
+//                CGPoint p = [gesture locationInView:cell];
+//                //点击小图
+//                if (CGRectContainsPoint(cell.blurAnimateView.frame, p)) {
+//                    CGPoint pp = [gesture locationInView:cell.blurAnimateView.thumbView];
+//                    if (CGRectContainsPoint(cell.blurAnimateView.thumbView.leftView.frame,pp)) {
+//                        [cell animateWithType:PIEThumbAnimateViewTypeLeft];
+//                    }
+//                    
+//                    else if (CGRectContainsPoint(cell.blurAnimateView.thumbView.rightView.frame,pp)) {
+//                        [cell animateWithType:PIEThumbAnimateViewTypeRight];
+//                    }
+//                    
+//                    else  if (CGRectContainsPoint(cell.blurAnimateView.imageView.frame, p)) {
+//                        PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+//                        vc.pageVM = _selectedVM;
+//                        [self presentViewController:vc animated:YES completion:nil];
+//                    }
+//                }
               
 //                //点击头像
 //                else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
@@ -641,6 +649,22 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 }
 
 - (void)tapOnSharePageButtonAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM = _sourceHot[indexPath.row];
+    [self showShareView:selectedVM];
+}
+
+- (void)tapOnImageViewAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    PIEPageVM *selectedVM          = _sourceHot[indexPath.row];
+    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+    vc.pageVM                      = selectedVM;
+    
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
+- (void)longPressOnImageViewAtIndexPath:(NSIndexPath *)indexPath
 {
     PIEPageVM *selectedVM = _sourceHot[indexPath.row];
     [self showShareView:selectedVM];

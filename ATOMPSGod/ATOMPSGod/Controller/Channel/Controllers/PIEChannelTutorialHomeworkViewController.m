@@ -16,6 +16,7 @@
 #import "PIECommentViewController.h"
 #import "PIEReplyCollectionViewController.h"
 #import "PIEShareView.h"
+#import "PIECarouselViewController2.h"
 
 
 @interface PIEChannelTutorialHomeworkViewController ()
@@ -191,6 +192,21 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
         [self tapOnFollowViewAtIndexPath:indexPath];
     }];
     
+    [replyCell.tapOnImageViewSignal subscribeNext:^(id x) {
+        @strongify(self);
+        [self tapOnImageViewAtIndexPath:indexPath];
+    }];
+    
+    /*
+        BUG FOUND HERE: 监听cell的longPressOnImageViewSignal，不知道为什么一次长点击会发出两次信号，所以
+                        shareView会弹出两次（下面代码解除注释即可重现bug）。而在PIEEliteHotVC中一切正常。
+     */
+    
+//    [replyCell.longPressOnImageViewSignal  subscribeNext:^(id x) {
+//        @strongify(self);
+//        [self longPressOnImageViewAtIndexPath:indexPath];
+//    }];
+    
     [replyCell.tapOnAllWorkSignal subscribeNext:^(id x) {
         @strongify(self);
         [self tapOnAllWorkAtIndexPath:indexPath];
@@ -252,6 +268,24 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
     [selectedVM follow];
 }
 
+- (void)tapOnImageViewAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM          = _source_homework[indexPath.row];
+    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+    vc.pageVM                      = selectedVM;
+    
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
+- (void)longPressOnImageViewAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEShareView *shareView = [PIEShareView new];
+    
+    PIEPageVM *selectedVM   = _source_homework[indexPath.row];
+    
+    [shareView show:selectedVM];
+}
+
 - (void)tapOnAllWorkAtIndexPath:(NSIndexPath *)indexPath
 {
     PIEReplyCollectionViewController *replyCollectionVC =
@@ -289,6 +323,8 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
     // reverted == NO:  逐步加一
     [selectedVM love:NO];
 }
+
+
 
 - (void)longPressOnLikeViewAtIndexPath:(NSIndexPath *)indexPath
 {

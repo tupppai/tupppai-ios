@@ -25,15 +25,23 @@
 @property (nonatomic, strong) UITapGestureRecognizer       *tapOnComment;
 @property (nonatomic, strong) UITapGestureRecognizer       *tapOnLike;
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPressOnLike;
+/*
+    leftView, rightView的点击事件自己消化，只有thumbViewImageView才需要向控制器传递信号
+ */
+@property (nonatomic, strong) UITapGestureRecognizer       *tapOnThumbViewLeftView;
+@property (nonatomic, strong) UITapGestureRecognizer       *tapOnThumbViewRightView;
+@property (nonatomic, strong) UITapGestureRecognizer       *tapOnThumbViewImageView;
+@property (nonatomic, strong) UILongPressGestureRecognizer *longPressOnThumbViewImageView;
 
 @end
 
-
-
 @implementation PIEEliteHotReplyTableViewCell
 - (void)awakeFromNib {
+    [super awakeFromNib];
+    
     [self commonInit];
     [self setupGesture];
+    [self setupRAC];
 
 }
 
@@ -103,10 +111,48 @@
     self.longPressOnLike = [[UILongPressGestureRecognizer alloc] init];
     [self.likeView addGestureRecognizer:self.longPressOnLike];
     
+    /* 点击图片的手势事件处理 */
+    self.blurAnimateView.userInteractionEnabled           = YES;
+    self.blurAnimateView.thumbView.userInteractionEnabled = YES;
     
+    self.tapOnThumbViewLeftView = [[UITapGestureRecognizer alloc] init];
+    [self.blurAnimateView.thumbView.leftView addGestureRecognizer:self.tapOnThumbViewLeftView];
+    self.blurAnimateView.thumbView.leftView.userInteractionEnabled = YES;
+    
+    self.tapOnThumbViewRightView = [[UITapGestureRecognizer alloc] init];
+    [self.blurAnimateView.thumbView.rightView addGestureRecognizer:self.tapOnThumbViewRightView];
+    self.blurAnimateView.thumbView.rightView.userInteractionEnabled = YES;
+    
+    self.tapOnThumbViewImageView = [[UITapGestureRecognizer alloc] init];
+    [self.blurAnimateView.imageView addGestureRecognizer:self.tapOnThumbViewImageView];
+    self.blurAnimateView.imageView.userInteractionEnabled = YES;
+    
+    self.longPressOnThumbViewImageView = [[UILongPressGestureRecognizer alloc] init];
+    [self.blurAnimateView addGestureRecognizer:self.longPressOnThumbViewImageView];
 }
 
-
+- (void)setupRAC
+{
+    
+    /* 自己消化掉动画变形的事件 
+       Question: 其它传递给controller的信号都是小心翼翼地处理复用，这里是在cell初始化的时候添加的监听，应该不需要为
+                 信号做额外的限制处理了吧？
+     */
+    
+    @weakify(self);
+    [[self.tapOnThumbViewLeftView rac_gestureSignal]
+     subscribeNext:^(id x) {
+         @strongify(self);
+         [self animateWithType:PIEThumbAnimateViewTypeLeft];
+    }];
+    
+    [[self.tapOnThumbViewRightView rac_gestureSignal]
+     subscribeNext:^(id x) {
+         @strongify(self);
+         [self animateWithType:PIEThumbAnimateViewTypeRight];
+     }];
+    
+}
 
 -(void)prepareForReuse {
     [super prepareForReuse];
@@ -255,6 +301,24 @@
     return _tapOnFollowButtonSignal;
 }
 
+- (RACSignal *)tapOnImageViewSignal
+{
+    if (_tapOnImageViewSignal == nil) {
+        _tapOnImageViewSignal = [[self.tapOnThumbViewImageView rac_gestureSignal]
+                                 takeUntil:self.rac_prepareForReuseSignal];
+    }
+    return _tapOnImageViewSignal;
+}
+
+- (RACSignal *)longPressOnImageViewSignal
+{
+    if (_longPressOnImageViewSignal == nil) {
+        _longPressOnImageViewSignal = [[self.longPressOnThumbViewImageView rac_gestureSignal]
+                                       takeUntil:self.rac_prepareForReuseSignal];
+    }
+    
+    return  _longPressOnImageViewSignal;
+}
 
 - (RACSignal *)tapOnAllWorkSignal
 {
