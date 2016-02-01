@@ -81,8 +81,8 @@
 /** 代缴的摇摇乐总额 */
 @property (nonatomic, assign) double toBeRewardedAmount;
 
-/** 准备充值的钱(总额 - 当前余额) */
-@property (nonatomic, assign) double toBeRechargeAmount;
+///** 准备充值的钱(总额 - 当前余额) */
+//@property (nonatomic, assign) double toBeRechargeAmount;
 
 @property (nonatomic, assign) BOOL canRefreshFooter;
 
@@ -104,6 +104,9 @@ static NSString *PIEChannelTutorialCommentsCountTableViewCellIdentifier =
 
 static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
 @"PIEChannelTutorialCommentTableViewCell";
+
+static const double kPIEMinimumRewardAmount = 1.0;
+
 
 #pragma mark - UI life cycles
 - (void)viewDidLoad {
@@ -183,11 +186,9 @@ static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
         
         [self.view addSubview:tableView];
         
-        
         [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self.view);
         }];
-        
         
         tableView;
     });
@@ -225,7 +226,6 @@ static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
          
          [Hud activity:@"随机打赏中..."];
          [self rollDiceRewardRequest];
-         
          
      }];
     
@@ -299,9 +299,7 @@ static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
          
          [chooseChargeSourceView dismiss];
          
-         
          [self showInputMoneyView];
-         
         
     }];
     
@@ -312,12 +310,11 @@ static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
         PIEChargeMoneyView *chargeMoneyView = tuple.first;
         [chargeMoneyView dismiss];
         double amount = [tuple.second doubleValue];
-        if (amount < _toBeRechargeAmount) {
+        if (amount < kPIEMinimumRewardAmount) {
             NSString *prompt =
-            [NSString stringWithFormat:@"至少要充值%.2f元", _toBeRechargeAmount];
+            [NSString stringWithFormat:@"至少要充值%.2f元", kPIEMinimumRewardAmount];
             [Hud error:prompt];
         }else{
-            // 充值结束之后重新调用rollDice接口继续摇摇乐
             [self chargeMoneyRequestWithType:_walletChargeSourceType
                                       amount:([tuple.second doubleValue])];
         }
@@ -338,7 +335,6 @@ static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
     _canRefreshFooter         = YES;
     
 }
-
 
 #pragma mark - <UITableViewDataSource>
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -677,8 +673,7 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
              [rewardFailedView show];
              rewardFailedView.delegate = self;
              
-             // 记录差额与代缴的总额
-             self.toBeRechargeAmount = amount - balance;
+             // 记录待缴的总额
              self.toBeRewardedAmount = amount;
              
              
@@ -709,16 +704,15 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
         params[@"type"] = @"alipay";
     }
     
-    [DDBaseService
-     GET:params
-     url:@"money/charge"
-     block:^(id responseObject) {
-         // if success： go on and pay the debt from previous 'rollDiceReward'.
-         if (responseObject != nil) {
-             [self rewardWithConcreteAmount:_toBeRewardedAmount];
+    
+    [DDService
+     charge:params
+     withBlock:^(BOOL success) {
+         if (success) {
+//             [self rewardWithConcreteAmount:_toBeRewardedAmount];
+             [Hud text:@"充值成功"];
          }
      }];
-    
 }
 
 - (void)rewardWithConcreteAmount:(double)amount
@@ -738,7 +732,6 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
          long rollDiceStatus    = [dataDict[@"type"] longValue];
          double balance         = [dataDict[@"balance"] doubleValue];
          double amount          = [dataDict[@"amount"] doubleValue];
-         
          
          // 已经充值了还会导致余额不足的情况吗？
          if (rollDiceStatus == -1){
@@ -783,7 +776,7 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
     
     chargeMoneyView.delegate = self;
     
-    [chargeMoneyView showWithAmoutToBeCharge:_toBeRechargeAmount];
+    [chargeMoneyView showWithAmoutToBeCharge:kPIEMinimumRewardAmount];
 }
 
 
@@ -807,15 +800,14 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
     
     // update UI
     
-    [Hud text:@"follow好没想好怎么全局同步和刷新UI"];
-    
+    [Hud text:@"follow"];
     
 }
 
 #pragma mark - private helpers
 - (void)unlockTutorial
 {
-    // 支付成功，遂重刷UI
+    // 打赏或分享到朋友圈后重刷UI
     [self loadNewTutorialDetails];
     
     // 心形满格
