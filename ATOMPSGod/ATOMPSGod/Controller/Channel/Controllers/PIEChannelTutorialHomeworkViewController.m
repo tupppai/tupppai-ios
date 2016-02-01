@@ -29,6 +29,8 @@
 
 @property (nonatomic, assign) BOOL canRefreshFooter;
 
+@property (nonatomic, assign) BOOL isFirstLoadingHomework;
+
 @end
 
 @implementation PIEChannelTutorialHomeworkViewController
@@ -96,11 +98,13 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
 
 #pragma mark - data setup
 - (void)setupData{
-    _source_homework  = [NSMutableArray<PIEPageVM *> new];
+    _source_homework        = [NSMutableArray<PIEPageVM *> new];
 
-    _currentPageIndex = 1;
-    
-    _canRefreshFooter = YES;
+    _currentPageIndex       = 1;
+
+    _canRefreshFooter       = YES;
+
+    _isFirstLoadingHomework = YES;
     
 }
 
@@ -116,7 +120,7 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
     PIEPageManager *manager = [[PIEPageManager alloc] init];
     [manager pullReplySource:params
                        block:^(NSMutableArray *retArray) {
-                           
+                           _isFirstLoadingHomework = NO;
                            if (retArray.count == 0) {
                                _canRefreshFooter = NO;
                            }else{
@@ -144,7 +148,7 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
     PIEPageManager *manager = [[PIEPageManager alloc] init];
     [manager pullReplySource:params
                        block:^(NSMutableArray *retArray) {
-                           
+                           _isFirstLoadingHomework = NO;
                            if (retArray.count < 10) {
                                _canRefreshFooter = NO;
                            }else{
@@ -293,8 +297,14 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
     // reverted == YES: 清空状态
     [selectedVM love:YES];
 }
-#pragma mark - lazy loadings
 
-
+#pragma mark - public methods
+- (void)refreshHeaderImmediately
+{
+    if (_source_homework.count <= 0 || _isFirstLoadingHomework) {
+        [self.tableView.mj_header beginRefreshing];
+    }
+    
+}
 
 @end

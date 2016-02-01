@@ -71,7 +71,6 @@
 /** 判断是否购买过该教程的用has_bought, 0是未购买（或分享到朋友圈， 下同），1是已购买  */
 @property (nonatomic, assign) BOOL hasBought;
 
-
 /** PIEChannelTutorialModel -> PIEPageVM  */
 - (PIEPageVM *)piePageVM;
 

@@ -13,5 +13,4 @@
 
 @property (nonatomic, strong) PIEChannelTutorialModel *currentTutorialModel;
 
-
 @end

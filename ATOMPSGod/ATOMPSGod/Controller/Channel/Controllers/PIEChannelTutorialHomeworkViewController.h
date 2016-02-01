@@ -13,4 +13,7 @@
 
 @property (nonatomic, strong) PIEChannelTutorialModel *currentTutorialModel;
 
+/** 用户第一次滑进这个tab的时候就自动开始刷新数据 */
+- (void)refreshHeaderImmediately;
+
 @end

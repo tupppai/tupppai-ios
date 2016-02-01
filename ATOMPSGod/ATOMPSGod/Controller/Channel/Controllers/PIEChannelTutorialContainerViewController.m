@@ -172,6 +172,14 @@ typedef NS_ENUM(NSUInteger, PIEChannelTutorialControllerType) {
                          animations:^{
                              self.scrollView.contentOffset = CGPointMake(SCREEN_WIDTH, 0);
                          }];
+        
+        // refresh if is first loaded
+        PIEChannelTutorialHomeworkViewController *homeworkVC =
+        (PIEChannelTutorialHomeworkViewController *)self.tutorialViewControllers[1];
+        
+        [homeworkVC refreshHeaderImmediately];
+        
+        
     }
 }
 
@@ -189,6 +197,10 @@ typedef NS_ENUM(NSUInteger, PIEChannelTutorialControllerType) {
         [self.segmentedControl setSelectedSegmentIndex:1 animated:YES];
         
         // refresh if is first loaded
+        PIEChannelTutorialHomeworkViewController *homeworkVC =
+        (PIEChannelTutorialHomeworkViewController *)self.tutorialViewControllers[1];
+        
+        [homeworkVC refreshHeaderImmediately];
 
     }
 }
