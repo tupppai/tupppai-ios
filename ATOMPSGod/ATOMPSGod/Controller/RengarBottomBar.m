@@ -13,6 +13,7 @@
 -(instancetype)init {
     self = [super init];
     if (self) {
+        self.backgroundColor = [UIColor whiteColor];
         [self addSubview:self.button];
         [self.button mas_makeConstraints:^(MASConstraintMaker *make) {
             make.leading.equalTo(self).with.offset(15);
