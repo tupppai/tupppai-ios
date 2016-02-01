@@ -47,7 +47,15 @@
     self.createdTimeLabel.text = tutorialModel.publishTime;
     
     /* model漏了两个属性：isMyFan, isMyFollow */
+    if (tutorialModel.isMyFan) {
+        [self.followButton setImage:[UIImage imageNamed:@"pie_mutualfollow"]
+                           forState:UIControlStateSelected];
+    }else{
+        [self.followButton setImage:[UIImage imageNamed:@"new_reply_followed"]
+                           forState:UIControlStateSelected];
+    }
     
+    RAC(self.followButton,selected) = RACObserve(tutorialModel, isMyFollow);
     
 }
 

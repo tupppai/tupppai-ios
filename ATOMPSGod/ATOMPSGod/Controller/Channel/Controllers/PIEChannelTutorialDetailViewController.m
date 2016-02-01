@@ -643,9 +643,7 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
                  [self.tableView reloadData];
              }];
          }
-         
      }];
-    
 }
 
 - (void)rollDiceRewardRequest
@@ -792,16 +790,10 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
     // jump to FriendViewController
     [self.parentViewController.navigationController pushViewController:friendVC
                                                               animated:YES];
-    
 }
 
 - (void)pressOnFollowButton{
-    // send request
-    
-    // update UI
-    
-    [Hud text:@"follow"];
-    
+    [self.source_tutorialModel followAction];
 }
 
 #pragma mark - private helpers

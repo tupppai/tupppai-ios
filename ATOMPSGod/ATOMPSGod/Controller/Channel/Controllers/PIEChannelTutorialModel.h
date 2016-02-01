@@ -74,4 +74,7 @@
 /** PIEChannelTutorialModel -> PIEPageVM  */
 - (PIEPageVM *)piePageVM;
 
+
+- (void)followAction;
+
 @end
