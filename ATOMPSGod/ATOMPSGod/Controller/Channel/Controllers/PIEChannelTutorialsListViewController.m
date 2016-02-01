@@ -29,6 +29,8 @@
 
 @property (nonatomic, assign) NSInteger currentPageIndex;
 
+@property (nonatomic, assign) BOOL canRefreshFooter;
+
 @end
 
 @implementation PIEChannelTutorialsListViewController
@@ -45,6 +47,7 @@ static NSString *PIEChannelTutorialListCellIdentifier =
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     [self setupData];
+
     
     [self setupSubViews];
     
@@ -116,6 +119,8 @@ static NSString *PIEChannelTutorialListCellIdentifier =
 
     _currentPageIndex = 1;
     
+    _canRefreshFooter = YES;
+    
 }
 
 #pragma mark - network request
@@ -129,6 +134,13 @@ static NSString *PIEChannelTutorialListCellIdentifier =
     [PIEChannelManager
      getSource_channelTutorialList:params
      block:^(NSArray<PIEChannelTutorialModel *> *retArray) {
+         
+         if (retArray.count == 0) {
+             _canRefreshFooter = NO;
+         }else{
+             _canRefreshFooter = YES;
+         }
+         
          [_tableView.mj_header endRefreshing];
          [_source_tutorial removeAllObjects];
          [_source_tutorial addObjectsFromArray:retArray];
@@ -149,6 +161,13 @@ static NSString *PIEChannelTutorialListCellIdentifier =
     [PIEChannelManager
      getSource_channelTutorialList:params
      block:^(NSArray<PIEChannelTutorialModel *> *retArray) {
+         
+         if (retArray.count < 10) {
+             _canRefreshFooter = NO;
+         }else{
+             _canRefreshFooter = YES;
+         }
+         
          [_tableView.mj_footer endRefreshing];
          [_source_tutorial addObjectsFromArray:retArray];
          [_tableView reloadData];
@@ -199,7 +218,13 @@ static NSString *PIEChannelTutorialListCellIdentifier =
 }
 
 - (void)didPullRefreshUp:(UITableView *)tableView{
-    [self loadMoreTutorials];
+    if (_canRefreshFooter == YES) {
+        [self loadMoreTutorials];
+    }else{
+        [Hud text:@"已经拉到底啦"];
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
+    }
+    
 }
 
 

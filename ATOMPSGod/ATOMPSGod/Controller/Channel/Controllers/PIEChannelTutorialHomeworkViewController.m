@@ -26,6 +26,9 @@
 @property (nonatomic, strong) PIERefreshTableView *tableView;
 @property (nonatomic, strong) NSMutableArray<PIEPageVM *> *source_homework;
 @property (nonatomic, assign) NSInteger currentPageIndex;
+
+@property (nonatomic, assign) BOOL canRefreshFooter;
+
 @end
 
 @implementation PIEChannelTutorialHomeworkViewController
@@ -97,6 +100,8 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
 
     _currentPageIndex = 1;
     
+    _canRefreshFooter = YES;
+    
 }
 
 #pragma mark - network request
@@ -111,6 +116,13 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
     PIEPageManager *manager = [[PIEPageManager alloc] init];
     [manager pullReplySource:params
                        block:^(NSMutableArray *retArray) {
+                           
+                           if (retArray.count == 0) {
+                               _canRefreshFooter = NO;
+                           }else{
+                               _canRefreshFooter = YES;
+                           }
+                           
                            [_source_homework removeAllObjects];
                            [_source_homework addObjectsFromArray:retArray];
 
@@ -132,6 +144,12 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
     PIEPageManager *manager = [[PIEPageManager alloc] init];
     [manager pullReplySource:params
                        block:^(NSMutableArray *retArray) {
+                           
+                           if (retArray.count < 10) {
+                               _canRefreshFooter = NO;
+                           }else{
+                               _canRefreshFooter = YES;
+                           }
                            [_source_homework addObjectsFromArray:retArray];
                            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                                [_tableView.mj_footer endRefreshing];
@@ -206,13 +224,17 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
 }
 
 - (void)didPullRefreshUp:(UITableView *)tableView{
-    [self loadMoreHomework];
+    if (_canRefreshFooter == YES) {
+        [self loadMoreHomework];
+    }else{
+        [Hud text:@"已经拉到底啦"];
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
+    }
 }
 
 #pragma mark - RAC response actions
 - (void)tapOnAvatarOrUsernameAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     PIEFriendViewController *friendVC = [PIEFriendViewController new];
     friendVC.pageVM = [self.currentTutorialModel piePageVM];
     
@@ -239,8 +261,8 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
 - (void)tapOnShareViewAtIndexPath:(NSIndexPath *)indexPath
 {
     PIEShareView *shareView = [PIEShareView new];
-    
-    PIEPageVM *selectedVM = _source_homework[indexPath.row];
+
+    PIEPageVM *selectedVM   = _source_homework[indexPath.row];
     
     [shareView show:selectedVM];
 }

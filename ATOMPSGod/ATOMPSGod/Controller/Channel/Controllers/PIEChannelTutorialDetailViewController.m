@@ -84,6 +84,7 @@
 /** 准备充值的钱(总额 - 当前余额) */
 @property (nonatomic, assign) double toBeRechargeAmount;
 
+@property (nonatomic, assign) BOOL canRefreshFooter;
 
 @end
 
@@ -110,8 +111,8 @@ static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
     // Do any additional setup after loading the view.
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    
-    self.view.backgroundColor = [UIColor whiteColor];
+
+    self.view.backgroundColor   = [UIColor whiteColor];
     
     [self setupData];
     
@@ -333,6 +334,8 @@ static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
     _source_tutorialCommentVM = [NSMutableArray<PIECommentVM *> array];
 
     _currentCommentIndex      = 0;
+
+    _canRefreshFooter         = YES;
     
 }
 
@@ -526,7 +529,12 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 
 - (void)didPullRefreshUp:(UITableView *)tableView
 {
-    [self loadMoreTutorialComments];
+    if (_canRefreshFooter == YES) {
+        [self loadMoreTutorialComments];
+    }else{
+        [Hud text:@"已经拉到底啦"];
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
+    }
 }
 
 #pragma mark - <PIEShareViewDelegate>
@@ -537,7 +545,6 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
     if (type == ATOMShareTypeWechatMoments) {
         [self unlockTutorial];
     }
-    
 }
 
 #pragma mark - Network request 
@@ -586,6 +593,13 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
          if (error != nil) {
              [Hud error:error.domain];
          }else{
+             
+             if (recentCommentArray.count == 0) {
+                 self.canRefreshFooter = NO;
+             }else{
+                 self.canRefreshFooter = YES;
+             }
+             
              [self.source_tutorialCommentVM removeAllObjects];
              [self.source_tutorialCommentVM addObjectsFromArray:recentCommentArray];
              
@@ -620,6 +634,13 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
          if (error != nil) {
              [Hud error:error.domain];
          }else{
+             
+             if (recentCommentArray.count < 10) {
+                 _canRefreshFooter = NO;
+             }else{
+                 _canRefreshFooter = YES;
+             }
+             
              [self.source_tutorialCommentVM addObjectsFromArray:recentCommentArray];
              
              [[NSOperationQueue mainQueue] addOperationWithBlock:^{
@@ -762,11 +783,8 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
     
     chargeMoneyView.delegate = self;
     
-    
     [chargeMoneyView showWithAmoutToBeCharge:_toBeRechargeAmount];
 }
-
-
 
 
 #pragma mark - private helpers
