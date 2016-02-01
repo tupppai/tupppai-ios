@@ -17,6 +17,8 @@
 
 #import "PIEChannelTutorialShareHomeworkPanelView.h"
 #import "PIEShareView.h"
+#import "LeesinUploadManager.h"
+#import "LeesinUploadModel.h"
 
 
 
@@ -210,12 +212,37 @@ typedef NS_ENUM(NSUInteger, PIEChannelTutorialControllerType) {
   didFinishPickingPhotoAsset:(PHAsset *)asset
            descriptionString:(NSString *)descriptionString
 {
-    PIEChannelTutorialShareHomeworkPanelView *panelView =
-    [PIEChannelTutorialShareHomeworkPanelView new];
     
-    panelView.delegate = self;
+    // upload reply
+    LeesinUploadModel *uploadModel = [LeesinUploadModel new];
+    LeesinUploadManager *manager   = [LeesinUploadManager new];
     
-    [panelView showWithAsset:asset description:descriptionString];
+    uploadModel.ask_id  = self.currentTutorialModel.ask_id;
+    uploadModel.type    = PIEPageTypeReply;
+    uploadModel.content = descriptionString;
+    uploadModel.imageArray = [NSMutableOrderedSet orderedSetWithObject:asset];
+    
+    manager.model = uploadModel;
+    
+    @weakify(self);
+    [Hud activity:@"上传作业中..."];
+    [manager upload:^(CGFloat percentage, BOOL success) {
+        if (success) {
+            @strongify(self);
+            [Hud dismiss];
+            
+            // refresh UI
+            
+            PIEChannelTutorialShareHomeworkPanelView *panelView =
+            [PIEChannelTutorialShareHomeworkPanelView new];
+            
+            panelView.delegate = self;
+            
+            [panelView showWithAsset:asset description:descriptionString];
+        }
+    }];
+    
+    
 }
 
 #pragma mark - lazy loadings
