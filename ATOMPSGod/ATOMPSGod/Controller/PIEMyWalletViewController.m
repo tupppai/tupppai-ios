@@ -16,6 +16,8 @@
 #import "PIEWithdrawlMoneyViewController.h"
 #import "LxDBAnything.h"
 #import "PIEChooseChargeSourceView.h"
+
+#import "Pingpp.h"
 @interface PIEMyWalletViewController ()<PIEChargeMoneyViewDelegate,PIEChooseChargeSourceViewDelegate>
 
 @property (nonatomic, strong) PIEChargeMoneyView *chargeMoneyView;
@@ -64,20 +66,42 @@
 }
 
 
--(void)chargeMoneyView:(PIEChargeMoneyView *)chargeMoneyView tapConfirmButtonWithAmount:(NSInteger)amount {
+-(void)chargeMoneyView:(PIEChargeMoneyView *)chargeMoneyView tapConfirmButtonWithAmount:(CGFloat)amount {
     
-    NSString *chargeTypeStr = @"wechat";
+    NSString *chargeTypeStr = @"wx";
     if (self.chooseChargeSourceView.chargeType == PIEWalletChargeSourceTypeAlipay) {
-        chargeTypeStr = @"";
+        chargeTypeStr = @"alipay";
     } else if (self.chooseChargeSourceView.chargeType == PIEWalletChargeSourceTypeWechat) {
-        chargeTypeStr = @"";
+        chargeTypeStr = @"wx";
     }
-    
-    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:@(amount),@"amount",chargeTypeStr,@"type",nil];
+    NSString *amountString = [NSString stringWithFormat:@"%.2f", amount];
 
-    [DDService POST:param url:@"money/charge" block:^(id responseObject) {
-        NSLog(@"responseObject%@",responseObject);
+    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:amountString,@"amount",chargeTypeStr,@"type",nil];
+
+    [DDService charge:param withBlock:^(BOOL success) {
+        NSLog(@"charge %d",success);
     }];
+//    [DDService POST:param url:@"money/charge" block:^(id responseObject) {
+//        NSDictionary *dictionaryData = [responseObject objectForKey:@"data"];
+//        if (dictionaryData == nil) {
+//            return ;
+//        }
+//        NSData *data = [NSJSONSerialization dataWithJSONObject:dictionaryData options:NSJSONWritingPrettyPrinted error:nil];
+//        NSString *jsonString = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+//        [Pingpp createPayment:jsonString
+//               viewController:self
+//                 appURLScheme:nil
+//               withCompletion:^(NSString *result, PingppError *error) {
+//                   NSLog(@"%@ ",result);
+//                   if ([result isEqualToString:@"success"]) {
+//                       // 支付成功
+//                   } else {
+//                       // 支付失败或取消
+//                       NSLog(@"Error: code=%lu msg=%@", error.code, [error getMsg]);
+//                   }
+//               }];
+//
+//    }];
 }
 
 -(void)chooseChargeSourceView:(PIEChooseChargeSourceView *)chooseChargeSourceView tapButtonOfIndex:(NSInteger)index {
@@ -169,8 +193,7 @@
         [self.view addSubview:label];
         
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.centerX.equalTo(self.view);
-            make.leading.and.trailing.equalTo(self.view);
+            make.centerX.equalTo(self.view);
             make.top.equalTo(myMoneyLabel.mas_bottom).with.offset(14);
         }];
         label;
@@ -185,10 +208,10 @@
         [self.view addSubview:imageView];
         
         [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-
             make.size.mas_equalTo(CGSizeMake(24, 33));
             make.bottom.equalTo(myCashCountLabel.mas_baseline);
             make.right.equalTo(myCashCountLabel.mas_left).with.offset(-14);
+            make.leading.greaterThanOrEqualTo(self.view);
         }];
         
         imageView;
@@ -207,6 +230,7 @@
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(myCashCountLabel.mas_right).with.offset(8);
             make.bottom.equalTo(myCashCountLabel.mas_baseline);
+            make.trailing.greaterThanOrEqualTo(self.view);
         }];
         
         label;

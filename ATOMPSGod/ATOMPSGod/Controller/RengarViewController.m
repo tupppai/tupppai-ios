@@ -47,7 +47,11 @@
     [self setupViews];
     [self setupPhotoSource];
     [self setupEvents];
+    
+
 }
+
+
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 }
@@ -249,7 +253,7 @@
 - (void)scrollViewDidScrollUp {
     [self resignTextView];
     [self.collectionViewHeightConstraint setOffset:_fullExpandedHeightOfCollectionView];
-    [UIView animateWithDuration:1.0 delay:0.0 usingSpringWithDamping:0.8 initialSpringVelocity:1.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+    [UIView animateWithDuration:1.0 delay:0.0 usingSpringWithDamping:0.85 initialSpringVelocity:0.6 options:UIViewAnimationOptionAllowUserInteraction animations:^{
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
         
@@ -258,7 +262,7 @@
 - (void)scrollViewDidScrollDown {
     [self resignTextView];
     [self.collectionViewHeightConstraint setOffset:_initialHeightOfCollectionView];
-    [UIView animateWithDuration:1.0 delay:0.0 usingSpringWithDamping:0.8 initialSpringVelocity:1.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+    [UIView animateWithDuration:1.0 delay:0.0 usingSpringWithDamping:0.85 initialSpringVelocity:0.6 options:UIViewAnimationOptionAllowUserInteraction animations:^{
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
         
@@ -371,7 +375,7 @@
         _collectionView.dataSource = self;
         _collectionView.alwaysBounceVertical = YES;
         _collectionView.bounces = YES;
-        
+        _collectionView.scrollsToTop = YES;
 
         UINib *nib = [UINib nibWithNibName:@"RengarAssetCollectionViewCell" bundle:NULL];
         [_collectionView registerNib:nib forCellWithReuseIdentifier:@"RengarAssetCollectionViewCell"];

@@ -8,6 +8,8 @@
 
 #import "DDService.h"
 //负责处理key，返回要的json，不做任何数据库操作，mantle操作，这些操作交给Manager
+#import "Pingpp.h"
+
 @implementation DDService
 
 #pragma mark - Profile
@@ -407,5 +409,39 @@
         }
     }];}
 
++ (void)charge:(NSDictionary*)param withBlock:(void (^)(BOOL success))block {
+    
+    [DDBaseService POST:param url:@"money/charge" block:^(id responseObject) {
+        NSDictionary *dictionaryData = [responseObject objectForKey:@"data"];
+        if (dictionaryData == nil) {
+            if (block) {
+                block(NO);
+            }
+            return ;
+        }
+        NSData *data = [NSJSONSerialization dataWithJSONObject:dictionaryData options:NSJSONWritingPrettyPrinted error:nil];
+        NSString *jsonString = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+        [Pingpp createPayment:jsonString
+               viewController:nil
+                 appURLScheme:nil
+               withCompletion:^(NSString *result, PingppError *error) {
+                   NSLog(@"result! %@ ",result);
+                   if ([result isEqualToString:@"success"]) {
+                       // 支付成功
+                       if (block) {
+                           block(YES);
+                       }
 
+                   } else {
+                       // 支付失败或取消
+                       if (block) {
+                           block(NO);
+                       }
+
+                       NSLog(@"Error: code=%lu msg=%@", error.code, [error getMsg]);
+                   }
+               }];
+    }];
+    
+}
 @end
