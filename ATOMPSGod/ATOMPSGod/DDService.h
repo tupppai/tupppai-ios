@@ -68,4 +68,6 @@
 + (void)ddGetMsg:(NSDictionary*)param withBlock:(void (^)(id data))block;
 + (void)ddGetNotifications:(NSDictionary*)param withBlock:(void (^)(id data))block;
 + (void)loveReply:(NSMutableDictionary*)param ID:(NSInteger)ID  withBlock:(void (^)(BOOL succeed))block;
+
++ (void)charge:(NSDictionary*)param withBlock:(void (^)(BOOL success))block ;
 @end
