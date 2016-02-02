@@ -76,7 +76,7 @@
                 <outlet property="publishTimeLabel" destination="NkN-rd-Rs1" id="dCw-On-4KF"/>
                 <outlet property="userNameLabel" destination="PSb-BF-b66" id="aV8-lF-evu"/>
             </connections>
-            <point key="canvasLocation" x="2" y="76"/>
+            <point key="canvasLocation" x="4" y="33"/>
         </tableViewCell>
     </objects>
 </document>
