@@ -311,7 +311,7 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
     [PIECommentViewController new];
     
     commentVC.vm = [self.currentTutorialModel piePageVM];
-    
+    commentVC.shouldShowHeaderView = NO;
     [self.parentViewController.navigationController pushViewController:commentVC
                                                               animated:YES];
 }

@@ -643,7 +643,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 - (void)tapOnCommentPageButtonAtIndexPath:(NSIndexPath *)indexPath
 {
     PIECommentViewController* vc = [PIECommentViewController new];
-    vc.vm = _selectedVM;
+    vc.vm = _sourceHot[indexPath.row];
     vc.shouldShowHeaderView = NO;
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -749,6 +749,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     if (!_shareView) {
         _shareView = [PIEShareView new];
         _shareView.delegate = self;
+        
     }
     return _shareView;
 }

@@ -39,6 +39,8 @@
     [self.avatarView.avatarImageView sd_setImageWithURL:
      [NSURL URLWithString:tutorialModel.avatarUrl]];
     
+    self.avatarView.isV       = tutorialModel.isV;
+
     self.userNameLabel.text   = tutorialModel.userName;
 
     self.tutorialTitle.text   = tutorialModel.title;

@@ -46,6 +46,8 @@
 
     self.createdTimeLabel.text = tutorialModel.publishTime;
     
+    self.avatarView.isV = tutorialModel.isV;
+    
     if (tutorialModel.isMyFan) {
         [self.followButton setImage:[UIImage imageNamed:@"pie_mutualfollow"]
                            forState:UIControlStateSelected];

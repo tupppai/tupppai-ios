@@ -23,6 +23,8 @@
 @property (nonatomic, strong) UITapGestureRecognizer       *tapOnAllwork;
 @property (nonatomic, strong) UITapGestureRecognizer       *tapOnShare;
 @property (nonatomic, strong) UITapGestureRecognizer       *tapOnComment;
+@property (nonatomic, strong) UITapGestureRecognizer       *tapOnCommentLabel1;
+@property (nonatomic, strong) UITapGestureRecognizer       *tapOnCommentLabel2;
 @property (nonatomic, strong) UITapGestureRecognizer       *tapOnLike;
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPressOnLike;
 /*
@@ -104,6 +106,14 @@
     [self.commentView addGestureRecognizer:self.tapOnComment];
     self.commentView.userInteractionEnabled = YES;
     
+    self.tapOnCommentLabel1 = [[UITapGestureRecognizer alloc] init];
+    [self.commentLabel1 addGestureRecognizer:self.tapOnCommentLabel1];
+    self.commentLabel1.userInteractionEnabled = YES;
+    
+    self.tapOnCommentLabel2 = [[UITapGestureRecognizer alloc] init];
+    [self.commentLabel2 addGestureRecognizer:self.tapOnCommentLabel2];
+    self.commentLabel2.userInteractionEnabled = YES;
+    
     self.tapOnLike = [[UITapGestureRecognizer alloc] init];
     [self.likeView addGestureRecognizer:self.tapOnLike];
     self.likeView.userInteractionEnabled = YES;
@@ -133,8 +143,7 @@
 
 - (void)setupRAC
 {
-    
-    /* 自己消化掉动画变形的事件 
+    /* 自己消化掉动画变形的事件
        Question: 其它传递给controller的信号都是小心翼翼地处理复用，这里是在cell初始化的时候添加的监听，应该不需要为
                  信号做额外的限制处理了吧？
      */
@@ -333,8 +342,17 @@
 - (RACSignal *)tapOnCommentSignal
 {
     if (_tapOnCommentSignal == nil) {
-        _tapOnCommentSignal = [[self.tapOnComment rac_gestureSignal]
-                               takeUntil:self.rac_prepareForReuseSignal];
+
+        RACSignal *commentPageButtonSignal = [self.tapOnComment rac_gestureSignal];
+        RACSignal *commentLabelSignal1     = [self.tapOnCommentLabel1 rac_gestureSignal];
+        RACSignal *commentLabelSignal2     = [self.tapOnCommentLabel2 rac_gestureSignal];
+        
+//        _tapOnCommentSignal = [[self.tapOnComment rac_gestureSignal]
+//                               takeUntil:self.rac_prepareForReuseSignal];
+        _tapOnCommentSignal = [[RACSignal merge:@[commentPageButtonSignal,
+                                                  commentLabelSignal1,
+                                                  commentLabelSignal2]]
+                               takeUntil:self.rac_prepareForReuseSignal];;
     }
     
     return _tapOnCommentSignal;
