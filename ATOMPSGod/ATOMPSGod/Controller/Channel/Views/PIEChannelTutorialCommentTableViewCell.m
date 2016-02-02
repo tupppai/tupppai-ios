@@ -10,11 +10,19 @@
 #import "PIEAvatarView.h"
 #import "PIECommentVM.h"
 
+@interface PIEChannelTutorialCommentTableViewCell ()
+@property (weak, nonatomic) IBOutlet UIView *cell_separator_bottom;
+
+@end
+
 @implementation PIEChannelTutorialCommentTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code
     self.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self.cell_separator_bottom mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(0.5);
+    }];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -47,7 +47,6 @@ static NSString *PIEChannelTutorialListCellIdentifier =
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     [self setupData];
-
     
     [self setupSubViews];
     
@@ -81,16 +80,21 @@ static NSString *PIEChannelTutorialListCellIdentifier =
 
 - (void)setupSubViews
 {
+    
+    self.view.backgroundColor = [UIColor colorWithHex:0xF8F8F8];
+    
     PIERefreshTableView *tableView = ({
         PIERefreshTableView *tableView = [[PIERefreshTableView alloc] init];
         
         tableView.delegate   = self;
         tableView.dataSource = self;
         tableView.psDelegate = self;
+        tableView.backgroundColor = [UIColor colorWithHex:0xF8F8F8];
         
         tableView.showsVerticalScrollIndicator   = NO;
         tableView.showsHorizontalScrollIndicator = NO;
-    
+        
+        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
         tableView.estimatedRowHeight = 270;
         tableView.rowHeight = UITableViewAutomaticDimension;
@@ -99,11 +103,11 @@ static NSString *PIEChannelTutorialListCellIdentifier =
                                               bundle:nil]
         forCellReuseIdentifier:PIEChannelTutorialListCellIdentifier];
         
-
         WS(weakSelf);
+        UIEdgeInsets padding = UIEdgeInsetsMake(0, 8, 0, 8);
         [self.view addSubview:tableView];
         [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(weakSelf.view);
+            make.edges.equalTo(weakSelf.view).with.insets(padding);
         }];
         
         tableView;

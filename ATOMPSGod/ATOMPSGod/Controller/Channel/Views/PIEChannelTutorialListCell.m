@@ -16,6 +16,8 @@
 - (void)awakeFromNib {
     // Initialization code
     self.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.avatarView.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.avatarView.avatarImageView.layer.borderWidth = 3;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
