@@ -8,10 +8,10 @@
 
 #import "PIEChargeMoneyPanelView.h"
 
-
 @interface PIEChargeMoneyPanelView ()
 
 @property (nonatomic, assign) CGFloat minimumTextFieldWidth;
+@property (nonatomic, assign) MASConstraint *textFieldMASWidth;
 
 @end
 
@@ -30,17 +30,14 @@
 - (void)commonInit
 {
     
-    _minimumTextFieldWidth = 40;
+    self.minimumTextFieldWidth = 40;
     
-    self.moneyCountTextField.placeholder = @"0.00";
-    
-    
-    CGSize strSize = [self.moneyCountTextField.placeholder
-                      boundingRectWithSize:CGSizeMake(300, 40)
-                                                  options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:30]}
-                                                  context:nil].size;
-    self.minimumTextFieldWidth = strSize.width;
-    
+    self.moneyCountTextField.placeholder = @"0";
+    self.moneyCountTextField.keyboardType = UIKeyboardTypeDecimalPad;
+    self.moneyCountTextField.textAlignment = NSTextAlignmentCenter;
+    [self.moneyCountTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+       self.textFieldMASWidth = make.width.mas_equalTo(@(self.minimumTextFieldWidth));
+    }];
     @weakify(self);
     [[[self.moneyCountTextField rac_textSignal]
     skip:1] subscribeNext:^(NSString *inputStr) {
@@ -49,14 +46,15 @@
         CGSize strSize = [inputStr boundingRectWithSize:CGSizeMake(300, 40)
                                                 options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:30]}
                                                 context:nil].size;
-        [self.moneyCountTextField mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.width.mas_equalTo(fmax(strSize.width, self.minimumTextFieldWidth));
-        }];
+        [self.textFieldMASWidth setOffset:(fmax(strSize.width, self.minimumTextFieldWidth))];
         
         [self setNeedsLayout];
     }];
+  
     
-    
+    [[self.moneyCountTextField rac_textSignal]subscribeNext:^(NSString* x) {
+        self.confirmButton.enabled = [x floatValue] > 0.0;
+    }];
 }
 
 

@@ -12,7 +12,7 @@
 #import "PIEAvatarView.h"
 
 
-@interface PIEWithdrawlMoneyViewController ()
+@interface PIEWithdrawlMoneyViewController ()<UITextFieldDelegate>
 
 @property (nonatomic, strong) UIView *titleView;
 
@@ -125,6 +125,7 @@
         textField.placeholder   = @"请输入提现金额";
         textField.textAlignment = NSTextAlignmentRight;
         textField.font          = [UIFont lightTupaiFontOfSize:15];
+        textField.keyboardType = UIKeyboardTypeDecimalPad;
 
         textField.leftViewMode  = UITextFieldViewModeAlways;
         textField.rightViewMode = UITextFieldViewModeAlways;
@@ -157,6 +158,8 @@
         textField;
     });
     
+    moneyCountTextField.delegate = self;
+    
     // 5. line separator 2
     UIView *lineSeparator2 = ({
         UIView *view = [[UIView alloc] init];
@@ -183,7 +186,6 @@
         button.titleLabel.font = [UIFont lightTupaiFontOfSize:16];
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self.view addSubview:button];
-        
         [button mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.view).with.offset(20);
             make.right.equalTo(self.view).with.offset(-20);
@@ -193,7 +195,17 @@
         
         button;
     });
+    [[confirmButton rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(id x) {
+        NSString *amountString = [NSString stringWithFormat:@"%.2f", [moneyCountTextField.text floatValue]];
+        NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:amountString,@"amount",@"wx",@"type",nil];
+        [DDService withdraw:param withBlock:^(BOOL success) {
+            
+        }];
+    }];
     
+    [[moneyCountTextField rac_textSignal]subscribeNext:^(NSString* x) {
+        confirmButton.enabled = [x floatValue] > 0.0;
+    }];
 }
 
 #pragma mark - Lazy loadings
@@ -217,7 +229,6 @@
         
         UILabel *subTitle = ({
             UILabel *label = [[UILabel alloc] init];
-            label.text = @"提现至微信账号";
             label.font = [UIFont lightTupaiFontOfSize:10];
             label.textColor = [UIColor blackColor];
             [_titleView addSubview:label];
@@ -228,6 +239,7 @@
             }];
             label;
         });
+        subTitle.text = @"提现至微信账号";
         
     }
     
@@ -240,4 +252,28 @@
     [self.view endEditing:YES];
 }
 
+
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    /* for backspace */
+    if([string length]==0){
+        return YES;
+    }
+    
+    /*  limit to only numeric characters  */
+    
+    NSCharacterSet *myCharSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
+    for (int i = 0; i < [string length]; i++) {
+        unichar c = [string characterAtIndex:i];
+        if ([myCharSet characterIsMember:c]) {
+            
+            NSUInteger newLength = [textField.text length] + [string length] - range.length;
+            if (newLength <= 10) {
+                return YES;
+            }
+        }
+    }
+    
+    return NO;
+    
+}
 @end

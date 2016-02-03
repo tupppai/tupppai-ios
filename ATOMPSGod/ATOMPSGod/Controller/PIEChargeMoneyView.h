@@ -22,6 +22,11 @@
 
 @interface PIEChargeMoneyView : UIView
 @property (nonatomic, weak) id<PIEChargeMoneyViewDelegate> delegate;
-- (void)showWithAmoutToBeCharge:(double)amount;
+//@property (nonatomic, assign) CGFloat maxAmount;
+//@property (nonatomic, assign) int maxDigit;
+
+- (void)showWithAmoutToBeCharge:(CGFloat)amount;
+- (void)show;
 - (void)dismiss;
+-(void)disableConfirmButton;
 @end
