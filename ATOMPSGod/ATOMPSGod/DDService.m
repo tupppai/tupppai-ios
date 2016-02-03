@@ -431,7 +431,6 @@
                        if (block) {
                            block(YES);
                        }
-
                    } else {
                        // 支付失败或取消
                        if (block) {

@@ -13,7 +13,6 @@
 #import "PIEPageModel.h"
 
 
-
 @implementation PIEChannelTutorialModel
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey
@@ -36,7 +35,8 @@
              @"comment_count":@"comment_count",
              @"tutorial_images":@"ask_uploads",
              @"coverImageUrl":@"image_url",
-             @"hasBought":@"has_bought"
+             @"hasBought":@"has_bought",
+             @"hasUnlocked":@"has_unlocked"
              };
 }
 

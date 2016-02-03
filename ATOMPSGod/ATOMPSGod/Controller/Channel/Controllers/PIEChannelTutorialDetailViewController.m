@@ -36,8 +36,6 @@
 #import "PIEChooseChargeSourceView.h"
 #import "PIEChargeMoneyView.h"
 
-
-
 @interface PIEChannelTutorialDetailViewController ()
 <
     /* Protocols */
@@ -206,13 +204,12 @@ static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
             make.left.bottom.right.equalTo(self.view);
         }];
         
-        toolBar.hasBought = self.currentTutorialModel.hasBought;
+        toolBar.hasBought  = self.currentTutorialModel.hasBought;
         
         toolBar;
     });
     
     self.toolBar = toolBar;
-    
     
 }
 
@@ -438,7 +435,7 @@ static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
         [tutorialImageCell injectImageModel:imageModel];
         
         if ((indexPath.row == self.source_tutorialModel.tutorial_images.count - 1) &&
-            self.source_tutorialModel.hasBought == NO)
+            self.source_tutorialModel.hasUnlocked == NO)
         {
             tutorialImageCell.locked = YES;
         }
@@ -555,6 +552,8 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
          _source_tutorialModel = [model copy];
          
          [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+             
+             _toolBar.hasBought = model.hasBought;
              [_tableView.mj_header endRefreshing];
              [_tableView reloadData];
          }];
@@ -803,7 +802,10 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
     [self loadNewTutorialDetails];
     
     // 心形满格
-    self.toolBar.hasBought = YES;
+//    self.toolBar.hasBought = YES;
+    
+    // 解锁了之后可能toolBar不会心形满格（寒酸鬼只是分享到朋友圈解锁了而已，这时不能直接满格）。所以设置toolBar.hasBought应该在网络请求成功的回调中
+    
 }
 
 
