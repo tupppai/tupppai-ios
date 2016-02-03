@@ -332,8 +332,8 @@
 
 -(void)applicationWillEnterForeground:(UIApplication *)application {
     
-    //if in money mode , get the new wallet
-    
+    [DDUserManager updateBalanceFromRemote];
+
 }
 
 @end

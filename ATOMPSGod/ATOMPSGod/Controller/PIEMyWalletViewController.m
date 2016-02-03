@@ -46,7 +46,7 @@
 {
     [super viewWillAppear:animated];
     [self setupNavBar];
-    [self updateBalanceFromFromRemote];
+    [DDUserManager updateBalanceFromRemote];
 }
 - (void)setupObservers {
     RAC(self.myCashCountLabel,text) =  [[RACObserve([DDUserManager currentUser], balance) filter:^BOOL(id _) {
@@ -56,21 +56,6 @@
     }];
 }
 
-- (void)updateBalanceFromFromRemote {
-    [DDService GET:nil url:@"profile/view" block:^(id responseObject) {
-        NSDictionary *data = [responseObject objectForKey:@"data"];
-        if (data == nil) {
-            return ;
-        }
-        NSNumber* balanceNumber = [data objectForKey:@"balance"];
-        if (balanceNumber == nil) {
-            return;
-        }
-        CGFloat balance = [balanceNumber floatValue];
-        [DDUserManager currentUser].balance = balance;
-        [DDUserManager updateCurrentUserInDatabase];
-    }];
-}
 
 
 #pragma mark - target-actions

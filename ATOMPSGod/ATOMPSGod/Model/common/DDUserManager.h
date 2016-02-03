@@ -100,4 +100,5 @@
 + (void)DD3PartyAuth:(NSDictionary *)param AndType:(NSString *)type withBlock:(void (^)(bool isRegistered,NSString* info))block;
 + (void)getMyFans:(NSDictionary *)param withBlock:(void (^)(NSArray *))block;
 + (void)getMyFollows:(NSDictionary *)param withBlock:(void (^)(NSArray *recommendArray, NSArray *myFollowArray))block;
++ (void)updateBalanceFromRemote;
 @end

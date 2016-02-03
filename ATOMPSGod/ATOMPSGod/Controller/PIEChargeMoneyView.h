@@ -15,7 +15,7 @@
 
 @optional
 
-- (void)chargeMoneyView:(nonnull PIEChargeMoneyView *)chargeMoneyView tapConfirmButtonWithAmount:(double)amount;
+- (void)chargeMoneyView:(nonnull PIEChargeMoneyView *)chargeMoneyView tapConfirmButtonWithAmount:(CGFloat)amount;
 - (void)chargeMoneyViewDidDismiss:(nonnull PIEChargeMoneyView *)chargeMoneyView ;
 
 @end

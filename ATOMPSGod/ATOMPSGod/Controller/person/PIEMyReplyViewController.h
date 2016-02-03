@@ -9,5 +9,5 @@
 #import "DDBaseVC.h"
 
 @interface PIEMyReplyViewController : DDBaseVC
-
+- (void)refreshHeaderToGetNewDataSource;
 @end
