@@ -16,7 +16,9 @@
         UINavigationController *navController = (UINavigationController *)self;
         [navController.topViewController presentViewControllerFromVisibleViewController:viewControllerToPresent];
     }
-    else if (self.presentedViewController) {
+    /** 避免多线程同时调用两次请求，导致连续弹两次窗的问题：假如下一个窗口已经是viewControllerToPresent的话就不要再递归了 */
+    else if (self.presentedViewController &&
+             ![self.presentedViewController isKindOfClass:[viewControllerToPresent class]]) {
         [self.presentedViewController presentViewControllerFromVisibleViewController:viewControllerToPresent];
     }
     else {
