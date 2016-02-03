@@ -583,6 +583,7 @@
 		F4EC11271BCF55EC002D1DCF /* PIENotificationLikeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4EC11261BCF55EC002D1DCF /* PIENotificationLikeTableViewCell.xib */; };
 		F4EC11291BCF55F7002D1DCF /* PIENotificationSystemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4EC11281BCF55F7002D1DCF /* PIENotificationSystemTableViewCell.xib */; };
 		F4EC112B1BCF5604002D1DCF /* PIENotificationReplyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4EC112A1BCF5604002D1DCF /* PIENotificationReplyTableViewCell.xib */; };
+		F4ED2D711C607CEB00C00DA6 /* PIEStateBackgroundColorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F4ED2D701C607CEB00C00DA6 /* PIEStateBackgroundColorButton.m */; };
 		F4EF1AA61C44845A005B86AE /* NSNumber+leesinDone.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EF1AA51C44845A005B86AE /* NSNumber+leesinDone.m */; };
 		F4EF1AAC1C44E026005B86AE /* QBAlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EF1AAB1C44E026005B86AE /* QBAlbumCell.m */; };
 		F4EF1AAF1C44E05D005B86AE /* QBCheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EF1AAE1C44E05D005B86AE /* QBCheckmarkView.m */; };
@@ -1850,6 +1851,8 @@
 		F4EC11261BCF55EC002D1DCF /* PIENotificationLikeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIENotificationLikeTableViewCell.xib; sourceTree = "<group>"; };
 		F4EC11281BCF55F7002D1DCF /* PIENotificationSystemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIENotificationSystemTableViewCell.xib; sourceTree = "<group>"; };
 		F4EC112A1BCF5604002D1DCF /* PIENotificationReplyTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIENotificationReplyTableViewCell.xib; sourceTree = "<group>"; };
+		F4ED2D6F1C607CEB00C00DA6 /* PIEStateBackgroundColorButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEStateBackgroundColorButton.h; sourceTree = "<group>"; };
+		F4ED2D701C607CEB00C00DA6 /* PIEStateBackgroundColorButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEStateBackgroundColorButton.m; sourceTree = "<group>"; };
 		F4EF1AA41C44845A005B86AE /* NSNumber+leesinDone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+leesinDone.h"; sourceTree = "<group>"; };
 		F4EF1AA51C44845A005B86AE /* NSNumber+leesinDone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+leesinDone.m"; sourceTree = "<group>"; };
 		F4EF1AAA1C44E026005B86AE /* QBAlbumCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBAlbumCell.h; sourceTree = "<group>"; };
@@ -3700,14 +3703,8 @@
 			children = (
 				90F4014E1C5084BB00B39CEB /* PIEMyWalletViewController.h */,
 				90F4014F1C5084BB00B39CEB /* PIEMyWalletViewController.m */,
-				903E62FB1C54A538008F9A28 /* PIEChooseChargeSourceActionSheet.h */,
-				903E62FC1C54A538008F9A28 /* PIEChooseChargeSourceActionSheet.m */,
-				903E630A1C54A556008F9A28 /* PIEChooseChargeSourceActionSheet.xib */,
 				0EAB36831C51D9B500F90FAA /* PIEWithdrawlMoneyViewController.h */,
 				0EAB36841C51D9B500F90FAA /* PIEWithdrawlMoneyViewController.m */,
-				0EE7588C1C51CD4500A9F59E /* PIEChargeMoneyPanelView.h */,
-				0EE7588D1C51CD4500A9F59E /* PIEChargeMoneyPanelView.m */,
-				0EE7589B1C51CD5700A9F59E /* PIEChargeMoneyPanelView.xib */,
 				90F4015D1C50A1BD00B39CEB /* PIECashFlowDetailsViewController.h */,
 				90F4015E1C50A1BD00B39CEB /* PIECashFlowDetailsViewController.m */,
 				90B3A2F31C546BD000F059D1 /* PIECashFlowDetailsNormalCell.h */,
@@ -3724,6 +3721,14 @@
 				F483B33C1C5714CC00AD9FEF /* PIEChargeMoneyView.m */,
 				F483B34A1C573AE100AD9FEF /* PIEChooseChargeSourceView.h */,
 				F483B34B1C573AE100AD9FEF /* PIEChooseChargeSourceView.m */,
+				0EE7588C1C51CD4500A9F59E /* PIEChargeMoneyPanelView.h */,
+				0EE7588D1C51CD4500A9F59E /* PIEChargeMoneyPanelView.m */,
+				0EE7589B1C51CD5700A9F59E /* PIEChargeMoneyPanelView.xib */,
+				903E62FB1C54A538008F9A28 /* PIEChooseChargeSourceActionSheet.h */,
+				903E62FC1C54A538008F9A28 /* PIEChooseChargeSourceActionSheet.m */,
+				903E630A1C54A556008F9A28 /* PIEChooseChargeSourceActionSheet.xib */,
+				F4ED2D6F1C607CEB00C00DA6 /* PIEStateBackgroundColorButton.h */,
+				F4ED2D701C607CEB00C00DA6 /* PIEStateBackgroundColorButton.m */,
 			);
 			name = Wallet;
 			sourceTree = "<group>";
@@ -5247,6 +5252,7 @@
 				90738B1B1C4763FE00EE6137 /* PIENotificationCommentOnImageTableViewCell.m in Sources */,
 				90EC3D5C1C2A78D10085A7BE /* PIEProceedingToHelpViewController.m in Sources */,
 				0E48CC491C51F55200FAD180 /* PIEAvatarImageView.m in Sources */,
+				F4ED2D711C607CEB00C00DA6 /* PIEStateBackgroundColorButton.m in Sources */,
 				E9FBCD2F1B6A042000BF7096 /* DDLoginNavigationController.m in Sources */,
 				F43930421BE4BD75006C9437 /* MRActivityIndicatorView+AFNetworking.m in Sources */,
 				5C83A88E1AC66F910071A024 /* POPCGUtils.mm in Sources */,

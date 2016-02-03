@@ -46,10 +46,14 @@
 }
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [[IQKeyboardManager sharedManager]setEnable:YES];
+}
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[IQKeyboardManager sharedManager]setEnable:NO];
 }
 - (void)createUI {
     self.title = @"资料编辑";
-//    self.edgesForExtendedLayout = UIRectEdgeNone;
     _createProfileView = [PIEModifySelfView new];
     self.view = _createProfileView;
     
@@ -231,6 +235,13 @@
     }
     return _imagePickerController;
 }
+
+#pragma mark - touching methods
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
+
 
 
 @end

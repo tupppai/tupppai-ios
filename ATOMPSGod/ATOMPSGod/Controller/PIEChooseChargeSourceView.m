@@ -39,17 +39,17 @@
         _actionSheetMasConstraintCenterY = make.bottom.equalTo(self).with.offset(150);
     }];
     
-    [[_actionSheet.zhifubaoButton rac_signalForControlEvents:UIControlEventTouchDown]subscribeNext:^(id x) {
+    [[_actionSheet.zhifubaoButton rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(id x) {
         if (_delegate && [_delegate respondsToSelector:@selector(chooseChargeSourceView:tapButtonOfIndex:)]) {
             [_delegate chooseChargeSourceView:self tapButtonOfIndex:0];
         }
     }];
-    [[_actionSheet.wechatButton rac_signalForControlEvents:UIControlEventTouchDown]subscribeNext:^(id x) {
+    [[_actionSheet.wechatButton rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(id x) {
         if (_delegate && [_delegate respondsToSelector:@selector(chooseChargeSourceView:tapButtonOfIndex:)]) {
             [_delegate chooseChargeSourceView:self tapButtonOfIndex:1];
         }
     }];
-    [[_actionSheet.cancelButton rac_signalForControlEvents:UIControlEventTouchDown]subscribeNext:^(id x) {
+    [[_actionSheet.cancelButton rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(id x) {
         if (_delegate && [_delegate respondsToSelector:@selector(chooseChargeSourceView:tapButtonOfIndex:)]) {
             [_delegate chooseChargeSourceView:self tapButtonOfIndex:2];
         }

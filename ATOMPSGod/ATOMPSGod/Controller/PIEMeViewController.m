@@ -49,12 +49,12 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
 @property (weak, nonatomic) IBOutlet UIView *pageMenuContainerView;
 @property (weak, nonatomic) IBOutlet UIView *avatarContainerView;
 
-@property (nonatomic, strong) PWRefreshFooterCollectionView *collectionView;
-@property (nonatomic, strong) NSMutableArray *dataSource;
-@property (nonatomic, strong) NSMutableArray *homeImageDataSource;
+//@property (nonatomic, strong) PWRefreshFooterCollectionView *collectionView;
+//@property (nonatomic, strong) NSMutableArray *dataSource;
+//@property (nonatomic, strong) NSMutableArray *homeImageDataSource;
 
-@property (nonatomic, assign) NSInteger currentPage;
-@property (nonatomic, assign) BOOL canRefreshFooter;
+//@property (nonatomic, assign) NSInteger currentPage;
+//@property (nonatomic, assign) BOOL canRefreshFooter;
 //@property (nonatomic, assign) CGPoint startPanLocation;
 @property (weak, nonatomic) IBOutlet UIImageView *psGodCertificate;
 
@@ -67,6 +67,9 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
 @property (nonatomic, weak) UIButton *messageButton;
 
 @property (nonatomic, assign)PIEMeViewControllerNavigationBarStyle currentNavigationBarStyle;
+
+//@property (nonatomic, strong) PIEMyReplyViewController *myReplyViewController;
+//@property (nonatomic, strong) PIEMyCollectionViewController *myCollectionViewController;
 
 @end
 
@@ -149,6 +152,7 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
          [self updateNotificationStatus];
      }];
     
+
 }
 
 - (void)dealloc {
@@ -386,9 +390,10 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     PIEMyReplyViewController *controller = [PIEMyReplyViewController new];
     controller.title = @"作品";
     [controllerArray addObject:controller];
+//    self.myReplyViewController = controller;
     
     PIEMyCollectionViewController *controller2 = [PIEMyCollectionViewController new];
-    
+//    self.myCollectionViewController = controller2;
     NSString* titleString = @"收藏";
     NSString *baseURL = [[NSUserDefaults standardUserDefaults] valueForKey:@"BASEURL"];
     if ([baseURL isEqualToString:baseURLString_Test]) {

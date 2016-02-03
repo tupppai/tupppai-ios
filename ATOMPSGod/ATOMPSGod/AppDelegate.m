@@ -45,6 +45,7 @@
     
     //going to remove
     [[IQKeyboardManager sharedManager] setEnable:NO];
+    [[IQKeyboardManager sharedManager] setEnableAutoToolbar:NO];
     [self initializeDatabase];
     [self initializeAfterDB];
     [self setupShareSDK];
@@ -329,6 +330,10 @@
 
 }
 
+-(void)applicationWillEnterForeground:(UIApplication *)application {
+    
+    [DDUserManager updateBalanceFromRemote];
 
+}
 
 @end

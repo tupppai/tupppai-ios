@@ -30,6 +30,8 @@
 @property (nonatomic, assign) BOOL isfirstLoading;
 @property (nonatomic, assign)  long long timeStamp;
 
+//@property (nonatomic, assign)  BOOL shouldGetNewDataSourceWhenViewWillAppear;
+
 @end
 
 @implementation PIEMyReplyViewController
@@ -52,7 +54,6 @@
         [Hud text:@"已经拉到底啦"];
         [_collectionView.mj_footer endRefreshingWithNoMoreData];
     }
-    
 }
 
 #pragma mark - GetDataSource
@@ -124,7 +125,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
+    [self setupObservers];
 }
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
+- (void)setupObservers {
+    [[RACObserve([DDUserManager currentUser],replyNumber)
+      skip:1]
+     subscribeNext:^(id x) {
+         [self.collectionView.mj_header beginRefreshing];
+     }];
+}
+
 
 - (void)createUI {
     CHTCollectionViewWaterfallLayout *layout = [[CHTCollectionViewWaterfallLayout alloc] init];

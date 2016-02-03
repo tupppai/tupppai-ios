@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "PIEStateBackgroundColorButton.h"
 @interface PIEChargeMoneyPanelView : UIView
 
 + (PIEChargeMoneyPanelView *)chargeMoneyPanel;
 @property (weak, nonatomic) IBOutlet UITextField *moneyCountTextField;
-@property (weak, nonatomic) IBOutlet UIButton *confirmButton;
+@property (weak, nonatomic) IBOutlet PIEStateBackgroundColorButton *confirmButton;
 
 @end
