@@ -381,10 +381,7 @@ PIEVerificationCodeCountdownButton *countdownButton;
     [[self.nextStepButton rac_signalForControlEvents:UIControlEventTouchUpInside]
     subscribeNext:^(id x) {
         @strongify(self);
-        
-        RengarViewController *vc = [RengarViewController new];
-        [self.navigationController pushViewController:vc animated:YES];
-        
+                
         if ([self.cellPhoneNumberTextField.text isMobileNumber] == NO) {
             [Hud error:@"手机格式不正确"];
         }

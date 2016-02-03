@@ -17,11 +17,12 @@
 #import "LxDBAnything.h"
 #import "PIEChooseChargeSourceView.h"
 
-#import "Pingpp.h"
 @interface PIEMyWalletViewController ()<PIEChargeMoneyViewDelegate,PIEChooseChargeSourceViewDelegate>
 
 @property (nonatomic, strong) PIEChargeMoneyView *chargeMoneyView;
 @property (nonatomic, strong) PIEChooseChargeSourceView *chooseChargeSourceView;
+
+@property (nonatomic, strong) UILabel *myCashCountLabel;
 
 @end
 
@@ -31,8 +32,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.view.backgroundColor = [UIColor colorWithHex:0xF8F8F8];
     [self setupSubViews];
-    
+    [self setupObservers];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -43,17 +45,18 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.view.backgroundColor = [UIColor colorWithHex:0xF8F8F8];
     [self setupNavBar];
-    
+    [DDUserManager updateBalanceFromRemote];
+}
+- (void)setupObservers {
+    RAC(self.myCashCountLabel,text) =  [[RACObserve([DDUserManager currentUser], balance) filter:^BOOL(id _) {
+        return YES;
+    }]map:^id(id value) {
+        return [NSString stringWithFormat:@"%.0f",[value floatValue]];
+    }];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    
-    
-}
+
 
 #pragma mark - target-actions
 - (void)rightBarButtonClicked:(UIBarButtonItem *)rightBarButton
@@ -68,40 +71,21 @@
 
 -(void)chargeMoneyView:(PIEChargeMoneyView *)chargeMoneyView tapConfirmButtonWithAmount:(CGFloat)amount {
     
+    [self.chargeMoneyView disableConfirmButton];
+    
     NSString *chargeTypeStr = @"wx";
     if (self.chooseChargeSourceView.chargeType == PIEWalletChargeSourceTypeAlipay) {
         chargeTypeStr = @"alipay";
     } else if (self.chooseChargeSourceView.chargeType == PIEWalletChargeSourceTypeWechat) {
         chargeTypeStr = @"wx";
     }
-    NSString *amountString = [NSString stringWithFormat:@"%.2f", amount];
-
+    NSString *amountString = [NSString stringWithFormat:@"%.0f", amount];
     NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:amountString,@"amount",chargeTypeStr,@"type",nil];
-
     [DDService charge:param withBlock:^(BOOL success) {
-        NSLog(@"charge %d",success);
+        if (success) {
+            [self.chargeMoneyView dismiss];
+        }
     }];
-//    [DDService POST:param url:@"money/charge" block:^(id responseObject) {
-//        NSDictionary *dictionaryData = [responseObject objectForKey:@"data"];
-//        if (dictionaryData == nil) {
-//            return ;
-//        }
-//        NSData *data = [NSJSONSerialization dataWithJSONObject:dictionaryData options:NSJSONWritingPrettyPrinted error:nil];
-//        NSString *jsonString = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-//        [Pingpp createPayment:jsonString
-//               viewController:self
-//                 appURLScheme:nil
-//               withCompletion:^(NSString *result, PingppError *error) {
-//                   NSLog(@"%@ ",result);
-//                   if ([result isEqualToString:@"success"]) {
-//                       // 支付成功
-//                   } else {
-//                       // 支付失败或取消
-//                       NSLog(@"Error: code=%lu msg=%@", error.code, [error getMsg]);
-//                   }
-//               }];
-//
-//    }];
 }
 
 -(void)chooseChargeSourceView:(PIEChooseChargeSourceView *)chooseChargeSourceView tapButtonOfIndex:(NSInteger)index {
@@ -109,12 +93,12 @@
         case 0:
             [self.chooseChargeSourceView dismiss];
             self.chooseChargeSourceView.chargeType = PIEWalletChargeSourceTypeAlipay;
-            [self.chargeMoneyView showWithAmoutToBeCharge:0.0];
+            [self.chargeMoneyView show];
             break;
         case 1:
             [self.chooseChargeSourceView dismiss];
             self.chooseChargeSourceView.chargeType = PIEWalletChargeSourceTypeWechat;
-            [self.chargeMoneyView showWithAmoutToBeCharge:0.0];
+            [self.chargeMoneyView show];
             break;
         case 2:
             [self.chooseChargeSourceView dismiss];
@@ -145,123 +129,93 @@
 - (void)setupSubViews
 {
     // money icon
-    UIImageView *moneyIconImageView = ({
-        UIImageView *imageView = [[UIImageView alloc] init];
+        UIImageView *moneyIconImageView = [[UIImageView alloc] init];
         
-        imageView.image = [UIImage imageNamed:@"pie_myWallet_money"];
-        imageView.contentMode = UIViewContentModeScaleAspectFit;
+        moneyIconImageView.image = [UIImage imageNamed:@"pie_myWallet_money"];
+        moneyIconImageView.contentMode = UIViewContentModeScaleAspectFit;
         
-        [self.view addSubview:imageView];
+        [self.view addSubview:moneyIconImageView];
         
-        [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        [moneyIconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.width.mas_equalTo(101);
             make.height.mas_equalTo(101);
             make.centerX.equalTo(self.view);
             make.top.equalTo(self.view.mas_top).with.offset(45);
         }];
-        imageView;
-    });
+    
     
     // 我的零钱 label
-    UILabel *myMoneyLabel = ({
-        UILabel *label = [[UILabel alloc] init];
+        UILabel *myMoneyLabel = [[UILabel alloc] init];
+        myMoneyLabel.text = @"我的零钱";
+        myMoneyLabel.font = [UIFont lightTupaiFontOfSize:13];
+        myMoneyLabel.textColor = [UIColor colorWithHex:0xFF5B38];
+        [self.view addSubview:myMoneyLabel];
         
-        label.text = @"我的零钱";
-        label.font = [UIFont lightTupaiFontOfSize:13];
-        label.textColor = [UIColor colorWithHex:0xFF5B38];
-        [self.view addSubview:label];
-        
-        [label mas_makeConstraints:^(MASConstraintMaker *make) {
+        [myMoneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(self.view);
             make.top.equalTo(moneyIconImageView.mas_bottom).with.offset(26);
         }];
-        
-        label;
-    });
     
+    [self.view addSubview:self.myCashCountLabel];
+    [self.myCashCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.top.equalTo(myMoneyLabel.mas_bottom).with.offset(14);
+        make.width.greaterThanOrEqualTo(@20);
+    }];
     
-
-    // 我的零钱－确切数量 label
-    UILabel *myCashCountLabel = ({
-        UILabel *label = [[UILabel alloc] init];
-        label.text = [NSString stringWithFormat:@"%.2f",[DDUserManager currentUser].balance];
-        label.font = [UIFont mediumTupaiFontOfSize:45];
-        label.textColor = [UIColor colorWithHex:0xFF5B38];
-        label.adjustsFontSizeToFitWidth = YES;
-        label.minimumScaleFactor = 0.5;
-        label.textAlignment = NSTextAlignmentCenter;
-        [self.view addSubview:label];
-        
-        [label mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(self.view);
-            make.top.equalTo(myMoneyLabel.mas_bottom).with.offset(14);
-        }];
-        label;
-    });
+ 
     
     // ¥ label
-    UIImageView *rmbIconImageView = ({
-        UIImageView *imageView = [[UIImageView alloc] init];
+        UIImageView *rmbIconImageView = [[UIImageView alloc] init];
+        rmbIconImageView.image = [UIImage imageNamed:@"pie_myWallet_rmbIcon"];
+        rmbIconImageView.contentMode = UIViewContentModeScaleAspectFit;
+        [self.view addSubview:rmbIconImageView];
         
-        imageView.image = [UIImage imageNamed:@"pie_myWallet_rmbIcon"];
-        imageView.contentMode = UIViewContentModeScaleAspectFit;
-        [self.view addSubview:imageView];
-        
-        [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        [rmbIconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.size.mas_equalTo(CGSizeMake(24, 33));
-            make.bottom.equalTo(myCashCountLabel.mas_baseline);
-            make.right.equalTo(myCashCountLabel.mas_left).with.offset(-14);
+            make.bottom.equalTo(self.myCashCountLabel.mas_baseline);
+            make.right.equalTo(self.myCashCountLabel.mas_left).with.offset(-14);
             make.leading.greaterThanOrEqualTo(self.view);
         }];
         
-        imageView;
-    });
     
     // "元" label
-    UILabel *yuanLabel = ({
-        UILabel *label = [[UILabel alloc] init];
+        UILabel *yuanLabel = [[UILabel alloc] init];
+        yuanLabel.text = @"元";
+        yuanLabel.textColor = [UIColor colorWithHex:0xFF5B38];
+        yuanLabel.font = [UIFont lightTupaiFontOfSize:13];
         
-        label.text = @"元";
-        label.textColor = [UIColor colorWithHex:0xFF5B38];
-        label.font = [UIFont lightTupaiFontOfSize:13];
+        [self.view addSubview:yuanLabel];
         
-        [self.view addSubview:label];
-        
-        [label mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(myCashCountLabel.mas_right).with.offset(8);
-            make.bottom.equalTo(myCashCountLabel.mas_baseline);
+        [yuanLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.myCashCountLabel.mas_right).with.offset(8);
+            make.bottom.equalTo(self.myCashCountLabel.mas_baseline);
             make.trailing.greaterThanOrEqualTo(self.view);
         }];
-        
-        label;
-    });
+
     
     // 充值 button
-    UIButton *chargeMoneyButton = ({
-        UIButton *button = [[UIButton alloc] init];
-        
-        [button setTitle:@"充值" forState:UIControlStateNormal];
-        [button setBackgroundImage:[UIImage imageNamed:@"pie_myWallet_chargeButton"]
+        UIButton *chargeMoneyButton = [[UIButton alloc] init];
+        [chargeMoneyButton setTitle:@"充值" forState:UIControlStateNormal];
+        [chargeMoneyButton setBackgroundImage:[UIImage imageNamed:@"pie_myWallet_chargeButton"]
                           forState:UIControlStateNormal];
-        button.titleLabel.font = [UIFont lightTupaiFontOfSize:16];
-        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        chargeMoneyButton.titleLabel.font = [UIFont lightTupaiFontOfSize:16];
+        [chargeMoneyButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         
-        [self.view addSubview:button];
+        [self.view addSubview:chargeMoneyButton];
         
-        [button mas_makeConstraints:^(MASConstraintMaker *make) {
+        [chargeMoneyButton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.height.mas_equalTo(40);
             make.left.equalTo(self.view).with.offset(21);
             make.right.equalTo(self.view).with.offset(-21);
-            make.top.equalTo(myCashCountLabel.mas_baseline).with.offset(58);
+            make.top.equalTo(self.myCashCountLabel.mas_baseline).with.offset(58);
         }];
-        
-        button;
-    });
     
-    [[chargeMoneyButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
-        [self.chooseChargeSourceView show];
-    }];
+        [[chargeMoneyButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
+            [self.chooseChargeSourceView show];
+        }];
     
+
     // 微信提现 button
 
     UIButton *withdrawFromWeixinButton = ({
@@ -284,16 +238,9 @@
         button;
     });
     [[withdrawFromWeixinButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
-//        PIEBindWeixinPaymentViewController *bindWeixinPaymentVC =
-//        [PIEBindWeixinPaymentViewController new];
-//        [self.navigationController pushViewController:bindWeixinPaymentVC
-//                                             animated:YES];
-        
         PIEWithdrawlMoneyViewController *withDrawlVC =
         [[PIEWithdrawlMoneyViewController alloc] init];
         [self.navigationController pushViewController:withDrawlVC animated:YES];
-        
-        
     }];
     
     // line separator
@@ -322,7 +269,6 @@
         label.text = promptText;
         label.font = [UIFont lightTupaiFontOfSize:14];
         label.textColor = [UIColor colorWithHex:0x7f7f7f];
-        label.numberOfLines = 0;
         
         [self.view addSubview:label];
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -332,6 +278,7 @@
         
         label;
     });
+    serviceLabel.numberOfLines = 0;
     
 }
 
@@ -354,6 +301,17 @@
     return _chooseChargeSourceView;
 }
 
-
+-(UILabel *)myCashCountLabel {
+    if (!_myCashCountLabel) {
+        UILabel *label = [[UILabel alloc] init];
+        label.font = [UIFont mediumTupaiFontOfSize:45];
+        label.textColor = [UIColor colorWithHex:0xFF5B38];
+        label.adjustsFontSizeToFitWidth = YES;
+        label.minimumScaleFactor = 0.5;
+        label.textAlignment = NSTextAlignmentCenter;
+        _myCashCountLabel = label;
+    }
+    return _myCashCountLabel;
+}
 
 @end

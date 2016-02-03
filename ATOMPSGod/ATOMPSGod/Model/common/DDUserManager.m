@@ -114,6 +114,21 @@ Will be executed only once when the function gets called for first time.
     }];
 
 }
++ (void)updateBalanceFromRemote {
+    [DDService GET:nil url:@"profile/view" block:^(id responseObject) {
+        NSDictionary *data = [responseObject objectForKey:@"data"];
+        if (data == nil) {
+            return ;
+        }
+        NSNumber* balanceNumber = [data objectForKey:@"balance"];
+        if (balanceNumber == nil) {
+            return;
+        }
+        CGFloat balance = [balanceNumber floatValue];
+        [DDUserManager currentUser].balance = balance;
+        [DDUserManager updateCurrentUserInDatabase];
+    }];
+}
 
 + (void )DDRegister:(NSDictionary *)param withBlock:(void (^)(BOOL success))block {
     

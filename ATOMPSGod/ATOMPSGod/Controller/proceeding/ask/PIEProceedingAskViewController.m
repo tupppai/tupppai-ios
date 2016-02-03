@@ -78,7 +78,14 @@ static NSString *PIEProceedingAskTableViewCell_NoGapIdentifier =
     
     
 }
-
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[IQKeyboardManager sharedManager]setEnable:YES];
+}
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[IQKeyboardManager sharedManager]setEnable:NO];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

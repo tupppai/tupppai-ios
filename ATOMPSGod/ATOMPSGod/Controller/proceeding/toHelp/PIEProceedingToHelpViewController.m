@@ -273,10 +273,10 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
 -(void)leesinViewController:(LeesinViewController *)leesinViewController uploadPercentage:(CGFloat)percentage uploadSucceed:(BOOL)success {
     [self.progressView setProgress:percentage animated:YES];
     if (success) {
-        if (leesinViewController.type == LeesinViewControllerTypeReplyNoMissionSelection) {
-            [self getRemoteSourceToHelp];
-            [self getMoreRemoteSourceToHelp_done];
-        }
+        [DDUserManager currentUser].replyNumber++;
+        [DDUserManager updateCurrentUserInDatabase];
+        [self getRemoteSourceToHelp];
+        [self getMoreRemoteSourceToHelp_done];
     }
 }
 
