@@ -105,7 +105,7 @@ static NSString *PIEChannelTutorialCommentsCountTableViewCellIdentifier =
 static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
 @"PIEChannelTutorialCommentTableViewCell";
 
-static const double kPIEMinimumRewardAmount = 1.0;
+
 
 
 #pragma mark - UI life cycles
@@ -310,9 +310,9 @@ static const double kPIEMinimumRewardAmount = 1.0;
         PIEChargeMoneyView *chargeMoneyView = tuple.first;
         [chargeMoneyView dismiss];
         double amount = [tuple.second doubleValue];
-        if (amount < kPIEMinimumRewardAmount) {
+        if (amount < kPIEChargeMinimumAmount) {
             NSString *prompt =
-            [NSString stringWithFormat:@"至少要充值%.2f元", kPIEMinimumRewardAmount];
+            [NSString stringWithFormat:@"至少要充值%.2f元", kPIEChargeMinimumAmount];
             [Hud error:prompt];
         }else{
             [self chargeMoneyRequestWithType:_walletChargeSourceType
@@ -663,7 +663,7 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
          double balance         = [dataDict[@"balance"] doubleValue];
          double amount          = [dataDict[@"amount"] doubleValue];
          
-         if (rollDiceStatus == -1){
+         if (rollDiceStatus == kPIERewardFailedInteger){
 
              PIEChannelTutorialRewardFailedView *rewardFailedView =
              [PIEChannelTutorialRewardFailedView new];
@@ -675,7 +675,7 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
              self.toBeRewardedAmount = amount;
              
              
-         }else if (rollDiceStatus == 1){
+         }else if (rollDiceStatus == kPIERewardSuccessInteger){
              NSString *prompt = [NSString stringWithFormat:@"支付%.2f元，剩余%.2f元", amount, balance];
              [Hud text:prompt];
              
@@ -732,7 +732,7 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
          double amount          = [dataDict[@"amount"] doubleValue];
          
          // 已经充值了还会导致余额不足的情况吗？
-         if (rollDiceStatus == -1){
+         if (rollDiceStatus == kPIERewardFailedInteger){
              
              PIEChannelTutorialRewardFailedView *rewardFailedView =
              [PIEChannelTutorialRewardFailedView new];
@@ -741,7 +741,7 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
              rewardFailedView.delegate = self;
              
              
-         }else if (rollDiceStatus == 1){
+         }else if (rollDiceStatus == kPIERewardSuccessInteger){
              NSString *prompt = [NSString stringWithFormat:@"支付%.2f元，剩余%.2f元", amount, balance];
              [Hud text:prompt];
              
@@ -774,7 +774,7 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
     
     chargeMoneyView.delegate = self;
     
-    [chargeMoneyView showWithAmoutToBeCharge:kPIEMinimumRewardAmount];
+    [chargeMoneyView showWithAmoutToBeCharge:kPIEChargeMinimumAmount];
 }
 
 
@@ -796,7 +796,7 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
     [self.source_tutorialModel followAction];
 }
 
-#pragma mark - private helpers
+
 - (void)unlockTutorial
 {
     // 打赏或分享到朋友圈后重刷UI
