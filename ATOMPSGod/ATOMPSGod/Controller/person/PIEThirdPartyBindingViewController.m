@@ -20,6 +20,8 @@ typedef void(^requestResultBlock)(void);
 
 @property (nonatomic, strong) PIEAccountBindingView *accountBindingView;
 
+@property (nonatomic, strong) NSMutableDictionary<NSString *, NSString *> *platformTypeChineseDict;
+
 @end
 
 @implementation PIEThirdPartyBindingViewController
@@ -36,8 +38,8 @@ typedef void(^requestResultBlock)(void);
     _accountBindingView = [PIEAccountBindingView new];
     self.view = _accountBindingView;
     _accountBindingView.accountBindingTableView.scrollEnabled = NO;
-    _accountBindingView.accountBindingTableView.delegate = self;
-    _accountBindingView.accountBindingTableView.dataSource = self;
+    _accountBindingView.accountBindingTableView.delegate      = self;
+    _accountBindingView.accountBindingTableView.dataSource    = self;
 }
 
 #pragma mark - Click Event
@@ -218,7 +220,7 @@ typedef void(^requestResultBlock)(void);
               success:^{
                   // 重置currentUser单例并且同步到本地沙盒
                   NSString *prompt =
-                  [NSString stringWithFormat:@"已经解绑%@",type];
+                  [NSString stringWithFormat:@"已经绑定%@",self.platformTypeChineseDict[type]];
                   [Hud text:prompt];
                   
                   // 重置currentUser单例并且同步到本地沙盒
@@ -253,7 +255,7 @@ typedef void(^requestResultBlock)(void);
              bindSwitch.on = YES;
          } success:^{
              NSString *prompt =
-             [NSString stringWithFormat:@"已经解绑%@",type];
+             [NSString stringWithFormat:@"已经解绑%@",self.platformTypeChineseDict[type]];
              [Hud text:prompt];
              // 重置currentUser单例并且同步到本地沙盒
              switch (bindSwitch.tag) {
@@ -336,4 +338,19 @@ typedef void(^requestResultBlock)(void);
                   }];
 }
 
+#pragma mark - lazy loadings
+- (NSMutableDictionary<NSString *,NSString *> *)platformTypeChineseDict
+{
+    if (_platformTypeChineseDict == nil) {
+        _platformTypeChineseDict = [NSMutableDictionary <NSString *, NSString *> dictionary];
+        
+        
+        _platformTypeChineseDict[@"qq"]     = @"QQ";
+        _platformTypeChineseDict[@"weixin"] = @"微信";
+        _platformTypeChineseDict[@"weibo"]  = @"微博";
+        
+        
+    }
+    return  _platformTypeChineseDict;
+}
 @end
