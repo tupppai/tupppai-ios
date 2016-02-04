@@ -273,5 +273,25 @@
 //    [self presentViewController:pvc animated:YES completion:nil];
 //}
 
+//- (BOOL)tabBarController:(UITabBarController *)tabBarController
+//shouldSelectViewController:(UIViewController *)viewController
+//{
+//    DDNavigationController *nav = (DDNavigationController *)viewController;
+//    
+//    if ([DDUserManager isTourist] &&
+//        ([[nav topViewController] isKindOfClass:[PIEProceedingViewController2 class]] ||
+//         [[nav topViewController] isKindOfClass:[PIEMeViewController class]]) )
+//    {
+//        // 如果是游客临时用户，然后又想点击“进行中”和“我”，直接发通知
+//        
+//        [[NSNotificationCenter defaultCenter]
+//         postNotificationName:PIENetworkCallForFurtherRegistrationNotification
+//         object:nil];
+//        
+//        return NO;
+//    }
+//    return YES;
+//}
+
 
 @end
