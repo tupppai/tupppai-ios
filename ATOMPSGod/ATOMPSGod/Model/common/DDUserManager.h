@@ -101,4 +101,7 @@
 + (void)getMyFans:(NSDictionary *)param withBlock:(void (^)(NSArray *))block;
 + (void)getMyFollows:(NSDictionary *)param withBlock:(void (^)(NSArray *recommendArray, NSArray *myFollowArray))block;
 + (void)updateBalanceFromRemote;
+
++ (BOOL)isTourist;
+
 @end
