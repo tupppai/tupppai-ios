@@ -9,5 +9,6 @@
 #import "DDBaseVC.h"
 
 @interface PIEFinishWithdralViewController : DDBaseVC
+@property (nonatomic,assign)CGFloat amount;
 
 @end

@@ -129,7 +129,7 @@
         }
         else if (section == 1) {
             if (row == 0) {
-                cell.textLabel.text = @"我的零钱";
+                cell.textLabel.text = @"我的钱包";
             } else if (row == 1) {
                 cell.textLabel.text = @"消息通知";
             } else if (row == 2) {

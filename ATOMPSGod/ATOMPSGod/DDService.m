@@ -422,25 +422,6 @@
         NSData *data = [NSJSONSerialization dataWithJSONObject:dictionaryData options:NSJSONWritingPrettyPrinted error:nil];
         NSString *jsonString = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
 
-        [Pingpp createPayment:jsonString
-               viewController:nil
-                 appURLScheme:nil
-               withCompletion:^(NSString *result, PingppError *error) {
-                   NSLog(@"result! %@ ",result);
-                   if ([result isEqualToString:@"success"]) {
-                       // 支付成功
-                       if (block) {
-                           block(YES);
-                       }
-                   } else {
-                       // 支付失败或取消
-                       if (block) {
-                           block(NO);
-                       }
-
-                       NSLog(@"Error: code=%lu msg=%@", error.code, [error getMsg]);
-                   }
-               }];
         
         [Pingpp createPayment:jsonString appURLScheme:@"2088122565280825" withCompletion:^(NSString *result, PingppError *error) {
             if ([result isEqualToString:@"success"]) {
@@ -465,33 +446,40 @@
 + (void)withdraw:(NSDictionary*)param withBlock:(void (^)(BOOL success))block {
     
     [DDBaseService POST:param url:@"money/transfer" block:^(id responseObject) {
-        NSDictionary *dictionaryData = [responseObject objectForKey:@"data"];
-        NSString *info = [responseObject objectForKey:@"info"];
-        if (dictionaryData == nil) {
+//        NSDictionary *dictionaryData = [responseObject objectForKey:@"data"];
+//        if (dictionaryData == nil) {
+//            if (block) {
+//                block(NO);
+//            }
+//            return ;
+//        }
+        if (responseObject) {
+            if (block) {
+                block(YES);
+            }
+        } else {
             if (block) {
                 block(NO);
             }
-            return ;
         }
-        NSData *data = [NSJSONSerialization dataWithJSONObject:dictionaryData options:NSJSONWritingPrettyPrinted error:nil];
-        NSString *jsonString = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+//        NSData *data = [NSJSONSerialization dataWithJSONObject:dictionaryData options:NSJSONWritingPrettyPrinted error:nil];
+//        NSString *jsonString = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
         
-        [Pingpp createPayment:jsonString appURLScheme:@"2088122565280825" withCompletion:^(NSString *result, PingppError *error) {
-            if ([result isEqualToString:@"success"]) {
-                if (block) {
-                    block(YES);
-                }
-                [Hud text:@"提现成功"];
-                
-            } else {
-                // 支付失败或取消
-                if (block) {
-                    block(NO);
-                }
-                [Hud text:@"提现失败或取消"];
-            }
-        }];
->>>>>>> upstream/dev
+//        [Pingpp createPayment:jsonString appURLScheme:@"2088122565280825" withCompletion:^(NSString *result, PingppError *error) {
+//            if ([result isEqualToString:@"success"]) {
+//                if (block) {
+//                    block(YES);
+//                }
+//                [Hud text:@"提现成功"];
+//                
+//            } else {
+//                // 支付失败或取消
+//                if (block) {
+//                    block(NO);
+//                }
+//                [Hud text:@"提现失败或取消"];
+//            }
+//        }];
     }];
     
 }

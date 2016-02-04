@@ -219,7 +219,6 @@ typedef NS_ENUM(NSUInteger, PIEChannelTutorialControllerType) {
     uploadModel.imageArray = [NSMutableOrderedSet orderedSetWithObject:asset];
     
     manager.model = uploadModel;
-    @weakify(self);
     [Hud activity:@"上传作业中..."];
 //    [manager upload:^(CGFloat percentage, BOOL success) {
 //        if (success) {
@@ -247,7 +246,6 @@ typedef NS_ENUM(NSUInteger, PIEChannelTutorialControllerType) {
     
     [manager uploadHomework:^(CGFloat percentage, BOOL success, PIEPageModel *pageModel) {
         if (success) {
-            @strongify(self);
             // refresh UI
             // --- load new homeworkds
             

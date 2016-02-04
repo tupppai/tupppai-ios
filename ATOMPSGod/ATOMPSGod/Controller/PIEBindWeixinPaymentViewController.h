@@ -7,7 +7,13 @@
 //
 
 #import "DDBaseVC.h"
+@class PIEBindWeixinPaymentViewController;
+
+@protocol PIEBindWeixinPaymentViewControllerDelegate <NSObject>
+@optional
+- (void)bindWechatViewController:(PIEBindWeixinPaymentViewController *)bindWechatViewController success:(BOOL)success;
+@end
 
 @interface PIEBindWeixinPaymentViewController : DDBaseVC
-
+@property (nonatomic,weak)id <PIEBindWeixinPaymentViewControllerDelegate> delegate;
 @end

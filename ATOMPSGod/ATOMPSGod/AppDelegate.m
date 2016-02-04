@@ -332,7 +332,8 @@
 
 -(void)applicationWillEnterForeground:(UIApplication *)application {
     
-    [DDUserManager updateBalanceFromRemote];
+    
+//    [DDUserManager updateBalanceFromRemote];
 
 }
 

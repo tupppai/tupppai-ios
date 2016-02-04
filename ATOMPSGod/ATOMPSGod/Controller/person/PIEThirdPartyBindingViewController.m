@@ -218,7 +218,7 @@ typedef void(^requestResultBlock)(void);
               success:^{
                   // 重置currentUser单例并且同步到本地沙盒
                   NSString *prompt =
-                  [NSString stringWithFormat:@"已经解绑%@",type];
+                  [NSString stringWithFormat:@"成功绑定%@",type];
                   [Hud text:prompt];
                   
                   // 重置currentUser单例并且同步到本地沙盒

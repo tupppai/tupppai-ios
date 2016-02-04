@@ -10,7 +10,6 @@
 
 
 @interface PIEFinishWithdralViewController ()
-
 @end
 
 @implementation PIEFinishWithdralViewController
@@ -20,6 +19,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    _amount = 0;
     self.edgesForExtendedLayout = UIRectEdgeNone;
     [self setupSubViews];
 }
@@ -39,7 +39,22 @@
 #pragma mark - UI components setup
 - (void)setupNavBar
 {
-    self.navigationItem.title = @"提现成功";
+    self.navigationItem.title = @"微信绑定";
+    UIButton *buttonLeft = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
+    buttonLeft.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [buttonLeft setImage:[UIImage imageNamed:@"PIE_icon_back"] forState:UIControlStateNormal];
+    UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonLeft];
+    self.navigationItem.leftBarButtonItem =  buttonItem;
+    
+    [buttonLeft addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)dismiss {
+    if (self.navigationController.viewControllers.count <= 1) {
+        [self dismissViewControllerAnimated:YES completion:NULL];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)setupSubViews
@@ -67,7 +82,7 @@
         UILabel *label = [[UILabel alloc] init];
         label.textAlignment = NSTextAlignmentCenter;
         NSString *promptText =
-        [NSString stringWithFormat:@"¥ 3.50"];
+        [NSString stringWithFormat:@"¥ %.2f",_amount];
         label.text = promptText;
         label.font = [UIFont lightTupaiFontOfSize:21];
         label.textColor = [UIColor blackColor];
@@ -89,7 +104,7 @@
         UILabel *label = [[UILabel alloc] init];
         label.textAlignment = NSTextAlignmentCenter;
         NSString *promptText =
-        [NSString stringWithFormat:@"提现申请已提交，请去微信查看\n提现至微信账号：%@", @"Remyhuang"];
+        [NSString stringWithFormat:@"提现申请已提交，请去微信查看"];
         label.text = promptText;
         label.font = [UIFont lightTupaiFontOfSize:14];
         label.textColor = [UIColor colorWithHex:0x7f7f7f];
@@ -131,7 +146,9 @@
         
         button;
     });
-    
+    [[finishButton rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(id x) {
+        [self dismiss];
+    }];
     
     // timePrompt label
     UILabel *timePromptLabel = ({
@@ -142,17 +159,16 @@
         label.text = promptText;
         label.font = [UIFont lightTupaiFontOfSize:14];
         label.textColor = [UIColor colorWithHex:0x7f7f7f];
-        
-        [self.view addSubview:label];
-        [label mas_makeConstraints:^(MASConstraintMaker *make) {
-            @strongify(self);
-            make.centerX.equalTo(self.view);
-            make.top.equalTo(finishButton.mas_bottom).with.offset(20);
-        }];
-        
-        
         label;
     });
+    
+    [self.view addSubview:timePromptLabel];
+    [timePromptLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        @strongify(self);
+        make.centerX.equalTo(self.view);
+        make.top.equalTo(finishButton.mas_bottom).with.offset(20);
+    }];
+
     
 }
 
