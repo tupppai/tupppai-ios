@@ -68,11 +68,17 @@
 /** 该教程的封面（目前是tutorial_images的第一张图片，但是服务器返回的时候顺便放到了最外层了 */
 @property (nonatomic, strong) NSString  *coverImageUrl;
 
-/** 判断是否购买过该教程的用has_bought, 0是未购买（或分享到朋友圈， 下同），1是已购买  */
+/** 判断是否购买过该教程的, 0是未购买，1是已购买  */
 @property (nonatomic, assign) BOOL hasBought;
+
+/** 判断是否解锁过该教程（购买或者分享到朋友圈）, 0是未解锁，1是已解锁 */
+@property (nonatomic, assign) BOOL hasUnlocked;
 
 
 /** PIEChannelTutorialModel -> PIEPageVM  */
 - (PIEPageVM *)piePageVM;
+
+
+- (void)followAction;
 
 @end

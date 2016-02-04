@@ -42,6 +42,13 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jSp-K2-3DB" userLabel="cell_separator_bottom">
+                        <rect key="frame" x="52" y="96.5" width="425" height="1"/>
+                        <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.8980392157" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" priority="250" constant="1" id="aX1-Gw-i0i"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="y7y-f8-Pzr" firstAttribute="leading" secondItem="PSb-BF-b66" secondAttribute="leading" id="3Sd-qo-YrG"/>
@@ -53,19 +60,23 @@
                     <constraint firstItem="Pt1-44-5PQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="VT7-FZ-hga"/>
                     <constraint firstItem="y7y-f8-Pzr" firstAttribute="top" secondItem="PSb-BF-b66" secondAttribute="bottom" constant="12" id="XuZ-gO-Qbg"/>
                     <constraint firstItem="NkN-rd-Rs1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="adC-m6-b17"/>
+                    <constraint firstAttribute="bottom" secondItem="jSp-K2-3DB" secondAttribute="bottom" id="d7H-Bj-Deq"/>
+                    <constraint firstItem="jSp-K2-3DB" firstAttribute="trailing" secondItem="NkN-rd-Rs1" secondAttribute="trailing" id="fU1-mv-i3m"/>
                     <constraint firstItem="Pt1-44-5PQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="17" id="kc8-QT-GPz"/>
                     <constraint firstItem="PSb-BF-b66" firstAttribute="leading" secondItem="Pt1-44-5PQ" secondAttribute="trailing" constant="10" id="oYL-80-Y7J"/>
                     <constraint firstItem="PSb-BF-b66" firstAttribute="top" secondItem="Pt1-44-5PQ" secondAttribute="top" id="uAu-uK-5br"/>
                     <constraint firstItem="y7y-f8-Pzr" firstAttribute="trailing" secondItem="NkN-rd-Rs1" secondAttribute="trailing" id="v3a-j6-XJX"/>
+                    <constraint firstItem="jSp-K2-3DB" firstAttribute="leading" secondItem="y7y-f8-Pzr" secondAttribute="leading" id="yJy-Fd-0zI"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="avatarView" destination="Pt1-44-5PQ" id="YhT-nk-Le7"/>
+                <outlet property="cell_separator_bottom" destination="jSp-K2-3DB" id="LOV-9P-HyD"/>
                 <outlet property="commentTextLabel" destination="y7y-f8-Pzr" id="D9M-aV-rnR"/>
                 <outlet property="publishTimeLabel" destination="NkN-rd-Rs1" id="dCw-On-4KF"/>
                 <outlet property="userNameLabel" destination="PSb-BF-b66" id="aV8-lF-evu"/>
             </connections>
-            <point key="canvasLocation" x="299" y="188"/>
+            <point key="canvasLocation" x="4" y="33"/>
         </tableViewCell>
     </objects>
 </document>

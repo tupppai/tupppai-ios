@@ -110,3 +110,12 @@ NSString * const PIERefreshNavigationChannelFromTabBarNotification =
 
 NSString * const PIEPrefreshNavigationProceedingFromTabBarNotification =
 @"PIEPrefreshNavigationProceedingFromTabBarNotification";
+
+
+NSInteger kPIERewardFailedInteger = -8;
+
+
+NSInteger kPIERewardSuccessInteger = 1;
+
+
+double kPIEChargeMinimumAmount = 0.01;

@@ -141,4 +141,20 @@ extern NSString * const PIERefreshNavigationChannelFromTabBarNotification;
 /** 重复点击tabbar上的“进行中”， 刷新PIEProceedingViewController的两个子控制器 */
 extern NSString * const PIEPrefreshNavigationProceedingFromTabBarNotification;
 
+
+/**===================== 支付，和钱💰相关 */
+
+/** thread/reward 余额不足 */
+extern NSInteger kPIERewardFailedInteger;
+
+/** thread/reward 顺利打赏 */
+extern NSInteger kPIERewardSuccessInteger;
+
+/** money/charge  最低充值金额 */
+extern double kPIEChargeMinimumAmount;
+
+
+
+
+
 @end

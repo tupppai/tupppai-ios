@@ -17,6 +17,8 @@
 
 #import "PIEChannelTutorialShareHomeworkPanelView.h"
 #import "PIEShareView.h"
+#import "LeesinUploadManager.h"
+#import "LeesinUploadModel.h"
 
 
 
@@ -115,6 +117,7 @@ typedef NS_ENUM(NSUInteger, PIEChannelTutorialControllerType) {
         [self addChildViewController:vc];
         [vc didMoveToParentViewController:self];
     }
+    
 }
 
 - (void)setupNavigationItem
@@ -131,19 +134,14 @@ typedef NS_ENUM(NSUInteger, PIEChannelTutorialControllerType) {
 
 - (void)setupRAC
 {
-    @weakify(self);
-    [[self rac_signalForSelector:@selector(shareHomeworkPanelView:didShareHomeworkWithType:)
-                    fromProtocol:@protocol(PIEChannelTutorialShareHomeworkPanelViewDelegate)]
-    subscribeNext:^(RACTuple *value) {
-        [Hud text:@"show shareView"];
-        @strongify(self);
-        PIEShareView *shareView = [[PIEShareView alloc] init];
-        
-        shareView.delegate = self;
-    
-        // nothing to share, since no network request while uploading homework at RengarViewController
-        [shareView show:nil];
-    }];
+//    @weakify(self);
+//    [[self rac_signalForSelector:@selector(shareHomeworkPanelView:didShareHomeworkWithType:)
+//                    fromProtocol:@protocol(PIEChannelTutorialShareHomeworkPanelViewDelegate)]
+//    subscribeNext:^(RACTuple *value) {
+//        @strongify(self);
+//        
+//        
+//    }];
 }
 
 #pragma nark - target-actions
@@ -172,6 +170,14 @@ typedef NS_ENUM(NSUInteger, PIEChannelTutorialControllerType) {
                          animations:^{
                              self.scrollView.contentOffset = CGPointMake(SCREEN_WIDTH, 0);
                          }];
+        
+        // refresh if is first loaded
+        PIEChannelTutorialHomeworkViewController *homeworkVC =
+        (PIEChannelTutorialHomeworkViewController *)self.tutorialViewControllers[1];
+        
+        [homeworkVC refreshHeaderImmediately];
+        
+        
     }
 }
 
@@ -189,6 +195,10 @@ typedef NS_ENUM(NSUInteger, PIEChannelTutorialControllerType) {
         [self.segmentedControl setSelectedSegmentIndex:1 animated:YES];
         
         // refresh if is first loaded
+        PIEChannelTutorialHomeworkViewController *homeworkVC =
+        (PIEChannelTutorialHomeworkViewController *)self.tutorialViewControllers[1];
+        
+        [homeworkVC refreshHeaderImmediately];
 
     }
 }
@@ -198,12 +208,58 @@ typedef NS_ENUM(NSUInteger, PIEChannelTutorialControllerType) {
   didFinishPickingPhotoAsset:(PHAsset *)asset
            descriptionString:(NSString *)descriptionString
 {
-    PIEChannelTutorialShareHomeworkPanelView *panelView =
-    [PIEChannelTutorialShareHomeworkPanelView new];
     
-    panelView.delegate = self;
+    // upload reply
+    LeesinUploadModel *uploadModel = [LeesinUploadModel new];
+    LeesinUploadManager *manager   = [LeesinUploadManager new];
     
-    [panelView showWithAsset:asset description:descriptionString];
+    uploadModel.ask_id  = self.currentTutorialModel.ask_id;
+    uploadModel.type    = PIEPageTypeReply;
+    uploadModel.content = descriptionString;
+    uploadModel.imageArray = [NSMutableOrderedSet orderedSetWithObject:asset];
+    
+    manager.model = uploadModel;
+    @weakify(self);
+    [Hud activity:@"上传作业中..."];
+//    [manager upload:^(CGFloat percentage, BOOL success) {
+//        if (success) {
+//            @strongify(self);
+//            [Hud dismiss];
+//            
+//            // 想办法在这里搞到一个pageVM
+//            
+//            // refresh UI
+//            
+//            // --- load new homeworks
+//            
+//            
+//            // --- show up panel view
+//            PIEChannelTutorialShareHomeworkPanelView *panelView =
+//            [PIEChannelTutorialShareHomeworkPanelView new];
+//            
+////            panelView.delegate = self;
+//            
+////            [panelView showWithAsset:asset description:descriptionString];
+//            [panelView showWithAsset:asset description:descriptionString
+//                           pageModel:<#(PIEPageModel *)#>
+//        }
+    
+    
+    [manager uploadHomework:^(CGFloat percentage, BOOL success, PIEPageModel *pageModel) {
+        if (success) {
+            @strongify(self);
+            // refresh UI
+            // --- load new homeworkds
+            
+            // --- show up panel view
+            PIEChannelTutorialShareHomeworkPanelView *panelView =
+            [PIEChannelTutorialShareHomeworkPanelView new];
+            
+            [panelView showWithAsset:asset
+                         description:descriptionString
+                           pageModel:pageModel];
+        }
+    }];
 }
 
 #pragma mark - lazy loadings

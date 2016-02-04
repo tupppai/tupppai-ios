@@ -8,11 +8,21 @@
 
 #import "PIEChannelTutorialCommentsCountTableViewCell.h"
 
+@interface PIEChannelTutorialCommentsCountTableViewCell ()
+
+@property (weak, nonatomic) IBOutlet UIView *cell_separator_bottom;
+
+
+@end
+
 @implementation PIEChannelTutorialCommentsCountTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code
     self.selectionStyle = UITableViewCellSelectionStyleNone;
+    [_cell_separator_bottom mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(0.5);
+    }];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

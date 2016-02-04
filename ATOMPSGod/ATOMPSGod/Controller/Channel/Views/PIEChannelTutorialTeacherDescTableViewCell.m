@@ -46,8 +46,18 @@
 
     self.createdTimeLabel.text = tutorialModel.publishTime;
     
-    /* model漏了两个属性：isMyFan, isMyFollow */
+    self.avatarView.isV = tutorialModel.isV;
     
+    if (tutorialModel.isMyFan) {
+        [self.followButton setImage:[UIImage imageNamed:@"pie_mutualfollow"]
+                           forState:UIControlStateSelected];
+    }else{
+        [self.followButton setImage:[UIImage imageNamed:@"new_reply_followed"]
+                           forState:UIControlStateSelected];
+    }
+    
+    RAC(self.followButton,selected) =
+    [RACObserve(tutorialModel, isMyFollow) takeUntil:self.rac_prepareForReuseSignal];
     
 }
 
@@ -55,17 +65,14 @@
 {
     [super prepareForReuse];
     
-
 }
 
 - (RACSignal *)tapOnAvatar
 {
-    
     if (_tapOnAvatar == nil) {
         _tapOnAvatar = [[self.tap rac_gestureSignal]
                         takeUntil:self.rac_prepareForReuseSignal];
     }
-    
     return _tapOnAvatar;
 }
 

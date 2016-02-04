@@ -196,6 +196,8 @@
 		90D01BD01C58966F0035F959 /* PIEChannelTutorialCommentsCountTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90D01BCE1C58966F0035F959 /* PIEChannelTutorialCommentsCountTableViewCell.xib */; };
 		90D01BD41C5896800035F959 /* PIEChannelTutorialCommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D01BD21C5896800035F959 /* PIEChannelTutorialCommentTableViewCell.m */; };
 		90D01BD51C5896800035F959 /* PIEChannelTutorialCommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90D01BD31C5896800035F959 /* PIEChannelTutorialCommentTableViewCell.xib */; };
+		90D38B891C61FC9B0054A78F /* UIViewController+RecursiveModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D38B881C61FC9B0054A78F /* UIViewController+RecursiveModal.m */; };
+		90D38B981C6211060054A78F /* PIEChannelDetailIntoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D38B971C6211060054A78F /* PIEChannelDetailIntoViewController.m */; };
 		90D6FE721C5781670060B92F /* PIEChannelTutorialLockedUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D6FE711C5781670060B92F /* PIEChannelTutorialLockedUpView.m */; };
 		90D6FE801C5781720060B92F /* PIEChannelTutorialLockedUpView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90D6FE7F1C5781720060B92F /* PIEChannelTutorialLockedUpView.xib */; };
 		90EC3D5C1C2A78D10085A7BE /* PIEProceedingToHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EC3D5B1C2A78D10085A7BE /* PIEProceedingToHelpViewController.m */; };
@@ -1145,6 +1147,10 @@
 		90D01BD11C5896800035F959 /* PIEChannelTutorialCommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelTutorialCommentTableViewCell.h; sourceTree = "<group>"; };
 		90D01BD21C5896800035F959 /* PIEChannelTutorialCommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelTutorialCommentTableViewCell.m; sourceTree = "<group>"; };
 		90D01BD31C5896800035F959 /* PIEChannelTutorialCommentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEChannelTutorialCommentTableViewCell.xib; sourceTree = "<group>"; };
+		90D38B871C61FC9B0054A78F /* UIViewController+RecursiveModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+RecursiveModal.h"; sourceTree = "<group>"; };
+		90D38B881C61FC9B0054A78F /* UIViewController+RecursiveModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RecursiveModal.m"; sourceTree = "<group>"; };
+		90D38B961C6211060054A78F /* PIEChannelDetailIntoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelDetailIntoViewController.h; sourceTree = "<group>"; };
+		90D38B971C6211060054A78F /* PIEChannelDetailIntoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelDetailIntoViewController.m; sourceTree = "<group>"; };
 		90D6FE701C5781670060B92F /* PIEChannelTutorialLockedUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelTutorialLockedUpView.h; sourceTree = "<group>"; };
 		90D6FE711C5781670060B92F /* PIEChannelTutorialLockedUpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelTutorialLockedUpView.m; sourceTree = "<group>"; };
 		90D6FE7F1C5781720060B92F /* PIEChannelTutorialLockedUpView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEChannelTutorialLockedUpView.xib; sourceTree = "<group>"; };
@@ -2139,6 +2145,8 @@
 				0EF2F5CB1C154A6200F27D61 /* PIEChannelViewController.xib */,
 				0E6F79001C16EE5C002F9FB6 /* PIEChannelDetailViewController.h */,
 				0E6F79011C16EE5C002F9FB6 /* PIEChannelDetailViewController.m */,
+				90D38B961C6211060054A78F /* PIEChannelDetailIntoViewController.h */,
+				90D38B971C6211060054A78F /* PIEChannelDetailIntoViewController.m */,
 				0E0DDC8B1C1A64BC009A66C4 /* PIEChannelActivityViewController.h */,
 				0E0DDC8C1C1A64BC009A66C4 /* PIEChannelActivityViewController.m */,
 				0EA9EE261C5241B700CEC2E3 /* PIEChannelTutorialsListViewController.h */,
@@ -4292,6 +4300,8 @@
 				E94B03291B7DE6EC00863C6F /* UIColor+PSGod.m */,
 				5C561A891AB857870052D4D5 /* NSString+Tupai.h */,
 				5C561A8A1AB857870052D4D5 /* NSString+Tupai.m */,
+				90D38B871C61FC9B0054A78F /* UIViewController+RecursiveModal.h */,
+				90D38B881C61FC9B0054A78F /* UIViewController+RecursiveModal.m */,
 			);
 			name = categories;
 			sourceTree = "<group>";
@@ -5356,6 +5366,7 @@
 				F4F28F2E1C23F70A0067F2E4 /* PIESearchUserViewController.m in Sources */,
 				90B3A2FB1C546BED00F059D1 /* PIECashFlowDetailsWithAvatarCell.m in Sources */,
 				F4F72BEE1BCB4EF7002FF05A /* FXBlurView.m in Sources */,
+				90D38B981C6211060054A78F /* PIEChannelDetailIntoViewController.m in Sources */,
 				F44FAA3E1C3FAF9300AC60B2 /* LeesinUploadManager.m in Sources */,
 				E9CBFF4C1B5214FB00DC8ED4 /* SIAlertView.m in Sources */,
 				90F401501C5084BB00B39CEB /* PIEMyWalletViewController.m in Sources */,
@@ -5415,6 +5426,7 @@
 				F43930471BE4BD75006C9437 /* MRWeakProxy.m in Sources */,
 				E9F890921B86C4AB0057ECBF /* FMResultSet.m in Sources */,
 				E95691B41B22E88300DA84BB /* NSDictionary+MTLManipulationAdditions.m in Sources */,
+				90D38B891C61FC9B0054A78F /* UIViewController+RecursiveModal.m in Sources */,
 				E905AF181B4E386100CB8E45 /* PIEProceedingManager.m in Sources */,
 				F41BA0CC1C0EDCE800979D43 /* MJRefreshBackNormalFooter.m in Sources */,
 				90C8FAFC1C48AF4900F536D7 /* PIEProceedingToHelpHeaderView.m in Sources */,

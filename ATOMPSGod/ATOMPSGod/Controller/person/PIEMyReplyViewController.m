@@ -217,6 +217,11 @@
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView
+{
+    return 20;
+}
+
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     PIEPageVM* vm = [_dataSource objectAtIndex:indexPath.row];

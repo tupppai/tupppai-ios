@@ -16,6 +16,8 @@
 - (void)awakeFromNib {
     // Initialization code
     self.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.avatarView.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.avatarView.avatarImageView.layer.borderWidth = 3;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -37,6 +39,8 @@
     [self.avatarView.avatarImageView sd_setImageWithURL:
      [NSURL URLWithString:tutorialModel.avatarUrl]];
     
+    self.avatarView.isV       = tutorialModel.isV;
+
     self.userNameLabel.text   = tutorialModel.userName;
 
     self.tutorialTitle.text   = tutorialModel.title;

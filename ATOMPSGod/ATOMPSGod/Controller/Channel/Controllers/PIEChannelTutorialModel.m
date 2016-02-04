@@ -13,7 +13,6 @@
 #import "PIEPageModel.h"
 
 
-
 @implementation PIEChannelTutorialModel
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey
@@ -36,7 +35,8 @@
              @"comment_count":@"comment_count",
              @"tutorial_images":@"ask_uploads",
              @"coverImageUrl":@"image_url",
-             @"hasBought":@"has_bought"
+             @"hasBought":@"has_bought",
+             @"hasUnlocked":@"has_unlocked"
              };
 }
 
@@ -71,13 +71,36 @@
 
     pageModel.uid                = self.uid;
     pageModel.nickname           = self.userName;
+    
     pageModel.followed           = self.isMyFollow;
+    
+//    // setup RAC-binding between pageModel.followed and tutorialModel.isMyFollow
+    // 下面这行代码根本没有任何作用……
+//    RAC(self, isMyFollow) = RACObserve(pageModel, followed);
+    
     pageModel.isMyFan            = self.isMyFan;
     pageModel.isV                = self.isV;
    
     PIEPageVM *pageVM = [[PIEPageVM alloc] initWithPageEntity:pageModel];
     
     return pageVM;
+}
+
+#pragma mark - public methods
+- (void)followAction
+{
+    self.isMyFollow = !self.isMyFollow;
+    
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    NSNumber *followStatus = self.isMyFollow ? @1:@0;
+    [param setObject:followStatus forKey:@"status"];
+    [param setObject:@(self.uid) forKey:@"uid"];
+    
+    [DDService follow:param withBlock:^(BOOL success) {
+        if (success == NO) {
+            self.isMyFollow = !self.isMyFollow;
+        }
+    }];
 }
 
 @end

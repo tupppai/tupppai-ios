@@ -9,13 +9,13 @@
 #import "PIEChannelTutorialShareHomeworkPanelView.h"
 #import "PIEChannelTutorialFinishUploadingHomeworkView.h"
 #import <Photos/Photos.h>
+#import "DDShareManager.h"
 
 @interface PIEChannelTutorialShareHomeworkPanelView ()
 
-
 @property (nonatomic, strong) PIEChannelTutorialFinishUploadingHomeworkView *panelView;
 @property (nonatomic, strong) MASConstraint *panelViewMasConstraintCenterY;
-
+@property (nonatomic, strong) PIEPageModel *homeworkPageModel;
 
 @end
 
@@ -38,8 +38,9 @@
     self.frame = [AppDelegate APP].window.bounds;
     self.backgroundColor = [UIColor clearColor];
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                          action:@selector(tapOnSelf:)];
+    UITapGestureRecognizer *tap =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(tapOnSelf:)];
     [self addGestureRecognizer:tap];
     
     [self addSubview:self.panelView];
@@ -58,52 +59,107 @@
 
 - (void)setupRAC
 {
-
+    @weakify(self);
     [[_panelView.weiboButton rac_signalForControlEvents:UIControlEventTouchUpInside]
     subscribeNext:^(id x) {
-        if (_delegate != nil &&
-            [_delegate respondsToSelector:@selector(shareHomeworkPanelView:didShareHomeworkWithType:)]) {
-            [_delegate shareHomeworkPanelView:self
-                     didShareHomeworkWithType:ATOMShareTypeSinaWeibo];
-        }
+        @strongify(self);
+        PIEPageVM *pageVM = [[PIEPageVM alloc] initWithPageEntity:self.homeworkPageModel];
+        
+        [DDShareManager
+         postSocialShare3:pageVM
+         withSocialShareType:ATOMShareTypeSinaWeibo
+         block:^(BOOL success) {
+             if (success) {
+                 [self dismiss];
+                 if (_delegate != nil &&
+                     [_delegate respondsToSelector:@selector(shareHomeworkPanelView:didShareHomeworkWithType:)]) {
+                     [_delegate shareHomeworkPanelView:self
+                              didShareHomeworkWithType:ATOMShareTypeSinaWeibo];
+                 }
+             }
+         }];
     }];
     
     [[_panelView.qqzoneButton rac_signalForControlEvents:UIControlEventTouchUpInside]
     subscribeNext:^(id x) {
-        if (_delegate != nil &&
-            [_delegate respondsToSelector:@selector(shareHomeworkPanelView:didShareHomeworkWithType:)]) {
-            [_delegate shareHomeworkPanelView:self didShareHomeworkWithType:ATOMShareTypeQQZone];
-        }
+        @strongify(self);
+        
+        PIEPageVM *pageVM = [[PIEPageVM alloc] initWithPageEntity:self.homeworkPageModel];
+        [DDShareManager
+         postSocialShare3:pageVM
+         withSocialShareType:ATOMShareTypeQQZone
+         block:^(BOOL success) {
+             if (success) {
+                 [self dismiss];
+                 if (_delegate != nil &&
+                     [_delegate respondsToSelector:@selector(shareHomeworkPanelView:didShareHomeworkWithType:)]) {
+                     [_delegate shareHomeworkPanelView:self didShareHomeworkWithType:ATOMShareTypeQQZone];
+                 }
+             }
+         }];
     }];
+    
     
     [[_panelView.wechatMomentButton rac_signalForControlEvents:UIControlEventTouchUpInside]
     subscribeNext:^(id x) {
-        if (_delegate != nil &&
-            [_delegate respondsToSelector:@selector(shareHomeworkPanelView:didShareHomeworkWithType:)]) {
-            [_delegate shareHomeworkPanelView:self
-                     didShareHomeworkWithType:ATOMShareTypeWechatMoments];
-        }
+        @strongify(self);
+        
+        PIEPageVM *pageVM = [[PIEPageVM alloc] initWithPageEntity:self.homeworkPageModel];
+        [DDShareManager
+         postSocialShare3:pageVM
+         withSocialShareType:ATOMShareTypeWechatMoments
+         block:^(BOOL success) {
+             [self dismiss];
+             if (_delegate != nil &&
+                 [_delegate respondsToSelector:@selector(shareHomeworkPanelView:didShareHomeworkWithType:)]) {
+                 [_delegate shareHomeworkPanelView:self
+                          didShareHomeworkWithType:ATOMShareTypeWechatMoments];
+             }
+         }];
     }];
+    
     
     [[_panelView.wechatButton rac_signalForControlEvents:UIControlEventTouchUpInside]
     subscribeNext:^(id x) {
-        if (_delegate != nil &&
-            [_delegate respondsToSelector:@selector(shareHomeworkPanelView:didShareHomeworkWithType:)]) {
-            [_delegate shareHomeworkPanelView:self
-                     didShareHomeworkWithType:ATOMShareTypeWechatFriends];
-        }
+        @strongify(self);
+        PIEPageVM *pageVM = [[PIEPageVM alloc] initWithPageEntity:self.homeworkPageModel];
+        [DDShareManager
+         postSocialShare3:pageVM
+         withSocialShareType:ATOMShareTypeWechatFriends
+         block:^(BOOL success) {
+             if (success) {
+                 [self dismiss];
+                 if (_delegate != nil &&
+                     [_delegate respondsToSelector:@selector(shareHomeworkPanelView:didShareHomeworkWithType:)]) {
+                     [_delegate shareHomeworkPanelView:self
+                              didShareHomeworkWithType:ATOMShareTypeWechatFriends];
+                 }
+             }
+         }];
     }];
+    
     
     [[_panelView.qqFriendButton rac_signalForControlEvents:UIControlEventTouchUpInside]
      subscribeNext:^(id x) {
-         if (_delegate != nil &&
-             [_delegate respondsToSelector:@selector(shareHomeworkPanelView:didShareHomeworkWithType:)]) {
-             [_delegate shareHomeworkPanelView:self
-                      didShareHomeworkWithType:ATOMShareTypeQQFriends];
-         }
+         @strongify(self);
+         
+         PIEPageVM *pageVM = [[PIEPageVM alloc] initWithPageEntity:self.homeworkPageModel];
+         
+         [DDShareManager
+          postSocialShare3:pageVM
+          withSocialShareType:ATOMShareTypeQQFriends
+          block:^(BOOL success) {
+              if (success) {
+                  [self dismiss];
+                  if (_delegate != nil &&
+                      [_delegate respondsToSelector:@selector(shareHomeworkPanelView:didShareHomeworkWithType:)]) {
+                      [_delegate shareHomeworkPanelView:self
+                               didShareHomeworkWithType:ATOMShareTypeQQFriends];
+                  }
+              }
+          }];
      }];
     
-    @weakify(self);
     [[_panelView.dismissButton rac_signalForControlEvents:UIControlEventTouchUpInside]
      subscribeNext:^(id x) {
          @strongify(self);
@@ -124,11 +180,11 @@
 
 #pragma mark - public methods
 
-
-- (void)showWithAsset:(PHAsset *)asset description:(NSString *)descriptionString
+- (void)showWithAsset:(PHAsset *)asset description:(NSString *)descriptionString pageModel:(PIEPageModel *)pageModel
 {
-    
     _panelView.descLabel.text = descriptionString;
+    
+    _homeworkPageModel = pageModel;
     
     [self requestImageFromAsset:asset
                     resultBlock:^(UIImage *homeworkImage) {
@@ -155,9 +211,8 @@
                              }
                          }
          ];
+    
 }
-
-
 
 - (void)dismiss
 {
@@ -192,7 +247,6 @@
      requestImageDataForAsset:asset
      options:nil
      resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
-         
          UIImage *homeworkImage = [UIImage imageWithData:imageData];
          if (retBlock != nil) {
              retBlock(homeworkImage);

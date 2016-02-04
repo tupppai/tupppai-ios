@@ -43,7 +43,6 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *followView;
 
-
 /*  RAC signals */
 @property (nonatomic, strong) RACSignal *tapOnAvatarOrUsernameSignal;
 @property (nonatomic, strong) RACSignal *tapOnFollowButtonSignal;
@@ -52,6 +51,8 @@
 @property (nonatomic, strong) RACSignal *tapOnShareSignal;
 @property (nonatomic, strong) RACSignal *tapOnLikeSignal;
 @property (nonatomic, strong) RACSignal *longPressOnLikeSignal;
+@property (nonatomic, strong) RACSignal *tapOnImageViewSignal;
+@property (nonatomic, strong) RACSignal *longPressOnImageViewSignal;
 
 
 - (void)injectSauce:(PIEPageVM *)viewModel;

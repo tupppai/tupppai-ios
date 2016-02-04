@@ -23,10 +23,11 @@
 
 @property (nonatomic, weak) id<PIEChannelTutorialShareHomeworkPanelViewDelegate>delegate;
 
-- (void)showWithAsset:(PHAsset *)asset description:(NSString *)descriptionString;
+- (void)showWithAsset:(PHAsset *)asset
+          description:(NSString *)descriptionString
+            pageModel:(PIEPageModel *)pageModel;
 
 - (void)dismiss;
-
 
 
 @end

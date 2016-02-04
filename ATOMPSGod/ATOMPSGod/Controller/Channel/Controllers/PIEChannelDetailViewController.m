@@ -30,6 +30,7 @@
 
 #import "LeesinViewController.h"
 #import "MRNavigationBarProgressView.h"
+#import "PIEChannelDetailIntoViewController.h"
 
 @interface PIEChannelDetailViewController ()<LeesinViewControllerDelegate>
 @property (nonatomic, strong) PIERefreshTableView           *tableView;
@@ -95,6 +96,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     
     [self setupData];
     [self setupViews];
+
     [self setupGestures];
     [self.tableView.mj_header beginRefreshing];
     
@@ -102,6 +104,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self setupNavBar];
     [self setupProgressView];
 }
 
@@ -144,6 +147,16 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 - (void)setupProgressView {
     _progressView = [MRNavigationBarProgressView progressViewForNavigationController:self.navigationController];
     _progressView.progressTintColor = [UIColor colorWithHex:0x4a4a4a andAlpha:0.93];
+}
+
+- (void)setupNavBar
+{
+    UIBarButtonItem *rightBarButton =
+    [[UIBarButtonItem alloc]
+     initWithImage:[UIImage imageNamed:@"pie_channelDetail_intro"]
+     style:UIBarButtonItemStylePlain
+     target:self action:@selector(tapRightBarButton)];
+    self.navigationItem.rightBarButtonItem = rightBarButton;
 }
 
 
@@ -377,7 +390,6 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 
     }
     
-    
 }
 
 
@@ -477,6 +489,17 @@ static NSString * PIEDetailUsersPSCellIdentifier =
     vc.type = LeesinViewControllerTypeReply;
     vc.channel_id = self.currentChannelViewModel.ID;
     [self presentViewController:vc animated:YES completion:nil];
+}
+
+- (void)tapRightBarButton
+{
+    PIEChannelDetailIntoViewController *introVC =
+    [[PIEChannelDetailIntoViewController alloc] init];
+    
+    introVC.url = self.currentChannelViewModel.url;
+    
+    [self.navigationController pushViewController:introVC
+                                         animated:YES];
 }
 
 

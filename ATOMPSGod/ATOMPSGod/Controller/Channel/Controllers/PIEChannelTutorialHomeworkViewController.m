@@ -16,6 +16,7 @@
 #import "PIECommentViewController.h"
 #import "PIEReplyCollectionViewController.h"
 #import "PIEShareView.h"
+#import "PIECarouselViewController2.h"
 
 
 @interface PIEChannelTutorialHomeworkViewController ()
@@ -26,6 +27,11 @@
 @property (nonatomic, strong) PIERefreshTableView *tableView;
 @property (nonatomic, strong) NSMutableArray<PIEPageVM *> *source_homework;
 @property (nonatomic, assign) NSInteger currentPageIndex;
+
+@property (nonatomic, assign) BOOL canRefreshFooter;
+
+@property (nonatomic, assign) BOOL isFirstLoadingHomework;
+
 @end
 
 @implementation PIEChannelTutorialHomeworkViewController
@@ -93,9 +99,13 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
 
 #pragma mark - data setup
 - (void)setupData{
-    _source_homework  = [NSMutableArray<PIEPageVM *> new];
+    _source_homework        = [NSMutableArray<PIEPageVM *> new];
 
-    _currentPageIndex = 1;
+    _currentPageIndex       = 1;
+
+    _canRefreshFooter       = YES;
+
+    _isFirstLoadingHomework = YES;
     
 }
 
@@ -111,6 +121,13 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
     PIEPageManager *manager = [[PIEPageManager alloc] init];
     [manager pullReplySource:params
                        block:^(NSMutableArray *retArray) {
+                           _isFirstLoadingHomework = NO;
+                           if (retArray.count == 0) {
+                               _canRefreshFooter = NO;
+                           }else{
+                               _canRefreshFooter = YES;
+                           }
+                           
                            [_source_homework removeAllObjects];
                            [_source_homework addObjectsFromArray:retArray];
 
@@ -132,6 +149,12 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
     PIEPageManager *manager = [[PIEPageManager alloc] init];
     [manager pullReplySource:params
                        block:^(NSMutableArray *retArray) {
+                           _isFirstLoadingHomework = NO;
+                           if (retArray.count < 10) {
+                               _canRefreshFooter = NO;
+                           }else{
+                               _canRefreshFooter = YES;
+                           }
                            [_source_homework addObjectsFromArray:retArray];
                            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                                [_tableView.mj_footer endRefreshing];
@@ -168,6 +191,21 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
         @strongify(self);
         [self tapOnFollowViewAtIndexPath:indexPath];
     }];
+    
+    [replyCell.tapOnImageViewSignal subscribeNext:^(id x) {
+        @strongify(self);
+        [self tapOnImageViewAtIndexPath:indexPath];
+    }];
+    
+    /*
+        BUG FOUND HERE: 监听cell的longPressOnImageViewSignal，不知道为什么一次长点击会发出两次信号，所以
+                        shareView会弹出两次（下面代码解除注释即可重现bug）。而在PIEEliteHotVC中一切正常。
+     */
+    
+//    [replyCell.longPressOnImageViewSignal  subscribeNext:^(id x) {
+//        @strongify(self);
+//        [self longPressOnImageViewAtIndexPath:indexPath];
+//    }];
     
     [replyCell.tapOnAllWorkSignal subscribeNext:^(id x) {
         @strongify(self);
@@ -206,13 +244,17 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
 }
 
 - (void)didPullRefreshUp:(UITableView *)tableView{
-    [self loadMoreHomework];
+    if (_canRefreshFooter == YES) {
+        [self loadMoreHomework];
+    }else{
+        [Hud text:@"已经拉到底啦"];
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
+    }
 }
 
 #pragma mark - RAC response actions
 - (void)tapOnAvatarOrUsernameAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     PIEFriendViewController *friendVC = [PIEFriendViewController new];
     friendVC.pageVM = [self.currentTutorialModel piePageVM];
     
@@ -224,6 +266,24 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
 {
     PIEPageVM *selectedVM = _source_homework[indexPath.row];
     [selectedVM follow];
+}
+
+- (void)tapOnImageViewAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM          = _source_homework[indexPath.row];
+    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+    vc.pageVM                      = selectedVM;
+    
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
+- (void)longPressOnImageViewAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEShareView *shareView = [PIEShareView new];
+    
+    PIEPageVM *selectedVM   = _source_homework[indexPath.row];
+    
+    [shareView show:selectedVM];
 }
 
 - (void)tapOnAllWorkAtIndexPath:(NSIndexPath *)indexPath
@@ -239,8 +299,8 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
 - (void)tapOnShareViewAtIndexPath:(NSIndexPath *)indexPath
 {
     PIEShareView *shareView = [PIEShareView new];
-    
-    PIEPageVM *selectedVM = _source_homework[indexPath.row];
+
+    PIEPageVM *selectedVM   = _source_homework[indexPath.row];
     
     [shareView show:selectedVM];
 }
@@ -251,7 +311,7 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
     [PIECommentViewController new];
     
     commentVC.vm = [self.currentTutorialModel piePageVM];
-    
+    commentVC.shouldShowHeaderView = NO;
     [self.parentViewController.navigationController pushViewController:commentVC
                                                               animated:YES];
 }
@@ -264,6 +324,8 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
     [selectedVM love:NO];
 }
 
+
+
 - (void)longPressOnLikeViewAtIndexPath:(NSIndexPath *)indexPath
 {
     PIEPageVM *selectedVM = _source_homework[indexPath.row];
@@ -271,8 +333,14 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
     // reverted == YES: 清空状态
     [selectedVM love:YES];
 }
-#pragma mark - lazy loadings
 
-
+#pragma mark - public methods
+- (void)refreshHeaderImmediately
+{
+    if (_source_homework.count <= 0 || _isFirstLoadingHomework) {
+        [self.tableView.mj_header beginRefreshing];
+    }
+    
+}
 
 @end

@@ -190,4 +190,8 @@
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView{
+    return 20;
+}
+
 @end

@@ -23,6 +23,7 @@
 #import "PIEEliteViewController.h"
 #import "PIELaunchViewController_Black.h"
 #import "PIEBindCellphoneViewController.h"
+#import "UIViewController+RecursiveModal.h"
 
 
 @interface PIETabBarController ()<UITabBarControllerDelegate>
@@ -145,9 +146,13 @@
     
     bindCellphoneVC.blurStyle = UIBlurEffectStyleDark;
     
-    [self presentViewController:bindCellphoneVC
-                       animated:YES
-                     completion:nil];
+//    [self presentViewController:bindCellphoneVC
+//                       animated:YES
+//                     completion:nil];
+//    [[AppDelegate APP].window.rootViewController presentViewController:bindCellphoneVC
+//                                                              animated:YES completion:nil];
+    
+    [[AppDelegate APP].window.rootViewController presentViewControllerFromVisibleViewController:bindCellphoneVC];
 }
 
 - (void)configureTabBarController {
