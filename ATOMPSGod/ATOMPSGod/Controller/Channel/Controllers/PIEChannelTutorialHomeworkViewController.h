@@ -14,6 +14,9 @@
 @property (nonatomic, strong) PIEChannelTutorialModel *currentTutorialModel;
 
 /** 用户第一次滑进这个tab的时候就自动开始刷新数据 */
-- (void)refreshHeaderImmediately;
+- (void)refreshHeaderIfNotLoadedYet;
+
+/** 直接刷新最新数据 */
+- (void)refreshHeaderForLatestData;
 
 @end
