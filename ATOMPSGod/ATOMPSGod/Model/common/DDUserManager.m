@@ -222,4 +222,11 @@ Will be executed only once when the function gets called for first time.
     }];
 }
 
+
+/** 返回用户是否是游客 */
++ (BOOL)isTourist
+{
+    return  ([self currentUser].uid == kPIETouristUID);
+}
+
 @end

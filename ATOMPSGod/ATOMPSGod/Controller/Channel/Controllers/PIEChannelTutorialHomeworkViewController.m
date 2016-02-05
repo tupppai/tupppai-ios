@@ -309,8 +309,10 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
 {
     PIECommentViewController *commentVC =
     [PIECommentViewController new];
+    PIEPageVM *selectedVM   = _source_homework[indexPath.row];
     
-    commentVC.vm = [self.currentTutorialModel piePageVM];
+    commentVC.vm = selectedVM;
+    
     commentVC.shouldShowHeaderView = NO;
     [self.parentViewController.navigationController pushViewController:commentVC
                                                               animated:YES];
@@ -335,12 +337,17 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
 }
 
 #pragma mark - public methods
-- (void)refreshHeaderImmediately
+- (void)refreshHeaderIfNotLoadedYet
 {
     if (_source_homework.count <= 0 || _isFirstLoadingHomework) {
         [self.tableView.mj_header beginRefreshing];
     }
     
+}
+
+- (void)refreshHeaderForLatestData
+{
+    [self.tableView.mj_header beginRefreshing];
 }
 
 @end

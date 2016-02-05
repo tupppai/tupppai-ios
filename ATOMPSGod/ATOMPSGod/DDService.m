@@ -465,6 +465,7 @@
 //        NSData *data = [NSJSONSerialization dataWithJSONObject:dictionaryData options:NSJSONWritingPrettyPrinted error:nil];
 //        NSString *jsonString = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
         
+
 //        [Pingpp createPayment:jsonString appURLScheme:@"2088122565280825" withCompletion:^(NSString *result, PingppError *error) {
 //            if ([result isEqualToString:@"success"]) {
 //                if (block) {
