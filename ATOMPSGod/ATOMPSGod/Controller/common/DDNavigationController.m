@@ -7,6 +7,7 @@
 //
 
 #import "DDNavigationController.h"
+#import "PIECommentViewController.h"
 
 @interface DDNavigationController ()
 <UINavigationControllerDelegate, UIGestureRecognizerDelegate>
@@ -39,25 +40,47 @@
 -(UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleDefault;
 }
+
+
+#pragma mark - overriden methods
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
     if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.interactivePopGestureRecognizer.enabled = YES;
     }
+    
+    if ([self isBannedFromTouristViewController:viewController]) {
+        // 如果当前用户是临时的游客用户，并且想要跳进一些比较敏感的控制器的话，直接发通知
+        
+        [[NSNotificationCenter defaultCenter]
+         postNotificationName:PIENetworkCallForFurtherRegistrationNotification
+         object:nil];
+        
+        return;
+    }
+    
     [super pushViewController:viewController animated:animated];
 }
-//#pragma mark - UINavigationControllerDelegate
-//
-//- (void)navigationController:(UINavigationController *)navigationController
-//       didShowViewController:(UIViewController *)viewController
-//                    animated:(BOOL)animate {
-//    if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-//        if (self.viewControllers.count == 1) {
-//            self.interactivePopGestureRecognizer.enabled = NO;
-//        } else {
-//            self.interactivePopGestureRecognizer.enabled = YES;
-//        }
-//    }
-//}
+
+
+#pragma mark - private helpers
+/**
+    viewController -> BOOL
+ 
+    check whether the viewController is not for a tourist user.
+ */
+- (BOOL)isBannedFromTouristViewController:(UIViewController *)viewController
+{
+    // TODO: 需要阿Ken为我提供更多的数据，目前只有一个评论页
+    if ([DDUserManager isTourist] &&
+        [viewController isKindOfClass:[PIECommentViewController class]]) {
+        return YES;
+    }else{
+        return NO;
+    }
+    
+}
+
+
 
 @end

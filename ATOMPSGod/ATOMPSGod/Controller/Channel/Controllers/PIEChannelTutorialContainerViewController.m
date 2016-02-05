@@ -19,6 +19,7 @@
 #import "PIEShareView.h"
 #import "LeesinUploadManager.h"
 #import "LeesinUploadModel.h"
+#import "MRNavigationBarProgressView.h"
 
 
 
@@ -35,6 +36,8 @@
 @property (nonatomic, strong) UIScrollView *scrollView;
 
 @property (nonatomic, strong) NSMutableArray <UIViewController *> *tutorialViewControllers;
+
+@property (nonatomic, strong) MRNavigationBarProgressView *progressView;
 
 @end
 
@@ -58,8 +61,6 @@ typedef NS_ENUM(NSUInteger, PIEChannelTutorialControllerType) {
     // Do any additional setup after loading the view.
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    
-    [self setupNavigationItem];
     
     [self setupViewControllers];
     
@@ -87,6 +88,13 @@ typedef NS_ENUM(NSUInteger, PIEChannelTutorialControllerType) {
         [vc.view removeFromSuperview];
         [vc removeFromParentViewController];
     }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self setupNavigationItem];
 }
 
 #pragma mark - UI components setup
@@ -129,6 +137,12 @@ typedef NS_ENUM(NSUInteger, PIEChannelTutorialControllerType) {
                                      style:UIBarButtonItemStylePlain
                                     target:self action:@selector(uploadHomework)];
     self.navigationItem.rightBarButtonItem = uploadHomeworkBarButton;
+    
+    
+    self.progressView = [MRNavigationBarProgressView progressViewForNavigationController:self.navigationController];
+    self.progressView.tintColor = [UIColor colorWithHex:0x4A4A4A andAlpha:0.93];
+    [self.navigationController.navigationBar setBackgroundImage:nil
+                                                  forBarMetrics:UIBarMetricsDefault];
     
 }
 
@@ -175,7 +189,7 @@ typedef NS_ENUM(NSUInteger, PIEChannelTutorialControllerType) {
         PIEChannelTutorialHomeworkViewController *homeworkVC =
         (PIEChannelTutorialHomeworkViewController *)self.tutorialViewControllers[1];
         
-        [homeworkVC refreshHeaderImmediately];
+        [homeworkVC refreshHeaderIfNotLoadedYet];
         
         
     }
@@ -198,8 +212,7 @@ typedef NS_ENUM(NSUInteger, PIEChannelTutorialControllerType) {
         PIEChannelTutorialHomeworkViewController *homeworkVC =
         (PIEChannelTutorialHomeworkViewController *)self.tutorialViewControllers[1];
         
-        [homeworkVC refreshHeaderImmediately];
-
+        [homeworkVC refreshHeaderIfNotLoadedYet];
     }
 }
 
@@ -220,36 +233,18 @@ typedef NS_ENUM(NSUInteger, PIEChannelTutorialControllerType) {
     
     manager.model = uploadModel;
     @weakify(self);
-    [Hud activity:@"上传作业中..."];
-//    [manager upload:^(CGFloat percentage, BOOL success) {
-//        if (success) {
-//            @strongify(self);
-//            [Hud dismiss];
-//            
-//            // 想办法在这里搞到一个pageVM
-//            
-//            // refresh UI
-//            
-//            // --- load new homeworks
-//            
-//            
-//            // --- show up panel view
-//            PIEChannelTutorialShareHomeworkPanelView *panelView =
-//            [PIEChannelTutorialShareHomeworkPanelView new];
-//            
-////            panelView.delegate = self;
-//            
-////            [panelView showWithAsset:asset description:descriptionString];
-//            [panelView showWithAsset:asset description:descriptionString
-//                           pageModel:<#(PIEPageModel *)#>
-//        }
-    
-    
     [manager uploadHomework:^(CGFloat percentage, BOOL success, PIEPageModel *pageModel) {
+        @strongify(self);
+        self.progressView.progress = percentage;
         if (success) {
-            @strongify(self);
+            
             // refresh UI
             // --- load new homeworkds
+            PIEChannelTutorialHomeworkViewController *homeworkVC =
+            (PIEChannelTutorialHomeworkViewController *)self.tutorialViewControllers[1];
+            
+            [homeworkVC refreshHeaderForLatestData];
+            
             
             // --- show up panel view
             PIEChannelTutorialShareHomeworkPanelView *panelView =
@@ -318,5 +313,6 @@ typedef NS_ENUM(NSUInteger, PIEChannelTutorialControllerType) {
     }
     return _segmentedControl;
 }
+
 
 @end
