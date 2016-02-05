@@ -19,7 +19,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    _amount = 0;
     self.edgesForExtendedLayout = UIRectEdgeNone;
     [self setupSubViews];
 }

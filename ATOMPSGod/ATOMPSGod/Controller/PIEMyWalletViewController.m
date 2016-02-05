@@ -85,6 +85,7 @@
     [DDService charge:param withBlock:^(BOOL success) {
         if (success) {
             [self.chargeMoneyView dismiss];
+            [DDUserManager updateBalanceFromRemote];
         }
     }];
 }
