@@ -7,8 +7,9 @@
 //
 
 #import "PIEWithdrawlMoneyViewController.h"
-
-
+#import "PIEBindWeixinPaymentViewController.h"
+#import "DDNavigationController.h"
+#import "PIEFinishWithdralViewController.h"
 #import "PIEAvatarView.h"
 
 
@@ -196,17 +197,31 @@
         button;
     });
     [[confirmButton rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(id x) {
-        NSString *amountString = [NSString stringWithFormat:@"%.2f", [moneyCountTextField.text floatValue]];
-        NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:amountString,@"amount",@"wx",@"type",nil];
-        [DDService withdraw:param withBlock:^(BOOL success) {
-            
-        }];
+        if ([DDUserManager currentUser].bindWechat == NO) {
+            PIEBindWeixinPaymentViewController *bindWechatVC = [PIEBindWeixinPaymentViewController new];
+            DDNavigationController *nav = [[DDNavigationController alloc]initWithRootViewController:bindWechatVC];
+            [self presentViewController:nav animated:YES completion:NULL];
+        } else {
+            confirmButton.enabled = NO;
+            NSString *amountString = [NSString stringWithFormat:@"%.2f", [moneyCountTextField.text floatValue]];
+            NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:amountString,@"amount",@"wx",@"type",nil];
+            [DDService withdraw:param withBlock:^(BOOL success) {
+                if (success) {
+                    PIEFinishWithdralViewController *vc = [PIEFinishWithdralViewController new];
+                    vc.amount = [moneyCountTextField.text floatValue];
+                    DDNavigationController *nav = [[DDNavigationController alloc]initWithRootViewController:vc];
+                    [self presentViewController:nav animated:YES completion:NULL];
+                }
+            }];
+        }
     }];
     
     [[moneyCountTextField rac_textSignal]subscribeNext:^(NSString* x) {
         confirmButton.enabled = [x floatValue] > 0.0;
     }];
 }
+
+
 
 #pragma mark - Lazy loadings
 - (UIView *)titleView{

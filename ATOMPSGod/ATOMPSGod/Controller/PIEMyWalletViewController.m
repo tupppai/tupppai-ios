@@ -16,8 +16,9 @@
 #import "PIEWithdrawlMoneyViewController.h"
 #import "LxDBAnything.h"
 #import "PIEChooseChargeSourceView.h"
+#import "DDNavigationController.h"
 
-@interface PIEMyWalletViewController ()<PIEChargeMoneyViewDelegate,PIEChooseChargeSourceViewDelegate>
+@interface PIEMyWalletViewController ()<PIEChargeMoneyViewDelegate,PIEChooseChargeSourceViewDelegate,PIEBindWeixinPaymentViewControllerDelegate>
 
 @property (nonatomic, strong) PIEChargeMoneyView *chargeMoneyView;
 @property (nonatomic, strong) PIEChooseChargeSourceView *chooseChargeSourceView;
@@ -84,6 +85,7 @@
     [DDService charge:param withBlock:^(BOOL success) {
         if (success) {
             [self.chargeMoneyView dismiss];
+            [DDUserManager updateBalanceFromRemote];
         }
     }];
 }
@@ -114,7 +116,7 @@
 
 #pragma mark - UI components setup
 - (void)setupNavBar{
-    self.navigationItem.title = @"我的零钱";
+    self.navigationItem.title = @"我的钱包";
     
     UIBarButtonItem *rightBarButton =
     [[UIBarButtonItem alloc] initWithTitle:@"明细"
@@ -146,7 +148,7 @@
     
     // 我的零钱 label
         UILabel *myMoneyLabel = [[UILabel alloc] init];
-        myMoneyLabel.text = @"我的零钱";
+        myMoneyLabel.text = @"我的钱包";
         myMoneyLabel.font = [UIFont lightTupaiFontOfSize:13];
         myMoneyLabel.textColor = [UIColor colorWithHex:0xFF5B38];
         [self.view addSubview:myMoneyLabel];
@@ -196,7 +198,7 @@
     
     // 充值 button
         UIButton *chargeMoneyButton = [[UIButton alloc] init];
-        [chargeMoneyButton setTitle:@"充值" forState:UIControlStateNormal];
+        [chargeMoneyButton setTitle:@"充值测试用" forState:UIControlStateNormal];
         [chargeMoneyButton setBackgroundImage:[UIImage imageNamed:@"pie_myWallet_chargeButton"]
                           forState:UIControlStateNormal];
         chargeMoneyButton.titleLabel.font = [UIFont lightTupaiFontOfSize:16];
@@ -208,7 +210,7 @@
             make.height.mas_equalTo(40);
             make.left.equalTo(self.view).with.offset(21);
             make.right.equalTo(self.view).with.offset(-21);
-            make.top.equalTo(self.myCashCountLabel.mas_baseline).with.offset(58);
+            make.top.equalTo(self.myCashCountLabel.mas_baseline).with.offset(110);
         }];
     
         [[chargeMoneyButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
@@ -232,15 +234,20 @@
             make.height.mas_equalTo(40);
             make.left.equalTo(self.view).with.offset(21);
             make.right.equalTo(self.view).with.offset(-21);
-            make.top.equalTo(chargeMoneyButton.mas_bottom).with.offset(20);
+            make.top.equalTo(self.myCashCountLabel.mas_baseline).with.offset(58);
         }];
         
         button;
     });
     [[withdrawFromWeixinButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
-        PIEWithdrawlMoneyViewController *withDrawlVC =
-        [[PIEWithdrawlMoneyViewController alloc] init];
-        [self.navigationController pushViewController:withDrawlVC animated:YES];
+        if ([DDUserManager currentUser].bindWechat == NO) {
+            PIEBindWeixinPaymentViewController *bindWechatVC = [PIEBindWeixinPaymentViewController new];
+            bindWechatVC.delegate = self;
+            DDNavigationController *nav = [[DDNavigationController alloc]initWithRootViewController:bindWechatVC];
+            [self presentViewController:nav animated:YES completion:NULL];
+        } else {
+            [self pushToWithDraw];
+        }
     }];
     
     // line separator
@@ -281,9 +288,17 @@
     serviceLabel.numberOfLines = 0;
     
 }
+-(void)bindWechatViewController:(PIEBindWeixinPaymentViewController *)bindWechatViewController success:(BOOL)success {
+    if (success) {
+        [self pushToWithDraw];
+    }
+}
 
-
-
+- (void)pushToWithDraw {
+    PIEWithdrawlMoneyViewController *withDrawlVC =
+    [[PIEWithdrawlMoneyViewController alloc] init];
+    [self.navigationController pushViewController:withDrawlVC animated:YES];
+}
 #pragma mark - Lazy loadings
 
 -(PIEChargeMoneyView *)chargeMoneyView {

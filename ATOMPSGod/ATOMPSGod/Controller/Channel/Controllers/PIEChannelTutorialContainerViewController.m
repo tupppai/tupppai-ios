@@ -237,7 +237,6 @@ typedef NS_ENUM(NSUInteger, PIEChannelTutorialControllerType) {
         @strongify(self);
         self.progressView.progress = percentage;
         if (success) {
-            
             // refresh UI
             // --- load new homeworkds
             PIEChannelTutorialHomeworkViewController *homeworkVC =
