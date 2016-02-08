@@ -151,12 +151,12 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 
 - (void)setupNavBar
 {
-    UIBarButtonItem *rightBarButton =
-    [[UIBarButtonItem alloc]
-     initWithImage:[UIImage imageNamed:@"pie_channelDetail_intro"]
-     style:UIBarButtonItemStylePlain
-     target:self action:@selector(tapRightBarButton)];
-    self.navigationItem.rightBarButtonItem = rightBarButton;
+//    UIBarButtonItem *rightBarButton =
+//    [[UIBarButtonItem alloc]
+//     initWithImage:[UIImage imageNamed:@"pie_channelDetail_intro"]
+//     style:UIBarButtonItemStylePlain
+//     target:self action:@selector(tapRightBarButton)];
+//    self.navigationItem.rightBarButtonItem = rightBarButton;
 }
 
 

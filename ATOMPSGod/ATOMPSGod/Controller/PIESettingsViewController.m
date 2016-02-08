@@ -83,7 +83,7 @@
     if (section == 0) {
         return 2;
     } else if (section == 1) {
-        return 4;
+        return 3;
     } else if (section ==2) {
         return 2;
     } else if (section ==3) {
@@ -129,12 +129,10 @@
         }
         else if (section == 1) {
             if (row == 0) {
-                cell.textLabel.text = @"我的钱包";
-            } else if (row == 1) {
                 cell.textLabel.text = @"消息通知";
-            } else if (row == 2) {
+            } else if (row == 1) {
                 cell.textLabel.text = @"我赞过的";
-            } else if (row == 3){
+            } else if (row == 2){
                 cell.textLabel.text = @"我评论过的";
             }
         }
@@ -183,20 +181,15 @@
             [self.navigationController pushViewController:mpvc animated:YES];
         }
     } else if (section == 1) {
-        if (row == 0) {
-            // 我的零钱
-            PIEMyWalletViewController *myWalletVC = [PIEMyWalletViewController new];
-            [self.navigationController pushViewController:myWalletVC
-                                                 animated:YES];
-        } else if (row == 1) {
+       if (row == 0) {
             //消息通知
             PIEMessagePushSettingViewController *mrvc = [PIEMessagePushSettingViewController new];
             [self.navigationController pushViewController:mrvc animated:YES];
-        } else if (row == 2) {
+        } else if (row == 1) {
             //我赞过的
             PIEMyLikedPagesViewController * vc = [PIEMyLikedPagesViewController new];
             [self.navigationController pushViewController:vc animated:YES];
-        }else if (row == 3){
+        }else if (row == 2){
             //我评论过的
             PIEMyCommentedPageViewController* vc = [PIEMyCommentedPageViewController new];
             [self.navigationController pushViewController:vc animated:YES];
