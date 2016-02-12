@@ -211,7 +211,7 @@ CGFloat startPanLocationY;
         _carousel = [[iCarousel alloc]initWithFrame:CGRectMake(0, margin_v, self.view.frame.size.width, SCREEN_HEIGHT)];
         _carousel.type = iCarouselTypeLinear;
 //        _carousel.decelerationRate = 0.5;
-//        _carousel.scrollSpeed = 1.3;
+        _carousel.scrollSpeed = 2.0;
 
         _carousel.backgroundColor = [UIColor clearColor];
         _carousel.delegate = self;
