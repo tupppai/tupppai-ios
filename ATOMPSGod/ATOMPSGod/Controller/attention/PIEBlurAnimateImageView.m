@@ -98,7 +98,6 @@ static int thumbViewSizeConstant = 100;
         _blurBackgroundImageView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
     }];
     
-    
     _thumbView.subviewCounts = viewModel.models_image.count;
     
     if (viewModel.models_image.count > 0) {

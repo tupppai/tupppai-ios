@@ -33,9 +33,20 @@
     [_contentLabel setFont:[UIFont lightTupaiFontOfSize:15]];
     [_timeLabel setFont:[UIFont lightTupaiFontOfSize:10]];
     
-    [_nameLabel setTextColor:[UIColor colorWithHex:0x4a4a4a andAlpha:1.0]];
-    [_contentLabel setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.9]];
-    [_timeLabel setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.3]];
+//    [_nameLabel setTextColor:[UIColor colorWithHex:0x4a4a4a andAlpha:1.0]];
+//    [_contentLabel setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.9]];
+//    [_timeLabel setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.3]];
+    
+    [_nameLabel setTextColor:[UIColor colorWithHex:0x4a4a4a]];
+    [_contentLabel setTextColor:[UIColor colorWithHex:0x000000]];
+    [_timeLabel setTextColor:[UIColor colorWithHex:0xB2B2B2]];
+    
+    _nameLabel.opaque    = YES;
+    _contentLabel.opaque = YES;
+    _timeLabel.opaque    = YES;
+    _nameLabel.backgroundColor    = [UIColor whiteColor];
+    _contentLabel.backgroundColor = [UIColor whiteColor];
+    _timeLabel.backgroundColor    = [UIColor whiteColor];
 
     [self.contentView addSubview:self.thumbView];
     

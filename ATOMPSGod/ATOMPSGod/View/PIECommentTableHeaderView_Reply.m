@@ -141,7 +141,6 @@
 }
 
 
-
 -(void)setVm:(PIEPageVM *)vm {
     if (vm) {
         _vm = vm;
@@ -219,8 +218,6 @@
         make.height.equalTo(@(size.height)).with.priorityHigh();
     }];
 }
-
-
 
 
 - (PIEAvatarView *)avatarView

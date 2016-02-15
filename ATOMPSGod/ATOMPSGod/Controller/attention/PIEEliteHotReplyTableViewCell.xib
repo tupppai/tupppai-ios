@@ -16,8 +16,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="386" height="622.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="沉沉" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kwf-rd-ff2">
+                    <label userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="沉沉" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kwf-rd-ff2">
                         <rect key="frame" x="43" y="15" width="26" height="16"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -38,6 +39,7 @@
                     </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hot_allwork" translatesAutoresizingMaskIntoConstraints="NO" id="VBu-vK-E8O">
                         <rect key="frame" x="12" y="479" width="70" height="15"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="70" id="RRM-DT-Q94"/>
                             <constraint firstAttribute="height" constant="15" id="gIY-5e-sPG"/>
@@ -86,6 +88,7 @@
                     </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pieCommentLabelIndicator" translatesAutoresizingMaskIntoConstraints="NO" id="I1R-dy-cUb" userLabel="commentIndicator">
                         <rect key="frame" x="12" y="520" width="12" height="12"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="12" id="fPG-1E-3VJ"/>
                             <constraint firstAttribute="height" constant="12" id="nOU-jB-6mq"/>
@@ -203,7 +206,7 @@
                 <outlet property="nameLabel" destination="kwf-rd-ff2" id="joW-UL-lKm"/>
                 <outlet property="shareView" destination="hvb-nQ-yFa" id="dyR-rS-NIE"/>
             </connections>
-            <point key="canvasLocation" x="296" y="629.5"/>
+            <point key="canvasLocation" x="195" y="625.5"/>
         </tableViewCell>
     </objects>
     <resources>

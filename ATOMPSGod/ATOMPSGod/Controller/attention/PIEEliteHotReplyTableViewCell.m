@@ -54,18 +54,36 @@
 - (void)commonInit {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-
-    _avatarView.backgroundColor = [UIColor clearColor];
-
+    
+    self.backgroundColor = [UIColor whiteColor];
+    self.opaque = YES;
+    
     [_nameLabel setFont:[UIFont lightTupaiFontOfSize:13]];
     [_contentLabel setFont:[UIFont lightTupaiFontOfSize:15]];
     [_commentLabel1 setFont:[UIFont lightTupaiFontOfSize:13]];
     [_commentLabel2 setFont:[UIFont lightTupaiFontOfSize:13]];
     
-    [_nameLabel setTextColor:[UIColor colorWithHex:0x4a4a4a andAlpha:1.0]];
-    [_contentLabel setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.9]];
-    [_commentLabel1 setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.8]];
-    [_commentLabel2 setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.8]];
+//    [_nameLabel setTextColor:[UIColor colorWithHex:0x4a4a4a andAlpha:1.0]];
+//    [_contentLabel setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.9]];
+//    [_commentLabel1 setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.8]];
+//    [_commentLabel2 setTextColor:[UIColor colorWithHex:0x000000 andAlpha:0.8]];
+    
+    [_nameLabel setTextColor:[UIColor colorWithHex:0x4a4a4a]];
+    [_contentLabel setTextColor:[UIColor colorWithHex:0x000000]];
+    [_commentLabel1 setTextColor:[UIColor colorWithHex:0x000000]];
+    [_commentLabel2 setTextColor:[UIColor colorWithHex:0x000000]];
+    _nameLabel.opaque     = YES;
+    _contentLabel.opaque  = YES;
+    _commentLabel1.opaque = YES;
+    _commentLabel2.opaque = YES;
+    
+    _nameLabel.backgroundColor     = [UIColor whiteColor];
+    _contentLabel.backgroundColor  = [UIColor whiteColor];
+    _commentLabel1.backgroundColor = [UIColor whiteColor];
+    _commentLabel2.backgroundColor = [UIColor whiteColor];
+    
+    _commentIndeicatorImageView.opaque = YES;
+    _commentIndeicatorImageView.backgroundColor = [UIColor whiteColor];
     
     [_followView setContentMode:UIViewContentModeCenter];
     
