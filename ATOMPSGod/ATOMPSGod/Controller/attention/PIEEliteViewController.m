@@ -13,6 +13,8 @@
 
 #import "PIEEliteHotViewController.h"
 #import "PIEEliteFollowViewController.h"
+#import "YYFPSLabel.h"
+
 
 typedef NS_ENUM(NSInteger, PIEEliteType) {
     PIEEliteTypeFollow = 1,
@@ -70,7 +72,10 @@ typedef NS_ENUM(NSInteger, PIEEliteType) {
     [self setupNotifications];
     
     
-    // fetch the initial dat
+    // fetch the initial data
+    
+    // setup FPS label
+    [self setupFPSLabel];
     
 }
 
@@ -137,6 +142,19 @@ typedef NS_ENUM(NSInteger, PIEEliteType) {
         [[NSNotificationCenter defaultCenter]postNotificationName:@"RefreshNavigation_Elite_Follow" object:nil];
     }
 }
+
+- (void)setupFPSLabel
+{
+    // 加测试 fps
+    YYFPSLabel *fpsLabel =
+    [[YYFPSLabel alloc] initWithFrame:CGRectMake(0, 100, 200, 200)];
+    [fpsLabel sizeToFit];
+    // 当前顶层窗口
+    UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
+    // 添加到窗口
+    [window addSubview:fpsLabel];
+}
+
 #pragma mark - <UIScrollViewDelegate>
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
         int currentPage = (scrollView.contentOffset.x + CGWidth(scrollView.frame) * 0.1) / CGWidth(scrollView.frame);
