@@ -53,20 +53,15 @@
 {
     PIERefreshTableView *tableView = ({
         PIERefreshTableView *tableView = [[PIERefreshTableView alloc] init];
-        
-        
-        
-        
         tableView.delegate   = self;
         tableView.dataSource = self;
-        
-        [self.view addSubview:tableView];
-        [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
-        }];
-        
         tableView;
     });
+    
+    [self.view addSubview:tableView];
+    [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
 }
 
 #pragma mark - <UITableViewDataSource>

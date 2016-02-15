@@ -44,8 +44,23 @@
 - (void)setupNavBar
 {
     self.navigationItem.title = @"微信绑定";
+    UIButton *buttonLeft = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
+    buttonLeft.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [buttonLeft setImage:[UIImage imageNamed:@"PIE_icon_back"] forState:UIControlStateNormal];
+    UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonLeft];
+    self.navigationItem.leftBarButtonItem =  buttonItem;
     
+    [buttonLeft addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
 }
+
+- (void)dismiss {
+    if (self.navigationController.viewControllers.count <= 1) {
+        [self dismissViewControllerAnimated:YES completion:NULL];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
 
 - (void)setupSubViews
 {
@@ -129,6 +144,31 @@
         
         button;
     });
+    [[bindWeixinPaymentButton rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(id x) {
+            [DDShareManager authorize2:SSDKPlatformTypeWechat withBlock:^(SSDKUser *user) {
+                NSMutableDictionary *params = [NSMutableDictionary <NSString *, NSString *> new];
+                params[@"type"]             = @"weixin";
+                params[@"openid"]           = user.uid;
+                [DDBaseService POST:params
+                                url:@"auth/bind"
+                              block:^(id responseObject) {
+                                  if (responseObject) {
+                                      [DDUserManager currentUser].bindWechat = YES;
+                                      [DDUserManager updateCurrentUserInDatabase];
+                                      [Hud success:@"绑定微信成功"];
+                                  } else {
+                                      [Hud error:@"绑定微信失败"];
+                                  }
+                                  
+                                  BOOL success = !(responseObject == nil);
+                                  if (_delegate && [_delegate respondsToSelector:@selector(bindWechatViewController:success:)]) {
+                                      [_delegate bindWechatViewController:self success:success];
+                                  }
+                                  [self dismiss];
+                              }];
+            }];
+        
+    }];
     
 }
 
