@@ -251,9 +251,10 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
             [self tapOnAvatarOrUsernameLabelAtIndexPath:indexPath];
         }];
         
-        [cell.tapOnFollowButtonSignal subscribeNext:^(id x) {
+        [cell.tapOnFollowButtonSignal subscribeNext:^(UITapGestureRecognizer *tap) {
             @strongify(self);
             [self tapOnFollowButtonAtIndexPath:indexPath];
+            tap.view.hidden = YES;
         }];
         
         [cell.tapOnImageViewSignal subscribeNext:^(id x) {

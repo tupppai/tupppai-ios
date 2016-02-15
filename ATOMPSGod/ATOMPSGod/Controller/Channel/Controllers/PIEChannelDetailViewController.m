@@ -354,6 +354,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
         }
         else if (CGRectContainsPoint(_selectedReplyCell.followView.frame, p)) {
             [_selectedVM follow];
+            _selectedReplyCell.followView.hidden = YES;
         }
         else if (CGRectContainsPoint(_selectedReplyCell.shareView.frame, p)) {
             [self showShareView:_selectedVM];

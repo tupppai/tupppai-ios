@@ -169,18 +169,21 @@
         _usernameLabel.text = vm.username;
         _timeLabel.text = vm.publishTime;
         
-        if (vm.isMyFan) {
-            [_followButton setImage:[UIImage imageNamed:@"pie_mutualfollow"] forState:UIControlStateSelected];
-        } else {
-            [_followButton setImage:[UIImage imageNamed:@"new_reply_followed"] forState:UIControlStateSelected];
-        }
-        _followButton.selected = vm.followed;
+//        if (vm.isMyFan) {
+//            [_followButton setImage:[UIImage imageNamed:@"pie_mutualfollow"] forState:UIControlStateSelected];
+//        } else {
+//            [_followButton setImage:[UIImage imageNamed:@"new_reply_followed"] forState:UIControlStateSelected];
+//        }
+//        _followButton.selected = vm.followed;
         
-        if (vm.userID == [DDUserManager currentUser].uid) {
+        // 需求变更
+        if (vm.userID == [DDUserManager currentUser].uid ||
+            vm.followed) {
             _followButton.hidden = YES;
         } else {
             _followButton.hidden = NO;
         }
+        
         
         [DDService sd_downloadImage:vm.imageURL withBlock:^(UIImage *image) {
             _imageViewBlur.image = [image blurredImageWithRadius:80 iterations:1 tintColor:[UIColor blackColor]];
@@ -333,6 +336,7 @@
 }
 -(void)follow {
     [self.vm follow];
+    self.followButton.hidden = YES;
 }
 
 @end
