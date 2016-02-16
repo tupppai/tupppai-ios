@@ -170,14 +170,22 @@
        
         
         [DDService sd_downloadImage:vm.imageURL withBlock:^(UIImage *image) {
-            _imageViewBlur.image = [image blurredImageWithRadius:80 iterations:1 tintColor:[UIColor blackColor]];
+//            _imageViewBlur.image = [image blurredImageWithRadius:80 iterations:1 tintColor:[UIColor blackColor]];
+            [image backgroundBlurredImageView:_imageViewBlur
+                                   WithRadius:30
+                                   iterations:1
+                                    tintColor:[UIColor blackColor]];
             _imageViewMain.image = image;
         }];
         
         NSString* imageUrl2 = [vm.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
         if (![vm.imageURL isEqualToString:imageUrl2]) {
             [DDService sd_downloadImage:imageUrl2 withBlock:^(UIImage *image) {
-                _imageViewBlur.image = [image blurredImageWithRadius:80 iterations:1 tintColor:[UIColor blackColor]];
+//                _imageViewBlur.image = [image blurredImageWithRadius:80 iterations:1 tintColor:[UIColor blackColor]];
+                [image backgroundBlurredImageView:_imageViewBlur
+                                       WithRadius:30
+                                       iterations:1
+                                        tintColor:[UIColor blackColor]];
                 _imageViewMain.image = image;
             }];
         }

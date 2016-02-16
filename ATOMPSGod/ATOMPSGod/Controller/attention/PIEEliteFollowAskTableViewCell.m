@@ -85,7 +85,11 @@
     [_theImageView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView]
                             completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                                 ws.theImageView.image = image;
-                                ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
+//                                ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
+                                [image backgroundBlurredImageView:ws.theImageView
+                                                       WithRadius:30
+                                                       iterations:1
+                                                        tintColor:nil];
                             }];
     [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:urlString_avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
 

@@ -113,7 +113,11 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
         NSString* avatarUrl = [[DDUserManager currentUser].avatar trimToImageWidth:200];
         [DDService sd_downloadImage:avatarUrl withBlock:^(UIImage *image) {
             self.avatarView.image = image;
-            self.topContainerView.image = [image blurredImageWithRadius:10 iterations:10 tintColor:nil];
+//            self.topContainerView.image = [image blurredImageWithRadius:10 iterations:10 tintColor:nil];
+            [image backgroundBlurredImageView:_topContainerView
+                                   WithRadius:10
+                                   iterations:10
+                                    tintColor:nil];
         }];
     }];
     
@@ -337,7 +341,11 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     [DDService sd_downloadImage:
      avatarUrl withBlock:^(UIImage *image) {
          _avatarView.image       = image;
-         _topContainerView.image = [image blurredImageWithRadius:10 iterations:10 tintColor:nil];
+//         _topContainerView.image = [image blurredImageWithRadius:10 iterations:10 tintColor:nil];
+         [image backgroundBlurredImageView:_topContainerView
+                                WithRadius:10
+                                iterations:10
+                                 tintColor:nil];
      }];
     self.psGodIcon_big.hidden    = !user.isV;
     self.psGodCertificate.hidden = !user.isV;
