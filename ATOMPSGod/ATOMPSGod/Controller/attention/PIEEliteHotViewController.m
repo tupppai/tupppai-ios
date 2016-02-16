@@ -100,8 +100,52 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     
     [self configureSwipeView];
 
-
     
+}
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self fetchPageModels];
+}
+
+- (NSManagedObjectContext *)managedObjectContext {
+    NSManagedObjectContext *context = nil;
+    id delegate = [[UIApplication sharedApplication] delegate];
+    if ([delegate performSelector:@selector(managedObjectContext)]) {
+        context = [delegate managedObjectContext];
+    }
+    return context;
+}
+
+- (void)addPageModel_CoreData:(PIEPageModel*)model {
+    NSManagedObjectContext *context = [self managedObjectContext];
+    // Create a new managed object
+    NSManagedObject *newPage = [NSEntityDescription insertNewObjectForEntityForName:@"Page" inManagedObjectContext:context];
+    [newPage setValue:@(model.ID) forKey:@"id"];
+    [newPage setValue:@(model.uid) forKey:@"user_id"];
+    [newPage setValue:model.nickname forKey:@"username"];
+    [newPage setValue:model.imageURL forKey:@"page_url"];
+    [newPage setValue:model.avatar forKey:@"avatar_url"];
+    [newPage setValue:@(model.type) forKey:@"type"];
+}
+
+- (void)fetchPageModels {
+    // Fetch the devices from persistent data store
+    NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Page"];
+    NSArray *pages = [[managedObjectContext executeFetchRequest:fetchRequest error:nil] mutableCopy];
+    for (NSManagedObject *object in pages) {
+        PIEPageModel *model = [PIEPageModel new];
+        model.ID = [[object valueForKey:@"id"]integerValue];
+        model.uid = [[object valueForKey:@"user_id"]integerValue];
+        model.nickname = [object valueForKey:@"username"];
+        model.avatar = [object valueForKey:@"avatar_url"];
+        model.imageURL = [object valueForKey:@"page_url"];
+        model.type = [[object valueForKey:@"type"]integerValue];
+
+        PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:model];
+        [self.sourceHot addObject:vm];
+    }
+    [self.tableHot reloadData];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -589,6 +633,11 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
             
             NSMutableArray *fromKVC = [self mutableArrayValueForKey:@"sourceHot"];
             [fromKVC addObjectsFromArray:returnArray];
+            
+            for (PIEPageVM *viewModel in returnArray) {
+                [self addPageModel_CoreData:viewModel.model];
+            }
+            
         }
         [self.tableHot.mj_header endRefreshing];
         if (block) {

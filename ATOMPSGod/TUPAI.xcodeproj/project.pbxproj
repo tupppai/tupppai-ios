@@ -440,6 +440,8 @@
 		F44A52791C0BF91500707281 /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F44A52781C0BF91500707281 /* libxml2.2.tbd */; };
 		F44A527F1C0C335000707281 /* PIEActionSheet_Report.m in Sources */ = {isa = PBXBuildFile; fileRef = F44A527E1C0C335000707281 /* PIEActionSheet_Report.m */; };
 		F44A52821C0C336500707281 /* PIEActionSheet_PS.m in Sources */ = {isa = PBXBuildFile; fileRef = F44A52811C0C336500707281 /* PIEActionSheet_PS.m */; };
+		F44CB2E31C731A2B00B68C6C /* PageModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F44CB2E11C731A2B00B68C6C /* PageModel.xcdatamodeld */; };
+		F44CB2F11C731F4900B68C6C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F44CB2F01C731F4900B68C6C /* CoreData.framework */; };
 		F44FAA3E1C3FAF9300AC60B2 /* LeesinUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F44FAA3D1C3FAF9300AC60B2 /* LeesinUploadManager.m */; };
 		F44FAA411C3FB04C00AC60B2 /* LeesinUploadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F44FAA401C3FB04C00AC60B2 /* LeesinUploadModel.m */; };
 		F45057271C2BDA5B00F7A302 /* PIECategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F45057261C2BDA5B00F7A302 /* PIECategoryModel.m */; };
@@ -1588,6 +1590,8 @@
 		F44A527E1C0C335000707281 /* PIEActionSheet_Report.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEActionSheet_Report.m; sourceTree = "<group>"; };
 		F44A52801C0C336500707281 /* PIEActionSheet_PS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEActionSheet_PS.h; sourceTree = "<group>"; };
 		F44A52811C0C336500707281 /* PIEActionSheet_PS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEActionSheet_PS.m; sourceTree = "<group>"; };
+		F44CB2E21C731A2B00B68C6C /* PageModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PageModel.xcdatamodel; sourceTree = "<group>"; };
+		F44CB2F01C731F4900B68C6C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		F44FAA3C1C3FAF9300AC60B2 /* LeesinUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeesinUploadManager.h; sourceTree = "<group>"; };
 		F44FAA3D1C3FAF9300AC60B2 /* LeesinUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeesinUploadManager.m; sourceTree = "<group>"; };
 		F44FAA3F1C3FB04C00AC60B2 /* LeesinUploadModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeesinUploadModel.h; sourceTree = "<group>"; };
@@ -1961,6 +1965,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F44CB2F11C731F4900B68C6C /* CoreData.framework in Frameworks */,
 				F4279A1B1C55F17C004CFBBE /* libsqlite3.0.tbd in Frameworks */,
 				F4279A151C55F0EA004CFBBE /* CFNetwork.framework in Frameworks */,
 				F44A52791C0BF91500707281 /* libxml2.2.tbd in Frameworks */,
@@ -2608,6 +2613,7 @@
 		5CDB05B81AA3FE520089121E = {
 			isa = PBXGroup;
 			children = (
+				F44CB2E11C731A2B00B68C6C /* PageModel.xcdatamodeld */,
 				E959A56B1B8F025500F90155 /* Notes */,
 				5CDB05C31AA3FE520089121E /* TUPAI */,
 				5CDB05DD1AA3FE520089121E /* ATOMPSGodTests */,
@@ -2989,6 +2995,7 @@
 		94794CACC85CA9D698472166 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F44CB2F01C731F4900B68C6C /* CoreData.framework */,
 				F4279A1A1C55F17C004CFBBE /* libsqlite3.0.tbd */,
 				F4279A181C55F114004CFBBE /* libc++.tbd */,
 				F4279A161C55F105004CFBBE /* Security.framework */,
@@ -5344,6 +5351,7 @@
 				F47EF0881C031FF500BFB442 /* VVBlurTransitioning.m in Sources */,
 				F499E44F1BD0E90100E5F178 /* PIESignOutTableViewCell.m in Sources */,
 				F4993CED1BE5B32C007F9BE4 /* UIButton+AFNetworking.m in Sources */,
+				F44CB2E31C731A2B00B68C6C /* PageModel.xcdatamodeld in Sources */,
 				F4EC11161BCE5B9E002D1DCF /* PIENotificationSystemTableViewCell.m in Sources */,
 				E9FF8A3B1B71CCB70010D2C4 /* DDInputPhoneFPVC.m in Sources */,
 				F42ED3B81BC4FC9E0052A0BF /* PIEMyReplyCollectionViewCell.m in Sources */,
@@ -5869,6 +5877,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		F44CB2E11C731A2B00B68C6C /* PageModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F44CB2E21C731A2B00B68C6C /* PageModel.xcdatamodel */,
+			);
+			currentVersion = F44CB2E21C731A2B00B68C6C /* PageModel.xcdatamodel */;
+			path = PageModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 5CDB05B91AA3FE520089121E /* Project object */;
 }
