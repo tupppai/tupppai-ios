@@ -30,7 +30,7 @@
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nih-jX-jzj" userLabel="avatarView" customClass="PIEAvatarView">
                         <rect key="frame" x="12" y="10" width="32" height="32"/>
-                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="32" id="Kz8-6u-nRX"/>
                             <constraint firstAttribute="width" constant="32" id="vci-Zd-CmA"/>
@@ -189,7 +189,7 @@
                 <outlet property="theImageView" destination="Qz0-1D-vqQ" id="Rbt-cP-LRF"/>
                 <outlet property="timeLabel" destination="tZ7-6S-wLe" id="7Ib-Nq-Kgx"/>
             </connections>
-            <point key="canvasLocation" x="-5" y="515"/>
+            <point key="canvasLocation" x="-121" y="497"/>
         </tableViewCell>
     </objects>
     <resources>

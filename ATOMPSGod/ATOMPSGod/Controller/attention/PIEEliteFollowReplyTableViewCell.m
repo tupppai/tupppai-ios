@@ -102,8 +102,9 @@
                                                        iterations:1
                                                         tintColor:nil];
                             }];
-    [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:urlString_avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+//    [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:urlString_avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
 
+    _avatarView.url = urlString_avatar;
     _avatarView.isV = viewModel.isV;
     
 

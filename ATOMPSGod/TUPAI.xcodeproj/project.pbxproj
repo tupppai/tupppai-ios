@@ -180,6 +180,7 @@
 		907A431E1C40FC1C002542E6 /* PIELaunchTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 907A431D1C40FC1C002542E6 /* PIELaunchTextField.m */; };
 		907A432D1C40FCA6002542E6 /* PIELaunchNextStepButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 907A432C1C40FCA6002542E6 /* PIELaunchNextStepButton.m */; };
 		907A43301C410C7E002542E6 /* PIEVerificationCodeCountdownButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 907A432F1C410C7E002542E6 /* PIEVerificationCodeCountdownButton.m */; };
+		908CF5FE1C7378C000195C78 /* UIImage+CropRoundImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 908CF5FD1C7378C000195C78 /* UIImage+CropRoundImage.m */; };
 		909E2E381C58DBDC000EA0EC /* PIEChannelTutorialRewardFailedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 909E2E371C58DBDC000EA0EC /* PIEChannelTutorialRewardFailedView.m */; };
 		90A56E4A1C54B0D10079B3D3 /* PIEChannelTutorialListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A56E481C54B0D10079B3D3 /* PIEChannelTutorialListCell.m */; };
 		90A56E4B1C54B0D10079B3D3 /* PIEChannelTutorialListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90A56E491C54B0D10079B3D3 /* PIEChannelTutorialListCell.xib */; };
@@ -1149,6 +1150,8 @@
 		907A432C1C40FCA6002542E6 /* PIELaunchNextStepButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIELaunchNextStepButton.m; sourceTree = "<group>"; };
 		907A432E1C410C7E002542E6 /* PIEVerificationCodeCountdownButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEVerificationCodeCountdownButton.h; sourceTree = "<group>"; };
 		907A432F1C410C7E002542E6 /* PIEVerificationCodeCountdownButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEVerificationCodeCountdownButton.m; sourceTree = "<group>"; };
+		908CF5FC1C7378C000195C78 /* UIImage+CropRoundImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+CropRoundImage.h"; sourceTree = "<group>"; };
+		908CF5FD1C7378C000195C78 /* UIImage+CropRoundImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+CropRoundImage.m"; sourceTree = "<group>"; };
 		909E2E361C58DBDC000EA0EC /* PIEChannelTutorialRewardFailedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelTutorialRewardFailedView.h; sourceTree = "<group>"; };
 		909E2E371C58DBDC000EA0EC /* PIEChannelTutorialRewardFailedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelTutorialRewardFailedView.m; sourceTree = "<group>"; };
 		90A56E471C54B0D10079B3D3 /* PIEChannelTutorialListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelTutorialListCell.h; sourceTree = "<group>"; };
@@ -4464,6 +4467,8 @@
 		F4C9BE491C1D4F7500A1AE82 /* categories */ = {
 			isa = PBXGroup;
 			children = (
+				908CF5FC1C7378C000195C78 /* UIImage+CropRoundImage.h */,
+				908CF5FD1C7378C000195C78 /* UIImage+CropRoundImage.m */,
 				0E354D3C1C340D660035785A /* UINavigationBar+Awesome.h */,
 				0E354D3D1C340D660035785A /* UINavigationBar+Awesome.m */,
 				F4C9BE4A1C1D4F8C00A1AE82 /* UIImage+Colors.h */,
@@ -5609,6 +5614,7 @@
 				90BD58061C71A7920063D2AD /* UIView+YYText.m in Sources */,
 				E95691B21B22E88300DA84BB /* MTLValueTransformer.m in Sources */,
 				E9D1F88C1B203A4F0072242B /* PIERefreshTableView.m in Sources */,
+				908CF5FE1C7378C000195C78 /* UIImage+CropRoundImage.m in Sources */,
 				5CDB062F1AA428BD0089121E /* MASConstraint.m in Sources */,
 				F4BB27BF1BD0AD8200C50F58 /* PIEImageView.m in Sources */,
 				E979013A1B4A6494003FB0B5 /* ATOMReportModel.m in Sources */,

@@ -31,7 +31,7 @@
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bwm-3T-NMU" userLabel="avatarView" customClass="PIEAvatarView">
                         <rect key="frame" x="8" y="8" width="30" height="30"/>
-                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="9ci-8U-qF7"/>
                             <constraint firstAttribute="width" constant="30" id="VfS-Q9-l1X"/>

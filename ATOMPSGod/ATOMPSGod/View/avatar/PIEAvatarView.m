@@ -7,6 +7,7 @@
 //
 
 #import "PIEAvatarView.h"
+#import "UIImage+CropRoundImage.h"
 
 @interface PIEAvatarView ()
 
@@ -22,7 +23,6 @@
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
-        self.backgroundColor = [UIColor clearColor];
         [self addSubview:self.avatarImageView];
 
     }
@@ -32,29 +32,6 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
     if (self = [super initWithCoder:aDecoder]) {
-        self.backgroundColor = [UIColor clearColor];
-        
-        /* dirty code begins: */
-//        UIView *backgroundView = [[UIView alloc] init];
-//        backgroundView.backgroundColor = [UIColor whiteColor];
-//        
-//        [self addSubview:backgroundView];
-
-//        /*
-//            TO-BE-OVERWRITTEN! 非常损耗性能的一种添加白色border的方法！
-//         */
-//        [backgroundView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.width.equalTo(self).with.offset(7);
-//            make.height.equalTo(self).with.offset(7);
-//            make.center.equalTo(self);
-//        }];
-//        
-//        backgroundView.clipsToBounds = YES;
-//        backgroundView.layer.cornerRadius = (self.bounds.size.width + 7) / 2.0;
-//        
-//        
-//        /* dirty  code ends */
-        
         [self addSubview:self.avatarImageView];
 
         [self.avatarImageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -81,11 +58,11 @@
         make.width.lessThanOrEqualTo(@18);
         make.height.lessThanOrEqualTo(@18);
     }];
-    self.psGodView.layer.borderWidth = 1;
-    self.psGodView.layer.borderColor = [UIColor whiteColor].CGColor;
-    self.psGodView.layer.cornerRadius = (self.bounds.size.width * (22.0 / 62.0)) / 2;
-    self.psGodView.layer.masksToBounds = YES;
-    self.psGodView.layer.shouldRasterize = YES;
+//    self.psGodView.layer.borderWidth = 1;
+//    self.psGodView.layer.borderColor = [UIColor whiteColor].CGColor;
+//    self.psGodView.layer.cornerRadius = (self.bounds.size.width * (22.0 / 62.0)) / 2;
+//    self.psGodView.layer.masksToBounds = YES;
+//    self.psGodView.layer.shouldRasterize = YES;
     
 }
 
@@ -95,12 +72,12 @@
     if (_avatarImageView == nil) {
 
         _avatarImageView = [[UIImageView alloc]initWithFrame:self.bounds];
-        _avatarImageView.layer.cornerRadius = self.bounds.size.width / 2.0;
-        [_avatarImageView setContentMode:UIViewContentModeScaleAspectFill];
-        
-        // for speeding up
-        _avatarImageView.layer.shouldRasterize = YES;
-        _avatarImageView.clipsToBounds = YES;
+//        _avatarImageView.layer.cornerRadius = self.bounds.size.width / 2.0;
+//        [_avatarImageView setContentMode:UIViewContentModeScaleAspectFill];
+//        
+//        // for speeding up
+//        _avatarImageView.layer.shouldRasterize = YES;
+//        _avatarImageView.clipsToBounds = YES;
     }
     
     return _avatarImageView;
@@ -139,7 +116,25 @@
 }
 -(void)setUrl:(NSString *)url {
     _url = url;
-    [self.avatarImageView sd_setImageWithURL:[NSURL URLWithString:url]];
+//    [self.avatarImageView sd_setImageWithURL:[NSURL URLWithString:url]];
+    [DDService sd_downloadImage:url
+                      withBlock:^(UIImage *image) {
+                          UIGraphicsBeginImageContextWithOptions(self.avatarImageView.bounds.size, NO, 1.0);
+                          // Add a clip before drawing anything, in the shape of an rounded rect
+                          [[UIBezierPath
+                            bezierPathWithRoundedRect:self.avatarImageView.bounds cornerRadius:50.0] addClip];
+                          // Draw your image
+                          [image drawInRect:self.avatarImageView.bounds];
+                          
+                          // Get the image, here setting the UIImageView image
+                          self.avatarImageView.image = UIGraphicsGetImageFromCurrentImageContext();
+                          
+                          // Lets forget about that we were drawing
+                          UIGraphicsEndImageContext();
+                      }];
 }
+
+#pragma mark - private helpers
+
 
 @end
