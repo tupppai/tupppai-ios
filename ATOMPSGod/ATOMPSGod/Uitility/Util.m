@@ -101,13 +101,13 @@ NSString* deviceName()
 
 +(NSString*)formatPublishTime:(NSDate*)date {
     NSString* publishTime;
-    NSDateFormatter *df = [NSDateFormatter new];
+//    NSDateFormatter *df = [NSDateFormatter new];
     NSTimeInterval timeInterval = - ([date timeIntervalSinceNow]);
     float dayDif = timeInterval/3600/24;
     int result = 0;
     if (dayDif > 7) {
-        [df setDateFormat:@"MM月dd日 HH:mm"];
-        publishTime = [df stringFromDate:date];
+//        [df setDateFormat:@"MM月dd日 HH:mm"];
+        publishTime = [[self formatter] stringFromDate:date];
     } else if (dayDif >= 1) {
         result = (int)roundf(dayDif);
         publishTime = [NSString stringWithFormat:@"%d天前",result];
@@ -122,6 +122,16 @@ NSString* deviceName()
         }
     }
     return publishTime;
+}
+
++ (NSDateFormatter *)formatter {
+    static NSDateFormatter *formatter;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"MM月dd日 HH:mm";
+    });
+    return formatter;
 }
 
 + (void) updateAvaterImage {

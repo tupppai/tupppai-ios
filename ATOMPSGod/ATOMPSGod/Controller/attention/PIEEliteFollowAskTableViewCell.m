@@ -86,7 +86,7 @@
                             completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                                 ws.theImageView.image = image;
 //                                ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
-                                [image backgroundBlurredImageView:ws.theImageView
+                                [image backgroundBlurredImageView:ws.blurView
                                                        WithRadius:30
                                                        iterations:1
                                                         tintColor:nil];
