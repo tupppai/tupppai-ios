@@ -18,7 +18,7 @@
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Yx-3J-Moh" userLabel="avatarView" customClass="PIEAvatarView">
                         <rect key="frame" x="8" y="8" width="30" height="30"/>
-                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="30" id="4rh-lJ-7OT"/>
                             <constraint firstAttribute="height" constant="30" id="abt-gY-c0Y"/>

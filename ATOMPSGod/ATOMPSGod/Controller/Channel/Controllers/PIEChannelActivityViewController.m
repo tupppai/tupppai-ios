@@ -429,6 +429,7 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
         else if (CGRectContainsPoint(_selectedReplyCell.followView.frame, p)) {
 //            [self followReplier];
             [_selectedVM follow];
+            _selectedReplyCell.followView.hidden = YES;
         }
         else if (CGRectContainsPoint(_selectedReplyCell.shareView.frame, p)) {
             [self showShareView:_selectedVM];

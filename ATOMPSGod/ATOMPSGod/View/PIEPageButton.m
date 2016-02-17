@@ -14,10 +14,18 @@
     _number = 0;
     _selected = NO;
     _imageView = [UIImageView new];
+    
+    _imageView.backgroundColor = [UIColor whiteColor];
+    _imageView.opaque = YES;
+    
     _label = [UILabel new];
     _label.text = @"0";
     _label.font = [UIFont lightTupaiFontOfSize:14];
-    _label.textColor = [UIColor colorWithHex:0x4a4a4a andAlpha:1.0];
+    _label.textColor = [UIColor colorWithHex:0x4a4a4a];
+    _label.backgroundColor = [UIColor whiteColor];
+    _label.opaque = YES;
+    
+    
     [self addSubview:_imageView];
     [self addSubview:_label];
     _imageView.contentMode = UIViewContentModeScaleAspectFit;

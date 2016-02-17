@@ -95,9 +95,11 @@ static int thumbViewSizeConstant = 100;
     _viewModel = viewModel;
     [DDService sd_downloadImage:viewModel.imageURL withBlock:^(UIImage *image) {
         _imageView.image = image;
-        _blurBackgroundImageView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
+//        
+//        _blurBackgroundImageView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
+        // 将堵住主线程的方法挪到其他线程中
+        [image backgroundBlurredImageView:_blurBackgroundImageView WithRadius:80 iterations:1 tintColor:nil];
     }];
-    
     
     _thumbView.subviewCounts = viewModel.models_image.count;
     

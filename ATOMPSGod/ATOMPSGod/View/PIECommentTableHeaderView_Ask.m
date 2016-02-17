@@ -147,8 +147,9 @@
         [RACObserve(vm, commentCount)subscribeNext:^(id x) {
             self.commentButton.numberString = x;
         }];
-        [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+//        [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
         
+        _avatarView.url = vm.avatarURL;
         _avatarView.isV = vm.isV;
 
         _usernameLabel.text = vm.username;
@@ -170,14 +171,22 @@
        
         
         [DDService sd_downloadImage:vm.imageURL withBlock:^(UIImage *image) {
-            _imageViewBlur.image = [image blurredImageWithRadius:80 iterations:1 tintColor:[UIColor blackColor]];
+//            _imageViewBlur.image = [image blurredImageWithRadius:80 iterations:1 tintColor:[UIColor blackColor]];
+            [image backgroundBlurredImageView:_imageViewBlur
+                                   WithRadius:30
+                                   iterations:1
+                                    tintColor:[UIColor blackColor]];
             _imageViewMain.image = image;
         }];
         
         NSString* imageUrl2 = [vm.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
         if (![vm.imageURL isEqualToString:imageUrl2]) {
             [DDService sd_downloadImage:imageUrl2 withBlock:^(UIImage *image) {
-                _imageViewBlur.image = [image blurredImageWithRadius:80 iterations:1 tintColor:[UIColor blackColor]];
+//                _imageViewBlur.image = [image blurredImageWithRadius:80 iterations:1 tintColor:[UIColor blackColor]];
+                [image backgroundBlurredImageView:_imageViewBlur
+                                       WithRadius:30
+                                       iterations:1
+                                        tintColor:[UIColor blackColor]];
                 _imageViewMain.image = image;
             }];
         }

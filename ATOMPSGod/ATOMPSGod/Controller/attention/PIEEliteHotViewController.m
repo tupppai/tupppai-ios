@@ -54,6 +54,8 @@
 
 @property (nonatomic, strong) SMPageControl *pageControl_swipeView;
 
+@property (nonatomic, copy) NSArray *pageManagedObjects;
+
 @end
 
 /* Protocols */
@@ -102,9 +104,27 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 
     
 }
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self fetchPageModelsFromDatabase];
+
+    [self.swipeView reloadData];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNavigation_Elite_Hot" object:nil];
+    
+}
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self fetchPageModelsFromDatabase];
 }
 
 - (NSManagedObjectContext *)managedObjectContext {
@@ -116,6 +136,16 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     return context;
 }
 
+- (void)renewPageModelInManagedContext:(NSArray*)array {
+    [self clearPagesInDatabase];
+    for (int i = 0; i<4; i++) {
+        if (array.count < i+1) {
+            return;
+        }
+        PIEPageVM *vm = [array objectAtIndex:i];
+        [self addPageModelToManagedContext:vm.model];
+    }
+}
 - (void)addPageModelToManagedContext:(PIEPageModel*)model {
     NSManagedObjectContext *context = [self managedObjectContext];
     // Create a new managed object
@@ -132,7 +162,9 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     // Fetch the devices from persistent data store
     NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Page"];
+    fetchRequest.fetchLimit = 4;
     NSArray *pages = [[managedObjectContext executeFetchRequest:fetchRequest error:nil] mutableCopy];
+    self.pageManagedObjects = pages;
     for (NSManagedObject *object in pages) {
         PIEPageModel *model = [PIEPageModel new];
         model.ID = [[object valueForKey:@"id"]integerValue];
@@ -141,29 +173,23 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
         model.avatar = [object valueForKey:@"avatar_url"];
         model.imageURL = [object valueForKey:@"page_url"];
         model.type = [[object valueForKey:@"type"]integerValue];
-
+        
         PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:model];
         [self.sourceHot addObject:vm];
     }
     [self.tableHot reloadData];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
+- (void)clearPagesInDatabase {
     
-    [self.swipeView reloadData];
+    NSManagedObjectContext *context = [self managedObjectContext];
+    for (NSManagedObject *page in self.pageManagedObjects) {
+        [context deleteObject:page];
+    }
+
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
--(void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNavigation_Elite_Hot" object:nil];
-    
-}
 
 #pragma mark - data setup
 
@@ -295,9 +321,10 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
             [self tapOnAvatarOrUsernameLabelAtIndexPath:indexPath];
         }];
         
-        [cell.tapOnFollowButtonSignal subscribeNext:^(id x) {
+        [cell.tapOnFollowButtonSignal subscribeNext:^(UITapGestureRecognizer *tap) {
             @strongify(self);
             [self tapOnFollowButtonAtIndexPath:indexPath];
+            tap.view.hidden = YES;
         }];
         
         [cell.tapOnImageViewSignal subscribeNext:^(id x) {
@@ -634,10 +661,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
             NSMutableArray *fromKVC = [self mutableArrayValueForKey:@"sourceHot"];
             [fromKVC addObjectsFromArray:returnArray];
             
-            for (PIEPageVM *viewModel in returnArray) {
-                [self addPageModelToManagedContext:viewModel.model];
-            }
-            
+            [self renewPageModelInManagedContext:returnArray];
         }
         [self.tableHot.mj_header endRefreshing];
         if (block) {
@@ -773,7 +797,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     if (_swipeView == nil) {
         _swipeView = [[SwipeView alloc] init];
         
-        CGFloat height = 333.0/750 * SCREEN_WIDTH;
+        NSInteger height = 333.0/750 * SCREEN_WIDTH;
         _swipeView =
         [[SwipeView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, height)];
         _swipeView.backgroundColor = [UIColor clearColor];

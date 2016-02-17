@@ -99,14 +99,14 @@ static DDSessionManager *shareInstance = nil;
 
 -(NSURLSessionDataTask *)xxx_dataTaskWithRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLResponse * _Nonnull, id _Nullable, NSError * _Nullable))completionHandler {
     return [self xxx_dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id _Nullable responseObject, NSError * _Nullable error) {
-        #if DEBUG
-                NSLog(@"request  %@ \n responseObject \n %@ ,%@",request,responseObject,error);
-        #endif
+//        #if DEBUG
+//                NSLog(@"request  %@ \n responseObject \n %@ ,%@",request,responseObject,error);
+//        #endif
         
         if (error) {
             [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NetworkErrorCall" object:nil]];
         } else if (responseObject) {
-            int ret = [(NSString*)[ responseObject objectForKey:@"ret"] intValue];
+            int ret = [[ responseObject objectForKey:@"ret"] intValue];
             if (ret == 2) {
                 // 服务器没有监测到“登陆态”——需要用户重新登录, 或者是因为游客状态想要做一些对服务器有着“写”操作的行为
                 

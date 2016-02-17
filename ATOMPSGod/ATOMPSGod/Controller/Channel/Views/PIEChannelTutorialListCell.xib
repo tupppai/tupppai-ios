@@ -32,7 +32,7 @@
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8YN-2b-5gb" customClass="PIEAvatarView">
                         <rect key="frame" x="492" y="245" width="50" height="50"/>
-                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="50" id="fDB-do-fiN"/>
                             <constraint firstAttribute="width" constant="50" id="lVc-v8-x8S"/>

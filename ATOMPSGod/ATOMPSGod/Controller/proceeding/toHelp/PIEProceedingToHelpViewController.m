@@ -23,6 +23,8 @@
 #import "LeesinViewController.h"
 #import "MRNavigationBarProgressView.h"
 #import "PIEProceedingToHelpHeaderView.h"
+#import "PIEProceedingToHelpHeaderView_undone.h"
+
 /* Variables */
 @interface PIEProceedingToHelpViewController ()<LeesinViewControllerDelegate>
 
@@ -395,7 +397,7 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     if (section == 0) {
-        return nil;
+        return [PIEProceedingToHelpHeaderView_undone headerView];
     }else if (section == 1){
         return [PIEProceedingToHelpHeaderView headerView];
     }else{
@@ -411,8 +413,10 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-  
-    if (section == 1){
+    if (section == 0) {
+        return 32;
+    }
+    else if (section == 1){
         if (_sourceToHelp_done.count>0) {
             return 32;
         }
@@ -439,6 +443,7 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
         if (resultArray.count == 0) {
             _canRefreshToHelpFooter = NO;
             [ws.sourceToHelp removeAllObjects];
+            [ws.toHelpTableView.mj_header endRefreshing];
         } else {
             _canRefreshToHelpFooter = YES;
             NSMutableArray* sourceAgent = [NSMutableArray new];
@@ -450,14 +455,20 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
             [ws.sourceToHelp addObjectsFromArray:sourceAgent];
             
             [ws.sourceToHelp_done removeAllObjects];
+            
+            
+            if (resultArray.count < 20) {
+                // "未完成的任务"已经加载完， 先不要reload tableView，先去继续加载另一个接口的数据
+                [ws getNewRemoteSourceToHelp_done];
+                
+            }else{
+                [[NSOperationQueue mainQueue]
+                 addOperationWithBlock:^{
+                     [ws.toHelpTableView reloadData];
+                     [ws.toHelpTableView.mj_header endRefreshing];
+                 }];
+            }
         }
-        
-        [[NSOperationQueue mainQueue]
-         addOperationWithBlock:^{
-             [ws.toHelpTableView reloadData];
-             [ws.toHelpTableView.mj_header endRefreshing];
-        }];
-        
     }];
 }
 
@@ -471,21 +482,24 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
     [param setObject:@(_timeStamp_toHelp) forKey:@"last_updated"];
     [param setObject:@(20) forKey:@"size"];
     [PIEProceedingManager getMyToHelp:param withBlock:^(NSArray *resultArray) {
-        if (resultArray.count == 0) {
+        
+        /*
+             不管三七二十一，先把数据给加上；
+             然后判断，假如已经刷完A接口的数据，那么就先不要
+         */
+        
+        NSMutableArray* sourceAgent = [NSMutableArray new];
+        for (PIEPageModel *homeImage in resultArray) {
+            PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:homeImage];
+            [sourceAgent addObject:vm];
+        }
+        [ws.sourceToHelp addObjectsFromArray:sourceAgent];
+        
+        if (resultArray.count < 20) {
             _canRefreshToHelpFooter = NO;
-            
-            // 第一次加载第二个section的数据，以后会因为上面_canRefreshToHelpFooter里的设置直接刷新done的数据
-            // 感觉这样有点乱来，会不会引起线程同步的问题？
             [ws getMoreRemoteSourceToHelp_done];
-            
-        } else {
+        }else{
             _canRefreshToHelpFooter = YES;
-            NSMutableArray* sourceAgent = [NSMutableArray new];
-            for (PIEPageModel *homeImage in resultArray) {
-                PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:homeImage];
-                [sourceAgent addObject:vm];
-            }
-            [ws.sourceToHelp addObjectsFromArray:sourceAgent];
             
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                 [ws.toHelpTableView reloadData];
@@ -493,6 +507,47 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
             }];
         }
     }];
+}
+
+- (void)getNewRemoteSourceToHelp_done{
+    
+    _currentIndex_ToHelp_done = 1;
+    WS(weakSelf);
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    [param setObject:@(_currentIndex_ToHelp_done) forKey:@"page"];
+    [param setObject:@(SCREEN_WIDTH * 0.5) forKey:@"width"];
+    [param setObject:@(_timeStamp_toHelp) forKey:@"last_updated"];
+    [param setObject:@(20) forKey:@"size"];
+    
+    [PIEProceedingManager getMyDone:param
+                          withBlock:^(NSMutableArray *dataArray) {
+                              if (dataArray.count == 0) {
+                                  _canRefreshToHelpFooter_done = NO;
+                              }else{
+                                  _canRefreshToHelpFooter_done = YES;
+                                  
+                                  
+                                  /*
+                                   NSArray<PIEPageModel *> -> NSArray<PIEPageVM *>
+                                   */
+                                  NSMutableArray<PIEPageVM *> *adhocArray =
+                                  [NSMutableArray<PIEPageVM *> new];
+                                  
+                                  for (PIEPageModel *model in dataArray) {
+                                      PIEPageVM *vm = [[PIEPageVM alloc]
+                                                       initWithPageEntity:model];
+                                      [adhocArray addObject:vm];
+                                  }
+                                  
+                                  [weakSelf.sourceToHelp_done addObjectsFromArray:adhocArray];
+                              }
+                              [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                                  [weakSelf.toHelpTableView reloadData];
+                                  [weakSelf.toHelpTableView.mj_header endRefreshing];
+                              }];
+                              
+                              
+                          }];
 }
 
 - (void)getMoreRemoteSourceToHelp_done{
