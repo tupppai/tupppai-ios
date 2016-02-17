@@ -117,7 +117,7 @@
         if (responseObject) {
             if (block) { block(YES); }
             if (status) {
-                [Hud text:@"成功关注"];
+                [Hud text:@"关注用户成功"];
                 [DDUserManager currentUser].attentionNumber++;
             } else {
                 [Hud text:@"取消关注成功"];

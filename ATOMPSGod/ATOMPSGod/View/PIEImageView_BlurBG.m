@@ -58,14 +58,22 @@
 }
 -(void)setImage:(UIImage *)image {
     self.imageView.image = image;
-    self.imageView_blur.image = [image blurredImageWithRadius:80 iterations:1 tintColor:[UIColor blackColor]];
+//    self.imageView_blur.image = [image blurredImageWithRadius:80 iterations:1 tintColor:[UIColor blackColor]];
+    [image backgroundBlurredImageView:_imageView_blur
+                           WithRadius:80
+                           iterations:1
+                            tintColor:[UIColor blackColor]];
 }
 
 -(void)setUrl:(NSString *)url {
     _url = url;
     [self.imageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"cellHolder"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         self.imageView.image = image;
-        self.imageView_blur.image = [image blurredImageWithRadius:80 iterations:1 tintColor:[UIColor blackColor]];
+//        self.imageView_blur.image = [image blurredImageWithRadius:80 iterations:1 tintColor:[UIColor blackColor]];
+        [image backgroundBlurredImageView:_imageView_blur
+                               WithRadius:80
+                               iterations:1
+                                tintColor:[UIColor blackColor]];
     }];
 }
 

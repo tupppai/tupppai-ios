@@ -271,7 +271,11 @@ typedef NS_ENUM(NSUInteger, PIEFriendViewControllerNavigationBarStyle) {
 
     [DDService sd_downloadImage:avatarUrlString withBlock:^(UIImage *image) {
         _avatarView.avatarImageView.image = image;
-        _blurView.image = [image blurredImageWithRadius:10 iterations:10 tintColor:[UIColor blackColor]];
+//        _blurView.image = [image blurredImageWithRadius:10 iterations:10 tintColor:[UIColor blackColor]];
+        [image backgroundBlurredImageView:_blurView
+                               WithRadius:10
+                               iterations:10
+                                tintColor:[UIColor blackColor]];
     }];
     
     
@@ -302,7 +306,11 @@ typedef NS_ENUM(NSUInteger, PIEFriendViewControllerNavigationBarStyle) {
     
     [DDService sd_downloadImage:pageVM.avatarURL withBlock:^(UIImage *image) {
         _avatarView.avatarImageView.image = image;
-        _blurView.image = [image blurredImageWithRadius:10 iterations:10 tintColor:[UIColor blackColor]];
+//        _blurView.image = [image blurredImageWithRadius:10 iterations:10 tintColor:[UIColor blackColor]];
+        [image backgroundBlurredImageView:_blurView
+                               WithRadius:10
+                               iterations:10
+                                tintColor:[UIColor blackColor]];
     }];
     
     if (pageVM.userID == [DDUserManager currentUser].uid) {

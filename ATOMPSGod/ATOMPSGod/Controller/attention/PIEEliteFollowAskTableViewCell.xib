@@ -160,7 +160,7 @@
                 <outlet property="theImageView" destination="1RB-Q4-adE" id="tdO-fL-fvL"/>
                 <outlet property="timeLabel" destination="xwi-w4-KPE" id="f0u-1h-7FI"/>
             </connections>
-            <point key="canvasLocation" x="29" y="434"/>
+            <point key="canvasLocation" x="160" y="430"/>
         </tableViewCell>
     </objects>
 </document>

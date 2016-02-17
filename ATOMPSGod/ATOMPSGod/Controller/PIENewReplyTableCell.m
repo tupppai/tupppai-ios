@@ -95,28 +95,36 @@
     [_theImageView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView]
                             completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                                 ws.theImageView.image = image;
-                                ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
+//                                ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
+                                [image backgroundBlurredImageView:ws.blurView
+                                                       WithRadius:30
+                                                       iterations:1
+                                                        tintColor:nil];
                             }];
-    [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:urlString_avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+//    [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:urlString_avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+//    
+    
+    _avatarView.url = urlString_avatar;
     _avatarView.isV = viewModel.isV;
 
     _ID = viewModel.ID;
     _askID = viewModel.askID;
     
-    {
-        if (viewModel.isMyFan) {
-            _followView.highlightedImage = [UIImage imageNamed:@"pie_mutualfollow"];
-        } else {
-            _followView.highlightedImage = [UIImage imageNamed:@"new_reply_followed"];
-        }
-        _followView.highlighted = viewModel.followed;
-        if (viewModel.userID == [DDUserManager currentUser].uid) {
-            _followView.hidden = YES;
-        } else {
-            _followView.hidden = NO;
-        }
-    }
 
+//        if (viewModel.isMyFan) {
+//            _followView.highlightedImage = [UIImage imageNamed:@"pie_mutualfollow"];
+//        } else {
+//            _followView.highlightedImage = [UIImage imageNamed:@"new_reply_followed"];
+//        }
+//        _followView.highlighted = viewModel.followed;
+    
+    // 需求变更
+    if (viewModel.userID == [DDUserManager currentUser].uid ||
+        viewModel.followed) {
+        _followView.hidden = YES;
+    } else {
+        _followView.hidden = NO;
+    }
     
     _shareView.imageView.image = [UIImage imageNamed:@"hot_share"];
     _shareView.numberString = viewModel.shareCount;

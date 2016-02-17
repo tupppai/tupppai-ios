@@ -53,6 +53,8 @@
 
 - (UIImage *)blurredImageWithRadius:(CGFloat)radius iterations:(NSUInteger)iterations tintColor:(UIColor *)tintColor;
 
+- (void)backgroundBlurredImageView:(UIImageView *)imageView WithRadius:(CGFloat)radius iterations:(NSUInteger)iterations tintColor:(UIColor *)tintColor;
+
 @end
 
 

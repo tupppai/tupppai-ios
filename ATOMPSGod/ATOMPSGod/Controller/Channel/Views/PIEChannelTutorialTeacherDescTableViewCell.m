@@ -39,8 +39,10 @@
 
 - (void)injectModel:(PIEChannelTutorialModel *)tutorialModel
 {
-    [self.avatarView.avatarImageView
-     sd_setImageWithURL:[NSURL URLWithString:tutorialModel.avatarUrl]];
+//    [self.avatarView.avatarImageView
+//     sd_setImageWithURL:[NSURL URLWithString:tutorialModel.avatarUrl]];
+    
+    self.avatarView.url = tutorialModel.avatarUrl;
     
     self.userNameLabel.text    = tutorialModel.userName;
 

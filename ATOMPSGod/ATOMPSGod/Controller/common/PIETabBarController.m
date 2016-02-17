@@ -165,7 +165,7 @@
     PIEMeViewController *aboutMeVC = (PIEMeViewController *)[[UIStoryboard storyboardWithName:@"Me" bundle:nil] instantiateViewControllerWithIdentifier: @"PIEME"];
 
     
-    myAttentionViewController.title = @"首页";
+    myAttentionViewController.title = @"动态";
     channelVc.title                 = @"图派";
     proceedingViewController.title  = @"进行中";
     aboutMeVC.title                 = @"我";
