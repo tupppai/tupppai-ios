@@ -17,7 +17,7 @@
     // Initialization code
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.avatarView.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
-    self.avatarView.avatarImageView.layer.borderWidth = 3;
+    self.avatarView.avatarImageView.layer.borderWidth = 2;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -36,8 +36,10 @@
     
     [self.tutorialImageView sd_setImageWithURL:[NSURL URLWithString:firstTutorialImageUrlStr]];
     
-    [self.avatarView.avatarImageView sd_setImageWithURL:
-     [NSURL URLWithString:tutorialModel.avatarUrl]];
+//    [self.avatarView.avatarImageView sd_setImageWithURL:
+//     [NSURL URLWithString:tutorialModel.avatarUrl]];
+    
+    self.avatarView.url = tutorialModel.avatarUrl;
     
     self.avatarView.isV       = tutorialModel.isV;
 

@@ -34,8 +34,9 @@
 
 - (void)injectVM:(PIECommentVM *)commentVM
 {
-    [self.avatarView.avatarImageView sd_setImageWithURL:
-     [NSURL URLWithString:commentVM.avatar]];
+//    [self.avatarView.avatarImageView sd_setImageWithURL:
+//     [NSURL URLWithString:commentVM.avatar]];
+    self.avatarView.url = commentVM.avatar;
     
     self.userNameLabel.text    = commentVM.username;
 

@@ -119,10 +119,10 @@
 //    [self.avatarImageView sd_setImageWithURL:[NSURL URLWithString:url]];
     [DDService sd_downloadImage:url
                       withBlock:^(UIImage *image) {
-                          UIGraphicsBeginImageContextWithOptions(self.avatarImageView.bounds.size, NO, 1.0);
+                          UIGraphicsBeginImageContextWithOptions(self.avatarImageView.bounds.size, NO, SCREEN_SCALE);
                           // Add a clip before drawing anything, in the shape of an rounded rect
                           [[UIBezierPath
-                            bezierPathWithRoundedRect:self.avatarImageView.bounds cornerRadius:50.0] addClip];
+                            bezierPathWithRoundedRect:self.avatarImageView.bounds cornerRadius:self.avatarImageView.bounds.size.width] addClip];
                           // Draw your image
                           [image drawInRect:self.avatarImageView.bounds];
                           

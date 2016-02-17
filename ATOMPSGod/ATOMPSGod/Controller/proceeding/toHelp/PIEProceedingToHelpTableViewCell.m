@@ -49,7 +49,9 @@
 //put a needle injecting into cell's ass.
 - (void)injectSource:(PIEPageVM*)vm {
     
-    [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+//    [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+    
+    _avatarView.url = vm.avatarURL;
 
     _avatarView.isV = vm.isV;
     

@@ -161,8 +161,9 @@
         [RACObserve(vm, loveStatus)subscribeNext:^(id x) {
             self.likeButton.status = [x integerValue];
         }];
-        [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+//        [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
         
+        _avatarView.url = vm.avatarURL;
         _avatarView.isV = vm.isV;
         
         _usernameLabel.text = vm.username;
