@@ -104,7 +104,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 }
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self fetchPageModels];
+    [self fetchPageModelsFromDatabase];
 }
 
 - (NSManagedObjectContext *)managedObjectContext {
@@ -116,7 +116,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     return context;
 }
 
-- (void)addPageModel_CoreData:(PIEPageModel*)model {
+- (void)addPageModelToManagedContext:(PIEPageModel*)model {
     NSManagedObjectContext *context = [self managedObjectContext];
     // Create a new managed object
     NSManagedObject *newPage = [NSEntityDescription insertNewObjectForEntityForName:@"Page" inManagedObjectContext:context];
@@ -128,7 +128,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     [newPage setValue:@(model.type) forKey:@"type"];
 }
 
-- (void)fetchPageModels {
+- (void)fetchPageModelsFromDatabase {
     // Fetch the devices from persistent data store
     NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Page"];
@@ -635,7 +635,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
             [fromKVC addObjectsFromArray:returnArray];
             
             for (PIEPageVM *viewModel in returnArray) {
-                [self addPageModel_CoreData:viewModel.model];
+                [self addPageModelToManagedContext:viewModel.model];
             }
             
         }
