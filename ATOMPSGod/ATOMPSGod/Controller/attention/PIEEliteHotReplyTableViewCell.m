@@ -144,15 +144,13 @@
      */
     
     @weakify(self);
-    [[[self.tapOnThumbViewLeftView rac_gestureSignal]
-     takeUntil:self.rac_prepareForReuseSignal]
+    [[self.tapOnThumbViewLeftView rac_gestureSignal]
      subscribeNext:^(id x) {
          @strongify(self);
          [self animateWithType:PIEThumbAnimateViewTypeLeft];
     }];
     
-    [[[self.tapOnThumbViewRightView rac_gestureSignal]
-     takeUntil:self.rac_prepareForReuseSignal]
+    [[self.tapOnThumbViewRightView rac_gestureSignal]
      subscribeNext:^(id x) {
          @strongify(self);
          [self animateWithType:PIEThumbAnimateViewTypeRight];

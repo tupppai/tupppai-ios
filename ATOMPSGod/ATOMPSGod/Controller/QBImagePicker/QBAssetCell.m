@@ -19,7 +19,7 @@
 
 -(void)awakeFromNib {
     [super awakeFromNib];
-    self.layer.cornerRadius = 3.0;
+//    self.layer.cornerRadius = 3.0;
     _overlayView.layer.borderColor = [UIColor yellowColor].CGColor;
     _overlayView.layer.borderWidth = 1.0;
     _overlayView.layer.cornerRadius = 3.0;
