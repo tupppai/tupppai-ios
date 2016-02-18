@@ -139,7 +139,7 @@
 }
 
 
-- (void)renewContraints {
+- (void)prepareForReuse {
     if (self.enlarged) {
         if (_subviewCounts == 2) {
             [self.masContraint_rightViewWidth uninstall];

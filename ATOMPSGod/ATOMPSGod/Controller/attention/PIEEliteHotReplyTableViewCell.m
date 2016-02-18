@@ -162,7 +162,7 @@
 
 -(void)prepareForReuse {
     [super prepareForReuse];
-    [self.blurAnimateView renewContraints];
+    [self.blurAnimateView prepareForReuse];
     _followView.hidden = NO;
     _commentLabel1.text = @"";
     _commentLabel2.text = @"";

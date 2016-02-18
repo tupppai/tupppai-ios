@@ -85,15 +85,19 @@ static int thumbViewSizeConstant = 100;
     self.enlarged = !self.enlarged;
 }
 
--(void)renewContraints {
+-(void)prepareForReuse {
     if(self.enlarged) {
         [self.thumbWidth_MasContraint setOffset:thumbViewSizeConstant];
         [self.thumbHeight_MasContraint setOffset:thumbViewSizeConstant];
         self.enlarged = NO;
-        [self.thumbView renewContraints];
+        [self.thumbView prepareForReuse];
     }
-    
+    self.thumbView.leftView.image = nil;
+    self.thumbView.rightView.image = nil;
+    self.blurBackgroundImageView.image = nil;
+    self.imageView.image = nil;
 }
+
 
 -(void)setViewModel:(PIEPageVM *)viewModel {
     _viewModel = viewModel;
