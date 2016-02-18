@@ -19,6 +19,6 @@
 @property (nonatomic,assign)BOOL enlarged;
 
 - (void)animateWithType:(PIEThumbAnimateViewType)type;
-- (void)renewContraints;
+- (void)prepareForReuse;
 //- (void)animate;
 @end

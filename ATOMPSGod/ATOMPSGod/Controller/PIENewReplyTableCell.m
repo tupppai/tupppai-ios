@@ -44,7 +44,7 @@
 
 -(void)prepareForReuse {
     [super prepareForReuse];
-    [self.blurAnimateImageView renewContraints];
+    [self.blurAnimateImageView prepareForReuse];
     [self removeKVO];
 }
 
