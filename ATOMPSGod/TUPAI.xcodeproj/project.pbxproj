@@ -5784,7 +5784,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				PROVISIONING_PROFILE = "62edcdd7-7b70-4d0e-8a71-6ae66a5aa960";
 				SDKROOT = iphoneos;
@@ -5882,7 +5882,7 @@
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/lib/Channels",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/lib",
 				);
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",

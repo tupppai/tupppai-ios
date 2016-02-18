@@ -1,5 +1,3 @@
-
-//PIEChannelTutorialShareHomeworkPanelViewDelegate//
 //  PIEChannelTutorialContainerViewController.h
 //  TUPAI
 //

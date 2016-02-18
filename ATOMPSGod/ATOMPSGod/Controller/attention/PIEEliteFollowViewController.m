@@ -442,7 +442,7 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
             else {
                 PIEEliteFollowReplyTableViewCell* cell = [self.tableFollow cellForRowAtIndexPath:_selectedIndexPath_follow];
                 CGPoint p = [gesture locationInView:cell];
-                if (CGRectContainsPoint(cell.theImageView.frame, p)) {
+                if (CGRectContainsPoint(cell.animateImageView.frame, p)) {
                     [self showShareView:_selectedVM];
                 }      else if (CGRectContainsPoint(cell.likeView.frame, p)) {
 //                    [PIEPageManager love:cell.likeView viewModel:_selectedVM revert:YES];
@@ -521,26 +521,12 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
     else {
         PIEEliteFollowReplyTableViewCell* cell = [self.tableFollow cellForRowAtIndexPath:_selectedIndexPath_follow];
         CGPoint p = [gesture locationInView:cell];
-        //点击小图
-        //点击小图
-        if (CGRectContainsPoint(cell.thumbView.frame, p)) {
-            CGPoint pp = [gesture locationInView:cell.thumbView];
-            if (CGRectContainsPoint(cell.thumbView.leftView.frame,pp)) {
-                [cell animateThumbScale:PIEThumbAnimateViewTypeLeft];
-            }
-            else if (CGRectContainsPoint(cell.thumbView.rightView.frame,pp)) {
-                [cell animateThumbScale:PIEThumbAnimateViewTypeRight];
-            }
-        }
-        //点击大图
-        else  if (CGRectContainsPoint(cell.theImageView.frame, p)) {
+        if (CGRectContainsPoint(cell.animateImageView.frame, p)) {
             //进入热门详情
             PIECarouselViewController2* vc = [PIECarouselViewController2 new];
             //                    _selectedVM.image = cell.theImageView.image;
             vc.pageVM = _selectedVM;
             [self presentViewController:vc animated:YES completion:nil];
-            
-           
         }
         //点击头像
         else if (CGRectContainsPoint(cell.avatarView.frame, p)) {

@@ -151,12 +151,12 @@ static NSString * PIEDetailUsersPSCellIdentifier =
 
 - (void)setupNavBar
 {
-    UIBarButtonItem *rightBarButton =
-    [[UIBarButtonItem alloc]
-     initWithImage:[UIImage imageNamed:@"pie_channelDetail_intro"]
-     style:UIBarButtonItemStylePlain
-     target:self action:@selector(tapRightBarButton)];
-    self.navigationItem.rightBarButtonItem = rightBarButton;
+//    UIBarButtonItem *rightBarButton =
+//    [[UIBarButtonItem alloc]
+//     initWithImage:[UIImage imageNamed:@"pie_channelDetail_intro"]
+//     style:UIBarButtonItemStylePlain
+//     target:self action:@selector(tapRightBarButton)];
+//    self.navigationItem.rightBarButtonItem = rightBarButton;
 }
 
 
@@ -319,19 +319,28 @@ static NSString * PIEDetailUsersPSCellIdentifier =
         CGPoint p = [gesture locationInView:_selectedReplyCell];
         
         //点击小图
-        if (CGRectContainsPoint(_selectedReplyCell.thumbView.frame, p)) {
-            CGPoint pp = [gesture locationInView:_selectedReplyCell.thumbView];
-            if (CGRectContainsPoint(_selectedReplyCell.thumbView.leftView.frame,pp)) {
-                [_selectedReplyCell animateThumbScale:PIEThumbAnimateViewTypeLeft];
+        if (CGRectContainsPoint(_selectedReplyCell.blurAnimateImageView.frame, p)) {
+            CGPoint pp = [gesture locationInView:_selectedReplyCell.blurAnimateImageView];
+            if (CGRectContainsPoint(_selectedReplyCell.blurAnimateImageView.thumbView.frame,pp)) {
+                CGPoint ppp = [gesture locationInView:_selectedReplyCell.blurAnimateImageView.thumbView];
+                
+                if (CGRectContainsPoint(_selectedReplyCell.blurAnimateImageView.thumbView.leftView.frame,ppp)) {
+                    [_selectedReplyCell.blurAnimateImageView animateWithType:PIEThumbAnimateViewTypeLeft];
+                }
+                else if (CGRectContainsPoint(_selectedReplyCell.blurAnimateImageView.thumbView.rightView.frame,ppp)) {
+                    [_selectedReplyCell.blurAnimateImageView animateWithType:PIEThumbAnimateViewTypeRight];
+                }
+                
             }
-            else if (CGRectContainsPoint(_selectedReplyCell.thumbView.rightView.frame,pp)) {
-                [_selectedReplyCell animateThumbScale:PIEThumbAnimateViewTypeRight];
+            else if (CGRectContainsPoint(_selectedReplyCell.blurAnimateImageView.imageView.frame,pp)) {
+                PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+                vc.pageVM = _selectedVM;
+                [self presentViewController:vc animated:NO completion:nil];
             }
         }
         //点击大图
-        else  if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
+        else  if (CGRectContainsPoint(_selectedReplyCell.blurAnimateImageView.frame, p)) {
             PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-            _selectedVM.image = _selectedReplyCell.theImageView.image;
             vc.pageVM = _selectedVM;
             [self presentViewController:vc animated:YES completion:nil];
             //                [self.navigationController pushViewController:vc animated:YES];
@@ -383,7 +392,7 @@ static NSString * PIEDetailUsersPSCellIdentifier =
         CGPoint p          = [gesture locationInView:_selectedReplyCell];
         
         //点击大图
-        if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
+        if (CGRectContainsPoint(_selectedReplyCell.blurAnimateImageView.frame, p)) {
             [self showShareView:_selectedVM];
         }        else if (CGRectContainsPoint(_selectedReplyCell.likeView.frame, p)) {
             [_selectedVM love:YES];
