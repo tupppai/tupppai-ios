@@ -108,7 +108,9 @@ static int thumbViewSizeConstant = 100;
         if (viewModel.models_image.count == 2) {
             NSString *urlString_imageView2 = [viewModel.models_image[1].url trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
             [_thumbView.leftView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView2] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
-                }
+        } else {
+            _thumbView.leftView.image = nil;
+        }
     }
 }
 -(UIImageView *)blurBackgroundImageView {

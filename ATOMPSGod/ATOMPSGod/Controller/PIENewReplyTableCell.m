@@ -69,7 +69,7 @@
 }
 -(void)prepareForReuse {
     [super prepareForReuse];
-    [self mansoryInitThumbAnimateView];
+//    [self mansoryInitThumbAnimateView];
     [self removeKVO];
 }
 
