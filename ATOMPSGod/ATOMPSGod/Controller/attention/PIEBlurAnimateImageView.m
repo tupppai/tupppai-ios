@@ -35,6 +35,9 @@ static int thumbViewSizeConstant = 100;
     return self;
 }
 -(void)commonInit {
+    
+    self.imageView.userInteractionEnabled = YES;
+    
     [self addSubview:self.blurBackgroundImageView];
     [self addSubview:self.imageView];
     [self addSubview:self.thumbView];
@@ -50,6 +53,7 @@ static int thumbViewSizeConstant = 100;
         self.thumbWidth_MasContraint    = make.width.equalTo(@(thumbViewSizeConstant));
         self.thumbHeight_MasContraint   = make.height.equalTo(@(thumbViewSizeConstant));
     }];
+    
 
     //setupContraints
 }

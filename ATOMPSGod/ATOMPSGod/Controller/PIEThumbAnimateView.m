@@ -23,6 +23,9 @@
 
 - (void)commonInit {
     [self setupSubviews];
+    self.leftView.userInteractionEnabled = YES;
+    self.rightView.userInteractionEnabled = YES;
+    self.userInteractionEnabled = YES;
 }
 - (void)setupSubviews {
     [self addSubview:self.blurView];

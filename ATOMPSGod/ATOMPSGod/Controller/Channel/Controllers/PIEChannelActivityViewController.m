@@ -235,7 +235,7 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     
     PIENewReplyTableCell *replyCell =
     [tableView dequeueReusableCellWithIdentifier:PIEChannelActivityReplyCellIdentifier];
-    [replyCell hideThumbnailImage];
+    replyCell.blurAnimateImageView.thumbView.hidden = YES;
     [replyCell injectSauce:_source_reply[indexPath.row]];
    
     
@@ -386,21 +386,11 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
         _selectedVM = self.source_reply[_selectedIndexPath.row];
         CGPoint p = [gesture locationInView:_selectedReplyCell];
         
-        //点击小图
-        if (CGRectContainsPoint(_selectedReplyCell.thumbView.frame, p)) {
-            CGPoint pp = [gesture locationInView:_selectedReplyCell.thumbView];
-            if (CGRectContainsPoint(_selectedReplyCell.thumbView.leftView.frame,pp)) {
-                [_selectedReplyCell animateThumbScale:PIEThumbAnimateViewTypeLeft];
-            }
-            else if (CGRectContainsPoint(_selectedReplyCell.thumbView.rightView.frame,pp)) {
-                [_selectedReplyCell animateThumbScale:PIEThumbAnimateViewTypeRight];
-            }
-        }
+
         //点击大图
-        else  if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
+          if (CGRectContainsPoint(_selectedReplyCell.blurAnimateImageView.frame, p)) {
             //进入热门详情
             PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-            _selectedVM.image = _selectedReplyCell.theImageView.image;
             vc.pageVM = _selectedVM;
             NSLog(@"!!%@,%zd,%zd",_selectedVM,_selectedVM.askID,_selectedVM.ID);
             [self presentViewController:vc animated:YES completion:nil];
@@ -462,7 +452,7 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
         CGPoint p          = [gesture locationInView:_selectedReplyCell];
         
         //点击大图
-        if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
+        if (CGRectContainsPoint(_selectedReplyCell.blurAnimateImageView.frame, p)) {
             [self showShareView:_selectedVM];
         }        else if (CGRectContainsPoint(_selectedReplyCell.likeView.frame, p)) {
 //            [PIEPageManager love:_selectedReplyCell.likeView viewModel:_selectedVM revert:YES];
