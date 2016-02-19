@@ -51,8 +51,8 @@
     [param setObject:@(_vm.ID) forKey:@"target"];
     [param setObject:@"ask" forKey:@"type"];
     if (_vm.models_catogory.count >= 1) {
-        PIECategoryModel* model = [_vm.models_catogory objectAtIndex:0];
-        [param setObject:model.ID forKey:@"category_id"];
+       
+        [param setObject:@(_vm.model.channelID) forKey:@"category_id"];
     }
     
     [DDService signProceeding:param withBlock:^(NSString *imageUrl) {
