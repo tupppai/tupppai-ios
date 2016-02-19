@@ -48,14 +48,48 @@ static int thumbViewSizeConstant = 100;
     [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self);
     }];
+
+    self.thumbView.hidden = YES;
     [self.thumbView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.trailing.and.bottom.equalTo(self);
         self.thumbWidth_MasContraint    = make.width.equalTo(@(thumbViewSizeConstant));
         self.thumbHeight_MasContraint   = make.height.equalTo(@(thumbViewSizeConstant));
     }];
     
+    
 
     //setupContraints
+}
+
+
+-(void)setViewModel:(PIEPageVM *)viewModel {
+    _viewModel = viewModel;
+    
+    [DDService sd_downloadImage:viewModel.imageURL withBlock:^(UIImage *image) {
+        _imageView.image = image;
+        [image backgroundBlurredImageView:_blurBackgroundImageView WithRadius:80 iterations:1 tintColor:nil];
+    }];
+    
+    
+    if (viewModel.type != PIEPageTypeReply || viewModel.askID == 0) {
+        return;
+    }
+    
+    self.thumbView.hidden = NO;
+    self.thumbView.subviewCounts = viewModel.models_image.count;
+    
+    if (viewModel.models_image.count > 0) {
+        PIEModelImage* entity = [viewModel.models_image objectAtIndex:0];
+        NSString *urlString_imageView1 = [entity.url trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
+        [self.thumbView.rightView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView1] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+        if (viewModel.models_image.count == 2) {
+            NSString *urlString_imageView2 = [viewModel.models_image[1].url trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
+            [_thumbView.leftView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView2] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+        } else {
+            _thumbView.leftView.image = nil;
+        }
+    }
+    
 }
 
 - (void)animateWithType:(PIEThumbAnimateViewType)type {
@@ -99,30 +133,6 @@ static int thumbViewSizeConstant = 100;
 }
 
 
--(void)setViewModel:(PIEPageVM *)viewModel {
-    _viewModel = viewModel;
-    [DDService sd_downloadImage:viewModel.imageURL withBlock:^(UIImage *image) {
-        _imageView.image = image;
-//        
-//        _blurBackgroundImageView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
-        // 将堵住主线程的方法挪到其他线程中
-        [image backgroundBlurredImageView:_blurBackgroundImageView WithRadius:80 iterations:1 tintColor:nil];
-    }];
-    
-    _thumbView.subviewCounts = viewModel.models_image.count;
-    
-    if (viewModel.models_image.count > 0) {
-        PIEModelImage* entity = [viewModel.models_image objectAtIndex:0];
-        NSString *urlString_imageView1 = [entity.url trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
-        [self.thumbView.rightView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView1] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
-        if (viewModel.models_image.count == 2) {
-            NSString *urlString_imageView2 = [viewModel.models_image[1].url trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
-            [_thumbView.leftView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView2] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
-        } else {
-            _thumbView.leftView.image = nil;
-        }
-    }
-}
 -(UIImageView *)blurBackgroundImageView {
     if (!_blurBackgroundImageView) {
         _blurBackgroundImageView = [UIImageView new];

@@ -20,7 +20,7 @@
 
 #import "PIECommentViewController.h"
 #import "PIEReplyCollectionViewController.h"
-
+#import "PIEPageDetailViewController.h"
 
 #import "PIEPageManager.h"
 /* Variables */
@@ -523,10 +523,14 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.animateImageView.frame, p)) {
             //进入热门详情
-            PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+//            PIECarouselViewController2* vc = [PIECarouselViewController2 new];
             //                    _selectedVM.image = cell.theImageView.image;
-            vc.pageVM = _selectedVM;
-            [self presentViewController:vc animated:YES completion:nil];
+//            vc.pageVM = _selectedVM;
+//            [self presentViewController:vc animated:YES completion:nil];
+            
+            PIEPageDetailViewController *vc2 = [PIEPageDetailViewController new];
+            vc2.pageViewModel = _selectedVM;
+            [self.navigationController pushViewController:vc2 animated:YES];
         }
         //点击头像
         else if (CGRectContainsPoint(cell.avatarView.frame, p)) {

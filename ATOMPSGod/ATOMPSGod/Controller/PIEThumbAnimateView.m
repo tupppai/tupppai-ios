@@ -26,6 +26,7 @@
     self.leftView.userInteractionEnabled = YES;
     self.rightView.userInteractionEnabled = YES;
     self.userInteractionEnabled = YES;
+    
 }
 - (void)setupSubviews {
     [self addSubview:self.blurView];
@@ -137,6 +138,7 @@
     self.enlarged = !self.enlarged;
 
 }
+
 
 
 - (void)prepareForReuse {

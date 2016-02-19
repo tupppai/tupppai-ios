@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="621" id="KGk-i7-Jjw" customClass="PIEPageDetailHeaderTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="363" height="621"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="363" height="620.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="apy-nb-mWa" customClass="PIEAvatarButton">
+                        <rect key="frame" x="8" y="8" width="36" height="37"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="36" id="9Aq-Uz-m62"/>
+                            <constraint firstAttribute="height" constant="37" id="Ujk-wp-0Ed"/>
+                        </constraints>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JAV-Xd-aFt">
+                        <rect key="frame" x="52" y="8" width="30" height="30"/>
+                        <state key="normal" title="-"/>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vlw-lC-tqq">
+                        <rect key="frame" x="52" y="40" width="8" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A08-Ui-GtX">
+                        <rect key="frame" x="264" y="12" width="60" height="28"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="BLF-I0-f17"/>
+                            <constraint firstAttribute="height" constant="28" id="eLD-iO-p0e"/>
+                        </constraints>
+                        <state key="normal" title="Button" image="new_reply_follow"/>
+                    </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QLM-nv-QSN" customClass="PIEBlurAnimateImageView">
+                        <rect key="frame" x="0.0" y="69" width="363" height="363"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="QLM-nv-QSN" secondAttribute="height" multiplier="1:1" id="bM0-fZ-Rev"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ddK-Rf-dzg">
+                        <rect key="frame" x="4" y="455" width="355" height="41"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YQ9-7v-pdO" customClass="PIEPageButton">
+                        <rect key="frame" x="0.0" y="540" width="46" height="36"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="120" id="51C-Za-kiU"/>
+                            <constraint firstAttribute="height" constant="36" id="Lk1-kh-Qgy"/>
+                            <constraint firstAttribute="width" priority="250" constant="46" id="kZ4-x8-AzM"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="51C-Za-kiU"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <view contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="r3D-0l-CRB" customClass="PIEPageCollectionSwipeView">
+                        <rect key="frame" x="25" y="451" width="338" height="0.0"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" id="QWb-E0-Q3p"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="apy-nb-mWa" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="1S7-k7-ZLF"/>
+                    <constraint firstAttribute="trailing" secondItem="ddK-Rf-dzg" secondAttribute="trailing" constant="4" id="4eL-Ro-ElX"/>
+                    <constraint firstItem="ddK-Rf-dzg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="4" id="66I-8A-4F2"/>
+                    <constraint firstItem="QLM-nv-QSN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Ate-Kn-w37"/>
+                    <constraint firstItem="vlw-lC-tqq" firstAttribute="leading" secondItem="apy-nb-mWa" secondAttribute="trailing" constant="8" id="CZd-6Z-FBN"/>
+                    <constraint firstItem="A08-Ui-GtX" firstAttribute="centerY" secondItem="apy-nb-mWa" secondAttribute="centerY" id="DH3-iJ-Af2"/>
+                    <constraint firstItem="r3D-0l-CRB" firstAttribute="top" secondItem="QLM-nv-QSN" secondAttribute="bottom" constant="19" id="E09-6D-FkM"/>
+                    <constraint firstItem="QLM-nv-QSN" firstAttribute="top" secondItem="vlw-lC-tqq" secondAttribute="bottom" constant="8" id="Fds-q7-0QV"/>
+                    <constraint firstItem="JAV-Xd-aFt" firstAttribute="leading" secondItem="apy-nb-mWa" secondAttribute="trailing" constant="8" id="FuT-64-msF"/>
+                    <constraint firstItem="ddK-Rf-dzg" firstAttribute="top" secondItem="r3D-0l-CRB" secondAttribute="bottom" constant="4" id="JQf-UM-cWg"/>
+                    <constraint firstItem="apy-nb-mWa" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="Ndg-0r-Nsa"/>
+                    <constraint firstItem="YQ9-7v-pdO" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Wv4-uO-tPb"/>
+                    <constraint firstAttribute="trailing" secondItem="r3D-0l-CRB" secondAttribute="trailing" id="Z8O-LD-e2c"/>
+                    <constraint firstItem="JAV-Xd-aFt" firstAttribute="top" secondItem="apy-nb-mWa" secondAttribute="top" id="gUx-tQ-7Pn"/>
+                    <constraint firstItem="YQ9-7v-pdO" firstAttribute="top" secondItem="ddK-Rf-dzg" secondAttribute="bottom" constant="44" id="huP-Sx-QIr"/>
+                    <constraint firstItem="vlw-lC-tqq" firstAttribute="top" secondItem="JAV-Xd-aFt" secondAttribute="bottom" constant="2.5" id="nvn-RQ-q5l"/>
+                    <constraint firstItem="r3D-0l-CRB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="17" id="vNk-YC-76X"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="YQ9-7v-pdO" secondAttribute="bottom" constant="36.5" id="vs1-S8-U1y"/>
+                    <constraint firstAttribute="trailing" secondItem="QLM-nv-QSN" secondAttribute="trailing" id="xnD-FZ-UCE"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="A08-Ui-GtX" secondAttribute="trailing" constant="31" id="zib-B6-smY"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="avatarButton" destination="apy-nb-mWa" id="MGd-aS-wMa"/>
+                <outlet property="blurAnimateImageView" destination="QLM-nv-QSN" id="0P3-vq-mhd"/>
+                <outlet property="contentLabel" destination="ddK-Rf-dzg" id="bNd-gN-Dyt"/>
+                <outlet property="followButton" destination="A08-Ui-GtX" id="AiV-l6-t4N"/>
+                <outlet property="pageCollectionSwipeView" destination="r3D-0l-CRB" id="2Lj-hw-7Pk"/>
+                <outlet property="pageCollectionViewHeightContraint" destination="QWb-E0-Q3p" id="hiC-bo-NHB"/>
+                <outlet property="shareButtonView" destination="YQ9-7v-pdO" id="cgX-WM-tCe"/>
+                <outlet property="timeLabel" destination="vlw-lC-tqq" id="Cam-Fo-exp"/>
+                <outlet property="usernameButton" destination="JAV-Xd-aFt" id="0bX-iY-o1f"/>
+            </connections>
+            <point key="canvasLocation" x="366.5" y="403.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="new_reply_follow" width="58" height="28"/>
+    </resources>
+</document>

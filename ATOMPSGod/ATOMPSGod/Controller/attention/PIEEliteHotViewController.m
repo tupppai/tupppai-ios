@@ -24,7 +24,7 @@
 #import "PIECommentViewController.h"
 #import "PIEReplyCollectionViewController.h"
 #import "PIEPageManager.h"
-
+#import "PIEPageDetailViewController.h"
 
 @interface PIEEliteHotViewController ()
 
@@ -731,10 +731,13 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 {
     
     PIEPageVM *selectedVM          = _sourceHot[indexPath.row];
-    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-    vc.pageVM                      = selectedVM;
-    
-    [self presentViewController:vc animated:YES completion:nil];
+//    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+//    vc.pageVM                      = selectedVM;
+    //    [self presentViewController:vc animated:YES completion:nil];
+
+    PIEPageDetailViewController *vc2 = [PIEPageDetailViewController new];
+    vc2.pageViewModel = selectedVM;
+    [self.navigationController pushViewController:vc2 animated:YES];
 }
 
 - (void)longPressOnImageViewAtIndexPath:(NSIndexPath *)indexPath
