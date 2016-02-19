@@ -24,5 +24,5 @@ typedef NS_ENUM(NSInteger, PIEThumbAnimateViewType) {
 @property (strong, nonatomic)  UIImageView *rightView;
 
 - (void)animateWithType:(PIEThumbAnimateViewType)type;
-- (void)renewContraints;
+- (void)prepareForReuse;
 @end

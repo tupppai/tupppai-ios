@@ -744,53 +744,7 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     opvc.pageVM = _vm;
     [self.navigationController pushViewController:opvc animated:YES];
 }
-//- (void) didTap3 {
-//    [self.textView resignFirstResponder];
-//    // Create image info
-//    JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
-//    if (_headerView.imageViewMain.image != nil) {
-//        imageInfo.image = _headerView.imageViewMain.image;
-//    } else {
-//        imageInfo.imageURL = [NSURL URLWithString:_vm.imageURL];
-//    }
-//    //    imageInfo.referenceRect = _selectedHotDetailCell.userHeaderButton.frame;
-//    //    imageInfo.referenceView = _selectedHotDetailCell.userHeaderButton;
-//    
-//    // Setup view controller
-//    JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
-//                                           initWithImageInfo:imageInfo
-//                                           mode:JTSImageViewControllerMode_Image
-//                                           backgroundStyle:JTSImageViewControllerBackgroundOption_Blurred];
-//    
-//    // Present the view controller.
-//    [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOffscreen];
-//    imageViewer.interactionsDelegate = self;
-//}
-//- (void) didTap4 {
-//    [self.textView resignFirstResponder];
-//    // Create image info
-//    JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
-//    if (_headerView.imageViewMain.image != nil) {
-////        imageInfo.image = _headerView.imageViewRight.image;
-//    } else {
-//        if (_vm.models_image.count >= 2) {
-//            PIEModelImage* imgEntity = _vm.models_image[1];
-//            imageInfo.imageURL = [NSURL URLWithString:imgEntity.url];
-//        }
-//    }
-//    //    imageInfo.referenceRect = _selectedHotDetailCell.userHeaderButton.frame;
-//    //    imageInfo.referenceView = _selectedHotDetailCell.userHeaderButton;
-//    
-//    // Setup view controller
-//    JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
-//                                           initWithImageInfo:imageInfo
-//                                           mode:JTSImageViewControllerMode_Image
-//                                           backgroundStyle:JTSImageViewControllerBackgroundOption_Scaled];
-//    
-//    // Present the view controller.
-//    [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOffscreen];
-//    imageViewer.interactionsDelegate = self;
-//}
+
 - (void) didTap5 {
     [self.textView resignFirstResponder];
 
@@ -810,10 +764,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
 
 - (void)shareViewDidShare:(PIEShareView *)shareView
 {
-    // refresh ui element on main thread after successful sharing, do nothing otherwise.
-//    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-//        [self updateShareStatus];
-//    }];
 }
 
 - (void)shareViewDidCancel:(PIEShareView *)shareView
@@ -868,34 +818,6 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     }
     return _shareView;
 }
-
-
-
-
-//- (void)addKVO {
-//    if (_shouldShowHeaderView) {
-//        [self.source_newComment addObserver:self forKeyPath:@"array" options:NSKeyValueObservingOptionNew context:nil];
-//    }
-//}
-//- (void)removeKVO {
-//    if (_shouldShowHeaderView) {
-//
-//        [self.source_newComment removeObserver:self forKeyPath:@"array"];
-//
-//    }
-//}
-
-
-//-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
-//if ([keyPath isEqualToString:@"array"]) {
-//        if (_vm.type == PIEPageTypeAsk) {
-//            ((PIECommentTableHeaderView_Ask*)self.tableView.tableHeaderView).commentButton.number = _source_newComment.countOfArray;
-//        }    else    if (_vm.type == PIEPageTypeReply) {
-//            ((PIECommentTableHeaderView_Reply*)self.tableView.tableHeaderView).commentButton.number = _source_newComment.countOfArray;
-//        }
-//    }
-//
-//}
 
 
 @end

@@ -14,7 +14,7 @@
 #import "PIEAvatarImageView.h"
 #import "PIELoveButton.h"
 #import "PIEAvatarView.h"
-
+#import "PIEBlurAnimateImageView.h"
 @interface PIENewReplyTableCell : UITableViewCell
 @property (nonatomic,strong) PIEPageVM* vm;
 
@@ -23,7 +23,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *theImageView;
+//@property (weak, nonatomic) IBOutlet UIImageView *theImageView;
+@property (weak, nonatomic) IBOutlet PIEBlurAnimateImageView *blurAnimateImageView;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *allWorkView;
 @property (weak, nonatomic) IBOutlet PIEPageButton *shareView;
@@ -31,14 +32,14 @@
 @property (weak, nonatomic) IBOutlet PIEPageButton *commentView;
 @property (weak, nonatomic) IBOutlet PIELoveButton *likeView;
 @property (weak, nonatomic) IBOutlet UIImageView *followView;
-@property (nonatomic, assign) NSInteger ID;
-@property (nonatomic, assign) NSInteger askID;
+//@property (nonatomic, assign) NSInteger ID;
+//@property (nonatomic, assign) NSInteger askID;
 
-@property (strong, nonatomic) PIEThumbAnimateView *thumbView;
+//@property (strong, nonatomic) PIEThumbAnimateView *thumbView;
 
-- (void)hideThumbnailImage;
+//- (void)hideThumbnailImage;
 
 - (void)injectSauce:(PIEPageVM *)viewModel ;
-- (void)animateToggleExpanded ;
-- (void)animateThumbScale:(PIEThumbAnimateViewType)type;
+//- (void)animateToggleExpanded ;
+//- (void)animateThumbScale:(PIEThumbAnimateViewType)type;
 @end
