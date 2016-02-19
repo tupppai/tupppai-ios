@@ -241,6 +241,6 @@
     <resources>
         <image name="icon_psGod_big" width="26" height="26"/>
         <image name="piePsGodCertificate" width="38" height="13"/>
-        <image name="pie_message" width="23" height="18"/>
+        <image name="pie_message" width="20" height="16"/>
     </resources>
 </document>
