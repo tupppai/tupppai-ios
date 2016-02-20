@@ -16,7 +16,7 @@
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9je-p7-PCG" customClass="PIEAvatarView">
                         <rect key="frame" x="17" y="17" width="31" height="31"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="31" id="gfA-vV-0sz"/>
                             <constraint firstAttribute="height" constant="31" id="ybP-eN-lDG"/>
@@ -62,7 +62,7 @@
                 <outlet property="followButton" destination="txo-o9-ATz" id="DuN-CM-B0e"/>
                 <outlet property="userNameLabel" destination="OxO-k5-Cna" id="vzI-jH-0Cm"/>
             </connections>
-            <point key="canvasLocation" x="250" y="73.5"/>
+            <point key="canvasLocation" x="131" y="75.5"/>
         </tableViewCell>
     </objects>
     <resources>
