@@ -39,8 +39,8 @@
 
 - (void)injectModel:(PIECashFlowModel *)model
 {
-    [self.avatarView.avatarImageView
-     sd_setImageWithURL:[NSURL URLWithString:model.avatarUrl]];
+//    [self.avatarView.avatarImageView
+//     sd_setImageWithURL:[NSURL URLWithString:model.avatarUrl]];
     
     if (model.avatarUrl == nil) {
         self.avatarView.hidden = YES;
@@ -53,6 +53,8 @@
     }else{
         self.avatarView.hidden = NO;
         self.cashFlowTypeImageView.hidden = YES;
+        
+        self.avatarView.url = model.avatarUrl;
         
         if (model.cashFlowModelType == PIECashFlowModelTypeIncome) {
             self.amountLabel.text =

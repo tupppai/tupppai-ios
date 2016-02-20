@@ -116,7 +116,13 @@ static NSString *PIECashFlowDetailTableViewCellIdentifier =
 #pragma mark - <PWRefreshBaseTableViewDelegate>
 - (void)didPullRefreshUp:(UITableView *)tableView
 {
-    [self loadMoreCashFlowDetails];
+    if (_canRefreshFooter) {
+        [self loadMoreCashFlowDetails];
+    }else{
+        [Hud text:@"已经拉到底啦"];
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
+    }
+    
 }
 
 #pragma mark - Network request
@@ -129,6 +135,8 @@ static NSString *PIECashFlowDetailTableViewCellIdentifier =
     [PIEMyWalletManager
      transactionDetails:params
      block:^(NSArray<PIECashFlowModel *> *retArray) {
+         _canRefreshFooter = (retArray.count > 0);
+         
          @strongify(self);
          [_source_cashFlow removeAllObjects];
          [_source_cashFlow addObjectsFromArray:retArray];
@@ -148,6 +156,8 @@ static NSString *PIECashFlowDetailTableViewCellIdentifier =
     [PIEMyWalletManager
      transactionDetails:params
      block:^(NSArray<PIECashFlowModel *> *retArray) {
+         _canRefreshFooter = (retArray.count == 10);
+         
          @strongify(self);
          [self.tableView.mj_footer endRefreshing];
          [_source_cashFlow addObjectsFromArray:retArray];
