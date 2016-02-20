@@ -22,37 +22,37 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="240"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="＊" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gng-se-MP8">
-                                        <rect key="frame" x="255" y="195.5" width="12" height="14.5"/>
+                                        <rect key="frame" x="255" y="195" width="12" height="14.5"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="关注" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gx7-sZ-8Me">
-                                        <rect key="frame" x="229" y="195.5" width="24" height="14.5"/>
+                                        <rect key="frame" x="229" y="195" width="24" height="14.5"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="＊" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gy0-hx-9KW">
-                                        <rect key="frame" x="365" y="195.5" width="12" height="14.5"/>
+                                        <rect key="frame" x="365" y="195" width="12" height="14.5"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="获赞" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qzW-PX-U7Y">
-                                        <rect key="frame" x="339" y="195.5" width="24" height="14.5"/>
+                                        <rect key="frame" x="339" y="195" width="24" height="14.5"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="粉丝" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UHf-uB-TMZ">
-                                        <rect key="frame" x="284" y="195.5" width="24" height="14.5"/>
+                                        <rect key="frame" x="284" y="195" width="24" height="14.5"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="＊" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0f8-Kd-RTM">
-                                        <rect key="frame" x="310" y="195.5" width="12" height="14.5"/>
+                                        <rect key="frame" x="310" y="195" width="12" height="14.5"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -64,7 +64,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jt2-sH-511">
-                                        <rect key="frame" x="274" y="201.5" width="3" height="3"/>
+                                        <rect key="frame" x="274" y="201" width="3" height="3"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="3" id="I7V-ao-v4g"/>
@@ -72,7 +72,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JTg-Op-4Qr">
-                                        <rect key="frame" x="329" y="201.5" width="3" height="3"/>
+                                        <rect key="frame" x="329" y="201" width="3" height="3"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="3" id="Rqa-um-JrX"/>
@@ -114,13 +114,20 @@
                                         </variation>
                                     </view>
                                     <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_psGod_big" translatesAutoresizingMaskIntoConstraints="NO" id="NaS-Kd-wkR" userLabel="psGod_big">
-                                        <rect key="frame" x="317.5" y="122.5" width="16.5" height="16.5"/>
+                                        <rect key="frame" x="317" y="122" width="16.5" height="16.5"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="piePsGodCertificate" translatesAutoresizingMaskIntoConstraints="NO" id="0nZ-YX-Z6e">
-                                        <rect key="frame" x="316.5" y="159" width="38" height="13"/>
+                                        <rect key="frame" x="316" y="159" width="38" height="13"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="13" id="48L-BZ-R4F"/>
                                             <constraint firstAttribute="width" constant="38" id="Y8X-T6-V6c"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pie_myWalletIndicator" translatesAutoresizingMaskIntoConstraints="NO" id="ZSH-50-jJW" userLabel="myWallet_indicator">
+                                        <rect key="frame" x="565" y="184" width="23" height="23"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="23" id="Dwf-Wf-hha"/>
+                                            <constraint firstAttribute="width" constant="23" id="vce-uy-K6f"/>
                                         </constraints>
                                     </imageView>
                                 </subviews>
@@ -144,11 +151,13 @@
                                     <constraint firstItem="yAp-sS-H6c" firstAttribute="top" secondItem="0eW-Qd-Lp1" secondAttribute="top" constant="60" id="SAv-9I-HN2"/>
                                     <constraint firstItem="UHf-uB-TMZ" firstAttribute="top" secondItem="0f8-Kd-RTM" secondAttribute="bottom" constant="-4" id="Ste-bB-jyU"/>
                                     <constraint firstItem="gng-se-MP8" firstAttribute="leading" secondItem="gx7-sZ-8Me" secondAttribute="trailing" constant="2" id="V8X-wH-yOY"/>
+                                    <constraint firstAttribute="trailing" secondItem="ZSH-50-jJW" secondAttribute="trailing" constant="12" id="VoV-G3-0NJ"/>
                                     <constraint firstItem="0nZ-YX-Z6e" firstAttribute="centerY" secondItem="quq-3A-g9a" secondAttribute="centerY" id="Vy7-Ao-AhL"/>
                                     <constraint firstItem="NaS-Kd-wkR" firstAttribute="height" secondItem="Wvc-KJ-tOw" secondAttribute="height" multiplier="0.21" id="XIf-WB-hsO"/>
                                     <constraint firstItem="JTg-Op-4Qr" firstAttribute="leading" secondItem="0f8-Kd-RTM" secondAttribute="trailing" constant="7" id="YiM-5B-xrd"/>
                                     <constraint firstItem="0nZ-YX-Z6e" firstAttribute="leading" secondItem="quq-3A-g9a" secondAttribute="trailing" constant="13" id="aA4-2d-o8n"/>
                                     <constraint firstItem="0f8-Kd-RTM" firstAttribute="centerY" secondItem="UHf-uB-TMZ" secondAttribute="centerY" id="fI5-ig-kcE"/>
+                                    <constraint firstItem="ZSH-50-jJW" firstAttribute="baseline" secondItem="Gy0-hx-9KW" secondAttribute="baseline" id="ftB-st-3iH"/>
                                     <constraint firstItem="Jt2-sH-511" firstAttribute="centerX" secondItem="yAp-sS-H6c" secondAttribute="centerX" id="gfQ-Io-YhE"/>
                                     <constraint firstItem="gng-se-MP8" firstAttribute="centerY" secondItem="gx7-sZ-8Me" secondAttribute="centerY" id="hRg-JN-luR"/>
                                     <constraint firstItem="qzW-PX-U7Y" firstAttribute="centerY" secondItem="UHf-uB-TMZ" secondAttribute="centerY" id="i8Z-31-DKF"/>
@@ -209,6 +218,7 @@
                         <outlet property="followView" destination="gx7-sZ-8Me" id="scz-qJ-RcT"/>
                         <outlet property="likeView" destination="qzW-PX-U7Y" id="uh9-4q-Uh0"/>
                         <outlet property="likedCountLabel" destination="Gy0-hx-9KW" id="xNo-3z-Wka"/>
+                        <outlet property="myWalletIndicatorImageView" destination="ZSH-50-jJW" id="49w-Cg-VHl"/>
                         <outlet property="psGodCertificate" destination="0nZ-YX-Z6e" id="FfH-PZ-qIb"/>
                         <outlet property="psGodIcon_big" destination="NaS-Kd-wkR" id="7W6-Ze-uec"/>
                         <outlet property="topContainerView" destination="0eW-Qd-Lp1" id="BnU-jc-QkQ"/>
@@ -242,5 +252,6 @@
         <image name="icon_psGod_big" width="26" height="26"/>
         <image name="piePsGodCertificate" width="38" height="13"/>
         <image name="pie_message" width="20" height="16"/>
+        <image name="pie_myWalletIndicator" width="23" height="23"/>
     </resources>
 </document>

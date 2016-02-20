@@ -30,7 +30,7 @@
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="关注图派公众号领取" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FpC-DX-i6M">
                             <rect key="frame" x="54" y="17" width="144" height="19.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="在公众号搜索图派，关注服务号即可提现" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YBq-YT-tns">
@@ -164,7 +164,7 @@
                 <outlet property="remainingBalanceLabel" destination="EuA-Zb-GOx" id="O1Q-z6-6h1"/>
                 <outlet property="separatorLineView" destination="QVV-hK-FHj" id="qvb-U1-Hxe"/>
             </connections>
-            <point key="canvasLocation" x="-63.5" y="197.5"/>
+            <point key="canvasLocation" x="30.5" y="179.5"/>
         </view>
     </objects>
     <resources>
