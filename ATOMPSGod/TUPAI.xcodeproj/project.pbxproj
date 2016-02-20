@@ -186,6 +186,20 @@
 		90A56E4B1C54B0D10079B3D3 /* PIEChannelTutorialListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90A56E491C54B0D10079B3D3 /* PIEChannelTutorialListCell.xib */; };
 		90A56E601C54C0170079B3D3 /* PIEChannelTutorialPrefaceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A56E5E1C54C0170079B3D3 /* PIEChannelTutorialPrefaceTableViewCell.m */; };
 		90A56E611C54C0170079B3D3 /* PIEChannelTutorialPrefaceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90A56E5F1C54C0170079B3D3 /* PIEChannelTutorialPrefaceTableViewCell.xib */; };
+		90A95E7C1C7828400001CE66 /* PIEBindWeixinPaymentViewController_new.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A95E611C7828400001CE66 /* PIEBindWeixinPaymentViewController_new.m */; };
+		90A95E7D1C7828400001CE66 /* PIECashFlowDetailsViewController_new.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A95E631C7828400001CE66 /* PIECashFlowDetailsViewController_new.m */; };
+		90A95E7E1C7828400001CE66 /* PIEFinishWithdrawMoneyViewController_new.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A95E651C7828400001CE66 /* PIEFinishWithdrawMoneyViewController_new.m */; };
+		90A95E7F1C7828400001CE66 /* PIEMyWalletViewController_new.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A95E671C7828400001CE66 /* PIEMyWalletViewController_new.m */; };
+		90A95E801C7828400001CE66 /* PIEPIEMyWalletFaqViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A95E691C7828400001CE66 /* PIEPIEMyWalletFaqViewController.m */; };
+		90A95E811C7828400001CE66 /* PIEWithdrawAuthCodeVerificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A95E6B1C7828400001CE66 /* PIEWithdrawAuthCodeVerificationViewController.m */; };
+		90A95E821C7828400001CE66 /* PIEWithdrawAuthCodeVerificationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90A95E6C1C7828400001CE66 /* PIEWithdrawAuthCodeVerificationViewController.xib */; };
+		90A95E831C7828400001CE66 /* PIEWithdrawlMoneyViewController_new.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A95E6E1C7828400001CE66 /* PIEWithdrawlMoneyViewController_new.m */; };
+		90A95E841C7828400001CE66 /* PIEMyWalletManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A95E711C7828400001CE66 /* PIEMyWalletManager.m */; };
+		90A95E851C7828400001CE66 /* PIECashFlowModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A95E741C7828400001CE66 /* PIECashFlowModel.m */; };
+		90A95E861C7828400001CE66 /* PIECashFlowDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A95E771C7828400001CE66 /* PIECashFlowDetailTableViewCell.m */; };
+		90A95E871C7828400001CE66 /* PIECashFlowDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90A95E781C7828400001CE66 /* PIECashFlowDetailTableViewCell.xib */; };
+		90A95E881C7828400001CE66 /* PIEWithdrawMoneyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A95E7A1C7828400001CE66 /* PIEWithdrawMoneyView.m */; };
+		90A95E891C7828400001CE66 /* PIEWithdrawMoneyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90A95E7B1C7828400001CE66 /* PIEWithdrawMoneyView.xib */; };
 		90B3A2F21C545D0E00F059D1 /* PIEChannelTutorialImageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B3A2F11C545D0E00F059D1 /* PIEChannelTutorialImageModel.m */; };
 		90B3A2F61C546BD000F059D1 /* PIECashFlowDetailsNormalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B3A2F41C546BD000F059D1 /* PIECashFlowDetailsNormalCell.m */; };
 		90B3A2F71C546BD000F059D1 /* PIECashFlowDetailsNormalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90B3A2F51C546BD000F059D1 /* PIECashFlowDetailsNormalCell.xib */; };
@@ -1160,6 +1174,31 @@
 		90A56E5D1C54C0170079B3D3 /* PIEChannelTutorialPrefaceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelTutorialPrefaceTableViewCell.h; sourceTree = "<group>"; };
 		90A56E5E1C54C0170079B3D3 /* PIEChannelTutorialPrefaceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelTutorialPrefaceTableViewCell.m; sourceTree = "<group>"; };
 		90A56E5F1C54C0170079B3D3 /* PIEChannelTutorialPrefaceTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEChannelTutorialPrefaceTableViewCell.xib; sourceTree = "<group>"; };
+		90A95E601C7828400001CE66 /* PIEBindWeixinPaymentViewController_new.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEBindWeixinPaymentViewController_new.h; sourceTree = "<group>"; };
+		90A95E611C7828400001CE66 /* PIEBindWeixinPaymentViewController_new.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEBindWeixinPaymentViewController_new.m; sourceTree = "<group>"; };
+		90A95E621C7828400001CE66 /* PIECashFlowDetailsViewController_new.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECashFlowDetailsViewController_new.h; sourceTree = "<group>"; };
+		90A95E631C7828400001CE66 /* PIECashFlowDetailsViewController_new.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECashFlowDetailsViewController_new.m; sourceTree = "<group>"; };
+		90A95E641C7828400001CE66 /* PIEFinishWithdrawMoneyViewController_new.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEFinishWithdrawMoneyViewController_new.h; sourceTree = "<group>"; };
+		90A95E651C7828400001CE66 /* PIEFinishWithdrawMoneyViewController_new.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEFinishWithdrawMoneyViewController_new.m; sourceTree = "<group>"; };
+		90A95E661C7828400001CE66 /* PIEMyWalletViewController_new.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEMyWalletViewController_new.h; sourceTree = "<group>"; };
+		90A95E671C7828400001CE66 /* PIEMyWalletViewController_new.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEMyWalletViewController_new.m; sourceTree = "<group>"; };
+		90A95E681C7828400001CE66 /* PIEPIEMyWalletFaqViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEPIEMyWalletFaqViewController.h; sourceTree = "<group>"; };
+		90A95E691C7828400001CE66 /* PIEPIEMyWalletFaqViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEPIEMyWalletFaqViewController.m; sourceTree = "<group>"; };
+		90A95E6A1C7828400001CE66 /* PIEWithdrawAuthCodeVerificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEWithdrawAuthCodeVerificationViewController.h; sourceTree = "<group>"; };
+		90A95E6B1C7828400001CE66 /* PIEWithdrawAuthCodeVerificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEWithdrawAuthCodeVerificationViewController.m; sourceTree = "<group>"; };
+		90A95E6C1C7828400001CE66 /* PIEWithdrawAuthCodeVerificationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEWithdrawAuthCodeVerificationViewController.xib; sourceTree = "<group>"; };
+		90A95E6D1C7828400001CE66 /* PIEWithdrawlMoneyViewController_new.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEWithdrawlMoneyViewController_new.h; sourceTree = "<group>"; };
+		90A95E6E1C7828400001CE66 /* PIEWithdrawlMoneyViewController_new.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEWithdrawlMoneyViewController_new.m; sourceTree = "<group>"; };
+		90A95E701C7828400001CE66 /* PIEMyWalletManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEMyWalletManager.h; sourceTree = "<group>"; };
+		90A95E711C7828400001CE66 /* PIEMyWalletManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEMyWalletManager.m; sourceTree = "<group>"; };
+		90A95E731C7828400001CE66 /* PIECashFlowModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECashFlowModel.h; sourceTree = "<group>"; };
+		90A95E741C7828400001CE66 /* PIECashFlowModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECashFlowModel.m; sourceTree = "<group>"; };
+		90A95E761C7828400001CE66 /* PIECashFlowDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECashFlowDetailTableViewCell.h; sourceTree = "<group>"; };
+		90A95E771C7828400001CE66 /* PIECashFlowDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECashFlowDetailTableViewCell.m; sourceTree = "<group>"; };
+		90A95E781C7828400001CE66 /* PIECashFlowDetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIECashFlowDetailTableViewCell.xib; sourceTree = "<group>"; };
+		90A95E791C7828400001CE66 /* PIEWithdrawMoneyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEWithdrawMoneyView.h; sourceTree = "<group>"; };
+		90A95E7A1C7828400001CE66 /* PIEWithdrawMoneyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEWithdrawMoneyView.m; sourceTree = "<group>"; };
+		90A95E7B1C7828400001CE66 /* PIEWithdrawMoneyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEWithdrawMoneyView.xib; sourceTree = "<group>"; };
 		90B3A2F01C545D0E00F059D1 /* PIEChannelTutorialImageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIEChannelTutorialImageModel.h; path = ATOMPSGod/Controller/Channel/Controllers/PIEChannelTutorialImageModel.h; sourceTree = SOURCE_ROOT; };
 		90B3A2F11C545D0E00F059D1 /* PIEChannelTutorialImageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIEChannelTutorialImageModel.m; path = ATOMPSGod/Controller/Channel/Controllers/PIEChannelTutorialImageModel.m; sourceTree = SOURCE_ROOT; };
 		90B3A2F31C546BD000F059D1 /* PIECashFlowDetailsNormalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECashFlowDetailsNormalCell.h; sourceTree = "<group>"; };
@@ -3024,6 +3063,70 @@
 			path = TTTAttributedLabel;
 			sourceTree = "<group>";
 		};
+		90A95E5E1C7828400001CE66 /* NewWallet */ = {
+			isa = PBXGroup;
+			children = (
+				90A95E5F1C7828400001CE66 /* Controllers */,
+				90A95E6F1C7828400001CE66 /* Manager */,
+				90A95E721C7828400001CE66 /* Models */,
+				90A95E751C7828400001CE66 /* Views */,
+			);
+			path = NewWallet;
+			sourceTree = "<group>";
+		};
+		90A95E5F1C7828400001CE66 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				90A95E601C7828400001CE66 /* PIEBindWeixinPaymentViewController_new.h */,
+				90A95E611C7828400001CE66 /* PIEBindWeixinPaymentViewController_new.m */,
+				90A95E621C7828400001CE66 /* PIECashFlowDetailsViewController_new.h */,
+				90A95E631C7828400001CE66 /* PIECashFlowDetailsViewController_new.m */,
+				90A95E641C7828400001CE66 /* PIEFinishWithdrawMoneyViewController_new.h */,
+				90A95E651C7828400001CE66 /* PIEFinishWithdrawMoneyViewController_new.m */,
+				90A95E661C7828400001CE66 /* PIEMyWalletViewController_new.h */,
+				90A95E671C7828400001CE66 /* PIEMyWalletViewController_new.m */,
+				90A95E681C7828400001CE66 /* PIEPIEMyWalletFaqViewController.h */,
+				90A95E691C7828400001CE66 /* PIEPIEMyWalletFaqViewController.m */,
+				90A95E6A1C7828400001CE66 /* PIEWithdrawAuthCodeVerificationViewController.h */,
+				90A95E6B1C7828400001CE66 /* PIEWithdrawAuthCodeVerificationViewController.m */,
+				90A95E6C1C7828400001CE66 /* PIEWithdrawAuthCodeVerificationViewController.xib */,
+				90A95E6D1C7828400001CE66 /* PIEWithdrawlMoneyViewController_new.h */,
+				90A95E6E1C7828400001CE66 /* PIEWithdrawlMoneyViewController_new.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		90A95E6F1C7828400001CE66 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				90A95E701C7828400001CE66 /* PIEMyWalletManager.h */,
+				90A95E711C7828400001CE66 /* PIEMyWalletManager.m */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		90A95E721C7828400001CE66 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				90A95E731C7828400001CE66 /* PIECashFlowModel.h */,
+				90A95E741C7828400001CE66 /* PIECashFlowModel.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		90A95E751C7828400001CE66 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				90A95E761C7828400001CE66 /* PIECashFlowDetailTableViewCell.h */,
+				90A95E771C7828400001CE66 /* PIECashFlowDetailTableViewCell.m */,
+				90A95E781C7828400001CE66 /* PIECashFlowDetailTableViewCell.xib */,
+				90A95E791C7828400001CE66 /* PIEWithdrawMoneyView.h */,
+				90A95E7A1C7828400001CE66 /* PIEWithdrawMoneyView.m */,
+				90A95E7B1C7828400001CE66 /* PIEWithdrawMoneyView.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		90BD57C01C71A7920063D2AD /* YYText */ = {
 			isa = PBXGroup;
 			children = (
@@ -4346,6 +4449,7 @@
 		F499E4461BD0E3E000E5F178 /* settings */ = {
 			isa = PBXGroup;
 			children = (
+				90A95E5E1C7828400001CE66 /* NewWallet */,
 				F4279A1C1C55FD77004CFBBE /* Wallet */,
 				F45ECF461BD1DC0A00417A75 /* MyCommented */,
 				F45ECF4F1BD1E39500417A75 /* PIEMyLikedPagesViewController.h */,
@@ -5025,6 +5129,7 @@
 				F4B02E121BECA27B00406A55 /* cell_holder_portrait.png in Resources */,
 				F4207AE91C046302004B1978 /* PIENotificationViewController.xib in Resources */,
 				F42100F21BF5EC1900CFD82E /* intro3.xib in Resources */,
+				90A95E891C7828400001CE66 /* PIEWithdrawMoneyView.xib in Resources */,
 				5C6CE6B91ADBE8A10035F522 /* EmojisList.plist in Resources */,
 				E942897F1B5B32A200ED26E4 /* NotificationBackgroundWarning@2x.png in Resources */,
 				E942897A1B5B32A200ED26E4 /* NotificationBackgroundSuccess.png in Resources */,
@@ -5037,7 +5142,9 @@
 				F41366951BBE73D900EE0C4E /* PIEReplyCollectionCell.xib in Resources */,
 				F4279A0E1C55F0C3004CFBBE /* AlipaySDK.bundle in Resources */,
 				F4F0A1C11C437F1C000DDEBB /* QBImagePicker.strings in Resources */,
+				90A95E871C7828400001CE66 /* PIECashFlowDetailTableViewCell.xib in Resources */,
 				F4D368731BA9552B00E6C91C /* PIENewAskCollectionCell.xib in Resources */,
+				90A95E821C7828400001CE66 /* PIEWithdrawAuthCodeVerificationViewController.xib in Resources */,
 				F4EC11291BCF55F7002D1DCF /* PIENotificationSystemTableViewCell.xib in Resources */,
 				0E54C7921C1E8F5E00F431AC /* PIEProceedingToHelpTableViewCell.xib in Resources */,
 				F4E7133E1BE35F230046C7A9 /* PIEModifyPasswordViewController.xib in Resources */,
@@ -5130,6 +5237,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90A95E831C7828400001CE66 /* PIEWithdrawlMoneyViewController_new.m in Sources */,
 				5CDB05CA1AA3FE520089121E /* AppDelegate.m in Sources */,
 				5C83A8961AC66F910071A024 /* POPVector.mm in Sources */,
 				903E09DE1C23DF9E006C87B8 /* PIEEliteViewController.m in Sources */,
@@ -5186,6 +5294,7 @@
 				5CEAC0331AD4F9540058037C /* DDMyCollectionManager.m in Sources */,
 				F4F72C201BCCFB7B002FF05A /* PIEShareIcon.m in Sources */,
 				90B3A2F21C545D0E00F059D1 /* PIEChannelTutorialImageModel.m in Sources */,
+				90A95E7C1C7828400001CE66 /* PIEBindWeixinPaymentViewController_new.m in Sources */,
 				F465C6FC1C294EAE00D8A410 /* PIEChannelDetailLatestPSCell.m in Sources */,
 				F4EF1AA61C44845A005B86AE /* NSNumber+leesinDone.m in Sources */,
 				F4106CF71C3F8B66006A23B9 /* LeesinAssetCell.m in Sources */,
@@ -5213,12 +5322,14 @@
 				F4AE609B1BC129ED007BCA2A /* PIEFriendReplyCollectionViewCell.m in Sources */,
 				F4E5F5CC1BD923E000AB8B31 /* PIEEliteHotAskTableViewCell.m in Sources */,
 				5CDB06361AA428BD0089121E /* View+MASAdditions.m in Sources */,
+				90A95E801C7828400001CE66 /* PIEPIEMyWalletFaqViewController.m in Sources */,
 				F4EC10FC1BCE591A002D1DCF /* PIENotificationCommentTableViewCell.m in Sources */,
 				5C83A88F1AC66F910071A024 /* POPCustomAnimation.mm in Sources */,
 				F4106CFE1C3F8B66006A23B9 /* LeesinTextView.m in Sources */,
 				5C7861161AAF4C9400E87C77 /* PIEMyReplyViewController.m in Sources */,
 				5C54DF231AB9772000BDE34D /* PIEPageModel.m in Sources */,
 				E991EF0B1B735D0500025108 /* DDIntroVC.m in Sources */,
+				90A95E881C7828400001CE66 /* PIEWithdrawMoneyView.m in Sources */,
 				5C83A8931AC66F910071A024 /* POPMath.mm in Sources */,
 				5C3101901AAEC8F900EF529B /* PIEMessagePushSettingViewController.m in Sources */,
 				5C54DF201AB9738E00BDE34D /* PIETabBarController.m in Sources */,
@@ -5290,6 +5401,7 @@
 				F4DC3D3F1BC131BA00DCF72F /* PIEFriendAskTableViewCell.m in Sources */,
 				F40207411BA7C4160007CE02 /* PIEPresenter.m in Sources */,
 				5CDB066B1AA45C920089121E /* ATOMMobileRegisterView.m in Sources */,
+				90A95E851C7828400001CE66 /* PIECashFlowModel.m in Sources */,
 				5CDB06021AA405A40089121E /* UIColor+Crayola.m in Sources */,
 				F4E72E771C070D5C0056791D /* PIECarousel_ItemView.m in Sources */,
 				905DC1B21C4F518000596B0E /* TTTAttributedLabel.m in Sources */,
@@ -5317,8 +5429,10 @@
 				5CDB06061AA405A40089121E /* UIColor+iOS7.m in Sources */,
 				F4275A1D1BE0B9ED00BBE7E4 /* PIEMyFollowViewController.m in Sources */,
 				F4324CDF1C0956CD005C61AC /* PIECommentViewController.m in Sources */,
+				90A95E7F1C7828400001CE66 /* PIEMyWalletViewController_new.m in Sources */,
 				F41FF0EB1BDE231200566A12 /* PIENotificationSystemViewController.m in Sources */,
 				F41BA0D01C0EDCE800979D43 /* MJRefreshStateHeader.m in Sources */,
+				90A95E7E1C7828400001CE66 /* PIEFinishWithdrawMoneyViewController_new.m in Sources */,
 				F4F28F311C23F7190067F2E4 /* PIESearchPageViewController.m in Sources */,
 				F4993CEA1BE5B32C007F9BE4 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				5CDB06311AA428BD0089121E /* MASLayoutConstraint.m in Sources */,
@@ -5338,6 +5452,7 @@
 				F47EF0861C031FF500BFB442 /* VVBlurPresentationController.m in Sources */,
 				F46117E21BAD1101001A6F1A /* IQUIView+IQKeyboardToolbar.m in Sources */,
 				F4BBE7721BBE3F9D00003CDE /* PIEReplyCollectionViewController.m in Sources */,
+				90A95E811C7828400001CE66 /* PIEWithdrawAuthCodeVerificationViewController.m in Sources */,
 				F4092DD81C3A3D3B003A3AD7 /* SLKTextInputbar.m in Sources */,
 				F45ECF511BD1E39500417A75 /* PIEMyLikedPagesViewController.m in Sources */,
 				F42ED3B11BC4FC2D0052A0BF /* PIEMeViewController.m in Sources */,
@@ -5492,8 +5607,10 @@
 				5C436A811AB02E7300D14608 /* PIENotificationTypeTableViewCell.m in Sources */,
 				F402F1011BE89CB4004988B4 /* PIESearchManager.m in Sources */,
 				F4E5F5FC1BD9D2E100AB8B31 /* AFURLResponseSerialization.m in Sources */,
+				90A95E861C7828400001CE66 /* PIECashFlowDetailTableViewCell.m in Sources */,
 				F4E680661BDC744C00A4F199 /* PIEProceedingShareView.m in Sources */,
 				F4EC11071BCE59B5002D1DCF /* PIENotificationLikeTableViewCell.m in Sources */,
+				90A95E7D1C7828400001CE66 /* PIECashFlowDetailsViewController_new.m in Sources */,
 				F4F72C1D1BCCFB2A002FF05A /* PIESharesheetView.m in Sources */,
 				F4C9BE4C1C1D4F8C00A1AE82 /* UIImage+Colors.m in Sources */,
 				5C31018D1AAEAB3C00EF529B /* PIEAccountBindingTableViewCell.m in Sources */,
@@ -5537,6 +5654,7 @@
 				F4F28F281C23AE9B0067F2E4 /* UIImage+WebP.m in Sources */,
 				E95691B01B22E88300DA84BB /* MTLModel.m in Sources */,
 				90BD57FE1C71A7920063D2AD /* YYTextArchiver.m in Sources */,
+				90A95E841C7828400001CE66 /* PIEMyWalletManager.m in Sources */,
 				0E54C78D1C1E8F5E00F431AC /* PIEDoneCollectionViewCell.m in Sources */,
 				F47EF0881C031FF500BFB442 /* VVBlurTransitioning.m in Sources */,
 				F499E44F1BD0E90100E5F178 /* PIESignOutTableViewCell.m in Sources */,
