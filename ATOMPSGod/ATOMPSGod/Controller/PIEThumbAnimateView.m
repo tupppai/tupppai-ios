@@ -23,6 +23,10 @@
 
 - (void)commonInit {
     [self setupSubviews];
+    self.leftView.userInteractionEnabled = YES;
+    self.rightView.userInteractionEnabled = YES;
+    self.userInteractionEnabled = YES;
+    
 }
 - (void)setupSubviews {
     [self addSubview:self.blurView];
@@ -40,6 +44,7 @@
         make.trailing.equalTo(self.rightView.mas_leading);
     }];
     
+    //default when thumb view has only 1
     [self.rightView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.and.bottom.equalTo(self);
         make.trailing.equalTo(self);
@@ -98,6 +103,11 @@
         [self.rightView mas_updateConstraints:^(MASConstraintMaker *make) {
            self.masContraint_rightViewWidth = make.width.equalTo(self).multipliedBy(0.5).with.priorityLow();
         }];
+    } else {
+        [self.masContraint_rightViewWidth uninstall];
+        [self.rightView mas_updateConstraints:^(MASConstraintMaker *make) {
+            self.masContraint_rightViewWidth = make.width.equalTo(self).multipliedBy(1).with.priorityLow();
+        }];
     }
 }
 
@@ -130,7 +140,8 @@
 }
 
 
-- (void)renewContraints {
+
+- (void)prepareForReuse {
     if (self.enlarged) {
         if (_subviewCounts == 2) {
             [self.masContraint_rightViewWidth uninstall];

@@ -483,6 +483,12 @@
 		F44A52791C0BF91500707281 /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F44A52781C0BF91500707281 /* libxml2.2.tbd */; };
 		F44A527F1C0C335000707281 /* PIEActionSheet_Report.m in Sources */ = {isa = PBXBuildFile; fileRef = F44A527E1C0C335000707281 /* PIEActionSheet_Report.m */; };
 		F44A52821C0C336500707281 /* PIEActionSheet_PS.m in Sources */ = {isa = PBXBuildFile; fileRef = F44A52811C0C336500707281 /* PIEActionSheet_PS.m */; };
+		F44CB2E31C731A2B00B68C6C /* PageModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F44CB2E11C731A2B00B68C6C /* PageModel.xcdatamodeld */; };
+		F44CB2F11C731F4900B68C6C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F44CB2F01C731F4900B68C6C /* CoreData.framework */; };
+		F44CB3AD1C76E4B500B68C6C /* PIEPageDetailHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F44CB3AB1C76E4B500B68C6C /* PIEPageDetailHeaderTableViewCell.m */; };
+		F44CB3AE1C76E4B500B68C6C /* PIEPageDetailHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F44CB3AC1C76E4B500B68C6C /* PIEPageDetailHeaderTableViewCell.xib */; };
+		F44CB3B11C76E6D900B68C6C /* PIEPageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F44CB3B01C76E6D900B68C6C /* PIEPageDetailViewController.m */; };
+		F44CB3B41C77002300B68C6C /* PIEPageCollectionSwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F44CB3B31C77002300B68C6C /* PIEPageCollectionSwipeView.m */; };
 		F44FAA3E1C3FAF9300AC60B2 /* LeesinUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F44FAA3D1C3FAF9300AC60B2 /* LeesinUploadManager.m */; };
 		F44FAA411C3FB04C00AC60B2 /* LeesinUploadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F44FAA401C3FB04C00AC60B2 /* LeesinUploadModel.m */; };
 		F45057271C2BDA5B00F7A302 /* PIECategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F45057261C2BDA5B00F7A302 /* PIECategoryModel.m */; };
@@ -1714,6 +1720,16 @@
 		F44A527E1C0C335000707281 /* PIEActionSheet_Report.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEActionSheet_Report.m; sourceTree = "<group>"; };
 		F44A52801C0C336500707281 /* PIEActionSheet_PS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEActionSheet_PS.h; sourceTree = "<group>"; };
 		F44A52811C0C336500707281 /* PIEActionSheet_PS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEActionSheet_PS.m; sourceTree = "<group>"; };
+		F44CB2E21C731A2B00B68C6C /* PageModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PageModel.xcdatamodel; sourceTree = "<group>"; };
+		F44CB2F01C731F4900B68C6C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		F44CB3341C74663500B68C6C /* PageModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "PageModel 2.xcdatamodel"; sourceTree = "<group>"; };
+		F44CB3AA1C76E4B500B68C6C /* PIEPageDetailHeaderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEPageDetailHeaderTableViewCell.h; sourceTree = "<group>"; };
+		F44CB3AB1C76E4B500B68C6C /* PIEPageDetailHeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEPageDetailHeaderTableViewCell.m; sourceTree = "<group>"; };
+		F44CB3AC1C76E4B500B68C6C /* PIEPageDetailHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEPageDetailHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		F44CB3AF1C76E6D900B68C6C /* PIEPageDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEPageDetailViewController.h; sourceTree = "<group>"; };
+		F44CB3B01C76E6D900B68C6C /* PIEPageDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEPageDetailViewController.m; sourceTree = "<group>"; };
+		F44CB3B21C77002300B68C6C /* PIEPageCollectionSwipeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEPageCollectionSwipeView.h; sourceTree = "<group>"; };
+		F44CB3B31C77002300B68C6C /* PIEPageCollectionSwipeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEPageCollectionSwipeView.m; sourceTree = "<group>"; };
 		F44FAA3C1C3FAF9300AC60B2 /* LeesinUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeesinUploadManager.h; sourceTree = "<group>"; };
 		F44FAA3D1C3FAF9300AC60B2 /* LeesinUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeesinUploadManager.m; sourceTree = "<group>"; };
 		F44FAA3F1C3FB04C00AC60B2 /* LeesinUploadModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeesinUploadModel.h; sourceTree = "<group>"; };
@@ -2087,6 +2103,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F44CB2F11C731F4900B68C6C /* CoreData.framework in Frameworks */,
 				F4279A1B1C55F17C004CFBBE /* libsqlite3.0.tbd in Frameworks */,
 				F4279A151C55F0EA004CFBBE /* CFNetwork.framework in Frameworks */,
 				F44A52791C0BF91500707281 /* libxml2.2.tbd in Frameworks */,
@@ -2737,6 +2754,7 @@
 		5CDB05B81AA3FE520089121E = {
 			isa = PBXGroup;
 			children = (
+				F44CB2E11C731A2B00B68C6C /* PageModel.xcdatamodeld */,
 				E959A56B1B8F025500F90155 /* Notes */,
 				5CDB05C31AA3FE520089121E /* TUPAI */,
 				5CDB05DD1AA3FE520089121E /* ATOMPSGodTests */,
@@ -2814,6 +2832,7 @@
 		5CDB05EA1AA400410089121E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				F44CB39D1C76E48100B68C6C /* PageDetail */,
 				F4CAFD851C586E30000332C3 /* Rengar */,
 				F4F0A1A41C437F1C000DDEBB /* QBImagePicker */,
 				F4106CB31C3F8B66006A23B9 /* leesin */,
@@ -3267,6 +3286,7 @@
 		94794CACC85CA9D698472166 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F44CB2F01C731F4900B68C6C /* CoreData.framework */,
 				F4279A1A1C55F17C004CFBBE /* libsqlite3.0.tbd */,
 				F4279A181C55F114004CFBBE /* libc++.tbd */,
 				F4279A161C55F105004CFBBE /* Security.framework */,
@@ -4236,6 +4256,20 @@
 			name = actionsheet;
 			sourceTree = "<group>";
 		};
+		F44CB39D1C76E48100B68C6C /* PageDetail */ = {
+			isa = PBXGroup;
+			children = (
+				F44CB3AA1C76E4B500B68C6C /* PIEPageDetailHeaderTableViewCell.h */,
+				F44CB3AB1C76E4B500B68C6C /* PIEPageDetailHeaderTableViewCell.m */,
+				F44CB3AC1C76E4B500B68C6C /* PIEPageDetailHeaderTableViewCell.xib */,
+				F44CB3AF1C76E6D900B68C6C /* PIEPageDetailViewController.h */,
+				F44CB3B01C76E6D900B68C6C /* PIEPageDetailViewController.m */,
+				F44CB3B21C77002300B68C6C /* PIEPageCollectionSwipeView.h */,
+				F44CB3B31C77002300B68C6C /* PIEPageCollectionSwipeView.m */,
+			);
+			name = PageDetail;
+			sourceTree = "<group>";
+		};
 		F45D8F841BD87CFD005946E8 /* socialShare */ = {
 			isa = PBXGroup;
 			children = (
@@ -5156,6 +5190,7 @@
 				90B3A2FC1C546BED00F059D1 /* PIECashFlowDetailsWithAvatarCell.xib in Resources */,
 				F41205B11C1986D500EE959F /* baozou.png in Resources */,
 				90D6FE801C5781720060B92F /* PIEChannelTutorialLockedUpView.xib in Resources */,
+				F44CB3AE1C76E4B500B68C6C /* PIEPageDetailHeaderTableViewCell.xib in Resources */,
 				F499E4561BD0F69100E5F178 /* PIEEliteFollowReplyTableViewCell.xib in Resources */,
 				E94289761B5B32A200ED26E4 /* NotificationBackgroundErrorIcon.png in Resources */,
 				F402F0FE1BE8953F004988B4 /* PIESearchContentCollectionViewCell.xib in Resources */,
@@ -5275,6 +5310,7 @@
 				5C67FB2D1AB2C509004EFF05 /* ATOMCustomCopperView.m in Sources */,
 				F43930441BE4BD75006C9437 /* MRProgressView+AFNetworking.m in Sources */,
 				F44A52821C0C336500707281 /* PIEActionSheet_PS.m in Sources */,
+				F44CB3B11C76E6D900B68C6C /* PIEPageDetailViewController.m in Sources */,
 				907A431E1C40FC1C002542E6 /* PIELaunchTextField.m in Sources */,
 				F41FF0E61BDDFCE800566A12 /* JTSSimpleImageDownloader.m in Sources */,
 				F4092DDC1C3A3D3B003A3AD7 /* SLKTypingIndicatorView.m in Sources */,
@@ -5340,6 +5376,7 @@
 				F4CAFD841C586CC1000332C3 /* RengarViewController.m in Sources */,
 				F4E530961BD4CFB800FAA65D /* PIELoginViewController.m in Sources */,
 				909E2E381C58DBDC000EA0EC /* PIEChannelTutorialRewardFailedView.m in Sources */,
+				F44CB3AD1C76E4B500B68C6C /* PIEPageDetailHeaderTableViewCell.m in Sources */,
 				F4CAFD881C586F39000332C3 /* RengarPanelView.m in Sources */,
 				F4CB08681C59E0B1007CB846 /* RengarAlbumTableViewCell.m in Sources */,
 				5C4AE3EC1AAED60A0020E102 /* PIEFriendFansViewController.m in Sources */,
@@ -5660,6 +5697,7 @@
 				F499E44F1BD0E90100E5F178 /* PIESignOutTableViewCell.m in Sources */,
 				90BD57F61C71A7920063D2AD /* YYTextDebugOption.m in Sources */,
 				F4993CED1BE5B32C007F9BE4 /* UIButton+AFNetworking.m in Sources */,
+				F44CB2E31C731A2B00B68C6C /* PageModel.xcdatamodeld in Sources */,
 				F4EC11161BCE5B9E002D1DCF /* PIENotificationSystemTableViewCell.m in Sources */,
 				E9FF8A3B1B71CCB70010D2C4 /* DDInputPhoneFPVC.m in Sources */,
 				F42ED3B81BC4FC9E0052A0BF /* PIEMyReplyCollectionViewCell.m in Sources */,
@@ -5738,6 +5776,7 @@
 				E979013A1B4A6494003FB0B5 /* ATOMReportModel.m in Sources */,
 				F4F28F261C23AE9B0067F2E4 /* UIImage+GIF.m in Sources */,
 				E942898B1B5B374B00ED26E4 /* HexColors.m in Sources */,
+				F44CB3B41C77002300B68C6C /* PIEPageCollectionSwipeView.m in Sources */,
 				9061EA7E1C55ECE40078374E /* PIEChannelTutorialFinishUploadingHomeworkView.m in Sources */,
 				5C31018A1AAE9B5700EF529B /* PIEAccountBindingView.m in Sources */,
 				F43930461BE4BD75006C9437 /* MRMethodCopier.m in Sources */,
@@ -5893,7 +5932,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				PROVISIONING_PROFILE = "62edcdd7-7b70-4d0e-8a71-6ae66a5aa960";
 				SDKROOT = iphoneos;
@@ -5991,7 +6030,7 @@
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/lib/Channels",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/lib",
 				);
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -6193,6 +6232,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		F44CB2E11C731A2B00B68C6C /* PageModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F44CB3341C74663500B68C6C /* PageModel 2.xcdatamodel */,
+				F44CB2E21C731A2B00B68C6C /* PageModel.xcdatamodel */,
+			);
+			currentVersion = F44CB3341C74663500B68C6C /* PageModel 2.xcdatamodel */;
+			path = PageModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 5CDB05B91AA3FE520089121E /* Project object */;
 }

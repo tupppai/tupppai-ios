@@ -39,12 +39,12 @@
     self.borderWidth = 1.0;
     self.checkmarkLineWidth = 1.2;
     
-    
-    // Set shadow
-    self.layer.shadowColor = [[UIColor lightGrayColor] CGColor];
-    self.layer.shadowOffset = CGSizeMake(0, 0);
-    self.layer.shadowOpacity = 0.2;
-    self.layer.shadowRadius = 2.0;
+    //below codes would cause performance issue
+//    // Set shadow
+//    self.layer.shadowColor = [[UIColor lightGrayColor] CGColor];
+//    self.layer.shadowOffset = CGSizeMake(0, 0);
+//    self.layer.shadowOpacity = 0.2;
+//    self.layer.shadowRadius = 2.0;
     
 }
 - (void)drawRect:(CGRect)rect

@@ -140,20 +140,15 @@
     [self.likeView addGestureRecognizer:self.longPressOnLike];
     
     /* 点击图片的手势事件处理 */
-    self.blurAnimateView.userInteractionEnabled           = YES;
-    self.blurAnimateView.thumbView.userInteractionEnabled = YES;
     
     self.tapOnThumbViewLeftView = [[UITapGestureRecognizer alloc] init];
     [self.blurAnimateView.thumbView.leftView addGestureRecognizer:self.tapOnThumbViewLeftView];
-    self.blurAnimateView.thumbView.leftView.userInteractionEnabled = YES;
     
     self.tapOnThumbViewRightView = [[UITapGestureRecognizer alloc] init];
     [self.blurAnimateView.thumbView.rightView addGestureRecognizer:self.tapOnThumbViewRightView];
-    self.blurAnimateView.thumbView.rightView.userInteractionEnabled = YES;
     
     self.tapOnThumbViewImageView = [[UITapGestureRecognizer alloc] init];
     [self.blurAnimateView.imageView addGestureRecognizer:self.tapOnThumbViewImageView];
-    self.blurAnimateView.imageView.userInteractionEnabled = YES;
     
     self.longPressOnThumbViewImageView = [[UILongPressGestureRecognizer alloc] init];
     [self.blurAnimateView addGestureRecognizer:self.longPressOnThumbViewImageView];
@@ -183,7 +178,7 @@
 
 -(void)prepareForReuse {
     [super prepareForReuse];
-    [self.blurAnimateView renewContraints];
+    [self.blurAnimateView prepareForReuse];
     _followView.hidden = NO;
     _commentLabel1.text = @"";
     _commentLabel2.text = @"";

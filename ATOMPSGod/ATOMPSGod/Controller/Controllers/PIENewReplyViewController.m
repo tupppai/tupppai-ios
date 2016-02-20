@@ -331,24 +331,26 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
             CGPoint p = [gesture locationInView:_selectedReplyCell];
             
             //点击小图
-            if (CGRectContainsPoint(_selectedReplyCell.thumbView.frame, p)) {
-                CGPoint pp = [gesture locationInView:_selectedReplyCell.thumbView];
-                if (CGRectContainsPoint(_selectedReplyCell.thumbView.leftView.frame,pp)) {
-                    [_selectedReplyCell animateThumbScale:PIEThumbAnimateViewTypeLeft];
+            if (CGRectContainsPoint(_selectedReplyCell.blurAnimateImageView.frame, p)) {
+                CGPoint pp = [gesture locationInView:_selectedReplyCell.blurAnimateImageView];
+                if (CGRectContainsPoint(_selectedReplyCell.blurAnimateImageView.thumbView.frame,pp)) {
+                    CGPoint ppp = [gesture locationInView:_selectedReplyCell.blurAnimateImageView.thumbView];
+
+                    if (CGRectContainsPoint(_selectedReplyCell.blurAnimateImageView.thumbView.leftView.frame,ppp)) {
+                        [_selectedReplyCell.blurAnimateImageView animateWithType:PIEThumbAnimateViewTypeLeft];
+                    }
+                    else if (CGRectContainsPoint(_selectedReplyCell.blurAnimateImageView.thumbView.rightView.frame,ppp)) {
+                        [_selectedReplyCell.blurAnimateImageView animateWithType:PIEThumbAnimateViewTypeRight];
+                    }
+
                 }
-                else if (CGRectContainsPoint(_selectedReplyCell.thumbView.rightView.frame,pp)) {
-                    [_selectedReplyCell animateThumbScale:PIEThumbAnimateViewTypeRight];
+                else if (CGRectContainsPoint(_selectedReplyCell.blurAnimateImageView.imageView.frame,pp)) {
+                    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+                    vc.pageVM = _selectedVM;
+                    [self presentViewController:vc animated:NO completion:nil];
                 }
             }
-            //点击大图
-            else  if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
-                //进入热门详情
-                PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-                _selectedVM.image = _selectedReplyCell.theImageView.image;
-                vc.pageVM = _selectedVM;
-                [self presentViewController:vc animated:NO completion:nil];
-                //                [self.navigationController pushViewController:vc animated:YES];
-            }
+
             //点击头像
             else if (CGRectContainsPoint(_selectedReplyCell.avatarView.frame, p)) {
                 PIEFriendViewController * friendVC = [PIEFriendViewController new];
@@ -403,7 +405,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
         CGPoint p          = [gesture locationInView:_selectedReplyCell];
         
         //点击大图
-        if (CGRectContainsPoint(_selectedReplyCell.theImageView.frame, p)) {
+        if (CGRectContainsPoint(_selectedReplyCell.blurAnimateImageView.frame, p)) {
             [self showShareView:_selectedVM];
         }          else if (CGRectContainsPoint(_selectedReplyCell.likeView.frame, p)) {
             [_selectedVM love:YES];
