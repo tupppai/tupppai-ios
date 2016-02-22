@@ -78,6 +78,8 @@
     [MobClick setCrashReportEnabled:YES];
     [MobClick setEncryptEnabled:YES];
     [MobClick setLogEnabled:NO];
+    NSNumber *version =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    [MobClick setVersion:[version integerValue]];
 //    [UMCheckUpdate checkUpdateWithAppkey:@"55b1ecdbe0f55a1de9001164" channel:nil];
 //    NSNumber *version =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 //    [UMCheckUpdate setVersion:[version integerValue]];
@@ -100,7 +102,6 @@
     //set AppKey and AppSecret
     [UMessage startWithAppkey:@"55b1ecdbe0f55a1de9001164" launchOptions:launchOptions];
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= _IPHONE80_
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
     {
         UIUserNotificationSettings *userSettings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge|UIUserNotificationTypeSound|UIUserNotificationTypeAlert
@@ -108,19 +109,6 @@
         [UMessage registerRemoteNotificationAndUserNotificationSettings:userSettings];
         
     }
-//    else {
-//        //register remoteNotification types (iOS 8.0以下)
-//        [UMessage registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge
-//         |UIRemoteNotificationTypeSound
-//         |UIRemoteNotificationTypeAlert];
-//    }
-#else
-    //register remoteNotification types (iOS 8.0以下)
-//    [UMessage registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge
-//     |UIRemoteNotificationTypeSound
-//     |UIRemoteNotificationTypeAlert];
-    
-#endif
 
 }
 -(void)initializeAfterDB {

@@ -20,5 +20,4 @@
 
 - (void)animateWithType:(PIEThumbAnimateViewType)type;
 - (void)prepareForReuse;
-//- (void)animate;
 @end
