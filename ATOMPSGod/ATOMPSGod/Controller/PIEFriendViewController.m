@@ -176,8 +176,12 @@ typedef NS_ENUM(NSUInteger, PIEFriendViewControllerNavigationBarStyle) {
     gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor whiteColor] CGColor], (id)[[UIColor lightGrayColor] CGColor], nil];
     [_view1.layer insertSublayer:gradient atIndex:0];
     
-    self.avatarView.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
-    self.avatarView.avatarImageView.layer.borderWidth = 1.5f;
+//    self.avatarView.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
+//    self.avatarView.avatarImageView.layer.borderWidth = 1.5f;
+    self.avatarView.layer.cornerRadius = self.avatarView.frame.size.width / 2;
+    self.avatarView.clipsToBounds = YES;
+    self.avatarView.backgroundColor = [UIColor clearColor];
+    self.avatarView.avatarImageView.backgroundColor = [UIColor clearColor];
     
     _dotView1.layer.cornerRadius = _dotView1.frame.size.width/2;
     _dotView2.layer.cornerRadius = _dotView2.frame.size.width/2;

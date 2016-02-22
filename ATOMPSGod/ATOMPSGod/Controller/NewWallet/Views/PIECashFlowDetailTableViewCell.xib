@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PIECashFlowDetailTableViewCell" rowHeight="160" id="KGk-i7-Jjw" customClass="PIECashFlowDetailTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="520" height="160"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="520" height="159.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wbu-8f-ZEc" userLabel="avatarView" customClass="PIEAvatarView">
+                        <rect key="frame" x="15" y="61" width="38" height="38"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="38" id="irS-eD-4GZ"/>
+                            <constraint firstAttribute="width" constant="38" id="sa3-GI-F7N"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="amount" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TqG-Lx-L73" userLabel="amountLabel">
+                        <rect key="frame" x="79" y="61" width="130" height="19.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="paymentDesc" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ytd-a9-UPI" userLabel="paymentDescLabel">
+                        <rect key="frame" x="79" y="88" width="433" height="16"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" red="0.49803921568627452" green="0.49803921568627452" blue="0.49803921568627452" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="paymentCreatedTime" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Qe-y0-igE" userLabel="paymentCreatedTimeLabel">
+                        <rect key="frame" x="332" y="61" width="173" height="13.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <color key="textColor" red="0.69803921568627447" green="0.69803921568627447" blue="0.69803921568627447" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VW7-St-qI6" userLabel="cashFlowTypeImageView">
+                        <rect key="frame" x="15" y="61" width="43" height="38"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="43" id="Gv5-12-fgD"/>
+                            <constraint firstAttribute="height" constant="38" id="koE-sb-3fj"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Ytd-a9-UPI" firstAttribute="leading" secondItem="TqG-Lx-L73" secondAttribute="leading" id="1yj-1b-nnd"/>
+                    <constraint firstItem="TqG-Lx-L73" firstAttribute="width" secondItem="Ytd-a9-UPI" secondAttribute="width" multiplier="0.3" id="39N-Tn-YEj"/>
+                    <constraint firstItem="Ytd-a9-UPI" firstAttribute="top" secondItem="TqG-Lx-L73" secondAttribute="bottom" constant="8" id="DGT-fO-hJN"/>
+                    <constraint firstAttribute="trailing" secondItem="5Qe-y0-igE" secondAttribute="trailing" constant="15" id="EyI-wt-I18"/>
+                    <constraint firstItem="5Qe-y0-igE" firstAttribute="top" secondItem="TqG-Lx-L73" secondAttribute="top" id="LdJ-Pw-iKh"/>
+                    <constraint firstItem="Wbu-8f-ZEc" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Vv4-Wj-giU"/>
+                    <constraint firstItem="TqG-Lx-L73" firstAttribute="top" secondItem="Wbu-8f-ZEc" secondAttribute="top" id="ffJ-A9-e6n"/>
+                    <constraint firstItem="TqG-Lx-L73" firstAttribute="leading" secondItem="Wbu-8f-ZEc" secondAttribute="trailing" constant="26" id="hMn-W7-xqu"/>
+                    <constraint firstItem="5Qe-y0-igE" firstAttribute="width" secondItem="Ytd-a9-UPI" secondAttribute="width" multiplier="0.4" id="ho4-ks-fJn"/>
+                    <constraint firstItem="VW7-St-qI6" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="knp-dp-GvZ"/>
+                    <constraint firstItem="Wbu-8f-ZEc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="rCV-Or-cer"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Ytd-a9-UPI" secondAttribute="trailing" id="rJH-T5-pdM"/>
+                    <constraint firstItem="VW7-St-qI6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="taz-9g-Sg0"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="amountLabel" destination="TqG-Lx-L73" id="WFp-WR-lIe"/>
+                <outlet property="avatarView" destination="Wbu-8f-ZEc" id="OAe-tl-QYl"/>
+                <outlet property="cashFlowTypeImageView" destination="VW7-St-qI6" id="BKt-k3-8Bn"/>
+                <outlet property="paymentCreatedTimeLabel" destination="5Qe-y0-igE" id="D6K-Pa-01Y"/>
+                <outlet property="paymentDescLabel" destination="Ytd-a9-UPI" id="ih8-8Z-RQ5"/>
+            </connections>
+            <point key="canvasLocation" x="-182" y="-43"/>
+        </tableViewCell>
+    </objects>
+</document>

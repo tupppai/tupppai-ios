@@ -24,6 +24,7 @@
 #import "UINavigationBar+Awesome.h"
 #import "PIEModifyProfileViewController.h"
 #import "DDNavigationController.h"
+#import "PIEMyWalletViewController_new.h"
 
 
 typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
@@ -48,6 +49,7 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
 @property (weak, nonatomic) IBOutlet UIImageView *topContainerView;
 @property (weak, nonatomic) IBOutlet UIView *pageMenuContainerView;
 @property (weak, nonatomic) IBOutlet UIView *avatarContainerView;
+@property (weak, nonatomic) IBOutlet UIImageView *myWalletIndicatorImageView;
 
 //@property (nonatomic, strong) PWRefreshFooterCollectionView *collectionView;
 //@property (nonatomic, strong) NSMutableArray *dataSource;
@@ -370,6 +372,18 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     UITapGestureRecognizer *tapG4 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAvatar)];
     _avatarView.userInteractionEnabled = YES;
     [_avatarView addGestureRecognizer:tapG4];
+    
+    UITapGestureRecognizer *tapOnMyWallet = [[UITapGestureRecognizer alloc] init];
+    [self.myWalletIndicatorImageView addGestureRecognizer:tapOnMyWallet];
+    self.myWalletIndicatorImageView.userInteractionEnabled = YES;
+    
+    @weakify(self);
+    [tapOnMyWallet.rac_gestureSignal subscribeNext:^(id x) {
+        @strongify(self);
+        PIEMyWalletViewController_new *myWallet = [PIEMyWalletViewController_new new];
+        [self.navigationController pushViewController:myWallet animated:YES];
+    }];
+    
 }
 
 - (void) tapAvatar {

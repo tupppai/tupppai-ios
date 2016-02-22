@@ -31,4 +31,7 @@ typedef NS_ENUM(NSInteger, ATOMShareType) {
 
 + (void)postSocialShare3:(PIEPageVM*)vm withSocialShareType:(ATOMShareType)shareType block:(void (^)(BOOL success))block;
 
++ (void)bindUserWithThirdPartyPlatform:(NSString *)type openId:(NSString *)openId
+                               failure:(void (^)(void))failure
+                               success:(void (^)(void))success;
 @end
