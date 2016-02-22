@@ -9,6 +9,7 @@
 #import "LeesinTextInputBar.h"
 #import "LeesinBottomBar.h"
 #import "Masonry.h"
+#import "LeesinTextView.h"
 
 @interface LeesinTextInputBar ()
 

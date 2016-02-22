@@ -73,6 +73,8 @@ static DDSessionManager *shareInstance = nil;
         Method originalMethod = class_getInstanceMethod(class, originalSelector);
         Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
         
+
+
         // When swizzling a class method, use the following:
         // Class class = object_getClass((id)self);
         // ...
@@ -99,10 +101,6 @@ static DDSessionManager *shareInstance = nil;
 
 -(NSURLSessionDataTask *)xxx_dataTaskWithRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLResponse * _Nonnull, id _Nullable, NSError * _Nullable))completionHandler {
     return [self xxx_dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id _Nullable responseObject, NSError * _Nullable error) {
-//        #if DEBUG
-//                NSLog(@"request  %@ \n responseObject \n %@ ,%@",request,responseObject,error);
-//        #endif
-        
         if (error) {
             [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NetworkErrorCall" object:nil]];
         } else if (responseObject) {

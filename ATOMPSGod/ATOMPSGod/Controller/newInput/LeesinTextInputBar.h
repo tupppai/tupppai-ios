@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LeesinTextView.h"
+@class LeesinTextView;
 
 typedef NS_ENUM(NSUInteger, LeesinTextInputBarButtonType) {
     LeesinTextInputBarButtonTypeMission,

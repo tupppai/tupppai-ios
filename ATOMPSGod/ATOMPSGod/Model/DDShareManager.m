@@ -92,6 +92,10 @@
 +(void)copy:(PIEPageVM*)vm {
     [self getRemoteShareInfo:vm withSocialShareType:ATOMShareTypeCopyLinks withBlock:^(ATOMShare *share) {
         UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+        if (share == nil) {
+            [Hud text:@"数据为空"];
+            return ;
+        }
         pasteboard.string = share.url;
         [Hud success:@"成功复制到粘贴板"];
     }];

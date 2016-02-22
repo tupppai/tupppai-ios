@@ -14,4 +14,5 @@
 - (BOOL)isPassword;
 - (NSString *)sha1;
 - (NSString*) trimToImageWidth :(int)width ;
+- (NSString *)md5;
 @end

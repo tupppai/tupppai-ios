@@ -13,9 +13,16 @@
 #import "PIELoveButton.h"
 #import "PIEBangView.h"
 #import "PIEPageCollectionSwipeView.h"
+#import "PIEShareView.h"
+#import "PIEActionSheet_PS.h"
 @interface PIEPageDetailHeaderTableViewCell()
 @property (nonatomic,strong) PIEBangView *bangView;
 @property (nonatomic,strong) PIELoveButton *loveView;
+@property (weak, nonatomic) IBOutlet PIEPageButton *shareButtonView;
+
+@property (nonatomic,strong) PIEShareView *shareView;
+@property (nonatomic,strong) PIEActionSheet_PS *actionSheet_help;
+
 @end
 @implementation PIEPageDetailHeaderTableViewCell
 
@@ -23,15 +30,19 @@
 -(instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [self commonInit];
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     return self;
 }
-- (void)commonInit {
-    self.selectionStyle = UITableViewCellSelectionStyleNone;
+
+- (void)tapShare {
+    [self.shareView show:self.viewModel];
 }
 - (void)awakeFromNib {
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapShare)];
+    [_shareButtonView addGestureRecognizer:tapGesture];
 }
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
@@ -97,18 +108,46 @@
 }
 
 
-
-
+- (void)tapBang {
+    [self.actionSheet_help showInView:[AppDelegate APP].window animated:YES];
+}
+- (void)tapLove {
+    [self.viewModel love:NO];
+}
+- (void)longPressLove {
+    [self.viewModel love:YES];
+}
 -(PIEBangView *)bangView {
     if (!_bangView) {
         _bangView = [PIEBangView new];
+        _bangView.userInteractionEnabled = YES;
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapBang)];
+        [_bangView addGestureRecognizer:tapGesture];
     }
     return _bangView;
 }
 -(PIELoveButton *)loveView {
     if (!_loveView) {
         _loveView = [PIELoveButton new];
+        _loveView.userInteractionEnabled = YES;
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapLove)];
+        [_loveView addGestureRecognizer:tapGesture];
+        UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressLove)];
+        [_loveView addGestureRecognizer:longPressGesture];
     }
     return _loveView;
+}
+-(PIEShareView *)shareView {
+    if (_shareView == nil) {
+        _shareView = [[PIEShareView alloc]init];
+    }
+    return _shareView;
+}
+-(PIEActionSheet_PS *)actionSheet_help {
+    if (!_actionSheet_help) {
+        _actionSheet_help = [PIEActionSheet_PS new];
+        _actionSheet_help.vm = self.viewModel;
+    }
+    return _actionSheet_help;
 }
 @end

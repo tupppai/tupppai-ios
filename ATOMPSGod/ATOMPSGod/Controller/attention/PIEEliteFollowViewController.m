@@ -15,7 +15,7 @@
 #import "DDCollectManager.h"
 #import "DeviceUtil.h"
 #import "PIEEliteManager.h"
-#import "PIECarouselViewController2.h"
+#import "PIEPageDetailViewController.h"
 #import "PIEFriendViewController.h"
 
 #import "PIECommentViewController.h"
@@ -472,11 +472,10 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
         PIEEliteFollowAskTableViewCell* cell = [self.tableFollow cellForRowAtIndexPath:_selectedIndexPath_follow];
         CGPoint p = [gesture locationInView:cell];
         if (CGRectContainsPoint(cell.theImageView.frame, p)) {
-            //进入热门详情
-            PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-            //                    _selectedVM.image = cell.theImageView.image;
-            vc.pageVM = _selectedVM;
-            [self presentViewController:vc animated:YES completion:nil];
+
+            PIEPageDetailViewController *vc = [PIEPageDetailViewController new];
+            vc.pageViewModel = _selectedVM;
+            [self.navigationController pushViewController:vc animated:YES];
         }
         //点击头像
         else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
