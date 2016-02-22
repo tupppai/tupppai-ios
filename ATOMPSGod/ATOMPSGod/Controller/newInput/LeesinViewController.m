@@ -23,6 +23,8 @@
 #import "LeesinSwipeView.h"
 #import "QBImagePickerController.h"
 #import "NSNumber+leesinDone.h"
+#import "LeesinTextView.h"
+
 typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     PIESwipeViewResueViewTypeMission,
     PIESwipeViewResueViewTypePhoto,
@@ -403,10 +405,12 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     if (![[sender object] isEqual: self.bar.textView]) {
         return;
     }
-//    [self lsn_updatePublishButton];
     if (self.bar.frame.size.height != self.bar.appropriateHeight) {
         [self.inputBarHC setOffset:self.bar.appropriateHeight];
     }
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.bar layoutIfNeeded];
+    }];
 }
 
 - (void) lsn_willShowKeyboard:(NSNotification*)notification {
@@ -934,7 +938,6 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
         [self.swipeView reloadData];
         [self.swipeView scrollToOffset:0 duration:0.45];
         [self lsn_updateSourceAndReloadPreviewBar];
-//        [self lsn_updatePublishButton];
         
         [self.qbImagePickerController.selectedAssets removeAllObjects];
 

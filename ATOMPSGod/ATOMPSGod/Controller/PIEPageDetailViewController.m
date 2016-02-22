@@ -10,9 +10,23 @@
 #import "PIEPageDetailHeaderTableViewCell.h"
 #import "PIECommentTableCell.h"
 #import "PIECommentManager.h"
-@interface PIEPageDetailViewController ()<UITableViewDataSource,UITableViewDelegate>
+#import "PIECommentTableViewHeader.h"
+#import "PIEPageDetailTextInputBar.h"
+#import "LeesinTextView.h"
+#import "PIEEntityCommentReply.h"
+#import "PIEFriendViewController.h"
+#import "PIEAvatarButton.h"
+#import "PIEBlurAnimateImageView.h"
+@interface PIEPageDetailViewController ()<UITableViewDataSource,UITableViewDelegate,PIEPageDetailTextInputBarDelegate>
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) NSMutableArray *commentSourceArray;
+@property (nonatomic,strong) UILabel *commentCountLabel;
+@property (nonatomic,strong) PIEPageDetailTextInputBar *textInputBar;
+@property (nonatomic, strong) MASConstraint *inputBarHC;
+@property (nonatomic, strong) MASConstraint *inputbarBottomMarginHC;
+
+@property (nonatomic, strong) PIECommentVM *targetCommentVM;
+
 
 @end
 
@@ -22,10 +36,95 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self.view addSubview:self.tableView];
+    [self.view addSubview:self.textInputBar];
+    [self.textInputBar mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.and.trailing.equalTo(self.view);
+        self.inputbarBottomMarginHC = make.bottom.equalTo(self.view);
+        self.inputBarHC = make.height.equalTo(@(self.textInputBar.appropriateHeight));
+    }];
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, self.textInputBar.appropriateHeight, 0);
+    
     _commentSourceArray = [NSMutableArray array];
+    
+    [[RACObserve(self, commentSourceArray)
+      filter:^BOOL(id value) {
+          NSArray *array = value;
+          return array.count>0;
+      }]
+     subscribeNext:^(id x) {
+         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+     }];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeTextViewText:) name:UITextViewTextDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
+    
+    UITapGestureRecognizer *tapCommentTableGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCommentTable:)];
+    tapCommentTableGesture.cancelsTouchesInView = NO;
+    [self.tableView addGestureRecognizer:tapCommentTableGesture];
+
+    
     [self getDataSource];
 }
+-(void)dealloc {
+    [self unRegisterObervers];
+}
 
+#pragma mark - tap Event
+
+- (void)tapCommentTable:(UITapGestureRecognizer *)gesture {
+    
+    CGPoint location = [gesture locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
+    if (indexPath == nil) {
+        return;
+    }
+    if (indexPath.section == 0) {
+
+    } else if (indexPath.section == 1) {
+        
+        NSInteger row = indexPath.row;
+        PIECommentTableCell *cell = (PIECommentTableCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        PIECommentVM *model =  _commentSourceArray[row];
+        
+        CGPoint p = [gesture locationInView:cell];
+        if (CGRectContainsPoint(cell.avatarView.frame, p)) {
+            PIEFriendViewController *opvc = [PIEFriendViewController new];
+            PIEPageVM* vm = [[PIEPageVM alloc]initWithCommentModel:model.model];;
+            opvc.pageVM = vm;
+            [self.navigationController pushViewController:opvc animated:YES];
+        }
+        else if (CGRectContainsPoint(cell.usernameLabel.frame, p)) {
+            PIEFriendViewController *opvc = [PIEFriendViewController new];
+            PIEPageVM* vm = [[PIEPageVM alloc]initWithCommentModel:model.model];;
+            vm.userID = model.uid;
+            vm.username = model.username;
+            opvc.pageVM = vm;
+            [self.navigationController pushViewController:opvc animated:YES];
+        } else if (CGRectContainsPoint(cell.receiveNameLabel.frame, p)) {
+            PIEFriendViewController *opvc = [PIEFriendViewController new];
+            opvc.uid = cell.receiveNameLabel.tag;
+            [self.navigationController pushViewController:opvc animated:YES];
+        } else {
+            _targetCommentVM = model;
+            self.textInputBar.textView.placeholder = [NSString stringWithFormat:@"@%@:",_targetCommentVM.username];
+            [self.textInputBar.textView becomeFirstResponder];
+            [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        }
+        
+    }
+}
+
+
+- (void)unRegisterObervers {
+ [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextViewTextDidChangeNotification object:NULL];
+ [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:NULL];
+ [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:NULL];
+
+}
+
+     
+     
 - (void)configFooterRefresh {
     
     NSMutableArray *animatedImages = [NSMutableArray array];
@@ -72,15 +171,15 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 1) {
-        return 20;
+        return 40;
     }
     return 0;
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 1) {
-        UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 20)];
-        label.text = @"评论";
-        return label;
+        PIECommentTableViewHeader *view = [PIECommentTableViewHeader new];
+        view.commentCountLabel.text = [NSString stringWithFormat:@"%zd",self.commentSourceArray.count];
+        return view;
     }
     return 0;
 }
@@ -94,6 +193,15 @@
             return nil;
         }
         cell.viewModel = _pageViewModel;
+        [cell.avatarButton addTarget:self action:@selector(tapAvatar_Header) forControlEvents:UIControlEventTouchDown];
+        [cell.usernameButton addTarget:self action:@selector(tapAvatar_Header) forControlEvents:UIControlEventTouchDown];
+        [cell.followButton addTarget:self action:@selector(tapFollow_Header) forControlEvents:UIControlEventTouchUpInside];
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapThumbLeftView)];
+        UITapGestureRecognizer *tapGesture2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapThumbRightView)];
+        
+        [cell.blurAnimateImageView.thumbView.leftView addGestureRecognizer:tapGesture];
+        [cell.blurAnimateImageView.thumbView.rightView addGestureRecognizer:tapGesture2];
+
         return cell;
     } else if (section == 1) {
         PIECommentTableCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"CommentTableCellReuseIdentifier"];
@@ -102,6 +210,26 @@
     }
     return nil;
 
+}
+
+
+- (void)tapAvatar_Header {
+    PIEFriendViewController *opvc = [PIEFriendViewController new];
+    opvc.pageVM = self.pageViewModel;
+    [self.navigationController pushViewController:opvc animated:YES];
+}
+- (void)tapFollow_Header {
+    [self.pageViewModel follow];
+}
+- (void)tapThumbLeftView {
+    PIEPageDetailHeaderTableViewCell *cell  = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    [cell.blurAnimateImageView animateWithType:PIEThumbAnimateViewTypeLeft];
+    
+}
+- (void)tapThumbRightView {
+    PIEPageDetailHeaderTableViewCell *cell  = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    [cell.blurAnimateImageView animateWithType:PIEThumbAnimateViewTypeRight];
+    
 }
 
 -(UITableView *)tableView {
@@ -114,6 +242,7 @@
         UINib *nib = [UINib nibWithNibName:@"PIEPageDetailHeaderTableViewCell" bundle:NULL];
         [_tableView registerNib:nib forCellReuseIdentifier:@"PageDetailHeaderTableViewCellIdentifier"];
         [_tableView registerClass:[PIECommentTableCell class] forCellReuseIdentifier:@"CommentTableCellReuseIdentifier"];
+        _tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive|UIScrollViewKeyboardDismissModeOnDrag;
 
     }
     return _tableView;
@@ -139,7 +268,6 @@
 //        if (recentCommentArray.count > 0) {
 //            _canRefreshFooter = YES;
 //        }
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
     }];
 }
 
@@ -167,5 +295,125 @@
 //        }
 //    }];
 }
+
+
+- (void)didChangeTextViewText:(id)sender {
+    
+    self.textInputBar.rightButton.enabled = self.textInputBar.textView.text.length > 0;
+    
+    if (![[sender object] isEqual: self.textInputBar.textView]) {
+        return;
+    }
+   
+    if (self.textInputBar.frame.size.height != self.textInputBar.appropriateHeight) {
+        [self.inputBarHC setOffset:self.textInputBar.appropriateHeight];
+    }
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.textInputBar layoutIfNeeded];
+    }];
+}
+
+- (void) willShowKeyboard:(NSNotification*)notification {
+    [_inputbarBottomMarginHC setOffset:-[self lsn_appropriateKeyboardHeightFromNotification:notification]];
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.view layoutIfNeeded];
+    }];
+    
+}
+- (void) willHideKeyboard:(NSNotification*)notification {
+    [_inputbarBottomMarginHC setOffset:0];
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.view layoutIfNeeded];
+    }];
+}
+
+- (CGFloat)lsn_appropriateKeyboardHeightFromNotification:(NSNotification *)notification
+{
+    
+    CGRect keyboardRect = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    
+    return [self lsn_appropriateKeyboardHeightFromRect:keyboardRect];
+}
+- (CGFloat)lsn_appropriateKeyboardHeightFromRect:(CGRect)rect
+{
+    CGRect keyboardRect = [self.view convertRect:rect fromView:nil];
+    
+    CGFloat viewHeight = CGRectGetHeight(self.view.bounds);
+    CGFloat keyboardMinY = CGRectGetMinY(keyboardRect);
+    
+    CGFloat keyboardHeight = MAX(0.0, viewHeight - keyboardMinY);
+    
+    return keyboardHeight;
+}
+
+-(void)pageDetailTextInputBar:(PIEPageDetailTextInputBar *)pageDetailTextInputBar tapRightButton:(UIButton *)tappedButton {
+    [self sendComment];
+}
+
+- (void)resignKeyboard {
+    if ([self.textInputBar.textView isFirstResponder]) {
+        [self.textInputBar.textView resignFirstResponder];
+    }
+}
+-(void)sendComment {
+    
+    PIECommentVM *commentVM = [PIECommentVM new];
+    commentVM.username = [DDUserManager currentUser].nickname;
+    commentVM.uid = [DDUserManager currentUser].uid;
+    commentVM.avatar = [DDUserManager currentUser].avatar;
+    commentVM.originText = self.textInputBar.textView.text;
+    commentVM.time = @"刚刚";
+    //    NSString* commentToShow;
+    //回复评论
+    if (_targetCommentVM) {
+        [commentVM.replyArray addObjectsFromArray:_targetCommentVM.replyArray];
+        commentVM.text = self.textInputBar.textView.text;
+        
+        PIEEntityCommentReply* reply = [PIEEntityCommentReply new];
+        reply.uid = _targetCommentVM.uid;
+        reply.username = _targetCommentVM.username;
+        reply.text = _targetCommentVM.originText;
+        reply.ID = _targetCommentVM.ID;
+        [commentVM.replyArray insertObject:reply atIndex:0];
+    }
+    //第一次评论
+    else {
+        commentVM.text  = self.textInputBar.textView.text;
+    }
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+    [self.commentSourceArray insertObject:commentVM atIndex:0];
+    [self.tableView beginUpdates];
+    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
+    [self.tableView endUpdates];
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+    
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    [param setObject:self.textInputBar.textView.text forKey:@"content"];
+    [param setObject:@(_pageViewModel.type) forKey:@"type"];
+    [param setObject:@(_pageViewModel.ID) forKey:@"target_id"];
+    if (_targetCommentVM) {
+        [param setObject:@(_targetCommentVM.ID) forKey:@"for_comment"];
+    }
+    PIECommentManager *showDetailOfComment = [PIECommentManager new];
+    [showDetailOfComment SendComment:param withBlock:^(NSInteger comment_id, NSError *error) {
+        if (comment_id) {
+            commentVM.ID = comment_id;
+            self.pageViewModel.model.totalCommentNumber++;
+        }
+    }];
+    _targetCommentVM = nil;
+    
+    self.textInputBar.textView.text = @"";
+}
+
+-(PIEPageDetailTextInputBar *)textInputBar {
+    if (!_textInputBar) {
+        _textInputBar = [PIEPageDetailTextInputBar new];
+        _textInputBar.delegate = self;
+    }
+    return _textInputBar;
+}
+
 
 @end

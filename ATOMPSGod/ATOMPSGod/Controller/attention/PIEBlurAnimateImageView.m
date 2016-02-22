@@ -35,7 +35,7 @@ static int thumbViewSizeConstant = 100;
     return self;
 }
 -(void)commonInit {
-    
+
     self.imageView.userInteractionEnabled = YES;
     
     [self addSubview:self.blurBackgroundImageView];

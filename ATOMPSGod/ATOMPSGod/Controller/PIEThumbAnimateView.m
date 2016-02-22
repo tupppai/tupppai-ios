@@ -77,6 +77,7 @@
         _leftView = [UIImageView new];
         _leftView.contentMode = UIViewContentModeScaleAspectFit;
         _leftView.clipsToBounds = YES;
+        _leftView.userInteractionEnabled = YES;
     }
     return _leftView;
 }
@@ -85,6 +86,8 @@
         _rightView = [UIImageView new];
         _rightView.contentMode = UIViewContentModeScaleAspectFit;
         _rightView.clipsToBounds = YES;
+        _rightView.userInteractionEnabled = YES;
+
     }
     return _rightView;
 }

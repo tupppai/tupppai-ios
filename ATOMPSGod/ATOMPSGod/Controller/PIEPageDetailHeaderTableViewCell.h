@@ -20,7 +20,6 @@
 @property (weak, nonatomic) IBOutlet PIEBlurAnimateImageView *blurAnimateImageView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *pageCollectionViewHeightContraint;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
-@property (weak, nonatomic) IBOutlet PIEPageButton *shareButtonView;
 @property (weak, nonatomic) IBOutlet PIEPageCollectionSwipeView *pageCollectionSwipeView;
 
 @property (nonatomic,strong) PIEPageVM *viewModel;

@@ -11,6 +11,7 @@
 @implementation PIEPageButton
 
 -(void)awakeFromNib {
+    self.userInteractionEnabled = YES;
     _number = 0;
     _selected = NO;
     _imageView = [UIImageView new];
@@ -54,6 +55,7 @@
 -(instancetype)init {
     self = [super init];
     if (self) {
+        self.userInteractionEnabled = YES;
         _number = 0;
         _selected = NO;
         _imageView = [UIImageView new];
