@@ -17,7 +17,7 @@
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="32o-EX-M0d" userLabel="avatar view" customClass="PIEAvatarView">
                         <rect key="frame" x="12" y="12" width="30" height="30"/>
-                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="LUJ-4h-OKJ"/>
                             <constraint firstAttribute="width" constant="30" id="SOB-vC-v1P"/>
@@ -44,7 +44,7 @@
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="swI-yX-do6" customClass="PIEBlurAnimateImageView">
                         <rect key="frame" x="0.0" y="54" width="435" height="435"/>
-                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="swI-yX-do6" secondAttribute="height" id="401-3O-eyt"/>
                         </constraints>
@@ -57,7 +57,7 @@
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jIW-F0-w6F" customClass="PIEPageButton">
                         <rect key="frame" x="12" y="557" width="42" height="15"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="D07-oj-Y1D"/>
                             <constraint firstAttribute="width" constant="42" id="UHJ-6v-k5X"/>
@@ -65,7 +65,7 @@
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yG5-8o-SpT" customClass="PIEPageButton">
                         <rect key="frame" x="74" y="557" width="42" height="15"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="ieL-NY-Oip"/>
                             <constraint firstAttribute="width" constant="42" id="wGy-yN-heM"/>
@@ -87,7 +87,7 @@
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pqU-ZE-XjG" customClass="PIELoveButton">
                         <rect key="frame" x="388" y="544" width="35" height="28"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="28" id="DRf-uf-cjP"/>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="27" id="SOM-B5-J8N"/>
@@ -136,7 +136,7 @@
                 <outlet property="shareButton" destination="jIW-F0-w6F" id="U1h-gj-blH"/>
                 <outlet property="usernameLabel" destination="WcQ-mY-qzq" id="H4H-e1-Szh"/>
             </connections>
-            <point key="canvasLocation" x="385.5" y="311"/>
+            <point key="canvasLocation" x="439.5" y="196"/>
         </tableViewCell>
     </objects>
     <resources>

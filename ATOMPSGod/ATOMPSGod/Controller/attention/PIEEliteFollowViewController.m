@@ -10,8 +10,12 @@
 #import "PIEActionSheet_PS.h"
 #import "PIEShareView.h"
 #import "PIERefreshTableView.h"
-#import "PIEEliteFollowReplyTableViewCell.h"
-#import "PIEEliteFollowAskTableViewCell.h"
+//#import "PIEEliteFollowReplyTableViewCell.h"
+//#import "PIEEliteFollowAskTableViewCell.h"
+
+#import "PIEEliteAskTableViewCell.h"
+#import "PIEEliteReplyTableViewCell.h"
+
 #import "DDCollectManager.h"
 #import "DeviceUtil.h"
 #import "PIEEliteManager.h"
@@ -25,7 +29,7 @@
 #import "PIEPageManager.h"
 /* Variables */
 @interface PIEEliteFollowViewController ()
-@property (nonatomic, strong) NSMutableArray *sourceFollow;
+@property (nonatomic, strong) NSMutableArray<PIEPageVM *> *sourceFollow;
 
 @property (nonatomic, strong) PIERefreshTableView *tableFollow;
 
@@ -67,8 +71,12 @@
 
 @implementation PIEEliteFollowViewController
 
-static  NSString* askIndentifier      = @"PIEEliteFollowAskTableViewCell";
-static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
+//static  NSString* askIndentifier      = @"PIEEliteFollowAskTableViewCell";
+//static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
+
+static NSString *PIEEliteAskCellIdentifier   = @"PIEEliteAskTableViewCell";
+static NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
+
 
 #pragma mark - UI life cycles
 - (void)viewDidLoad {
@@ -82,9 +90,7 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
     
     [self configTableViewFollow];
     
-    [self setupGestures];
-    
-    
+//    [self setupGestures];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -104,9 +110,8 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
     
     _isfirstLoadingFollow   = YES;
     
-    _sourceFollow           = [NSMutableArray new];
+    _sourceFollow           = [NSMutableArray<PIEPageVM *> new];
     
-   
 }
 
 #pragma mark - Notification Setup
@@ -127,15 +132,15 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
     }];
 }
 
-- (void)setupGestures {
-    
-    UITapGestureRecognizer* tapGestureFollow = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureFollow:)];
-    [self.tableFollow addGestureRecognizer:tapGestureFollow];
-   
-    UILongPressGestureRecognizer* longPressGestureFollow = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnFollow:)];
-    [self.tableFollow addGestureRecognizer:longPressGestureFollow];
-    
-}
+//- (void)setupGestures {
+//    
+//    UITapGestureRecognizer* tapGestureFollow = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureFollow:)];
+//    [self.tableFollow addGestureRecognizer:tapGestureFollow];
+//   
+//    UILongPressGestureRecognizer* longPressGestureFollow = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnFollow:)];
+//    [self.tableFollow addGestureRecognizer:longPressGestureFollow];
+//    
+//}
 
 #pragma mark - Notification Methods
 - (void)refreshHeader {
@@ -143,44 +148,6 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
         [self.tableFollow.mj_header beginRefreshing];
     }
 }
-
-//- (void)collectedIconStatusDidChanged:(NSNotification *)notification
-//{
-//    if (_selectedIndexPath_follow) {
-////        BOOL isCollected = [notification.userInfo[PIECollectedIconIsCollectedKey] boolValue];
-////        NSString *collectedCount = notification.userInfo[PIECollectedIconCollectedCountKey];
-//        PIEPageVM* vm = [_sourceFollow objectAtIndex:_selectedIndexPath_follow.row];
-//        if (vm.type == PIEPageTypeReply) {
-//            /* 取得PIEEliteFollowReplyTableViewCell的实例，修改星星的状态和个数 */
-//            PIEEliteFollowReplyTableViewCell *cell =
-//            [self.tableFollow cellForRowAtIndexPath:_selectedIndexPath_follow];
-//            cell.collectView.highlighted  = vm.collected;
-//            cell.collectView.numberString = vm.collectCount;
-//        }
-//
-//    }
-//    
-//}
-
-/**
- *  用户点击了updateShareStatus之后（在弹出的窗口分享），刷新本页面ReplyCell的分享数
- */
-- (void)updateShareStatus {
-    
-    /*
-     _vm.shareCount ++ 这个副作用集中发生在PIEShareView之中。
-     
-     */
-    
-    //    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
-    
-    if (_selectedIndexPath_follow != nil) {
-        [self.tableFollow reloadRowsAtIndexPaths:@[_selectedIndexPath_follow] withRowAnimation:UITableViewRowAnimationAutomatic];
-    }
-    
-}
-
-
 
 #pragma mark - <UITableViewDataSource>
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -193,109 +160,165 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
 {
     
     PIEPageVM* vm = [_sourceFollow objectAtIndex:indexPath.row];
-        
+    
     if (vm.type == PIEPageTypeAsk) {
-        PIEEliteFollowAskTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:askIndentifier];
-        [cell injectSauce:vm];
-        return cell;
+        // 类型一：求P
+        PIEEliteAskTableViewCell *askCell =
+        [tableView dequeueReusableCellWithIdentifier:PIEEliteAskCellIdentifier];
+        
+        [askCell bindVM:vm];
+        
+        // begin RAC binding
+        @weakify(self);
+        [askCell.tapOnUserSignal subscribeNext:^(id x) {
+            @strongify(self);
+            [self tapOnAvatarOrUsernameLabelAtIndexPath:indexPath];
+        }];
+        
+        [askCell.tapOnFollowButtonSignal
+         subscribeNext:^(UITapGestureRecognizer *tap) {
+             @strongify(self);
+             [self tapOnFollowButtonAtIndexPath:indexPath];
+             tap.view.hidden = YES;
+         }];
+        
+        [askCell.tapOnImageSignal
+         subscribeNext:^(id x) {
+             @strongify(self);
+             [self tapOnImageViewAtIndexPath:indexPath];
+         }];
+        
+        [askCell.longPressOnImageSignal
+         subscribeNext:^(id x) {
+             @strongify(self);
+             [self longPressOnImageViewAtIndexPath:indexPath];
+         }];
+        
+        [askCell.tapOnCommentSignal
+         subscribeNext:^(id x) {
+             @strongify(self);
+             [self tapOnCommentPageButtonAtIndexPath:indexPath];
+         }];
+        
+        [askCell.tapOnShareSignal
+         subscribeNext:^(id x) {
+             @strongify(self);
+             [self tapOnSharePageButtonAtIndexPath:indexPath];
+         }];
+        
+        [askCell.tapOnRelatedWorkSignal
+         subscribeNext:^(id x) {
+             @strongify(self);
+             [self tapOnAllworkButtonAtIndexPath:indexPath];
+         }];
+        
+        [askCell.tapOnBangSignal
+         subscribeNext:^(id x) {
+             @strongify(self);
+             [self tapOnBangIconAtIndexPath:indexPath];
+         }];
+        
+        // --- end of RAC binding
+        
+        return askCell;
     }
-    else {
-        PIEEliteFollowReplyTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:replyIndentifier];
-        [cell injectSauce:vm];
-        return cell;
+    else if (vm.type == PIEPageTypeReply){
+        PIEEliteReplyTableViewCell *replyCell =
+        [tableView dequeueReusableCellWithIdentifier:PIEEliteReplyCellIdentifier];
+        
+        [replyCell bindVM:vm];
+        
+        
+        if (vm.askID == 0) {
+            // 类型三：动态（像朋友圈那样，只是发一张图片而已）
+            [replyCell setAllWorkButtonHidden:YES];
+        }else{
+            // 类型二：帮P
+            [replyCell setAllWorkButtonHidden:NO];
+        }
+        
+        // begin RAC binding
+        @weakify(self);
+        
+        [replyCell.tapOnUserSignal
+         subscribeNext:^(id x) {
+             @strongify(self);
+             [self tapOnAvatarOrUsernameLabelAtIndexPath:indexPath];
+         }];
+        
+        [replyCell.tapOnFollowButtonSignal
+         subscribeNext:^(UITapGestureRecognizer *tap) {
+             @strongify(self);
+             [self tapOnFollowButtonAtIndexPath:indexPath];
+             
+             tap.view.hidden = YES;
+         }];
+        
+        [replyCell.tapOnImageSignal
+         subscribeNext:^(id x) {
+             @strongify(self);
+             [self tapOnImageViewAtIndexPath:indexPath];
+         }];
+        
+        [replyCell.longPressOnImageSignal
+         subscribeNext:^(id x) {
+             @strongify(self);
+             [self longPressOnImageViewAtIndexPath:indexPath];
+         }];
+        
+        [replyCell.tapOnCommentSignal
+         subscribeNext:^(id x) {
+             @strongify(self);
+             [self tapOnCommentPageButtonAtIndexPath:indexPath];
+         }];
+        
+        [replyCell.tapOnShareSignal
+         subscribeNext:^(id x) {
+             @strongify(self);
+             [self tapOnSharePageButtonAtIndexPath:indexPath];
+         }];
+        
+        [replyCell.tapOnLoveSignal
+         subscribeNext:^(id x) {
+             @strongify(self);
+             [self tapOnLikePageButtonAtIndexPath:indexPath];
+         }];
+        
+        [replyCell.longPressOnLoveSignal
+         subscribeNext:^(id x) {
+             @strongify(self);
+             [self longPressOnLikePageButtonAtIndexPath:indexPath];
+         }];
+        
+        [replyCell.tapOnRelatedWorkSignal
+         subscribeNext:^(id x) {
+             @strongify(self);
+             [self tapOnAllworkButtonAtIndexPath:indexPath];
+         }];
+        
+        // --- end of RAC binding
+        
+        return replyCell;
     }
     
-
+//    if (vm.type == PIEPageTypeAsk) {
+//        PIEEliteFollowAskTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:askIndentifier];
+//        [cell injectSauce:vm];
+//        return cell;
+//    }
+//    else {
+//        PIEEliteFollowReplyTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:replyIndentifier];
+//        [cell injectSauce:vm];
+//        return cell;
+//    }
+    
+    return nil;
 }
 
 #pragma mark - <UITableViewDelegate>
 /* Nothing yet. */
 
-#pragma mark - Cell 点击事件
-//
-///** Cell-点击 － 关注 */
-//- (void)follow:(UIImageView*)followView {
-//    followView.highlighted = !followView.highlighted;
-//    NSMutableDictionary *param = [NSMutableDictionary new];
-//    [param setObject:@(_selectedVM.userID) forKey:@"uid"];
-//    if (followView.highlighted) {
-//        [param setObject:@1 forKey:@"status"];
-//    }
-//    else {
-//        [param setObject:@0 forKey:@"status"];
-//    }
-//    
-//    [DDService follow:param withBlock:^(BOOL success) {
-//        if (success) {
-//            _selectedVM.followed = followView.highlighted;
-//        } else {
-//            followView.highlighted = !followView.highlighted;
-//            [Hud text:@"网络异常，请稍后再试"];
-//        }
-//        if (followView.highlighted) {
-//            [Hud text:@"关注成功"];
-//        }else{
-//            [Hud text:@"已取消关注"];
-//        }
-//    }];
-//}
-
-//* Cell-点击 收藏 
-//-(void)collect:(PIEPageButton*) collectView shouldShowHud:(BOOL)shouldShowHud {
-//    
-//    // 这里的“收藏”方法的逻辑和shareView中的完全一样，可以考虑将下面的代码统一封装到DDCollectionManager之中，
-//    // 让controller的collet：方法和shareView的collect方法调用
-//    
-//    NSMutableDictionary *param = [NSMutableDictionary new];
-//    collectView.selected = !collectView.selected;
-//    if (collectView.selected) {
-//        //收藏
-//        [param setObject:@(1) forKey:@"status"];
-//    } else {
-//        //取消收藏
-//        [param setObject:@(0) forKey:@"status"];
-//    }
-//    [DDCollectManager toggleCollect:param withPageType:_selectedVM.type withID:_selectedVM.ID withBlock:^(NSError *error) {
-//        if (!error) {
-//            if (shouldShowHud) {
-//                if (  collectView.selected) {
-//                    [Hud textWithLightBackground:@"收藏成功"];
-//                } else {
-//                    [Hud textWithLightBackground:@"取消收藏成功"];
-//                }
-//            }
-//            _selectedVM.collected = collectView.selected;
-//            _selectedVM.collectCount = collectView.numberString;
-//        }   else {
-//            collectView.selected = !collectView.selected;
-//        }
-//    }];
-//}
-
-
 #pragma mark - <PIEShareViewDelegate> and its related methods
-- (void)shareViewDidShare:(PIEShareView *)shareView
-{
-    // refresh ui element on main thread after successful sharing, do nothing otherwise.
-//    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-//        [self updateShareStatus];
-//    }];
-}
-
-- (void)shareViewDidCancel:(PIEShareView *)shareView
-{
-    [shareView dismiss];
-}
-
-- (void)shareViewDidCollect:(PIEShareView *)shareView
-{
-    // Optional的代理方法：仅在EliteViewController才有星星需要更新状态
-   
-    
-    
-}
-
-
 
 - (void)showShareView:(PIEPageVM *)pageVM {
     [self.shareView show:pageVM];
@@ -418,7 +441,7 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
     return YES;
 }
 
-
+/*
 #pragma mark - Gesture Event
 
 - (void)longPressOnFollow:(UILongPressGestureRecognizer *)gesture {
@@ -445,7 +468,6 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
                 if (CGRectContainsPoint(cell.animateImageView.frame, p)) {
                     [self showShareView:_selectedVM];
                 }      else if (CGRectContainsPoint(cell.likeView.frame, p)) {
-//                    [PIEPageManager love:cell.likeView viewModel:_selectedVM revert:YES];
                     [_selectedVM love:YES];
                 }
 
@@ -571,6 +593,80 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
     }
     
 }
+*/
+
+#pragma mark - RAC signal response methods
+- (void)tapOnAvatarOrUsernameLabelAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEFriendViewController * friendVC = [PIEFriendViewController new];
+    friendVC.pageVM = _sourceFollow[indexPath.row];
+    
+    [self.navigationController pushViewController:friendVC animated:YES];
+}
+
+- (void)tapOnFollowButtonAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM = _sourceFollow[indexPath.row];
+    [selectedVM follow];
+}
+
+- (void)tapOnCommentPageButtonAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIECommentViewController* vc = [PIECommentViewController new];
+    vc.vm = _sourceFollow[indexPath.row];
+    vc.shouldShowHeaderView = NO;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)tapOnSharePageButtonAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM = _sourceFollow[indexPath.row];
+    [self showShareView:selectedVM];
+}
+
+- (void)tapOnImageViewAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    PIEPageVM *selectedVM          = _sourceFollow[indexPath.row];
+    //    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+    //    vc.pageVM                      = selectedVM;
+    //    [self presentViewController:vc animated:YES completion:nil];
+    
+    PIEPageDetailViewController *vc2 = [PIEPageDetailViewController new];
+    vc2.pageViewModel = selectedVM;
+    [self.navigationController pushViewController:vc2 animated:YES];
+}
+
+- (void)longPressOnImageViewAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM = _sourceFollow[indexPath.row];
+    [self showShareView:selectedVM];
+}
+
+- (void)tapOnAllworkButtonAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM = _sourceFollow[indexPath.row];
+    PIEReplyCollectionViewController* vc = [PIEReplyCollectionViewController new];
+    vc.pageVM = selectedVM;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)tapOnBangIconAtIndexPath:(NSIndexPath *)indexPath
+{
+    [Hud text:@"BANG!"];
+}
+
+- (void)tapOnLikePageButtonAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM = _sourceFollow[indexPath.row];
+    [selectedVM love:NO];
+}
+
+- (void)longPressOnLikePageButtonAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM = _sourceFollow[indexPath.row];
+    [selectedVM love:YES];
+}
 
 #pragma mark - Lazy loadings
 - (PIERefreshTableView *)tableFollow
@@ -589,11 +685,22 @@ static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
         _tableFollow.rowHeight            = UITableViewAutomaticDimension;
         
         
-        UINib* nib2 = [UINib nibWithNibName:askIndentifier bundle:nil];
-        [self.tableFollow registerNib:nib2 forCellReuseIdentifier:askIndentifier];
-        UINib* nib3 = [UINib nibWithNibName:replyIndentifier bundle:nil];
-        [self.tableFollow registerNib:nib3 forCellReuseIdentifier:replyIndentifier];
+//        UINib* nib2 = [UINib nibWithNibName:askIndentifier bundle:nil];
+//        [self.tableFollow registerNib:nib2 forCellReuseIdentifier:askIndentifier];
+//        UINib* nib3 = [UINib nibWithNibName:replyIndentifier bundle:nil];
+//        [self.tableFollow registerNib:nib3 forCellReuseIdentifier:replyIndentifier];
         
+        UINib *askCellNib =
+        [UINib nibWithNibName:@"PIEEliteAskTableViewCell" bundle:nil];
+        
+        UINib *replyCellNib =
+        [UINib nibWithNibName:@"PIEEliteReplyTableViewCell" bundle:nil];
+        
+        [_tableFollow registerNib:askCellNib
+        forCellReuseIdentifier:PIEEliteAskCellIdentifier];
+        
+        [_tableFollow registerNib:replyCellNib
+        forCellReuseIdentifier:PIEEliteReplyCellIdentifier];
         
     }
     

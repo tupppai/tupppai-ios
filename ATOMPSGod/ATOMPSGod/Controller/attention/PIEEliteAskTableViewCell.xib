@@ -17,7 +17,7 @@
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iDc-LA-Y92" userLabel="avatar view" customClass="PIEAvatarView">
                         <rect key="frame" x="12" y="12" width="30" height="30"/>
-                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="Ds6-VV-aDu"/>
                             <constraint firstAttribute="width" constant="30" id="eia-HI-KkA"/>
@@ -53,7 +53,7 @@
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="24f-gc-bHE" secondAttribute="height" id="175-z3-AdQ"/>
                             <constraint firstItem="qaK-FX-WCc" firstAttribute="leading" secondItem="24f-gc-bHE" secondAttribute="leading" constant="10" id="XcQ-2N-aUM"/>
@@ -68,7 +68,7 @@
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZnW-xz-0Pd" customClass="PIEPageButton">
                         <rect key="frame" x="12" y="557" width="42" height="15"/>
-                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="42" id="dgu-8n-X2d"/>
                             <constraint firstAttribute="height" constant="15" id="iN8-pq-8fr"/>
@@ -76,7 +76,7 @@
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zoj-Rz-RGK" customClass="PIEPageButton">
                         <rect key="frame" x="74" y="557" width="42" height="15"/>
-                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="Li4-Ec-ACU"/>
                             <constraint firstAttribute="width" constant="42" id="XhI-NO-Lrn"/>
@@ -84,7 +84,7 @@
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kjo-f0-djg" customClass="PIEPageButton">
                         <rect key="frame" x="136" y="557" width="90" height="15"/>
-                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" priority="250" constant="90" id="8PB-dv-gb7"/>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="i7T-6I-qkQ"/>
@@ -147,7 +147,7 @@
                 <outlet property="shareButton" destination="ZnW-xz-0Pd" id="e00-AB-s5o"/>
                 <outlet property="usernameLabel" destination="zDU-bi-7mB" id="WrV-sq-E4q"/>
             </connections>
-            <point key="canvasLocation" x="150.5" y="363"/>
+            <point key="canvasLocation" x="-12.5" y="354"/>
         </tableViewCell>
     </objects>
     <resources>

@@ -41,8 +41,6 @@
 
 @property (nonatomic, strong) UITapGestureRecognizer       *tapOnThumbImageViewRightView;
 
-@property (nonatomic, strong) UITapGestureRecognizer       *tapOnCommentLabel;
-
 @property (nonatomic, strong) UITapGestureRecognizer       *tapOnShareButton;
 
 @property (nonatomic, strong) UITapGestureRecognizer       *tapOnCommentButton;
@@ -107,10 +105,6 @@
     [self.blurAnimateImageView.thumbView.rightView addGestureRecognizer:self.tapOnThumbImageViewRightView];
     self.blurAnimateImageView.thumbView.rightView.userInteractionEnabled = YES;
     
-    self.tapOnCommentLabel = [[UITapGestureRecognizer alloc] init];
-    [self.commentLabel addGestureRecognizer:self.tapOnCommentLabel];
-    self.commentLabel.userInteractionEnabled = YES;
-    
     self.tapOnShareButton = [[UITapGestureRecognizer alloc] init];
     [self.shareButton addGestureRecognizer:self.tapOnShareButton];
     self.shareButton.userInteractionEnabled = YES;
@@ -153,12 +147,16 @@
     NSString *urlString_avatar =
     [pageVM.avatarURL trimToImageWidth:_avatarView.frame.size.width * SCREEN_SCALE];
     self.avatarView.url = urlString_avatar;
+    self.avatarView.isV = pageVM.isV;
     
     // 用户名
     self.usernameLabel.text    = pageVM.username;
     
     // 时间
     self.createdTimeLabel.text = pageVM.publishTime;
+    
+    // 图片评论
+    self.commentLabel.text = pageVM.content;
     
     // 关注按钮
     if (pageVM.userID == [DDUserManager currentUser].uid ||
@@ -168,7 +166,7 @@
         _followButton.hidden = NO;
     }
     RAC(_followButton, highlighted) =
-    [RACObserve(pageVM, follow) takeUntil:self.rac_prepareForReuseSignal];
+    [RACObserve(pageVM, followed) takeUntil:self.rac_prepareForReuseSignal];
     
     // 图片
     _blurAnimateImageView.viewModel = pageVM;
@@ -192,11 +190,20 @@
     
 }
 
+/** 第三种cell：动态 */
+- (void)setAllWorkButtonHidden:(BOOL)hidden
+{
+    if (hidden) {
+        self.allWorkButton.hidden = YES;
+    }
+}
+
 - (void)prepareForReuse
 {
     [super prepareForReuse];
     [self.blurAnimateImageView prepareForReuse];
     self.followButton.hidden = NO;
+
 }
 
 #pragma mark - Public RAC signal
@@ -245,10 +252,8 @@
 - (RACSignal *)tapOnCommentSignal
 {
     if (_tapOnCommentSignal == nil) {
-        RACSignal *commentSignal1 = [self.tapOnCommentLabel  rac_gestureSignal];
-        RACSignal *commentSignal2 = [self.tapOnCommentButton rac_gestureSignal];
-        
-        _tapOnCommentSignal = [[RACSignal merge:@[commentSignal1, commentSignal2]]
+
+        _tapOnCommentSignal = [[self.tapOnCommentButton rac_gestureSignal]
                                takeUntil:self.rac_prepareForReuseSignal];
     }
     

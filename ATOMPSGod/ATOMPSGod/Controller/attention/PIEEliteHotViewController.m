@@ -14,8 +14,12 @@
 #import "PIERefreshTableView.h"
 #import "PIEWebViewViewController.h"
 #import "SMPageControl.h"
-#import "PIEEliteHotReplyTableViewCell.h"
-#import "PIEEliteHotAskTableViewCell.h"
+//#import "PIEEliteHotReplyTableViewCell.h"
+//#import "PIEEliteHotAskTableViewCell.h"
+
+#import "PIEEliteAskTableViewCell.h"
+#import "PIEEliteReplyTableViewCell.h"
+
 //#import "DeviceUtil.h"
 #import "PIEEliteManager.h"
 #import "PIECarouselViewController2.h"
@@ -25,6 +29,8 @@
 #import "PIEReplyCollectionViewController.h"
 #import "PIEPageManager.h"
 #import "PIEPageDetailViewController.h"
+
+
 
 @interface PIEEliteHotViewController ()
 
@@ -76,11 +82,10 @@
 @end
 
 
-
 @implementation PIEEliteHotViewController
 
-static  NSString* hotReplyIndentifier = @"PIEEliteHotReplyTableViewCell";
-static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
+static  NSString *PIEEliteAskCellIdentifier   = @"PIEEliteAskTableViewCell";
+static  NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
 
 #pragma mark - UI life cycles
 - (void)viewDidLoad {
@@ -91,15 +96,11 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     
     [self setupNotificationObserver];
     
-    
     [self configTableViewHot];
     
-    [self setupGestures];
-   
     [self getSourceIfEmpty_hot:nil];
     
    
-    
     [self configureSwipeView];
 
     
@@ -175,6 +176,9 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
         model.type = [[object valueForKey:@"type"]integerValue];
         
         PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:model];
+        
+        // TODO: 这里self.sourceHot已经绑定了RAC， 一旦sourceHot有改变就会reload一次tableView；
+        //       这里有可能会造成不必要的性能损耗（每次显示页面CPU都会有一次尖峰，导致卡顿）
         [self.sourceHot addObject:vm];
     }
     [self.tableHot reloadData];
@@ -186,10 +190,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     for (NSManagedObject *page in self.pageManagedObjects) {
         [context deleteObject:page];
     }
-
 }
-
-
 
 #pragma mark - data setup
 
@@ -210,7 +211,6 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
      subscribeNext:^(id x) {
          [self.tableHot reloadData];
      }];
-    
 }
 
 #pragma mark - Notification setup
@@ -232,7 +232,6 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     [self.tableHot mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(weakSelf.view);
     }];
-    
 
     self.swipeView.dataSource = self;
     self.swipeView.delegate = self;
@@ -241,17 +240,6 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 - (void)configureSwipeView{
     
 }
-
-- (void)setupGestures {
-    UITapGestureRecognizer* tapGestureHot = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureHot:)];
-    [self.tableHot addGestureRecognizer:tapGestureHot];
-    
-    UILongPressGestureRecognizer* longPressGestureHot = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnHot:)];
-    [self.tableHot addGestureRecognizer:longPressGestureHot];
-   
-    
-}
-
 
 
 
@@ -303,68 +291,148 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PIEPageVM* vm = [_sourceHot objectAtIndex:indexPath.row];
-    
     if (vm.type == PIEPageTypeAsk) {
-        PIEEliteHotAskTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:hotAskIndentifier];
-        [cell injectSauce:vm];
-        return cell;
-    }
-    else {
-        PIEEliteHotReplyTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:hotReplyIndentifier];
-        [cell injectSauce:vm];
+        // 类型一：求P
+        PIEEliteAskTableViewCell *askCell =
+        [tableView dequeueReusableCellWithIdentifier:PIEEliteAskCellIdentifier];
         
+        [askCell bindVM:vm];
         
+        // begin RAC binding
         @weakify(self);
-        // beginning of RAC-binding
-        [cell.tapOnAvatarOrUsernameSignal subscribeNext:^(id x) {
+        [askCell.tapOnUserSignal subscribeNext:^(id x) {
             @strongify(self);
             [self tapOnAvatarOrUsernameLabelAtIndexPath:indexPath];
         }];
         
-        [cell.tapOnFollowButtonSignal subscribeNext:^(UITapGestureRecognizer *tap) {
-            @strongify(self);
-            [self tapOnFollowButtonAtIndexPath:indexPath];
-            tap.view.hidden = YES;
+        [askCell.tapOnFollowButtonSignal
+         subscribeNext:^(UITapGestureRecognizer *tap) {
+             @strongify(self);
+             [self tapOnFollowButtonAtIndexPath:indexPath];
+             tap.view.hidden = YES;
         }];
         
-        [cell.tapOnImageViewSignal subscribeNext:^(id x) {
-            @strongify(self);
-            [self tapOnImageViewAtIndexPath:indexPath];
-        }];
+        [askCell.tapOnImageSignal
+         subscribeNext:^(id x) {
+             @strongify(self);
+             [self tapOnImageViewAtIndexPath:indexPath];
+         }];
         
-        [cell.longPressOnImageViewSignal subscribeNext:^(id x) {
-            @strongify(self);
-            [self longPressOnImageViewAtIndexPath:indexPath];
-        }];
+        [askCell.longPressOnImageSignal
+         subscribeNext:^(id x) {
+             @strongify(self);
+             [self longPressOnImageViewAtIndexPath:indexPath];
+         }];
         
-        [cell.tapOnAllWorkSignal subscribeNext:^(id x) {
-            @strongify(self);
-            [self tapOnAllworkButtonAtIndexPath:indexPath];
-        }];
+        [askCell.tapOnCommentSignal
+         subscribeNext:^(id x) {
+             @strongify(self);
+             [self tapOnCommentPageButtonAtIndexPath:indexPath];
+         }];
         
-        [cell.tapOnCommentSignal subscribeNext:^(id x) {
-            @strongify(self);
-            [self tapOnCommentPageButtonAtIndexPath:indexPath];
-        }];
+        [askCell.tapOnShareSignal
+         subscribeNext:^(id x) {
+             @strongify(self);
+             [self tapOnSharePageButtonAtIndexPath:indexPath];
+         }];
         
-        [cell.tapOnShareSignal subscribeNext:^(id x) {
-            @strongify(self);
-            [self tapOnSharePageButtonAtIndexPath:indexPath];
-        }];
+        [askCell.tapOnRelatedWorkSignal
+         subscribeNext:^(id x) {
+             @strongify(self);
+             [self tapOnAllworkButtonAtIndexPath:indexPath];
+         }];
         
-        [cell.tapOnLikeSignal subscribeNext:^(id x) {
-            @strongify(self);
-            [self tapOnLikePageButtonAtIndexPath:indexPath];
-        }];
+        [askCell.tapOnBangSignal
+         subscribeNext:^(id x) {
+             @strongify(self);
+             [self tapOnBangIconAtIndexPath:indexPath];
+         }];
         
-        [cell.longPressOnLikeSignal subscribeNext:^(id x) {
-            @strongify(self);
-            [self longPressOnLikePageButtonAtIndexPath:indexPath];
-        }];
-        // --- end of RAC-binding
+        // --- end of RAC binding
         
-        return cell;
+        return askCell;
     }
+    else if (vm.type == PIEPageTypeReply){
+        PIEEliteReplyTableViewCell *replyCell =
+        [tableView dequeueReusableCellWithIdentifier:PIEEliteReplyCellIdentifier];
+        
+        [replyCell bindVM:vm];
+        
+        
+        if (vm.askID == 0) {
+            // 类型三：动态（像朋友圈那样，只是发一张图片而已）
+            [replyCell setAllWorkButtonHidden:YES];
+        }else{
+            // 类型二：帮P
+            [replyCell setAllWorkButtonHidden:NO];
+        }
+        
+        // begin RAC binding
+        @weakify(self);
+        
+        [replyCell.tapOnUserSignal
+         subscribeNext:^(id x) {
+             @strongify(self);
+             [self tapOnAvatarOrUsernameLabelAtIndexPath:indexPath];
+        }];
+        
+        [replyCell.tapOnFollowButtonSignal
+         subscribeNext:^(UITapGestureRecognizer *tap) {
+             @strongify(self);
+             [self tapOnFollowButtonAtIndexPath:indexPath];
+             
+             tap.view.hidden = YES;
+         }];
+        
+        [replyCell.tapOnImageSignal
+         subscribeNext:^(id x) {
+             @strongify(self);
+             [self tapOnImageViewAtIndexPath:indexPath];
+         }];
+        
+        [replyCell.longPressOnImageSignal
+         subscribeNext:^(id x) {
+             @strongify(self);
+             [self longPressOnImageViewAtIndexPath:indexPath];
+         }];
+        
+        [replyCell.tapOnCommentSignal
+         subscribeNext:^(id x) {
+             @strongify(self);
+             [self tapOnCommentPageButtonAtIndexPath:indexPath];
+         }];
+        
+        [replyCell.tapOnShareSignal
+         subscribeNext:^(id x) {
+             @strongify(self);
+             [self tapOnSharePageButtonAtIndexPath:indexPath];
+         }];
+        
+        [replyCell.tapOnLoveSignal
+         subscribeNext:^(id x) {
+             @strongify(self);
+             [self tapOnLikePageButtonAtIndexPath:indexPath];
+         }];
+        
+        [replyCell.longPressOnLoveSignal
+         subscribeNext:^(id x) {
+             @strongify(self);
+             [self longPressOnLikePageButtonAtIndexPath:indexPath];
+         }];
+        
+        [replyCell.tapOnRelatedWorkSignal
+         subscribeNext:^(id x) {
+             @strongify(self);
+             [self tapOnAllworkButtonAtIndexPath:indexPath];
+         }];
+        
+        // --- end of RAC binding
+        
+        return replyCell;
+    }
+    
+    
+    return nil;
 }
 
 
@@ -436,6 +504,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     return YES;
 }
 
+/*
 #pragma mark - Gesture events
 - (void)longPressOnHot:(UILongPressGestureRecognizer *)gesture {
     CGPoint location = [gesture locationInView:self.tableHot];
@@ -587,7 +656,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 //                }
             }
 }
-
+*/
 
 
 #pragma mark - Notification methods
@@ -692,6 +761,7 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
             _canRefreshFooterHot = YES;
         }
         
+        // TODO： 试试不用KVC看看怎样
         NSMutableArray *fromKVC = [self mutableArrayValueForKey:@"sourceHot"];
         [fromKVC addObjectsFromArray:returnArray];
         [self.tableHot.mj_footer endRefreshing];
@@ -754,6 +824,11 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+- (void)tapOnBangIconAtIndexPath:(NSIndexPath *)indexPath
+{
+    [Hud text:@"BANG!"];
+}
+
 - (void)tapOnLikePageButtonAtIndexPath:(NSIndexPath *)indexPath
 {
     PIEPageVM *selectedVM = _sourceHot[indexPath.row];
@@ -765,8 +840,6 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     PIEPageVM *selectedVM = _sourceHot[indexPath.row];
     [selectedVM love:YES];
 }
-
-
 
 #pragma mark - Lazy loadings
 
@@ -785,11 +858,17 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
 
         _tableHot.tableHeaderView      = self.swipeView;
 
+        UINib *askCellNib =
+        [UINib nibWithNibName:@"PIEEliteAskTableViewCell" bundle:nil];
         
-        UINib* nib = [UINib nibWithNibName:hotReplyIndentifier bundle:nil];
-        [_tableHot registerNib:nib forCellReuseIdentifier:hotReplyIndentifier];
-        UINib* nib2 = [UINib nibWithNibName:hotAskIndentifier bundle:nil];
-        [_tableHot registerNib:nib2 forCellReuseIdentifier:hotAskIndentifier];
+        UINib *replyCellNib =
+        [UINib nibWithNibName:@"PIEEliteReplyTableViewCell" bundle:nil];
+        
+        [_tableHot registerNib:askCellNib
+        forCellReuseIdentifier:PIEEliteAskCellIdentifier];
+        
+        [_tableHot registerNib:replyCellNib
+        forCellReuseIdentifier:PIEEliteReplyCellIdentifier];
     }
     
     return _tableHot;
@@ -855,5 +934,6 @@ static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
     
     return _sourceBanner;
 }
+
 
 @end
