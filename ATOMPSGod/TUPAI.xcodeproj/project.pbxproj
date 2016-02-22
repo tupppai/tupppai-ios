@@ -149,6 +149,10 @@
 		90104B441C4B5F8F00E389F4 /* PIESearchUserSimpleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90104B431C4B5F8F00E389F4 /* PIESearchUserSimpleTableViewCell.xib */; };
 		90104B481C4B627900E389F4 /* PIESearchUserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90104B461C4B627900E389F4 /* PIESearchUserTableViewCell.m */; };
 		90104B491C4B627900E389F4 /* PIESearchUserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90104B471C4B627900E389F4 /* PIESearchUserTableViewCell.xib */; };
+		9013383A1C78797F007D0B4A /* PIEEliteAskTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 901338381C78797F007D0B4A /* PIEEliteAskTableViewCell.m */; };
+		9013383B1C78797F007D0B4A /* PIEEliteAskTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 901338391C78797F007D0B4A /* PIEEliteAskTableViewCell.xib */; };
+		9013383F1C78798D007D0B4A /* PIEEliteReplyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9013383D1C78798D007D0B4A /* PIEEliteReplyTableViewCell.m */; };
+		901338401C78798D007D0B4A /* PIEEliteReplyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9013383E1C78798D007D0B4A /* PIEEliteReplyTableViewCell.xib */; };
 		9013E9BE1C575EDD00459905 /* PIEChannelTutorialDetailToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 9013E9BD1C575EDD00459905 /* PIEChannelTutorialDetailToolbar.m */; };
 		9013E9CC1C575EF600459905 /* PIEChannelTutorialDetailToolbar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9013E9CB1C575EF600459905 /* PIEChannelTutorialDetailToolbar.xib */; };
 		9021B96C1C2D2591008C8F0B /* PIEAvatarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9021B96B1C2D2591008C8F0B /* PIEAvatarButton.m */; };
@@ -1116,6 +1120,12 @@
 		90104B451C4B627900E389F4 /* PIESearchUserTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIESearchUserTableViewCell.h; sourceTree = "<group>"; };
 		90104B461C4B627900E389F4 /* PIESearchUserTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIESearchUserTableViewCell.m; sourceTree = "<group>"; };
 		90104B471C4B627900E389F4 /* PIESearchUserTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIESearchUserTableViewCell.xib; sourceTree = "<group>"; };
+		901338371C78797F007D0B4A /* PIEEliteAskTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteAskTableViewCell.h; sourceTree = "<group>"; };
+		901338381C78797F007D0B4A /* PIEEliteAskTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteAskTableViewCell.m; sourceTree = "<group>"; };
+		901338391C78797F007D0B4A /* PIEEliteAskTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEEliteAskTableViewCell.xib; sourceTree = "<group>"; };
+		9013383C1C78798D007D0B4A /* PIEEliteReplyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteReplyTableViewCell.h; sourceTree = "<group>"; };
+		9013383D1C78798D007D0B4A /* PIEEliteReplyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEEliteReplyTableViewCell.m; sourceTree = "<group>"; };
+		9013383E1C78798D007D0B4A /* PIEEliteReplyTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEEliteReplyTableViewCell.xib; sourceTree = "<group>"; };
 		9013E9BC1C575EDD00459905 /* PIEChannelTutorialDetailToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelTutorialDetailToolbar.h; sourceTree = "<group>"; };
 		9013E9BD1C575EDD00459905 /* PIEChannelTutorialDetailToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEChannelTutorialDetailToolbar.m; sourceTree = "<group>"; };
 		9013E9CB1C575EF600459905 /* PIEChannelTutorialDetailToolbar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEChannelTutorialDetailToolbar.xib; sourceTree = "<group>"; };
@@ -2447,6 +2457,7 @@
 		5C4F5BD61AA551BF00226F64 /* Elite */ = {
 			isa = PBXGroup;
 			children = (
+				9013382A1C787967007D0B4A /* View */,
 				F4C0DFE71BE9D443000615CF /* BannerWebView */,
 				F4D9F6C91BBFC5390023A53B /* follow */,
 				F4D9F6C81BBFC5310023A53B /* hot */,
@@ -3058,6 +3069,19 @@
 				5CDB06611AA45C680089121E /* DDCreateProfileVC.m */,
 			);
 			path = login;
+			sourceTree = "<group>";
+		};
+		9013382A1C787967007D0B4A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				901338371C78797F007D0B4A /* PIEEliteAskTableViewCell.h */,
+				901338381C78797F007D0B4A /* PIEEliteAskTableViewCell.m */,
+				901338391C78797F007D0B4A /* PIEEliteAskTableViewCell.xib */,
+				9013383C1C78798D007D0B4A /* PIEEliteReplyTableViewCell.h */,
+				9013383D1C78798D007D0B4A /* PIEEliteReplyTableViewCell.m */,
+				9013383E1C78798D007D0B4A /* PIEEliteReplyTableViewCell.xib */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 		9021B9661C2CE7C5008C8F0B /* avatar */ = {
@@ -5156,6 +5180,7 @@
 				F41BA0D11C0EDCE800979D43 /* MJRefresh.bundle in Resources */,
 				905D436F1C645F6500342E8E /* PIEProceedingToHelpHeaderView_undone.xib in Resources */,
 				E94289821B5B32A200ED26E4 /* NotificationButtonBackground.png in Resources */,
+				901338401C78798D007D0B4A /* PIEEliteReplyTableViewCell.xib in Resources */,
 				0EF2F5CD1C154A6200F27D61 /* PIEChannelViewController.xib in Resources */,
 				E94289811B5B32A200ED26E4 /* NotificationBackgroundWarningIcon@2x.png in Resources */,
 				90A56E611C54C0170079B3D3 /* PIEChannelTutorialPrefaceTableViewCell.xib in Resources */,
@@ -5190,6 +5215,7 @@
 				90B3A2FC1C546BED00F059D1 /* PIECashFlowDetailsWithAvatarCell.xib in Resources */,
 				F41205B11C1986D500EE959F /* baozou.png in Resources */,
 				90D6FE801C5781720060B92F /* PIEChannelTutorialLockedUpView.xib in Resources */,
+				9013383B1C78797F007D0B4A /* PIEEliteAskTableViewCell.xib in Resources */,
 				F44CB3AE1C76E4B500B68C6C /* PIEPageDetailHeaderTableViewCell.xib in Resources */,
 				F499E4561BD0F69100E5F178 /* PIEEliteFollowReplyTableViewCell.xib in Resources */,
 				E94289761B5B32A200ED26E4 /* NotificationBackgroundErrorIcon.png in Resources */,
@@ -5547,6 +5573,7 @@
 				F413B0501C167AB500F9BA27 /* PIECarouselPageTableViewCell.m in Sources */,
 				90BD580C1C71A7920063D2AD /* YYTextView.m in Sources */,
 				F46117DB1BAD1101001A6F1A /* IQKeyboardManager.m in Sources */,
+				9013383F1C78798D007D0B4A /* PIEEliteReplyTableViewCell.m in Sources */,
 				906F87EC1C3FBDE200318DBB /* PIEFurtherRegistrationView.m in Sources */,
 				F4E5F5FA1BD9D2E100AB8B31 /* AFURLConnectionOperation.m in Sources */,
 				90D01BCF1C58966F0035F959 /* PIEChannelTutorialCommentsCountTableViewCell.m in Sources */,
@@ -5617,6 +5644,7 @@
 				5CDB06741AA47EEC0089121E /* ATOMInputVerifyCodeView.m in Sources */,
 				0E354D3E1C340D660035785A /* UINavigationBar+Awesome.m in Sources */,
 				F4092DDD1C3A3D3B003A3AD7 /* UIResponder+SLKAdditions.m in Sources */,
+				9013383A1C78797F007D0B4A /* PIEEliteAskTableViewCell.m in Sources */,
 				0E0DDC8D1C1A64BC009A66C4 /* PIEChannelActivityViewController.m in Sources */,
 				90F401651C50DE6600B39CEB /* PIEFinishWithdralViewController.m in Sources */,
 				E90C7C5D1B20726400CF0E6A /* PWMascotAnimationImageView.m in Sources */,
