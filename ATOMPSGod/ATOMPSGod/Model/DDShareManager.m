@@ -343,4 +343,34 @@
      }];
 }
 
++ (void)bindUserWithThirdPartyPlatform:(NSString *)type openId:(NSString *)openId
+                               failure:(void (^)(void))failure
+                               success:(void (^)(void))success
+{
+    /*
+     auth/bind, POST, openid, type(qq, weixin or weibo)
+     */
+    
+    NSMutableDictionary *params = [NSMutableDictionary <NSString *, NSString *> new];
+    params[@"type"]             = type;
+    params[@"openid"]           = openId;
+    
+    [Hud activity:@"绑定中..."];
+    [DDBaseService POST:params
+                    url:@"auth/bind"
+                  block:^(id responseObject) {
+                      [Hud dismiss];
+                      
+                      if (responseObject == nil) {
+                          if (failure != nil) {
+                              failure();
+                          }
+                      }else{
+                          if (success != nil) {
+                              success();
+                          }
+                      }
+                  }];
+}
+
 @end
