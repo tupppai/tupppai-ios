@@ -8,6 +8,27 @@
 
 #import <UIKit/UIKit.h>
 
+@class PIEPageVM;
 @interface PIEEliteAskTableViewCell : UITableViewCell
+
+- (void)bindVM:(PIEPageVM *)pageVM;
+
+/* Signals */
+@property (nonatomic, strong) RACSignal *tapOnUserSignal;
+
+@property (nonatomic, strong) RACSignal *tapOnFollowButtonSignal;
+
+@property (nonatomic, strong) RACSignal *tapOnImageSignal;
+
+@property (nonatomic, strong) RACSignal *longPressOnImageSignal;
+
+@property (nonatomic, strong) RACSignal *tapOnCommentSignal;
+
+@property (nonatomic, strong) RACSignal *tapOnShareSignal;
+
+@property (nonatomic, strong) RACSignal *tapOnBangSignal;
+
+@property (nonatomic, strong) RACSignal *tapOnRelatedWorkSignal;
+
 
 @end

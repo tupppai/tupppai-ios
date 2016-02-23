@@ -66,7 +66,7 @@
 
     _tapGesture1 = [[UITapGestureRecognizer alloc] init];
     [self.animateImageView.thumbView.leftView addGestureRecognizer:_tapGesture1];
-
+    
     [[_tapGesture1 rac_gestureSignal]
      subscribeNext:^(id x) {
          @strongify(self);

@@ -200,7 +200,7 @@
     viewModel.avatarURL  = urlString_avatar;
     viewModel.imageURL = urlString_imageView;
     _blurAnimateView.viewModel = viewModel;
-
+    
 
 //    if (viewModel.isMyFan) {
 //        _followView.highlightedImage = [UIImage imageNamed:@"pie_mutualfollow"];
@@ -218,10 +218,10 @@
     
 
     _shareView.imageView.image = [UIImage imageNamed:@"hot_share"];
-    _shareView.numberString = viewModel.shareCount;
+    _shareView.numberString    = viewModel.shareCount;
     
     _commentView.imageView.image = [UIImage imageNamed:@"hot_comment"];
-    _commentView.numberString = viewModel.commentCount;
+    _commentView.numberString    = viewModel.commentCount;
     [_likeView initStatus:viewModel.loveStatus numberString:viewModel.likeCount];
     _contentLabel.text = viewModel.content;
     

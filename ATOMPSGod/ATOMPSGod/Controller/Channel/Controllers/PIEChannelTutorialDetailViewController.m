@@ -35,6 +35,7 @@
 #import "PIEShareView.h"
 #import "PIEChooseChargeSourceView.h"
 #import "PIEChargeMoneyView.h"
+#import "Pingpp.h"
 
 @interface PIEChannelTutorialDetailViewController ()
 <
@@ -222,8 +223,8 @@ static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
          @strongify(self);
          
          [Hud activity:@"随机打赏中..."];
-         [self rollDiceRewardRequest];
-         
+//         [self rollDiceRewardRequest];
+         [self rollDiceRequestWithWeixinPayment];
      }];
     
     [[self.toolBar.commentButton
@@ -303,7 +304,7 @@ static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
     [[self rac_signalForSelector:@selector(chargeMoneyView:tapConfirmButtonWithAmount:) fromProtocol:@protocol(PIEChargeMoneyViewDelegate)]
     subscribeNext:^(RACTuple *tuple) {
         
-        @strongify(self);
+//        @strongify(self);
         PIEChargeMoneyView *chargeMoneyView = tuple.first;
         [chargeMoneyView dismiss];
         double amount = [tuple.second doubleValue];
@@ -312,8 +313,8 @@ static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
             [NSString stringWithFormat:@"至少要充值%.2f元", kPIEChargeMinimumAmount];
             [Hud error:prompt];
         }else{
-            [self chargeMoneyRequestWithType:_walletChargeSourceType
-                                      amount:([tuple.second doubleValue])];
+//            [self chargeMoneyRequestWithType:_walletChargeSourceType
+//                                      amount:([tuple.second doubleValue])];
         }
         
     }];
@@ -664,14 +665,24 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
          
          if (rollDiceStatus == kPIERewardFailedInteger){
 
-             PIEChannelTutorialRewardFailedView *rewardFailedView =
-             [PIEChannelTutorialRewardFailedView new];
+//             PIEChannelTutorialRewardFailedView *rewardFailedView =
+//             [PIEChannelTutorialRewardFailedView new];
+//             
+//             [rewardFailedView show];
+//             rewardFailedView.delegate = self;
+//             
+//             // 记录待缴的总额
+//             self.toBeRewardedAmount = amount;
              
-             [rewardFailedView show];
-             rewardFailedView.delegate = self;
+             // 更改需求：直接跳进微信的支付页面
+             @weakify(self);
+             [self chargeMoneyRequestWithType:PIEWalletChargeSourceTypeWechat
+                                       amount:amount
+                                      success:^{
+                                          @strongify(self);
+                                          [self rewardWithConcreteAmount:amount];
+                                      }];
              
-             // 记录待缴的总额
-             self.toBeRewardedAmount = amount;
              
              
          }else if (rollDiceStatus == kPIERewardSuccessInteger){
@@ -689,7 +700,53 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
     
 }
 
-- (void)chargeMoneyRequestWithType:(PIEWalletChargeSourceType)sourceType amount:(double)amount
+/** 直接用用户的微信钱包付款，不需要用到用户在图派的余额 */
+- (void)rollDiceRequestWithWeixinPayment
+{
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    
+    params[@"ask_id"] = [@(self.source_tutorialModel.ask_id) stringValue];
+    
+    /**
+        thread/reward: 从用户当前余额扣款来打赏
+        money/reward:  直接用 用户的微信钱包付款，不经过用户在图派的余额
+     */
+    [DDBaseService
+     POST:params
+     url:@"money/reward"
+     block:^(id responseObject) {
+         NSDictionary *dataDict = responseObject[@"data"];
+         if (dataDict == nil) {
+             [Hud error:@"支付失败"];
+             return;
+         }
+         
+         NSData *data = [NSJSONSerialization dataWithJSONObject:dataDict
+                                                        options:NSJSONWritingPrettyPrinted
+                                                          error:nil];
+         NSString *jsonString = [[NSString alloc] initWithData:data
+                                                      encoding:NSUTF8StringEncoding];
+         
+         @weakify(self);
+         [Pingpp createPayment:jsonString
+                  appURLScheme:@"2088122565280825"
+                withCompletion:^(NSString *result, PingppError *error) {
+                    if ([result isEqualToString:@"success"]) {
+                        // 支付成功，即将刷新页面
+                        [Hud text:@"支付成功"];
+                        @strongify(self);
+                        [self unlockTutorial];
+                    }else{
+                        [Hud text:@"支付失败"];
+                    }
+                }];
+     }];
+}
+
+
+- (void)chargeMoneyRequestWithType:(PIEWalletChargeSourceType)sourceType
+                            amount:(double)amount
+                           success:(void(^)(void))successBlock
 {
 
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
@@ -701,13 +758,11 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
         params[@"type"] = @"alipay";
     }
     
-    
     [DDService
      charge:params
      withBlock:^(BOOL success) {
-         if (success) {
-//             [self rewardWithConcreteAmount:_toBeRewardedAmount];
-             [Hud text:@"充值成功"];
+         if (success && successBlock != nil) {
+             successBlock();
          }
      }];
 }

@@ -8,7 +8,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="598" id="Bl7-aC-EcS" customClass="PIEEliteReplyTableViewCell">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PIEEliteReplyTableViewCell" rowHeight="598" id="Bl7-aC-EcS" customClass="PIEEliteReplyTableViewCell">
             <rect key="frame" x="0.0" y="0.0" width="435" height="598"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Bl7-aC-EcS" id="y7K-bu-JJj">
@@ -17,7 +17,7 @@
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="32o-EX-M0d" userLabel="avatar view" customClass="PIEAvatarView">
                         <rect key="frame" x="12" y="12" width="30" height="30"/>
-                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="LUJ-4h-OKJ"/>
                             <constraint firstAttribute="width" constant="30" id="SOB-vC-v1P"/>
@@ -44,7 +44,7 @@
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="swI-yX-do6" customClass="PIEBlurAnimateImageView">
                         <rect key="frame" x="0.0" y="54" width="435" height="435"/>
-                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="swI-yX-do6" secondAttribute="height" id="401-3O-eyt"/>
                         </constraints>
@@ -57,7 +57,7 @@
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jIW-F0-w6F" customClass="PIEPageButton">
                         <rect key="frame" x="12" y="557" width="42" height="15"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="D07-oj-Y1D"/>
                             <constraint firstAttribute="width" constant="42" id="UHJ-6v-k5X"/>
@@ -65,7 +65,7 @@
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yG5-8o-SpT" customClass="PIEPageButton">
                         <rect key="frame" x="74" y="557" width="42" height="15"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="ieL-NY-Oip"/>
                             <constraint firstAttribute="width" constant="42" id="wGy-yN-heM"/>
@@ -85,9 +85,14 @@
                             <constraint firstAttribute="height" constant="15" id="dxn-Xb-18C"/>
                         </constraints>
                     </imageView>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pqU-ZE-XjG">
-                        <rect key="frame" x="348" y="533" width="62" height="39"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pqU-ZE-XjG" customClass="PIELoveButton">
+                        <rect key="frame" x="388" y="544" width="35" height="28"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="28" id="DRf-uf-cjP"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="27" id="SOM-B5-J8N"/>
+                            <constraint firstAttribute="width" priority="250" constant="35" id="rc6-7q-rfX"/>
+                        </constraints>
                     </view>
                 </subviews>
                 <constraints>
@@ -95,6 +100,8 @@
                     <constraint firstAttribute="trailing" secondItem="jFp-5Y-zJ5" secondAttribute="trailing" id="2gU-L5-qgy"/>
                     <constraint firstItem="yG5-8o-SpT" firstAttribute="top" secondItem="jIW-F0-w6F" secondAttribute="top" id="2x9-ZG-Q4x"/>
                     <constraint firstAttribute="trailing" secondItem="2LS-jK-h2G" secondAttribute="trailing" constant="12" id="9U8-Bx-dwl"/>
+                    <constraint firstAttribute="trailing" secondItem="pqU-ZE-XjG" secondAttribute="trailing" constant="12" id="AmP-3K-ls4"/>
+                    <constraint firstItem="pqU-ZE-XjG" firstAttribute="bottom" secondItem="zjK-AS-sCd" secondAttribute="bottom" id="BPH-RW-ubD"/>
                     <constraint firstItem="jFp-5Y-zJ5" firstAttribute="top" secondItem="jIW-F0-w6F" secondAttribute="bottom" constant="15" id="BTT-lP-hfo"/>
                     <constraint firstItem="32o-EX-M0d" firstAttribute="top" secondItem="y7K-bu-JJj" secondAttribute="top" constant="12" id="Eik-Bc-elC"/>
                     <constraint firstAttribute="trailing" secondItem="aZO-FO-rDl" secondAttribute="trailing" constant="12" id="GnL-3W-XBA"/>
@@ -117,7 +124,19 @@
                     <constraint firstItem="Lc0-ER-Owq" firstAttribute="top" secondItem="WcQ-mY-qzq" secondAttribute="bottom" constant="4" id="wtr-6R-TNG"/>
                 </constraints>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="317.5" y="364"/>
+            <connections>
+                <outlet property="allWorkButton" destination="zjK-AS-sCd" id="Xgs-on-JQH"/>
+                <outlet property="avatarView" destination="32o-EX-M0d" id="QQi-jG-K7L"/>
+                <outlet property="blurAnimateImageView" destination="swI-yX-do6" id="s9D-v7-SCu"/>
+                <outlet property="commentButton" destination="yG5-8o-SpT" id="j1b-h1-j8g"/>
+                <outlet property="commentLabel" destination="aZO-FO-rDl" id="Hog-0w-Hyh"/>
+                <outlet property="createdTimeLabel" destination="Lc0-ER-Owq" id="X8p-HV-uaI"/>
+                <outlet property="followButton" destination="2LS-jK-h2G" id="UDK-0i-Z8y"/>
+                <outlet property="loveButton" destination="pqU-ZE-XjG" id="Tzv-Ed-xj8"/>
+                <outlet property="shareButton" destination="jIW-F0-w6F" id="U1h-gj-blH"/>
+                <outlet property="usernameLabel" destination="WcQ-mY-qzq" id="H4H-e1-Szh"/>
+            </connections>
+            <point key="canvasLocation" x="439.5" y="196"/>
         </tableViewCell>
     </objects>
     <resources>
