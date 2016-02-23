@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SwipeView.h"
 
 @interface PIEPageCollectionSwipeView : UIView
 @property (nonatomic,strong)PIEPageVM *pageViewModel;
-
+@property (nonatomic,strong) SwipeView *swipeView;
 @end

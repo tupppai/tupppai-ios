@@ -496,6 +496,7 @@
 		F44CB3CB1C7ADF1100B68C6C /* PIECommentTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = F44CB3CA1C7ADF1100B68C6C /* PIECommentTableViewHeader.xib */; };
 		F44CB3CE1C7ADF9D00B68C6C /* PIECommentTableViewHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = F44CB3CD1C7ADF9D00B68C6C /* PIECommentTableViewHeader.m */; };
 		F44CB3D11C7AE8E400B68C6C /* PIEPageDetailTextInputBar.m in Sources */ = {isa = PBXBuildFile; fileRef = F44CB3D01C7AE8E400B68C6C /* PIEPageDetailTextInputBar.m */; };
+		F44CB3D61C7C32D000B68C6C /* PIEPageCommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F44CB3D51C7C32D000B68C6C /* PIEPageCommentTableViewCell.m */; };
 		F44FAA3E1C3FAF9300AC60B2 /* LeesinUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F44FAA3D1C3FAF9300AC60B2 /* LeesinUploadManager.m */; };
 		F44FAA411C3FB04C00AC60B2 /* LeesinUploadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F44FAA401C3FB04C00AC60B2 /* LeesinUploadModel.m */; };
 		F45057271C2BDA5B00F7A302 /* PIECategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F45057261C2BDA5B00F7A302 /* PIECategoryModel.m */; };
@@ -1748,6 +1749,8 @@
 		F44CB3CD1C7ADF9D00B68C6C /* PIECommentTableViewHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECommentTableViewHeader.m; sourceTree = "<group>"; };
 		F44CB3CF1C7AE8E400B68C6C /* PIEPageDetailTextInputBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEPageDetailTextInputBar.h; sourceTree = "<group>"; };
 		F44CB3D01C7AE8E400B68C6C /* PIEPageDetailTextInputBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEPageDetailTextInputBar.m; sourceTree = "<group>"; };
+		F44CB3D41C7C32D000B68C6C /* PIEPageCommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEPageCommentTableViewCell.h; sourceTree = "<group>"; };
+		F44CB3D51C7C32D000B68C6C /* PIEPageCommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEPageCommentTableViewCell.m; sourceTree = "<group>"; };
 		F44FAA3C1C3FAF9300AC60B2 /* LeesinUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeesinUploadManager.h; sourceTree = "<group>"; };
 		F44FAA3D1C3FAF9300AC60B2 /* LeesinUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeesinUploadManager.m; sourceTree = "<group>"; };
 		F44FAA3F1C3FB04C00AC60B2 /* LeesinUploadModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeesinUploadModel.h; sourceTree = "<group>"; };
@@ -4303,6 +4306,8 @@
 				F44CB3CA1C7ADF1100B68C6C /* PIECommentTableViewHeader.xib */,
 				F44CB3CF1C7AE8E400B68C6C /* PIEPageDetailTextInputBar.h */,
 				F44CB3D01C7AE8E400B68C6C /* PIEPageDetailTextInputBar.m */,
+				F44CB3D41C7C32D000B68C6C /* PIEPageCommentTableViewCell.h */,
+				F44CB3D51C7C32D000B68C6C /* PIEPageCommentTableViewCell.m */,
 			);
 			name = PageDetail;
 			sourceTree = "<group>";
@@ -5381,6 +5386,7 @@
 				F4092DD91C3A3D3B003A3AD7 /* SLKTextView+SLKAdditions.m in Sources */,
 				5C5DDBCB1AD3D0DC00F4B845 /* DDOtherUserManager.m in Sources */,
 				F4993CEB1BE5B32C007F9BE4 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
+				F44CB3D61C7C32D000B68C6C /* PIEPageCommentTableViewCell.m in Sources */,
 				F499E45A1BD0F6A100E5F178 /* PIEEliteFollowAskTableViewCell.m in Sources */,
 				F41BA0C91C0EDCE800979D43 /* MJRefreshAutoNormalFooter.m in Sources */,
 				903D51EC1C3A67710020D5BF /* PIELaunchViewController_Black.m in Sources */,

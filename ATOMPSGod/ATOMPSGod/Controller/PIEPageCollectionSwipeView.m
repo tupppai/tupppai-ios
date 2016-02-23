@@ -6,14 +6,12 @@
 //  Copyright © 2016 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
-#import "SwipeView.h"
 #import "DDHotDetailManager.h"
 #import "PIEPageCollectionSwipeView.h"
-@interface PIEPageCollectionSwipeView()<SwipeViewDataSource,SwipeViewDelegate>
+@interface PIEPageCollectionSwipeView()<SwipeViewDataSource>
 @property (nonatomic,strong) UIImageView *askImageView;
 @property (nonatomic,strong) UIImageView *askImageView2;
 @property (nonatomic,strong) UIImageView *iconImageView;
-@property (nonatomic,strong) SwipeView *swipeView;
 @property (nonatomic,strong) MASConstraint *askImageView2WidthMasConstraint;
 
 
@@ -37,7 +35,6 @@
             [self reloadAskImageViews];
             [self.swipeView reloadData];
         }];
-    
 }
 
 - (void)reloadAskImageViews {
@@ -80,14 +77,14 @@
     [self addSubview:self.iconImageView];
     [self.iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(self);
-        make.width.equalTo(@10);
-        make.leading.equalTo(self.askImageView2.mas_trailing);
+        make.width.equalTo(@11.5);
+        make.leading.equalTo(self.askImageView2.mas_trailing).with.offset(5.5);
         make.centerY.equalTo(self);
     }];
     
     [self addSubview:self.swipeView];
     [self.swipeView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.equalTo(self.iconImageView.mas_trailing);
+        make.leading.equalTo(self.iconImageView.mas_trailing).with.offset(5.5);
         make.height.equalTo(self);
         make.trailing.equalTo(self);
         make.centerY.equalTo(self);
@@ -110,8 +107,10 @@
     {
         CGFloat width = self.swipeView.frame.size.height;
         view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width+10, width)];
-        UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 0, width, width)];
+        UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, width, width)];
         imageView.contentMode = UIViewContentModeScaleAspectFill;
+        imageView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        imageView.clipsToBounds = YES;
         [view addSubview:imageView];
     }
     PIEPageVM* vm = [_replySourceArray objectAtIndex:index];
@@ -125,16 +124,14 @@
     return view;
 }
 
--(void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index {
-
-//    PIEPageVM* vm = [_replySourceArray objectAtIndex:index];
-}
 
 
 -(UIImageView *)askImageView {
     if (!_askImageView) {
         _askImageView = [UIImageView new];
-        _askImageView.backgroundColor = [UIColor greenColor];
+        _askImageView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        _askImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _askImageView.clipsToBounds = YES;
     }
     return _askImageView;
 }
@@ -142,20 +139,25 @@
 -(UIImageView *)askImageView2 {
     if (!_askImageView2) {
         _askImageView2 = [UIImageView new];
-        _askImageView.backgroundColor = [UIColor redColor];
+        _askImageView2.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        _askImageView2.contentMode = UIViewContentModeScaleAspectFill;
+        _askImageView2.clipsToBounds = YES;
     }
     return _askImageView2;
 }
 -(UIImageView *)iconImageView {
     if (!_iconImageView) {
         _iconImageView = [UIImageView new];
+        _iconImageView.backgroundColor = [UIColor whiteColor];
+        _iconImageView.image = [UIImage imageNamed:@"pagedetailshuffle"];
+        _iconImageView.contentMode = UIViewContentModeScaleAspectFit;
     }
     return _iconImageView;
 }
 -(SwipeView *)swipeView {
     if (!_swipeView) {
         _swipeView = [SwipeView new];
-        _swipeView.backgroundColor = [UIColor greenColor];
+        _swipeView.backgroundColor = [UIColor whiteColor];
         _swipeView.dataSource = self;
         _swipeView.delegate = self;
     }
