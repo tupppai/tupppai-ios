@@ -8,9 +8,7 @@
 
 #import "PIEShareView.h"
 
-//#import "POP.h"
 #import "DDCollectManager.h"
-//
 
 #define height_sheet 251.0f
 @interface PIEShareView ()
@@ -137,6 +135,7 @@
 
 - (void)tapGesCancel:(UIGestureRecognizer*)gesture {
     
+    [self dismiss];
     if (_delegate != nil &&
         [_delegate respondsToSelector:@selector(shareViewDidCancel:)])
     {
@@ -229,11 +228,9 @@
     }];
     [UIView animateWithDuration:0.12 animations:^{
         [self.sheetView layoutIfNeeded];
-//        self.dimmingView.alpha = 0.2;
     } completion:^(BOOL finished) {
         if (finished) {
             [self removeFromSuperview];
-//            self.dimmingView.alpha = 0.87;
             [self deallocPageViewModel];
         }
     }];

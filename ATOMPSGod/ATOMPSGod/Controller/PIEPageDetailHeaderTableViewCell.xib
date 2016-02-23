@@ -24,8 +24,8 @@
                             <constraint firstAttribute="height" constant="31" id="Ujk-wp-0Ed"/>
                         </constraints>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JAV-Xd-aFt">
-                        <rect key="frame" x="53" y="12" width="7" height="15"/>
+                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JAV-Xd-aFt">
+                        <rect key="frame" x="53" y="12" width="6" height="15"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <inset key="contentEdgeInsets" minX="-1" minY="-1" maxX="0.0" maxY="0.0"/>
                         <state key="normal" title="-">

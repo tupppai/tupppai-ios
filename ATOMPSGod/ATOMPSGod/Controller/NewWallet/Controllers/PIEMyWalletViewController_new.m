@@ -52,6 +52,9 @@
     [self setupSubViews];
     [self setupObservers];
 }
+-(BOOL)hidesBottomBarWhenPushed {
+    return YES;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

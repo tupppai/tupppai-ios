@@ -59,7 +59,6 @@
           return array.count>0;
       }]
      subscribeNext:^(id x) {
-//         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationBottom];
          [self.tableView reloadData];
      }];
     
@@ -344,14 +343,15 @@
 }
 -(void)sendComment {
     
+    if (self.textInputBar.textView.text.length == 0 || [self.textInputBar.textView.text isEqualToString:@""]) {
+        return;
+    }
     PIECommentVM *commentVM = [PIECommentVM new];
     commentVM.username = [DDUserManager currentUser].nickname;
     commentVM.uid = [DDUserManager currentUser].uid;
     commentVM.avatar = [DDUserManager currentUser].avatar;
     commentVM.originText = self.textInputBar.textView.text;
     commentVM.time = @"刚刚";
-    //    NSString* commentToShow;
-    //回复评论
     if (_targetCommentVM) {
         [commentVM.replyArray addObjectsFromArray:_targetCommentVM.replyArray];
         commentVM.text = self.textInputBar.textView.text;
@@ -392,6 +392,7 @@
     _targetCommentVM = nil;
     
     self.textInputBar.textView.text = @"";
+
 }
 
 -(PIEPageDetailTextInputBar *)textInputBar {
@@ -415,7 +416,6 @@
         [_tableView registerNib:nib forCellReuseIdentifier:@"PageDetailHeaderTableViewCellIdentifier"];
         [_tableView registerClass:[PIEPageCommentTableViewCell class] forCellReuseIdentifier:@"PageCommentTableViewCellResueIdentifier"];
         _tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive|UIScrollViewKeyboardDismissModeOnDrag;
-        
     }
     return _tableView;
 }

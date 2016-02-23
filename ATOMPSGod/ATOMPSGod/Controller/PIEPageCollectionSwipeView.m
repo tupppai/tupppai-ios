@@ -159,7 +159,7 @@
         _swipeView = [SwipeView new];
         _swipeView.backgroundColor = [UIColor whiteColor];
         _swipeView.dataSource = self;
-        _swipeView.delegate = self;
+//        _swipeView.delegate = self;
     }
     return _swipeView;
 }
