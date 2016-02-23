@@ -65,9 +65,11 @@ static int thumbViewSizeConstant = 100;
 -(void)setViewModel:(PIEPageVM *)viewModel {
     _viewModel = viewModel;
     
-    [DDService sd_downloadImage:viewModel.imageURL withBlock:^(UIImage *image) {
+    
+    [DDService sd_downloadImage:[viewModel.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION]
+                      withBlock:^(UIImage *image) {
         _imageView.image = image;
-        [image backgroundBlurredImageView:_blurBackgroundImageView WithRadius:80 iterations:1 tintColor:nil];
+        [image backgroundBlurredImageView:_blurBackgroundImageView WithRadius:20 iterations:1 tintColor:nil];
     }];
     
     

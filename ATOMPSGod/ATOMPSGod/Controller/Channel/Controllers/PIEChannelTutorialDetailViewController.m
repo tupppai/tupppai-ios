@@ -303,7 +303,7 @@ static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
     [[self rac_signalForSelector:@selector(chargeMoneyView:tapConfirmButtonWithAmount:) fromProtocol:@protocol(PIEChargeMoneyViewDelegate)]
     subscribeNext:^(RACTuple *tuple) {
         
-        @strongify(self);
+//        @strongify(self);
         PIEChargeMoneyView *chargeMoneyView = tuple.first;
         [chargeMoneyView dismiss];
         double amount = [tuple.second doubleValue];
@@ -312,8 +312,8 @@ static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
             [NSString stringWithFormat:@"至少要充值%.2f元", kPIEChargeMinimumAmount];
             [Hud error:prompt];
         }else{
-            [self chargeMoneyRequestWithType:_walletChargeSourceType
-                                      amount:([tuple.second doubleValue])];
+//            [self chargeMoneyRequestWithType:_walletChargeSourceType
+//                                      amount:([tuple.second doubleValue])];
         }
         
     }];
@@ -664,14 +664,24 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
          
          if (rollDiceStatus == kPIERewardFailedInteger){
 
-             PIEChannelTutorialRewardFailedView *rewardFailedView =
-             [PIEChannelTutorialRewardFailedView new];
+//             PIEChannelTutorialRewardFailedView *rewardFailedView =
+//             [PIEChannelTutorialRewardFailedView new];
+//             
+//             [rewardFailedView show];
+//             rewardFailedView.delegate = self;
+//             
+//             // 记录待缴的总额
+//             self.toBeRewardedAmount = amount;
              
-             [rewardFailedView show];
-             rewardFailedView.delegate = self;
+             // 更改需求：直接跳进微信的支付页面
+             @weakify(self);
+             [self chargeMoneyRequestWithType:PIEWalletChargeSourceTypeWechat
+                                       amount:amount
+                                      success:^{
+                                          @strongify(self);
+                                          [self rewardWithConcreteAmount:amount];
+                                      }];
              
-             // 记录待缴的总额
-             self.toBeRewardedAmount = amount;
              
              
          }else if (rollDiceStatus == kPIERewardSuccessInteger){
@@ -689,7 +699,9 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
     
 }
 
-- (void)chargeMoneyRequestWithType:(PIEWalletChargeSourceType)sourceType amount:(double)amount
+- (void)chargeMoneyRequestWithType:(PIEWalletChargeSourceType)sourceType
+                            amount:(double)amount
+                           success:(void(^)(void))successBlock
 {
 
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
@@ -701,13 +713,11 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
         params[@"type"] = @"alipay";
     }
     
-    
     [DDService
      charge:params
      withBlock:^(BOOL success) {
-         if (success) {
-//             [self rewardWithConcreteAmount:_toBeRewardedAmount];
-             [Hud text:@"充值成功"];
+         if (success && successBlock != nil) {
+             successBlock();
          }
      }];
 }

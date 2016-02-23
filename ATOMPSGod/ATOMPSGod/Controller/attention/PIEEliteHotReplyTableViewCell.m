@@ -200,7 +200,7 @@
     viewModel.avatarURL  = urlString_avatar;
     viewModel.imageURL = urlString_imageView;
     _blurAnimateView.viewModel = viewModel;
-
+    
 
 //    if (viewModel.isMyFan) {
 //        _followView.highlightedImage = [UIImage imageNamed:@"pie_mutualfollow"];
