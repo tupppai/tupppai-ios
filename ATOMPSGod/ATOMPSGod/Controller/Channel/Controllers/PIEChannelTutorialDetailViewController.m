@@ -35,6 +35,7 @@
 #import "PIEShareView.h"
 #import "PIEChooseChargeSourceView.h"
 #import "PIEChargeMoneyView.h"
+#import "Pingpp.h"
 
 @interface PIEChannelTutorialDetailViewController ()
 <
@@ -222,8 +223,8 @@ static NSString *PIEChannelTutorialCommentTableViewCellIdentifier =
          @strongify(self);
          
          [Hud activity:@"随机打赏中..."];
-         [self rollDiceRewardRequest];
-         
+//         [self rollDiceRewardRequest];
+         [self rollDiceRequestWithWeixinPayment];
      }];
     
     [[self.toolBar.commentButton
@@ -698,6 +699,50 @@ estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
      }];
     
 }
+
+/** 直接用用户的微信钱包付款，不需要用到用户在图派的余额 */
+- (void)rollDiceRequestWithWeixinPayment
+{
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    
+    params[@"ask_id"] = [@(self.source_tutorialModel.ask_id) stringValue];
+    
+    /**
+        thread/reward: 从用户当前余额扣款来打赏
+        money/reward:  直接用 用户的微信钱包付款，不经过用户在图派的余额
+     */
+    [DDBaseService
+     POST:params
+     url:@"money/reward"
+     block:^(id responseObject) {
+         NSDictionary *dataDict = responseObject[@"data"];
+         if (dataDict == nil) {
+             [Hud error:@"支付失败"];
+             return;
+         }
+         
+         NSData *data = [NSJSONSerialization dataWithJSONObject:dataDict
+                                                        options:NSJSONWritingPrettyPrinted
+                                                          error:nil];
+         NSString *jsonString = [[NSString alloc] initWithData:data
+                                                      encoding:NSUTF8StringEncoding];
+         
+         @weakify(self);
+         [Pingpp createPayment:jsonString
+                  appURLScheme:@"2088122565280825"
+                withCompletion:^(NSString *result, PingppError *error) {
+                    if ([result isEqualToString:@"success"]) {
+                        // 支付成功，即将刷新页面
+                        [Hud text:@"支付成功"];
+                        @strongify(self);
+                        [self unlockTutorial];
+                    }else{
+                        [Hud text:@"支付失败"];
+                    }
+                }];
+     }];
+}
+
 
 - (void)chargeMoneyRequestWithType:(PIEWalletChargeSourceType)sourceType
                             amount:(double)amount
