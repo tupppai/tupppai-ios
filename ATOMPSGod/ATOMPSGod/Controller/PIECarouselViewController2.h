@@ -8,7 +8,7 @@
 
 //#import "DDBaseVC.h"
 #import "iCarousel.h"
-#import "VVBlurViewController.h"
+
 #import "PIECustomPresentViewController.h"
 //@interface PIECarouselViewController2 : PIECustomPresentViewController<iCarouselDataSource, iCarouselDelegate>
 @interface PIECarouselViewController2 : PIECustomPresentViewController<iCarouselDataSource, iCarouselDelegate>

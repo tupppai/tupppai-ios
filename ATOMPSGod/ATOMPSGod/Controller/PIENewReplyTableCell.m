@@ -59,8 +59,8 @@
     [self addKVO];
     NSString *urlString_avatar = [viewModel.avatarURL trimToImageWidth:_avatarView.frame.size.width*SCREEN_SCALE];
     self.blurAnimateImageView.viewModel = viewModel;
-    [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:urlString_avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
     
+    _avatarView.url = urlString_avatar;
     _avatarView.isV = viewModel.isV;
 
     
@@ -90,15 +90,10 @@
     [_likeView initStatus:viewModel.loveStatus numberString:viewModel.likeCount];
     _contentLabel.text = viewModel.content;
     
-    
     _nameLabel.text = viewModel.username;
     _timeLabel.text = viewModel.publishTime;
 
 }
-
-
-
-
 
 
 - (void)addKVO {
