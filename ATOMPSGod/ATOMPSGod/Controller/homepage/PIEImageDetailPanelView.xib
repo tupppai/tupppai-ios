@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="PIEImageDetailPanelView">
+            <rect key="frame" x="0.0" y="0.0" width="384" height="511"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EgI-s0-blY" customClass="PIEAvatarView">
+                    <rect key="frame" x="10" y="12" width="30" height="30"/>
+                    <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="8Xy-x7-iuo"/>
+                        <constraint firstAttribute="width" constant="30" id="Zuj-JF-XCN"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bU3-8c-ZtB">
+                    <rect key="frame" x="48" y="12" width="192" height="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="createdTime" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kgk-qs-5i4">
+                    <rect key="frame" x="48" y="31" width="60.5" height="12"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                    <color key="textColor" red="0.69803921568627447" green="0.69803921568627447" blue="0.69803921568627447" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MA1-rC-3eO" customClass="PIEBlurAnimateImageView">
+                    <rect key="frame" x="0.0" y="52" width="384" height="384"/>
+                    <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="MA1-rC-3eO" secondAttribute="height" id="gt4-Ko-pWk"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9ui-Jg-2RR">
+                    <rect key="frame" x="99" y="448" width="85" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="35" id="RIu-6m-MJC"/>
+                        <constraint firstAttribute="width" constant="85" id="rhR-C1-wp1"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="下载">
+                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5qi-2r-Zyp">
+                    <rect key="frame" x="200" y="448" width="85" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="35" id="Cpg-fS-a5k"/>
+                        <constraint firstAttribute="width" constant="85" id="tA7-P9-YNy"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="详情">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image_detail_ask" translatesAutoresizingMaskIntoConstraints="NO" id="qPf-J4-HoT" userLabel="askIcon">
+                    <rect key="frame" x="342" y="15" width="43" height="23"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="23" id="i18-f4-UuT"/>
+                        <constraint firstAttribute="width" constant="43" id="i5N-2H-n0s"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image_detail_reply" translatesAutoresizingMaskIntoConstraints="NO" id="vl9-c5-ipG" userLabel="replyIcon">
+                    <rect key="frame" x="342" y="14" width="43" height="23"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="23" id="AJv-xO-wS8"/>
+                        <constraint firstAttribute="width" constant="43" id="ZAh-7u-0Aj"/>
+                    </constraints>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fBb-TH-3Hu" customClass="PIELoveButton">
+                    <rect key="frame" x="335" y="455" width="35" height="28"/>
+                    <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" priority="250" constant="35" id="gRX-hR-QoM"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="27" id="qhL-xY-6wl"/>
+                        <constraint firstAttribute="height" constant="28" id="ype-qX-mLX"/>
+                    </constraints>
+                </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bang_icon" translatesAutoresizingMaskIntoConstraints="NO" id="qm2-GN-ymt" userLabel="bangImageView">
+                    <rect key="frame" x="345" y="450" width="27" height="33"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="33" id="Pqt-XG-GAd"/>
+                        <constraint firstAttribute="width" constant="27" id="WBe-hO-ZqF"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="bU3-8c-ZtB" firstAttribute="top" secondItem="EgI-s0-blY" secondAttribute="top" id="5rR-WX-saP"/>
+                <constraint firstAttribute="trailing" secondItem="qPf-J4-HoT" secondAttribute="trailing" constant="-1" id="7GB-f6-uTr"/>
+                <constraint firstItem="Kgk-qs-5i4" firstAttribute="leading" secondItem="bU3-8c-ZtB" secondAttribute="leading" id="8g4-mt-jF9"/>
+                <constraint firstItem="MA1-rC-3eO" firstAttribute="top" secondItem="vl9-c5-ipG" secondAttribute="bottom" constant="15" id="D6E-Yt-ubq"/>
+                <constraint firstItem="MA1-rC-3eO" firstAttribute="top" secondItem="EgI-s0-blY" secondAttribute="bottom" constant="10" id="Eq9-9h-yah"/>
+                <constraint firstItem="EgI-s0-blY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="HQh-p6-euG"/>
+                <constraint firstAttribute="trailing" secondItem="vl9-c5-ipG" secondAttribute="trailing" constant="-1" id="JBz-0d-uCh"/>
+                <constraint firstItem="bU3-8c-ZtB" firstAttribute="leading" secondItem="EgI-s0-blY" secondAttribute="trailing" constant="8" id="LiH-4y-pVY"/>
+                <constraint firstItem="EgI-s0-blY" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="12" id="MKG-pA-f4s"/>
+                <constraint firstAttribute="trailing" secondItem="MA1-rC-3eO" secondAttribute="trailing" id="NqR-6p-c7j"/>
+                <constraint firstItem="9ui-Jg-2RR" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" constant="-50" id="O9a-zU-Dxb"/>
+                <constraint firstItem="qm2-GN-ymt" firstAttribute="bottom" secondItem="5qi-2r-Zyp" secondAttribute="bottom" id="Qet-d1-oec"/>
+                <constraint firstItem="5qi-2r-Zyp" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" constant="50" id="Rpm-pG-9GZ"/>
+                <constraint firstItem="5qi-2r-Zyp" firstAttribute="top" secondItem="9ui-Jg-2RR" secondAttribute="top" id="WTv-KP-6sl"/>
+                <constraint firstItem="Kgk-qs-5i4" firstAttribute="top" secondItem="bU3-8c-ZtB" secondAttribute="bottom" constant="3" id="XX0-uv-fjX"/>
+                <constraint firstItem="fBb-TH-3Hu" firstAttribute="bottom" secondItem="5qi-2r-Zyp" secondAttribute="bottom" id="cAf-ve-HMD"/>
+                <constraint firstAttribute="trailing" secondItem="fBb-TH-3Hu" secondAttribute="trailing" constant="14" id="ceC-Mo-7wz"/>
+                <constraint firstItem="bU3-8c-ZtB" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.5" id="hJF-oN-iuW"/>
+                <constraint firstItem="9ui-Jg-2RR" firstAttribute="top" secondItem="MA1-rC-3eO" secondAttribute="bottom" constant="12" id="ioe-mV-Ek4"/>
+                <constraint firstItem="qPf-J4-HoT" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="udh-sZ-YvC"/>
+                <constraint firstAttribute="trailing" secondItem="qm2-GN-ymt" secondAttribute="trailing" constant="12" id="vgx-2R-nCE"/>
+                <constraint firstItem="MA1-rC-3eO" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="xEK-f2-mvH"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="askIconImageView" destination="qPf-J4-HoT" id="7Xg-tI-IXX"/>
+                <outlet property="avatarView" destination="EgI-s0-blY" id="AK4-nr-9u8"/>
+                <outlet property="bangImageView" destination="qm2-GN-ymt" id="AQu-bx-9Nk"/>
+                <outlet property="blurAnimateImageView" destination="MA1-rC-3eO" id="2Sf-Vk-lYQ"/>
+                <outlet property="createdTimeLabel" destination="Kgk-qs-5i4" id="mfL-ZA-1mU"/>
+                <outlet property="detailButton" destination="5qi-2r-Zyp" id="XHk-w3-fEK"/>
+                <outlet property="downloadButton" destination="9ui-Jg-2RR" id="p3A-ax-XHe"/>
+                <outlet property="loveButton" destination="fBb-TH-3Hu" id="AzQ-ym-dxO"/>
+                <outlet property="replyIconImageView" destination="vl9-c5-ipG" id="dIJ-Cg-yyv"/>
+                <outlet property="usernameLabel" destination="bU3-8c-ZtB" id="lmH-5s-eec"/>
+            </connections>
+            <point key="canvasLocation" x="252" y="152.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="bang_icon" width="27" height="33"/>
+        <image name="image_detail_ask" width="43" height="23"/>
+        <image name="image_detail_reply" width="43" height="23"/>
+    </resources>
+</document>

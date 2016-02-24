@@ -209,6 +209,9 @@
 		90B3A2F71C546BD000F059D1 /* PIECashFlowDetailsNormalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90B3A2F51C546BD000F059D1 /* PIECashFlowDetailsNormalCell.xib */; };
 		90B3A2FB1C546BED00F059D1 /* PIECashFlowDetailsWithAvatarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B3A2F91C546BED00F059D1 /* PIECashFlowDetailsWithAvatarCell.m */; };
 		90B3A2FC1C546BED00F059D1 /* PIECashFlowDetailsWithAvatarCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90B3A2FA1C546BED00F059D1 /* PIECashFlowDetailsWithAvatarCell.xib */; };
+		90B7BAA71C7C8ED400DE5C8D /* PIECarousel_ItemView_new.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B7BAA61C7C8ED400DE5C8D /* PIECarousel_ItemView_new.m */; };
+		90B7BAA91C7C8EF800DE5C8D /* PIECarousel_ItemView_new.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90B7BAA81C7C8EF800DE5C8D /* PIECarousel_ItemView_new.xib */; };
+		90B7BABC1C7D4E1900DE5C8D /* PIECarouselViewController3.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B7BABB1C7D4E1900DE5C8D /* PIECarouselViewController3.m */; };
 		90B8775C1C3E010F0087E9D7 /* PIEForgotPasswordViewController_Black.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B8775B1C3E010F0087E9D7 /* PIEForgotPasswordViewController_Black.m */; };
 		90BD57F51C71A7920063D2AD /* YYTextContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90BD57C31C71A7920063D2AD /* YYTextContainerView.m */; };
 		90BD57F61C71A7920063D2AD /* YYTextDebugOption.m in Sources */ = {isa = PBXBuildFile; fileRef = 90BD57C51C71A7920063D2AD /* YYTextDebugOption.m */; };
@@ -250,6 +253,8 @@
 		90EC3D5C1C2A78D10085A7BE /* PIEProceedingToHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EC3D5B1C2A78D10085A7BE /* PIEProceedingToHelpViewController.m */; };
 		90EC3D5F1C2A78E20085A7BE /* PIEProceedingAskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EC3D5E1C2A78E20085A7BE /* PIEProceedingAskViewController.m */; };
 		90EC3D621C2A79030085A7BE /* PIEProceedingViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EC3D611C2A79030085A7BE /* PIEProceedingViewController2.m */; };
+		90F0E8911C7C2D4F00B6EA96 /* PIEImageDetailPanelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F0E8901C7C2D4F00B6EA96 /* PIEImageDetailPanelView.m */; };
+		90F0E89F1C7C2D6100B6EA96 /* PIEImageDetailPanelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90F0E89E1C7C2D6100B6EA96 /* PIEImageDetailPanelView.xib */; };
 		90F401501C5084BB00B39CEB /* PIEMyWalletViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F4014F1C5084BB00B39CEB /* PIEMyWalletViewController.m */; };
 		90F4015F1C50A1BD00B39CEB /* PIECashFlowDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F4015E1C50A1BD00B39CEB /* PIECashFlowDetailsViewController.m */; };
 		90F401621C50C55100B39CEB /* PIEBindWeixinPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F401611C50C55100B39CEB /* PIEBindWeixinPaymentViewController.m */; };
@@ -1226,6 +1231,11 @@
 		90B3A2F81C546BED00F059D1 /* PIECashFlowDetailsWithAvatarCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECashFlowDetailsWithAvatarCell.h; sourceTree = "<group>"; };
 		90B3A2F91C546BED00F059D1 /* PIECashFlowDetailsWithAvatarCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECashFlowDetailsWithAvatarCell.m; sourceTree = "<group>"; };
 		90B3A2FA1C546BED00F059D1 /* PIECashFlowDetailsWithAvatarCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIECashFlowDetailsWithAvatarCell.xib; sourceTree = "<group>"; };
+		90B7BAA51C7C8ED400DE5C8D /* PIECarousel_ItemView_new.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECarousel_ItemView_new.h; sourceTree = "<group>"; };
+		90B7BAA61C7C8ED400DE5C8D /* PIECarousel_ItemView_new.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECarousel_ItemView_new.m; sourceTree = "<group>"; };
+		90B7BAA81C7C8EF800DE5C8D /* PIECarousel_ItemView_new.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIECarousel_ItemView_new.xib; sourceTree = "<group>"; };
+		90B7BABA1C7D4E1900DE5C8D /* PIECarouselViewController3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECarouselViewController3.h; sourceTree = "<group>"; };
+		90B7BABB1C7D4E1900DE5C8D /* PIECarouselViewController3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIECarouselViewController3.m; sourceTree = "<group>"; };
 		90B8775A1C3E010F0087E9D7 /* PIEForgotPasswordViewController_Black.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEForgotPasswordViewController_Black.h; sourceTree = "<group>"; };
 		90B8775B1C3E010F0087E9D7 /* PIEForgotPasswordViewController_Black.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEForgotPasswordViewController_Black.m; sourceTree = "<group>"; };
 		90BD57C21C71A7920063D2AD /* YYTextContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYTextContainerView.h; sourceTree = "<group>"; };
@@ -1305,6 +1315,9 @@
 		90EC3D5E1C2A78E20085A7BE /* PIEProceedingAskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEProceedingAskViewController.m; sourceTree = "<group>"; };
 		90EC3D601C2A79030085A7BE /* PIEProceedingViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEProceedingViewController2.h; sourceTree = "<group>"; };
 		90EC3D611C2A79030085A7BE /* PIEProceedingViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEProceedingViewController2.m; sourceTree = "<group>"; };
+		90F0E88F1C7C2D4F00B6EA96 /* PIEImageDetailPanelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEImageDetailPanelView.h; sourceTree = "<group>"; };
+		90F0E8901C7C2D4F00B6EA96 /* PIEImageDetailPanelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEImageDetailPanelView.m; sourceTree = "<group>"; };
+		90F0E89E1C7C2D6100B6EA96 /* PIEImageDetailPanelView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEImageDetailPanelView.xib; sourceTree = "<group>"; };
 		90F4014E1C5084BB00B39CEB /* PIEMyWalletViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEMyWalletViewController.h; sourceTree = "<group>"; };
 		90F4014F1C5084BB00B39CEB /* PIEMyWalletViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEMyWalletViewController.m; sourceTree = "<group>"; };
 		90F4015D1C50A1BD00B39CEB /* PIECashFlowDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIECashFlowDetailsViewController.h; sourceTree = "<group>"; };
@@ -3417,6 +3430,9 @@
 				E94B031B1B7C74E500863C6F /* PIECommentTextView.m */,
 				F4324CDD1C0956CD005C61AC /* PIECommentViewController.h */,
 				F4324CDE1C0956CD005C61AC /* PIECommentViewController.m */,
+				90F0E88F1C7C2D4F00B6EA96 /* PIEImageDetailPanelView.h */,
+				90F0E8901C7C2D4F00B6EA96 /* PIEImageDetailPanelView.m */,
+				90F0E89E1C7C2D6100B6EA96 /* PIEImageDetailPanelView.xib */,
 				F4206FE51BF0929C00C9B339 /* KVCMutableArray.h */,
 				F4206FE61BF0929C00C9B339 /* KVCMutableArray.m */,
 			);
@@ -4598,9 +4614,14 @@
 			children = (
 				F4DE44F71C06F47B00BEEB96 /* PIECarouselViewController2.h */,
 				F4DE44F81C06F47B00BEEB96 /* PIECarouselViewController2.m */,
+				90B7BABA1C7D4E1900DE5C8D /* PIECarouselViewController3.h */,
+				90B7BABB1C7D4E1900DE5C8D /* PIECarouselViewController3.m */,
 				F4E72E751C070D5C0056791D /* PIECarousel_ItemView.h */,
 				F4E72E761C070D5C0056791D /* PIECarousel_ItemView.m */,
 				F4E72E781C070D6A0056791D /* PIECarousel_ItemView.xib */,
+				90B7BAA51C7C8ED400DE5C8D /* PIECarousel_ItemView_new.h */,
+				90B7BAA61C7C8ED400DE5C8D /* PIECarousel_ItemView_new.m */,
+				90B7BAA81C7C8EF800DE5C8D /* PIECarousel_ItemView_new.xib */,
 				F413B04D1C167AB500F9BA27 /* PIECarouselPageTableViewCell.h */,
 				F413B04E1C167AB500F9BA27 /* PIECarouselPageTableViewCell.m */,
 				F413B04F1C167AB500F9BA27 /* PIECarouselPageTableViewCell.xib */,
@@ -5268,9 +5289,11 @@
 				E94289751B5B32A200ED26E4 /* NotificationBackgroundError@2x.png in Resources */,
 				E94289771B5B32A200ED26E4 /* NotificationBackgroundErrorIcon@2x.png in Resources */,
 				90104B441C4B5F8F00E389F4 /* PIESearchUserSimpleTableViewCell.xib in Resources */,
+				90B7BAA91C7C8EF800DE5C8D /* PIECarousel_ItemView_new.xib in Resources */,
 				F45D8FA51BD87CFD005946E8 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				F4E530971BD4CFB800FAA65D /* PIELoginViewController.xib in Resources */,
 				E94289791B5B32A200ED26E4 /* NotificationBackgroundMessage@2x.png in Resources */,
+				90F0E89F1C7C2D6100B6EA96 /* PIEImageDetailPanelView.xib in Resources */,
 				F4C0DFF11BE9EF3A000615CF /* PIEFeedbackViewController.xib in Resources */,
 				F45D8FA71BD87CFD005946E8 /* WeiboSDK.bundle in Resources */,
 				F42100F01BF5EBC800CFD82E /* intro2.xib in Resources */,
@@ -5536,6 +5559,7 @@
 				5CDB062E1AA428BD0089121E /* MASCompositeConstraint.m in Sources */,
 				E900AB5F1B4513B20019BAEA /* DDCollectManager.m in Sources */,
 				5C4C70C81AB6E20800358989 /* DDUserManager.m in Sources */,
+				90B7BABC1C7D4E1900DE5C8D /* PIECarouselViewController3.m in Sources */,
 				E991EF001B735B7000025108 /* EAIntroPage.m in Sources */,
 				E95691AF1B22E88300DA84BB /* MTLModel+NSCoding.m in Sources */,
 				F41FF0E81BDDFCE800566A12 /* UIImage+JTSImageEffects.m in Sources */,
@@ -5603,6 +5627,7 @@
 				5C8D4ACD1ADE484A00B158AE /* PIEFriendFollowingViewController.m in Sources */,
 				E99D2F581B1C7E8D000D7784 /* UIImage+Reflection.m in Sources */,
 				0E54C7911C1E8F5E00F431AC /* PIEProceedingToHelpTableViewCell.m in Sources */,
+				90B7BAA71C7C8ED400DE5C8D /* PIECarousel_ItemView_new.m in Sources */,
 				F4F72BF61BCB6979002FF05A /* PIEImageCollectionViewCell.m in Sources */,
 				F46117DC1BAD1101001A6F1A /* IQKeyboardReturnKeyHandler.m in Sources */,
 				E99D2F5C1B1C7E8D000D7784 /* UIScrollView+Screenshot.m in Sources */,
@@ -5690,6 +5715,7 @@
 				90A95E861C7828400001CE66 /* PIECashFlowDetailTableViewCell.m in Sources */,
 				F4E680661BDC744C00A4F199 /* PIEProceedingShareView.m in Sources */,
 				F4EC11071BCE59B5002D1DCF /* PIENotificationLikeTableViewCell.m in Sources */,
+				90F0E8911C7C2D4F00B6EA96 /* PIEImageDetailPanelView.m in Sources */,
 				90A95E7D1C7828400001CE66 /* PIECashFlowDetailsViewController_new.m in Sources */,
 				F4F72C1D1BCCFB2A002FF05A /* PIESharesheetView.m in Sources */,
 				F4C9BE4C1C1D4F8C00A1AE82 /* UIImage+Colors.m in Sources */,
