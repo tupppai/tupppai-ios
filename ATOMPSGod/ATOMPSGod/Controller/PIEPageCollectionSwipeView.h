@@ -7,8 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "SwipeView.h"
+#import "PIEPageCollectionImageView.h"
 @interface PIEPageCollectionSwipeView : UIView
 @property (nonatomic,strong)PIEPageVM *pageViewModel;
+@property (nonatomic,strong) SwipeView *swipeView;
+@property (nonatomic,strong) PIEPageCollectionImageView *askImageView;
+@property (nonatomic,strong) UIImageView *askImageView2;
+@property (nonatomic,strong) NSArray *askSourceArray;
 
 @end

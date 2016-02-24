@@ -56,8 +56,6 @@ static int thumbViewSizeConstant = 100;
         self.thumbHeight_MasContraint   = make.height.equalTo(@(thumbViewSizeConstant));
     }];
     
-    
-
     //setupContraints
 }
 
@@ -65,15 +63,21 @@ static int thumbViewSizeConstant = 100;
 -(void)setViewModel:(PIEPageVM *)viewModel {
     _viewModel = viewModel;
     
-    
     [DDService sd_downloadImage:[viewModel.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION]
                       withBlock:^(UIImage *image) {
-        _imageView.image = image;
-        [image backgroundBlurredImageView:_blurBackgroundImageView WithRadius:20 iterations:1 tintColor:nil];
+      _imageView.image = image;
+                          
+                          if (ABS(image.size.height - image.size.width) > 1 ) {
+                              [image backgroundBlurredImageView:_blurBackgroundImageView WithRadius:20 iterations:1 tintColor:nil];
+                          }
+     
     }];
     
     
     if (viewModel.type != PIEPageTypeReply || viewModel.askID == 0) {
+        return;
+    }
+    if (self.hideThumbView) {
         return;
     }
     

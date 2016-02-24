@@ -170,7 +170,11 @@
     return numberOfLines;
 }
 
+-(void)setText:(NSString *)text {
+    [super setText:text];
+    [[NSNotificationCenter defaultCenter] postNotificationName:UITextViewTextDidChangeNotification object:self];
 
+}
 #pragma mark - NSNotificationCenter register/unregister
 
 - (void)pie_registerNotifications

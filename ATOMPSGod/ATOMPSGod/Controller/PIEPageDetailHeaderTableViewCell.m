@@ -15,15 +15,16 @@
 #import "PIEPageCollectionSwipeView.h"
 #import "PIEShareView.h"
 #import "PIEActionSheet_PS.h"
+
 @interface PIEPageDetailHeaderTableViewCell()
 @property (nonatomic,strong) PIEBangView *bangView;
 @property (nonatomic,strong) PIELoveButton *loveView;
 @property (weak, nonatomic) IBOutlet PIEPageButton *shareButtonView;
-
 @property (nonatomic,strong) PIEShareView *shareView;
 @property (nonatomic,strong) PIEActionSheet_PS *actionSheet_help;
-
 @end
+
+
 @implementation PIEPageDetailHeaderTableViewCell
 
 
@@ -41,13 +42,12 @@
 - (void)awakeFromNib {
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapShare)];
     [_shareButtonView addGestureRecognizer:tapGesture];
+    _usernameButton.titleLabel.font = [UIFont lightTupaiFontOfSize:13];
+    _timeLabel.font = [UIFont lightTupaiFontOfSize:10];
+    _contentLabel.font = [UIFont lightTupaiFontOfSize:15];
 }
 
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-}
 
 -(void)setViewModel:(PIEPageVM *)viewModel {
     _viewModel = viewModel;
@@ -59,9 +59,7 @@
         _avatarButton.isV = viewModel.isV;
     }];
     [_usernameButton setTitle:viewModel.username forState:UIControlStateNormal];
-  
-    _followButton.hidden = viewModel.followed;
-    
+    _blurAnimateImageView.hideThumbView = YES;
     _blurAnimateImageView.viewModel = viewModel;
     _timeLabel.text = viewModel.publishTime;
     _contentLabel.text = viewModel.content;
@@ -69,6 +67,10 @@
     
     [self addTypeButton:viewModel];
     [self addPageCollectionView:viewModel];
+    
+    RAC(_shareButtonView, numberString) =  [RACObserve(_viewModel, shareCount) takeUntil:self.rac_prepareForReuseSignal];
+    RAC(_followButton, hidden) = [RACObserve(_viewModel, followed) takeUntil:self.rac_prepareForReuseSignal];
+
     
 }
 
@@ -80,7 +82,7 @@
         return;
     }
     
-    _pageCollectionViewHeightContraint.constant = 40;
+    _pageCollectionViewHeightContraint.constant = 47;
     self.pageCollectionSwipeView.pageViewModel = viewModel;
     
     
@@ -89,21 +91,27 @@
     if (viewModel.type == PIEPageTypeAsk) {
         [self.contentView addSubview:self.bangView];
         [self.bangView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.width.equalTo(@20);
-            make.height.equalTo(@30);
-            make.trailing.equalTo(self.contentView).with.offset(-10);
-            make.bottom.equalTo(self.contentView).with.offset(-10);
+            make.width.equalTo(@27);
+            make.height.equalTo(@33);
+            make.trailing.equalTo(self.contentView).with.offset(-17);
+            make.centerY.equalTo(self.shareButtonView);
         }];
     } else {
         [self.contentView addSubview:self.loveView];
         [self.loveView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.width.greaterThanOrEqualTo(@20);
-            make.height.equalTo(@30);
-            make.trailing.equalTo(self.contentView).with.offset(-10);
-            make.bottom.equalTo(self.contentView).with.offset(-10);
+            make.width.greaterThanOrEqualTo(@22);
+            make.height.equalTo(@19);
+            make.trailing.equalTo(self.contentView).with.offset(-18);
+            make.centerY.equalTo(self.shareButtonView);
         }];
         self.loveView.numberString = viewModel.likeCount;
         self.loveView.status = viewModel.loveStatus;
+        
+        RAC(self.loveView, status) =
+        [RACObserve(_viewModel, loveStatus) takeUntil:self.rac_prepareForReuseSignal];
+        RAC(self.loveView, numberString) =
+        [RACObserve(_viewModel, likeCount) takeUntil:self.rac_prepareForReuseSignal];
+
     }
 }
 
