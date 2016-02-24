@@ -10,6 +10,8 @@
 
 @interface PIECarouselViewController3 : PIECustomPresentViewController
 
+@property (nonatomic, strong) NSArray<PIEPageVM *> *pageVMs;
 
+- (void)scrollToIndex:(NSInteger)index;
 
 @end
