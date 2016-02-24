@@ -16,6 +16,7 @@
 
 //#import "PIECarousel_ItemView.h"
 #import "PIECarousel_ItemView_new.h"
+#import "UIView+RoundedCorner.h"
 
 
 #define scale_h (414-40)/414.0
@@ -92,8 +93,11 @@
         _view_placeHoder = [[UIView alloc]initWithFrame:CGRectMake((self.view.frame.size.width-width)/2, margin_v, width, SCREEN_HEIGHT-margin_v+5)];
         _view_placeHoder.backgroundColor = [UIColor whiteColor];
         _view_placeHoder.alpha = 0.1;
-        _view_placeHoder.layer.cornerRadius = 10;
-        _view_placeHoder.clipsToBounds = YES;
+        
+//        _view_placeHoder.layer.cornerRadius = 10;
+//        _view_placeHoder.clipsToBounds = YES;
+        
+        [_view_placeHoder setRoundedCorners:UIRectCornerAllCorners radius:10];
         
         UIActivityIndicatorView* indicatorView = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         indicatorView.center = CGPointMake(width/2, 200);
@@ -164,28 +168,7 @@
     } completion:^(BOOL finished) {
         
     }];
-    
-//    [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
-//        self.carousel.currentItemView.frame = frame;
-//        self.carousel.currentItemView.transform = CGAffineTransformMakeScale(1.05, 1);
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//            [self presentViewController:nav animated:NO completion:^{
-//                self.carousel.currentItemView.transform = CGAffineTransformIdentity;
-//                CGRect frame = self.carousel.currentItemView.frame;
-//                frame.origin.y += 40;
-//                self.carousel.currentItemView.frame = frame;
-//            }];
-//        });
-//        
-//    } completion:^(BOOL finished) {
-//        if (finished) {
-////            [self presentViewController:nav animated:NO completion:^{
-////                CGRect frame = self.carousel.currentItemView.frame;
-////                frame.origin.y += 30;
-////                self.carousel.currentItemView.frame = frame;
-////            }];
-//        }
-//    }];
+
 }
 - (void)handleGesture_SwipeDown:(id)sender {
 
@@ -317,14 +300,14 @@
 #pragma mark iCarousel taps
 
 -(void)carouselDidEndScrollingAnimation:(iCarousel *)carousel {
-    [self flyCurrentItemViewWithDirection:YES];
+//    [self flyCurrentItemViewWithDirection:YES];
 }
 - (void)carouselCurrentItemIndexDidChange:(__unused iCarousel *)carousel
 {
     [self updateCurrentVMWithIndex:carousel.currentItemIndex];
 }
 -(void)carouselWillBeginDragging:(iCarousel *)carousel {
-    [self flyCurrentItemViewWithDirection:NO];
+//    [self flyCurrentItemViewWithDirection:NO];
 }
 
 /*
@@ -345,6 +328,8 @@
         _currentVM = [_dataSource objectAtIndex:index];
     }
 }
+
+
 - (void)getDataSource {
     _currentPage = 1;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];

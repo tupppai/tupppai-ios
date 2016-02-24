@@ -184,6 +184,7 @@
 		907A431E1C40FC1C002542E6 /* PIELaunchTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 907A431D1C40FC1C002542E6 /* PIELaunchTextField.m */; };
 		907A432D1C40FCA6002542E6 /* PIELaunchNextStepButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 907A432C1C40FCA6002542E6 /* PIELaunchNextStepButton.m */; };
 		907A43301C410C7E002542E6 /* PIEVerificationCodeCountdownButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 907A432F1C410C7E002542E6 /* PIEVerificationCodeCountdownButton.m */; };
+		9080F2E11C7DBC9A00B11161 /* UIView+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 9080F2E01C7DBC9A00B11161 /* UIView+RoundedCorner.m */; };
 		908CF5FE1C7378C000195C78 /* UIImage+CropRoundImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 908CF5FD1C7378C000195C78 /* UIImage+CropRoundImage.m */; };
 		909E2E381C58DBDC000EA0EC /* PIEChannelTutorialRewardFailedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 909E2E371C58DBDC000EA0EC /* PIEChannelTutorialRewardFailedView.m */; };
 		90A56E4A1C54B0D10079B3D3 /* PIEChannelTutorialListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A56E481C54B0D10079B3D3 /* PIEChannelTutorialListCell.m */; };
@@ -1190,6 +1191,8 @@
 		907A432C1C40FCA6002542E6 /* PIELaunchNextStepButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIELaunchNextStepButton.m; sourceTree = "<group>"; };
 		907A432E1C410C7E002542E6 /* PIEVerificationCodeCountdownButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEVerificationCodeCountdownButton.h; sourceTree = "<group>"; };
 		907A432F1C410C7E002542E6 /* PIEVerificationCodeCountdownButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEVerificationCodeCountdownButton.m; sourceTree = "<group>"; };
+		9080F2DF1C7DBC9A00B11161 /* UIView+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RoundedCorner.h"; sourceTree = "<group>"; };
+		9080F2E01C7DBC9A00B11161 /* UIView+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+RoundedCorner.m"; sourceTree = "<group>"; };
 		908CF5FC1C7378C000195C78 /* UIImage+CropRoundImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+CropRoundImage.h"; sourceTree = "<group>"; };
 		908CF5FD1C7378C000195C78 /* UIImage+CropRoundImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+CropRoundImage.m"; sourceTree = "<group>"; };
 		909E2E361C58DBDC000EA0EC /* PIEChannelTutorialRewardFailedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEChannelTutorialRewardFailedView.h; sourceTree = "<group>"; };
@@ -4685,6 +4688,8 @@
 				5C561A8A1AB857870052D4D5 /* NSString+Tupai.m */,
 				90D38B871C61FC9B0054A78F /* UIViewController+RecursiveModal.h */,
 				90D38B881C61FC9B0054A78F /* UIViewController+RecursiveModal.m */,
+				9080F2DF1C7DBC9A00B11161 /* UIView+RoundedCorner.h */,
+				9080F2E01C7DBC9A00B11161 /* UIView+RoundedCorner.m */,
 			);
 			name = categories;
 			sourceTree = "<group>";
@@ -5608,6 +5613,7 @@
 				5CDB06011AA405A40089121E /* UIColor+CIELAB.m in Sources */,
 				F413B0591C16E2C000F9BA27 /* PIETransitioning_CarouselComment.m in Sources */,
 				E95691B11B22E88300DA84BB /* MTLReflection.m in Sources */,
+				9080F2E11C7DBC9A00B11161 /* UIView+RoundedCorner.m in Sources */,
 				E99D2F5B1B1C7E8D000D7784 /* UIImage+Saving.m in Sources */,
 				F46117E01BAD1101001A6F1A /* IQTitleBarButtonItem.m in Sources */,
 				5C83A88A1AC66F910071A024 /* POPAnimationRuntime.mm in Sources */,
