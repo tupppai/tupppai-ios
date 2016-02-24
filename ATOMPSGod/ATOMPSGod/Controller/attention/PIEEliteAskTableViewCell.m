@@ -179,8 +179,8 @@
     // 其他作品 按钮
     // TODO: 目前还不知道是哪个字段，先乱写一个
     _otherWorkButton.imageView.image = [UIImage imageNamed:@"otherWork_icon"];
-    _otherWorkButton.numberString    = @"已有233个作品";
-    
+    NSString *prompt = [NSString stringWithFormat:@"已有%@个作品", pageVM.replyCount];
+    _otherWorkButton.numberString    = prompt;
 }
 
 - (void)prepareForReuse

@@ -10,13 +10,19 @@
 #import "PIEAvatarView.h"
 #import "PIEBlurAnimateImageView.h"
 #import "PIELoveButton.h"
+#import "PIEFriendViewController.h"
+#import "DDNavigationController.h"
+#import "PIEPageDetailViewController.h"
+#import "PIEActionSheet_PS.h"
+
 
 @interface PIECarousel_ItemView_new ()
 
 @property (nonatomic, strong) PIEPageVM *currentPageVM;
 
-@property (nonatomic, strong) RACDisposable *previousLoveStatusSubscriptionDisposable;
-@property (nonatomic, strong) RACDisposable *previousNumberStringSubscriptionDisposable;
+@property (weak, nonatomic  ) IBOutlet NSLayoutConstraint *downloadButtonTrailingConstraint;
+
+@property (nonatomic, strong) PIEActionSheet_PS *psActionSheet;
 
 @end
 
@@ -28,6 +34,7 @@
 {
     return [[[NSBundle mainBundle] loadNibNamed:@"PIECarousel_ItemView_new"
                                           owner:nil options:nil] lastObject];
+    
 }
 
 - (void)awakeFromNib
@@ -39,7 +46,6 @@
     [self setupTouchingEvents];
 }
 
-
 - (void)commonInit
 {
     [self.downloadButton setBackgroundImage:[UIImage imageNamed:@"pie_myWallet_chargeButton"]
@@ -48,7 +54,6 @@
     [self.detailButton setBackgroundImage:[UIImage imageNamed:@"launchViewControllerButtonBackground"]
                                  forState:UIControlStateNormal];
     
-
 }
 
 - (void)setupTouchingEvents
@@ -86,34 +91,74 @@
      action:@selector(longPressOnLoveButton)];
     [self.loveButton addGestureRecognizer:longPressOnLoveButton];
     
+    UITapGestureRecognizer *tapOnBang =
+    [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnBang)];
+    self.bangIconImageView.userInteractionEnabled = YES;
+    [self.bangIconImageView addGestureRecognizer:tapOnBang];
+
 }
 
 #pragma mark - Touching event responses
 - (void)tapOnUser
 {
-    [Hud text:[@(self.currentPageVM.ID) stringValue]];
+    PIEFriendViewController *friendVC =
+    [PIEFriendViewController new];
+    
+    friendVC.pageVM = _currentPageVM;
+    friendVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    
+    
+    DDNavigationController *nav = [[DDNavigationController alloc] initWithRootViewController:friendVC];
+    
+    [self.viewController presentViewController:nav
+                                      animated:YES
+                                    completion:nil];
+    
 }
 
 - (void)downloadImage
 {
-    [Hud text:[@(self.currentPageVM.ID) stringValue]];
+    self.psActionSheet.vm = _currentPageVM;
+    [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
 }
 
 - (void)pushToCommentVC
 {
-   [Hud text:[@(self.currentPageVM.ID) stringValue]];
+    PIEPageDetailViewController *pageDetailVC =
+    [[PIEPageDetailViewController alloc] init];
+    
+    pageDetailVC.pageViewModel = _currentPageVM;
+    
+    pageDetailVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    
+    DDNavigationController *nav =
+    [[DDNavigationController alloc] initWithRootViewController:pageDetailVC];
+    
+    [self.viewController presentViewController:nav
+                                      animated:YES completion:nil];
 }
 
 - (void)tapOnLoveButton
 {
-   [Hud text:[@(self.currentPageVM.ID) stringValue]];
+    [_currentPageVM love:NO];
+    
+    self.loveButton.status = _currentPageVM.loveStatus;
+    self.loveButton.numberString = _currentPageVM.likeCount;
 }
 
 - (void)longPressOnLoveButton
 {
-   [Hud text:[@(self.currentPageVM.ID) stringValue]];
+    [_currentPageVM love:YES];
+    
+    self.loveButton.status = _currentPageVM.loveStatus;
+    self.loveButton.numberString = _currentPageVM.likeCount;
 }
 
+- (void)tapOnBang
+{
+    self.psActionSheet.vm = _currentPageVM;
+    [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
+}
 
 #pragma mark - public methods
 - (void)injectPageVM:(PIEPageVM *)pageVM
@@ -152,23 +197,27 @@
     // RAC-binding
     
     // --- 1. dispose previous subscription, since the view might be reused.
-    [self.previousLoveStatusSubscriptionDisposable dispose];
-    [self.previousNumberStringSubscriptionDisposable dispose];
-    
+//    [self.previousLoveStatusSubscriptionDisposable dispose];
+//    [self.previousNumberStringSubscriptionDisposable dispose];
+//    
     // --- 2. binding & re-assign disposables
-    @weakify(self);
-    self.previousLoveStatusSubscriptionDisposable =
-    [RACObserve(pageVM, loveStatus)
-     subscribeNext:^(NSNumber *enumValue) {
-         @strongify(self);
-         self.loveButton.status = [enumValue integerValue];
-     }];
-    self.previousNumberStringSubscriptionDisposable =
-    [RACObserve(pageVM, likeCount)
-     subscribeNext:^(NSString *numberString) {
-         @strongify(self);
-         self.loveButton.numberString = numberString;
-     }];
+//    @weakify(self);
+//    self.previousLoveStatusSubscriptionDisposable =
+//    [RACObserve(pageVM, loveStatus)
+//     subscribeNext:^(NSNumber *enumValue) {
+//         @strongify(self);
+//         self.loveButton.status = [enumValue integerValue];
+//     }];
+//    self.previousNumberStringSubscriptionDisposable =
+//    [RACObserve(pageVM, likeCount)
+//     subscribeNext:^(NSString *numberString) {
+//         @strongify(self);
+//         self.loveButton.numberString = numberString;
+//     }];
+    
+    // 超级赞
+    self.loveButton.status       = pageVM.loveStatus;
+    self.loveButton.numberString = pageVM.likeCount;
     
     [self addRoundedCorner];
 }
@@ -178,25 +227,17 @@
 {
     if (shouldHideDetailButton) {
         self.detailButton.hidden = YES;
-        
-        @weakify(self);
-        [self.downloadButton mas_updateConstraints:^(MASConstraintMaker *make) {
-            @strongify(self);
-            make.centerX.equalTo(self).with.offset(0);
-        }];
-        
-        [self.downloadButton layoutIfNeeded];
+
+        self.downloadButtonTrailingConstraint.constant = self.downloadButton.frame.size.width/2.0;
+
+        [self layoutIfNeeded];
         
     }else{
         self.detailButton.hidden = NO;
         
-        @weakify(self);
-        [self.downloadButton mas_updateConstraints:^(MASConstraintMaker *make) {
-            @strongify(self);
-            make.centerX.equalTo(self).with.offset(-50);
-        }];
+        self.downloadButtonTrailingConstraint.constant = -5;
         
-        [self.downloadButton layoutIfNeeded];
+        [self layoutIfNeeded];
     }
 }
 
@@ -211,6 +252,16 @@
          cornerRadii: (CGSize){10.0, 10.0}].CGPath;
     
         self.layer.mask = maskLayer;
+}
+
+
+#pragma mark - Lazy loadings
+- (PIEActionSheet_PS *)psActionSheet
+{
+    if (_psActionSheet == nil) {
+        _psActionSheet    = [PIEActionSheet_PS new];
+    }
+    return  _psActionSheet;
 }
 
 @end

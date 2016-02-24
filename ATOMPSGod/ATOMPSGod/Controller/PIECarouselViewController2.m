@@ -241,11 +241,8 @@
             view.tag = index;
 
             CGFloat width  = SCREEN_WIDTH *scale_h;
-            CGFloat height = width * (960.0 / 700);
-            
-//            CGFloat width  = SCREEN_WIDTH;
-//            CGFloat height = SCREEN_HEIGHT;
-            
+            CGFloat height = width * (930.0 / 700);
+
             view =
             [[UIView alloc]
              initWithFrame:CGRectMake(0, 0, width, height)];
@@ -266,6 +263,7 @@
         for (id subview in view.subviews) {
             if ([subview isKindOfClass:[PIECarousel_ItemView_new class]]) {
                 PIECarousel_ItemView_new* itemView = subview;
+                [itemView setShouldHideDetailButton:(index % 2 == 0)];
                 [itemView injectPageVM:vm];
             }
         }
