@@ -24,6 +24,7 @@
 
 #define margin_v (SCREEN_HEIGHT - SCREEN_HEIGHT*scale_v)
 
+#define kCarouselItemMaxChangedY 100
 
 @interface PIECarouselViewController2 ()
 @property (nonatomic, strong)  iCarousel *carousel;
@@ -41,6 +42,10 @@
 //@property (weak, nonatomic) IBOutlet UIVisualEffectView *bottomDimmerView;
 @property (nonatomic, assign) NSInteger previousCurrentIndex ;
 @property (nonatomic, strong) UIView *view_placeHoder ;
+
+@property (nonatomic, assign) CGFloat carouselItemViewY;
+@property (nonatomic, assign) CGPoint originCarouselItemViewCenter;
+
 @end
 
 @implementation PIECarouselViewController2
@@ -80,8 +85,9 @@
     self.view.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.7];
 }
 -(void)setupData {
-    _askCount = 0;
-    _replyCount = 0;
+    _askCount          = 0;
+    _replyCount        = 0;
+    _carouselItemViewY = 0;
 }
 -(void)setupPlaceHoder {
     [self.view addSubview:self.view_placeHoder];
@@ -103,6 +109,7 @@
         indicatorView.center = CGPointMake(width/2, 200);
         [_view_placeHoder addSubview:indicatorView];
         [indicatorView startAnimating];
+        
         UISwipeGestureRecognizer *swipe2 = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture_SwipeDown:)];
         swipe2.direction =   UISwipeGestureRecognizerDirectionDown;
         [_view_placeHoder addGestureRecognizer:swipe2];
@@ -116,16 +123,12 @@
     [self setModalPresentationStyle:UIModalPresentationOverCurrentContext];
     _dataSource = [NSMutableArray array];
     [self.view addSubview:self.carousel];
-    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture_SwipeUp:)];
-    swipe.direction =   UISwipeGestureRecognizerDirectionUp;
-    [self.carousel addGestureRecognizer:swipe];
     
-    UISwipeGestureRecognizer *swipe2 = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture_SwipeDown:)];
-    swipe2.direction =   UISwipeGestureRecognizerDirectionDown;
-    [self.carousel addGestureRecognizer:swipe2];
-    UITapGestureRecognizer* tapGes = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnSelf:)];
-    [self.view addGestureRecognizer:tapGes];
-
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc]
+                                   initWithTarget:self
+                                   action:@selector(handleGesture_pan:)];
+    [self.carousel addGestureRecognizer:pan];
+    
     [self setupPlaceHoder];
 }
 
@@ -137,6 +140,9 @@
 }
 //CGFloat startPanLocationY;
 
+
+// discarded methods
+/*
 - (void)handleGesture_SwipeUp:(id)sender {
     
     
@@ -169,7 +175,8 @@
         
     }];
 
-}
+} */
+
 - (void)handleGesture_SwipeDown:(id)sender {
 
    [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
@@ -182,6 +189,68 @@
            [self dismissViewControllerAnimated:NO completion:nil];
        }
    }];
+}
+
+
+- (void)handleGesture_pan:(UIPanGestureRecognizer *)panGesture
+{
+    iCarousel *icarousel = (iCarousel *)panGesture.view;
+    if (panGesture.state == UIGestureRecognizerStateBegan) {
+        _originCarouselItemViewCenter = icarousel.currentItemView.center;
+    }
+    else if (panGesture.state == UIGestureRecognizerStateChanged) {
+        CGPoint newCenter = icarousel.currentItemView.center;
+        
+        CGFloat changedY = [panGesture translationInView:self.view].y;
+        newCenter.y        += changedY;
+
+        _carouselItemViewY += changedY;
+        
+        icarousel.currentItemView.center = newCenter;
+        
+        // reset the translation
+        [panGesture setTranslation:CGPointZero inView:self.view];
+        
+    }else if (panGesture.state == UIGestureRecognizerStateEnded){
+        //有一个阈值
+        if (fabs(_carouselItemViewY) > kCarouselItemMaxChangedY) {
+            _carouselItemViewY = 0.0;
+            
+            if (_carouselItemViewY > 0) {
+                // 往下弹出itemView
+                CGPoint newCenter = icarousel.currentItemView.center;
+                newCenter.y = SCREEN_HEIGHT;
+                
+                [UIView animateWithDuration:0.1
+                                 animations:^{
+                                     icarousel.currentItemView.center = newCenter;
+                                 }];
+                
+            }else{
+                // 往上弹出itemView
+                CGPoint newCenter = icarousel.currentItemView.center;
+                newCenter.y = -SCREEN_HEIGHT;
+                
+                [UIView animateWithDuration:0.1
+                                 animations:^{
+                                     icarousel.currentItemView.center = newCenter;
+                                 }];
+                
+            }
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self dismissViewControllerAnimated:YES completion:nil];
+            });
+            
+        }else{
+            [UIView animateWithDuration:0.3
+                             animations:^{
+                                 icarousel.currentItemView.center = _originCarouselItemViewCenter;
+                             }];
+        }
+    }
+    
+    
 }
 
 -(iCarousel *)carousel {
