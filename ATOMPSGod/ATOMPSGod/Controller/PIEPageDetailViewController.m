@@ -19,7 +19,9 @@
 #import "PIEBlurAnimateImageView.h"
 #import "SwipeView.h"
 #import "PIEPageCollectionSwipeView.h"
-@interface PIEPageDetailViewController ()<UITableViewDataSource,UITableViewDelegate,PIEPageDetailTextInputBarDelegate,SwipeViewDelegate>
+#import "DDHotDetailManager.h"
+
+@interface PIEPageDetailViewController ()<UITableViewDataSource,UITableViewDelegate,PIEPageDetailTextInputBarDelegate,SwipeViewDelegate,SwipeViewDataSource>
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) NSMutableArray *commentSourceArray;
 @property (nonatomic,strong) UILabel *commentCountLabel;
@@ -32,13 +34,30 @@
 @property (nonatomic,assign) NSInteger currentPage;
 @property (nonatomic,assign) long long timeStamp;
 
+@property (nonatomic,strong) NSArray *replySourceArray;
+@property (nonatomic,strong) NSArray *askSourceArray;
+@property (nonatomic,strong) PIEPageCollectionSwipeView *collectionSwipeView;
+
 @end
 
 @implementation PIEPageDetailViewController
 
+-(BOOL)hidesBottomBarWhenPushed {
+    return YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self setupData];
+    [self setupViews];
+    [self registerObservers];
+    [self setupActions];
+    [self getCommentSource];
+    [self getPageCollectionSwipeViewDataSource];
+}
+
+- (void)setupViews {
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.textInputBar];
     [self.textInputBar mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -48,10 +67,39 @@
     }];
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, self.textInputBar.appropriateHeight, 0);
     
+    [self setupTableViewRefreshingFooter];
+}
+
+- (void)setupTableViewRefreshingFooter {
     
-    [self configFooterRefresh];
+    NSMutableArray *animatedImages = [NSMutableArray array];
+    for (int i = 1; i<=6; i++) {
+        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"pie_loading_%d", i]];
+        [animatedImages addObject:image];
+    }
     
+    MJRefreshAutoGifFooter *footer = [MJRefreshAutoGifFooter footerWithRefreshingTarget:self refreshingAction:@selector(getMoreCommentSource)];
+    footer.refreshingTitleHidden = YES;
+    footer.stateLabel.hidden = YES;
+    
+    [footer setImages:animatedImages duration:0.5 forState:MJRefreshStateRefreshing];
+    
+    self.tableView.mj_footer = footer;
+    
+}
+
+- (void)setupData {
     _commentSourceArray = [NSMutableArray array];
+    _replySourceArray = [NSMutableArray array];
+    _askSourceArray = [NSMutableArray array];
+}
+- (void)setupActions {
+    UITapGestureRecognizer *tapCommentTableGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCommentTable:)];
+    tapCommentTableGesture.cancelsTouchesInView = NO;
+    [self.tableView addGestureRecognizer:tapCommentTableGesture];
+}
+
+- (void)registerObservers   {
     
     [[RACObserve(self, commentSourceArray)
       filter:^BOOL(id value) {
@@ -61,23 +109,107 @@
      subscribeNext:^(id x) {
          [self.tableView reloadData];
      }];
+    [[RACObserve(self, replySourceArray)
+      filter:^BOOL(id value) {
+          NSArray *array = value;
+          return array.count>0;
+      }]
+     subscribeNext:^(id x) {
+         if (self.collectionSwipeView.swipeView == nil) {
+             return ;
+         }
+         [self.collectionSwipeView.swipeView reloadData];
+     }];
     
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeTextViewText:) name:UITextViewTextDidChangeNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
-    
-    UITapGestureRecognizer *tapCommentTableGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCommentTable:)];
-    tapCommentTableGesture.cancelsTouchesInView = NO;
-    [self.tableView addGestureRecognizer:tapCommentTableGesture];
-
-    
-    [self getDataSource];
 }
 -(void)dealloc {
-    [self unRegisterObervers];
+    [self unRegisterObservers];
 }
 
-#pragma mark - tap Event
+
+- (void)unRegisterObservers {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextViewTextDidChangeNotification object:NULL];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:NULL];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:NULL];
+    
+}
+
+#pragma mark - getSource
+
+- (void)getCommentSource {
+    
+    if (self.pageViewModel.model.totalCommentNumber == 0) {
+        return;
+    }
+    self.timeStamp = [[NSDate date] timeIntervalSince1970];
+    self.currentPage = 1;
+    
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    [param setObject:@(_pageViewModel.ID) forKey:@"target_id"];
+    [param setObject:@(_pageViewModel.type) forKey:@"type"];
+    [param setObject:@(self.timeStamp) forKey:@"last_updated"];
+    [param setObject:@(1) forKey:@"page"];
+    [param setObject:@(10) forKey:@"size"];
+    
+    PIECommentManager *commentManager = [PIECommentManager new];
+    [commentManager ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
+        self.commentSourceArray = recentCommentArray;
+    }];
+}
+
+- (void)getMoreCommentSource {
+    if (self.pageViewModel.model.totalCommentNumber == 0) {
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
+        return;
+    }
+    self.currentPage++;
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    [param setObject:@(_pageViewModel.ID) forKey:@"target_id"];
+    [param setObject:@(_pageViewModel.type) forKey:@"type"];
+    [param setObject:@(self.currentPage) forKey:@"page"];
+    if (self.timeStamp == 0) {
+        self.timeStamp = [[NSDate date] timeIntervalSince1970];
+        [param setObject:@(self.timeStamp) forKey:@"last_updated"];
+    } else {
+        [param setObject:@(self.timeStamp) forKey:@"last_updated"];
+    }
+    [param setObject:@(10) forKey:@"size"];
+    
+    PIECommentManager *commentManager = [PIECommentManager new];
+    [commentManager ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
+        if (recentCommentArray == nil || recentCommentArray.count == 0) {
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+        } else {
+            NSMutableArray *fromKVC = [self mutableArrayValueForKey:@"commentSourceArray"];
+            [fromKVC addObjectsFromArray:recentCommentArray];
+            [self.tableView.mj_footer endRefreshing];
+        }
+    }];
+}
+
+- (void)getPageCollectionSwipeViewDataSource {
+    if (self.pageViewModel.askID == 0) {
+        return;
+    }
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    [param setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
+    [param setObject:@(1) forKey:@"page"];
+    [param setObject:@(100) forKey:@"size"];
+    DDHotDetailManager *manager = [DDHotDetailManager new];
+    [manager fetchAllReply:param ID:_pageViewModel.askID withBlock:^(NSMutableArray *askArray, NSMutableArray *replyArray) {
+        self.askSourceArray = askArray;
+        self.collectionSwipeView.askSourceArray = askArray;
+        
+        NSMutableArray *KVCArray = [self mutableArrayValueForKey:@"replySourceArray"];
+        [KVCArray addObjectsFromArray:replyArray];
+    }];
+    
+}
+#pragma mark - tapCommentTable
 
 - (void)tapCommentTable:(UITapGestureRecognizer *)gesture {
     
@@ -87,7 +219,7 @@
         return;
     }
     if (indexPath.section == 0) {
-
+        return;
     } else if (indexPath.section == 1) {
         
         NSInteger row = indexPath.row;
@@ -115,48 +247,21 @@
         } else {
             _targetCommentVM = model;
             self.textInputBar.textView.placeholder = [NSString stringWithFormat:@"@%@:",_targetCommentVM.username];
-            [self.textInputBar.textView becomeFirstResponder];
-            [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:YES];
         }
         
     }
 }
 
 
-- (void)unRegisterObervers {
- [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextViewTextDidChangeNotification object:NULL];
- [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:NULL];
- [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:NULL];
 
-}
 
      
      
-- (void)configFooterRefresh {
-    
-    NSMutableArray *animatedImages = [NSMutableArray array];
-    for (int i = 1; i<=6; i++) {
-        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"pie_loading_%d", i]];
-        [animatedImages addObject:image];
-    }
-    
-    MJRefreshAutoGifFooter *footer = [MJRefreshAutoGifFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
-    footer.refreshingTitleHidden = YES;
-    footer.stateLabel.hidden = YES;
-    
-    [footer setImages:animatedImages duration:0.5 forState:MJRefreshStateRefreshing];
-    
-    self.tableView.mj_footer = footer;
-    
-}
 
-- (void)loadMoreData {
-    [self getMoreDataSource];
-}
+#pragma mark - tableView dataSource & delegate
 
--(BOOL)hidesBottomBarWhenPushed {
-    return YES;
-}
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 2;
 }
@@ -197,14 +302,17 @@
         [cell.avatarButton addTarget:self action:@selector(tapAvatar_Header) forControlEvents:UIControlEventTouchDown];
         [cell.usernameButton addTarget:self action:@selector(tapAvatar_Header) forControlEvents:UIControlEventTouchDown];
         [cell.followButton addTarget:self action:@selector(tapFollow_Header) forControlEvents:UIControlEventTouchUpInside];
-        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapThumbLeftView)];
-        UITapGestureRecognizer *tapGesture2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapThumbRightView)];
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapPageCollectionSwipeView_askImageView1)];
+        UITapGestureRecognizer *tapGesture2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapPageCollectionSwipeView_askImageView2)];
         
-        [cell.blurAnimateImageView.thumbView.leftView addGestureRecognizer:tapGesture];
-        [cell.blurAnimateImageView.thumbView.rightView addGestureRecognizer:tapGesture2];
+        [cell.pageCollectionSwipeView.askImageView addGestureRecognizer:tapGesture];
+        [cell.pageCollectionSwipeView.askImageView2 addGestureRecognizer:tapGesture2];
         cell.pageCollectionSwipeView.swipeView.delegate = self;
-
+        cell.pageCollectionSwipeView.swipeView.dataSource = self;
+        self.collectionSwipeView = cell.pageCollectionSwipeView;
+        
         return cell;
+        
     } else if (section == 1) {
         PIEPageCommentTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"PageCommentTableViewCellResueIdentifier"];
         [cell getSource:_commentSourceArray[indexPath.row]];
@@ -214,10 +322,80 @@
 
 }
 
+#pragma mark SwipeView delegate&datasource
+
+
+- (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
+{
+    
+    return _replySourceArray.count;
+}
+
+- (UIView *)swipeView:(SwipeView *)swipeView viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
+{
+    CGFloat swipeViewHeight = swipeView.frame.size.height-1;
+
+    if (!view)
+    {
+        view = [[UIView alloc] initWithFrame:CGRectMake(0, 1, swipeViewHeight+5, swipeViewHeight)];
+        
+        UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 0, swipeViewHeight, swipeViewHeight)];
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
+        imageView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        imageView.clipsToBounds = YES;
+        [view addSubview:imageView];
+    }
+    PIEPageVM* vm = [_replySourceArray objectAtIndex:index];
+    for (UIView *subView in view.subviews){
+        if([subView isKindOfClass:[UIImageView class]]){
+            UIImageView *imageView = (UIImageView *)subView;
+            vm.imageURL = [vm.imageURL trimToImageWidth:swipeViewHeight*SCREEN_SCALE];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:[vm.imageURL trimToImageWidth:swipeViewHeight*SCREEN_SCALE]]];
+        }
+    }
+    if (index == 0) {
+        UIImageView *tagImageView = [UIImageView new];
+        tagImageView.image = [UIImage imageNamed:@"pie_reply"];
+        tagImageView.contentMode = UIViewContentModeScaleAspectFit;
+        tagImageView.tag = 748;
+        [view addSubview:tagImageView];
+        [tagImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.leading.equalTo(view).with.offset(3);
+            make.top.equalTo(view).with.offset(-1);
+            make.width.equalTo(view).with.multipliedBy(0.5);
+        }];
+        
+
+    } else {
+        for (UIView *subView in view.subviews){
+            if(subView.tag == 748){
+                [subView removeFromSuperview];
+            }
+        }
+    }
+    
+    return view;
+}
+
+
+- (void)tapPageCollectionSwipeView_askImageView1 {
+    NSLog(@"tapPageCollectionSwipeView_askImageView1 ");
+    if (_askSourceArray.count >= 1) {
+        
+    }
+}
+- (void)tapPageCollectionSwipeView_askImageView2 {
+    NSLog(@"tapPageCollectionSwipeView_askImageView2 ");
+    if (_askSourceArray.count >= 2) {
+        
+    }
+}
 
 -(void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index {
     NSLog(@"swipeView %zd",index);
 }
+
+
 
 - (void)tapAvatar_Header {
     PIEFriendViewController *opvc = [PIEFriendViewController new];
@@ -227,61 +405,13 @@
 - (void)tapFollow_Header {
     [self.pageViewModel follow];
 }
-- (void)tapThumbLeftView {
-    PIEPageDetailHeaderTableViewCell *cell  = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-    [cell.blurAnimateImageView animateWithType:PIEThumbAnimateViewTypeLeft];
-    
-}
-- (void)tapThumbRightView {
-    PIEPageDetailHeaderTableViewCell *cell  = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-    [cell.blurAnimateImageView animateWithType:PIEThumbAnimateViewTypeRight];
+
+-(void)pageDetailTextInputBar:(PIEPageDetailTextInputBar *)pageDetailTextInputBar tapRightButton:(UIButton *)tappedButton {
+    [self sendComment];
 }
 
 
-
-
-#pragma mark - GetDataSource
-
-- (void)getDataSource {
-    
-    self.timeStamp = [[NSDate date] timeIntervalSince1970];
-    self.currentPage = 1;
-    
-    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setObject:@(_pageViewModel.ID) forKey:@"target_id"];
-    [param setObject:@(_pageViewModel.type) forKey:@"type"];
-    [param setObject:@(self.timeStamp) forKey:@"last_updated"];
-    [param setObject:@(1) forKey:@"page"];
-    [param setObject:@(10) forKey:@"size"];
-    
-    PIECommentManager *commentManager = [PIECommentManager new];
-    [commentManager ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
-        self.commentSourceArray = recentCommentArray;
-    }];
-}
-
-- (void)getMoreDataSource {
-    self.currentPage++;
-    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setObject:@(_pageViewModel.ID) forKey:@"target_id"];
-    [param setObject:@(_pageViewModel.type) forKey:@"type"];
-    [param setObject:@(self.currentPage) forKey:@"page"];
-    [param setObject:@(self.timeStamp) forKey:@"last_updated"];
-    [param setObject:@(10) forKey:@"size"];
-    PIECommentManager *commentManager = [PIECommentManager new];
-    [commentManager ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
-
-       
-        if (recentCommentArray == nil || recentCommentArray.count == 0) {
-            [self.tableView.mj_footer endRefreshingWithNoMoreData];
-        } else {
-            NSMutableArray *fromKVC = [self mutableArrayValueForKey:@"commentSourceArray"];
-            [fromKVC addObjectsFromArray:recentCommentArray];
-            [self.tableView.mj_footer endRefreshing];
-        }
-    }];
-}
-
+#pragma mark methods
 
 - (void)didChangeTextViewText:(id)sender {
     
@@ -332,9 +462,7 @@
     return keyboardHeight;
 }
 
--(void)pageDetailTextInputBar:(PIEPageDetailTextInputBar *)pageDetailTextInputBar tapRightButton:(UIButton *)tappedButton {
-    [self sendComment];
-}
+
 
 - (void)resignKeyboard {
     if ([self.textInputBar.textView isFirstResponder]) {
@@ -392,8 +520,10 @@
     _targetCommentVM = nil;
     
     self.textInputBar.textView.text = @"";
-
 }
+
+
+#pragma mark lazy initialization
 
 -(PIEPageDetailTextInputBar *)textInputBar {
     if (!_textInputBar) {

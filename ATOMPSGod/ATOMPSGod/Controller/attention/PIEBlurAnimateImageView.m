@@ -56,8 +56,6 @@ static int thumbViewSizeConstant = 100;
         self.thumbHeight_MasContraint   = make.height.equalTo(@(thumbViewSizeConstant));
     }];
     
-    
-
     //setupContraints
 }
 
@@ -69,7 +67,7 @@ static int thumbViewSizeConstant = 100;
                       withBlock:^(UIImage *image) {
       _imageView.image = image;
                           
-                          if (ABS(image.size.height - image.size.width) > 10 ) {
+                          if (ABS(image.size.height - image.size.width) > 1 ) {
                               [image backgroundBlurredImageView:_blurBackgroundImageView WithRadius:20 iterations:1 tintColor:nil];
                           }
      
@@ -77,6 +75,9 @@ static int thumbViewSizeConstant = 100;
     
     
     if (viewModel.type != PIEPageTypeReply || viewModel.askID == 0) {
+        return;
+    }
+    if (self.hideThumbView) {
         return;
     }
     

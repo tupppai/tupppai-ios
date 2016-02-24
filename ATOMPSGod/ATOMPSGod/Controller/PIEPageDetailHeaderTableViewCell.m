@@ -15,15 +15,16 @@
 #import "PIEPageCollectionSwipeView.h"
 #import "PIEShareView.h"
 #import "PIEActionSheet_PS.h"
+
 @interface PIEPageDetailHeaderTableViewCell()
 @property (nonatomic,strong) PIEBangView *bangView;
 @property (nonatomic,strong) PIELoveButton *loveView;
 @property (weak, nonatomic) IBOutlet PIEPageButton *shareButtonView;
-
 @property (nonatomic,strong) PIEShareView *shareView;
 @property (nonatomic,strong) PIEActionSheet_PS *actionSheet_help;
-
 @end
+
+
 @implementation PIEPageDetailHeaderTableViewCell
 
 
@@ -47,10 +48,6 @@
 }
 
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-}
 
 -(void)setViewModel:(PIEPageVM *)viewModel {
     _viewModel = viewModel;
@@ -62,8 +59,7 @@
         _avatarButton.isV = viewModel.isV;
     }];
     [_usernameButton setTitle:viewModel.username forState:UIControlStateNormal];
-  
-    
+    _blurAnimateImageView.hideThumbView = YES;
     _blurAnimateImageView.viewModel = viewModel;
     _timeLabel.text = viewModel.publishTime;
     _contentLabel.text = viewModel.content;

@@ -17,6 +17,7 @@
 @property (nonatomic,strong)UIImageView *imageView;
 @property (nonatomic,strong)PIEThumbAnimateView *thumbView;
 @property (nonatomic,assign)BOOL enlarged;
+@property (nonatomic,assign)BOOL hideThumbView;
 
 - (void)animateWithType:(PIEThumbAnimateViewType)type;
 - (void)prepareForReuse;

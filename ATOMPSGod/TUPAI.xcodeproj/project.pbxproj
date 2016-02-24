@@ -480,6 +480,7 @@
 		F43930451BE4BD75006C9437 /* MRMessageInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = F43930331BE4BD75006C9437 /* MRMessageInterceptor.m */; };
 		F43930461BE4BD75006C9437 /* MRMethodCopier.m in Sources */ = {isa = PBXBuildFile; fileRef = F43930351BE4BD75006C9437 /* MRMethodCopier.m */; };
 		F43930471BE4BD75006C9437 /* MRWeakProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = F43930381BE4BD75006C9437 /* MRWeakProxy.m */; };
+		F4440A371C7D55A400CE4252 /* PIEPageCollectionImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4440A361C7D55A400CE4252 /* PIEPageCollectionImageView.m */; };
 		F449BB701BE496C50019C315 /* MMPlaceHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = F449BB6F1BE496C50019C315 /* MMPlaceHolder.m */; };
 		F44A52751C0BF83000707281 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = F44A52701C0BF83000707281 /* TFHpple.m */; };
 		F44A52761C0BF83000707281 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = F44A52721C0BF83000707281 /* TFHppleElement.m */; };
@@ -1720,6 +1721,8 @@
 		F43930361BE4BD75006C9437 /* MRProgressHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRProgressHelper.h; sourceTree = "<group>"; };
 		F43930371BE4BD75006C9437 /* MRWeakProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRWeakProxy.h; sourceTree = "<group>"; };
 		F43930381BE4BD75006C9437 /* MRWeakProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRWeakProxy.m; sourceTree = "<group>"; };
+		F4440A351C7D55A400CE4252 /* PIEPageCollectionImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEPageCollectionImageView.h; sourceTree = "<group>"; };
+		F4440A361C7D55A400CE4252 /* PIEPageCollectionImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEPageCollectionImageView.m; sourceTree = "<group>"; };
 		F449BB6E1BE496C50019C315 /* MMPlaceHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMPlaceHolder.h; sourceTree = "<group>"; };
 		F449BB6F1BE496C50019C315 /* MMPlaceHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMPlaceHolder.m; sourceTree = "<group>"; };
 		F44A526F1C0BF83000707281 /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
@@ -4308,6 +4311,8 @@
 				F44CB3D01C7AE8E400B68C6C /* PIEPageDetailTextInputBar.m */,
 				F44CB3D41C7C32D000B68C6C /* PIEPageCommentTableViewCell.h */,
 				F44CB3D51C7C32D000B68C6C /* PIEPageCommentTableViewCell.m */,
+				F4440A351C7D55A400CE4252 /* PIEPageCollectionImageView.h */,
+				F4440A361C7D55A400CE4252 /* PIEPageCollectionImageView.m */,
 			);
 			name = PageDetail;
 			sourceTree = "<group>";
@@ -5355,6 +5360,7 @@
 				5C67FB2D1AB2C509004EFF05 /* ATOMCustomCopperView.m in Sources */,
 				F43930441BE4BD75006C9437 /* MRProgressView+AFNetworking.m in Sources */,
 				F44A52821C0C336500707281 /* PIEActionSheet_PS.m in Sources */,
+				F4440A371C7D55A400CE4252 /* PIEPageCollectionImageView.m in Sources */,
 				F44CB3B11C76E6D900B68C6C /* PIEPageDetailViewController.m in Sources */,
 				907A431E1C40FC1C002542E6 /* PIELaunchTextField.m in Sources */,
 				F41FF0E61BDDFCE800566A12 /* JTSSimpleImageDownloader.m in Sources */,
