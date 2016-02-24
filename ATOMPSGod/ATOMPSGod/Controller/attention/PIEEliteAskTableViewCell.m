@@ -160,7 +160,7 @@
     }else{
         _followButton.hidden = NO;
     }
-    RAC(_followButton, highlighted) =
+    RAC(_followButton, hidden) =
     [RACObserve(pageVM, followed) takeUntil:self.rac_prepareForReuseSignal];
     
     // 图片
@@ -187,7 +187,6 @@
 {
     [super prepareForReuse];
     [self.blurAnimateImageView prepareForReuse];
-    self.followButton.hidden = NO;
 }
 
 #pragma mark - public RAC signals

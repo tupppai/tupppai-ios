@@ -9,20 +9,19 @@
 #import "PIECarouselViewController2.h"
 #import "DDHotDetailManager.h"
 #import "PIEFriendViewController.h"
-#import "PIECarousel_ItemView.h"
 #import "DDNavigationController.h"
 #import "PIECommentViewController.h"
 #import "PIEActionSheet_PS.h"
 
 
+//#import "PIECarousel_ItemView.h"
+#import "PIECarousel_ItemView_new.h"
 
 
 #define scale_h (414-40)/414.0
 #define scale_v (1334-168)/1334
 
 #define margin_v (SCREEN_HEIGHT - SCREEN_HEIGHT*scale_v)
-
-
 
 
 @interface PIECarouselViewController2 ()
@@ -132,9 +131,7 @@
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
-CGFloat startPanLocationY;
-
-
+//CGFloat startPanLocationY;
 
 - (void)handleGesture_SwipeUp:(id)sender {
     
@@ -151,7 +148,8 @@ CGFloat startPanLocationY;
     [UIView animateWithDuration:0.3 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:1.0 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
         self.view.backgroundColor = [UIColor whiteColor];
         self.carousel.currentItemView.frame = frame;
-        self.carousel.currentItemView.transform = CGAffineTransformMakeScale(SCREEN_WIDTH/self.carousel.currentItemView.frame.size.width, SCREEN_WIDTH/self.carousel.currentItemView.frame.size.width);
+        self.carousel.currentItemView.transform =
+        CGAffineTransformMakeScale(SCREEN_WIDTH/self.carousel.currentItemView.frame.size.width, SCREEN_WIDTH/self.carousel.currentItemView.frame.size.width);
 
         self.carousel.currentItemView.layer.cornerRadius = 0;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -205,12 +203,12 @@ CGFloat startPanLocationY;
 
 -(iCarousel *)carousel {
     if (!_carousel) {
-        _carousel = [[iCarousel alloc]initWithFrame:CGRectMake(0, margin_v, self.view.frame.size.width, SCREEN_HEIGHT)];
+        _carousel = [[iCarousel alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, SCREEN_HEIGHT)];
         _carousel.type = iCarouselTypeLinear;
 //        _carousel.decelerationRate = 0.5;
         _carousel.scrollSpeed = 2.0;
 
-        _carousel.backgroundColor = [UIColor clearColor];
+//        _carousel.backgroundColor = [UIColor redColor];
         _carousel.delegate = self;
         _carousel.dataSource = self;
         _carousel.pagingEnabled = YES;
@@ -243,22 +241,32 @@ CGFloat startPanLocationY;
             view.tag = index;
 
             CGFloat width  = SCREEN_WIDTH *scale_h;
+            CGFloat height = width * (960.0 / 700);
             
-            view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, width, self.view.bounds.size.height)];
-            view.backgroundColor = [UIColor clearColor];
-        
-            PIECarousel_ItemView* itemView = [[PIECarousel_ItemView alloc]initWithFrame:CGRectMake(0, 0, width, view.frame.size.height)];
-            itemView.backgroundColor = [UIColor whiteColor];
-            itemView.layer.cornerRadius = 10;
-            itemView.clipsToBounds = YES;
+//            CGFloat width  = SCREEN_WIDTH;
+//            CGFloat height = SCREEN_HEIGHT;
+            
+            view =
+            [[UIView alloc]
+             initWithFrame:CGRectMake(0, 0, width, height)];
+            
+            
+//            view.backgroundColor = [UIColor clearColor];
+            
+//            PIECarousel_ItemView* itemView = [[PIECarousel_ItemView alloc]initWithFrame:CGRectMake(0, 0, width, view.frame.size.height)];
+//            itemView.backgroundColor = [UIColor whiteColor];
+//            itemView.layer.cornerRadius = 10;
+//            itemView.clipsToBounds = YES;
+//            [view addSubview:itemView];
+            PIECarousel_ItemView_new *itemView = [PIECarousel_ItemView_new itemView];
+            itemView.frame = CGRectMake(0, 0, width, height);
             [view addSubview:itemView];
         }
         PIEPageVM* vm = [_dataSource objectAtIndex:index];
         for (id subview in view.subviews) {
-            if ([subview isKindOfClass:[PIECarousel_ItemView class]]) {
-                PIECarousel_ItemView* itemView = subview;
-                itemView.vm = vm;
-
+            if ([subview isKindOfClass:[PIECarousel_ItemView_new class]]) {
+                PIECarousel_ItemView_new* itemView = subview;
+                [itemView injectPageVM:vm];
             }
         }
         return view;
@@ -280,7 +288,7 @@ CGFloat startPanLocationY;
         case iCarouselOptionSpacing:
         {
             //add a bit of spacing between the item views
-            return value * 1.02f;
+            return value * 1.5f;
         }
         case iCarouselOptionFadeMax:
         {
@@ -321,17 +329,18 @@ CGFloat startPanLocationY;
     [self flyCurrentItemViewWithDirection:NO];
 }
 
-
-- (NSInteger)numberOfPlaceholdersInCarousel:(iCarousel *)carousel {
-    return 2;
-}
--(UIView *)carousel:(iCarousel *)carousel placeholderViewAtIndex:(NSInteger)index reusingView:(UIView *)view {
-    if (!view) {
-        view = [UIView new];
-    }
-    return view;
-}
-
+/*
+//
+//- (NSInteger)numberOfPlaceholdersInCarousel:(iCarousel *)carousel {
+//    return 2;
+//}
+//-(UIView *)carousel:(iCarousel *)carousel placeholderViewAtIndex:(NSInteger)index reusingView:(UIView *)view {
+//    if (!view) {
+//        view = [UIView new];
+//    }
+//    return view;
+//}
+*/
 
 -(void)updateCurrentVMWithIndex:(NSInteger)index {
     if (_dataSource.count > index) {
@@ -368,7 +377,7 @@ CGFloat startPanLocationY;
         } else {
             _view_placeHoder.alpha = 0.6;
         }
-            [self reorderSourceAndScroll];
+        [self reorderSourceAndScroll];
         
     }];
 }
@@ -432,7 +441,6 @@ CGFloat startPanLocationY;
 
         }
     }
-    
     
     if (!shouldScroll) {
         [_carousel reloadData];
