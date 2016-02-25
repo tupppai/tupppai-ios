@@ -262,7 +262,6 @@
             NSString* imageUrl_trimmed = [share.imageUrl trimToImageWidth:100];
             NSURL* imageUrl = [[NSURL alloc]initWithString:[NSString stringWithFormat:@"%@",imageUrl_trimmed]];
             NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
-            //注释掉的话 微博自动分享
             [shareParams SSDKEnableUseClientShare];
             
             if (shareType == ATOMShareTypeWechatFriends) {

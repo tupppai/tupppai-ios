@@ -73,8 +73,7 @@ static DDSessionManager *shareInstance = nil;
         Method originalMethod = class_getInstanceMethod(class, originalSelector);
         Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
         
-
-
+        
         // When swizzling a class method, use the following:
         // Class class = object_getClass((id)self);
         // ...
@@ -95,9 +94,63 @@ static DDSessionManager *shareInstance = nil;
         } else {
             method_exchangeImplementations(originalMethod, swizzledMethod);
         }
+
+        
+        SEL originalSelector2 = @selector(dataTaskWithHTTPMethod:URLString:parameters:success:failure:);
+        SEL swizzledSelector2 = @selector(xxx_dataTaskWithHTTPMethod:URLString:parameters:success:failure:);
+        Method originalMethod2 = class_getInstanceMethod(class, originalSelector2);
+        Method swizzledMethod2 = class_getInstanceMethod(class, swizzledSelector2);
+
+        BOOL didAddMethod2 =
+        class_addMethod(class,
+                        originalSelector2,
+                        method_getImplementation(swizzledMethod2),
+                        method_getTypeEncoding(swizzledMethod2));
+
+
+        if (didAddMethod2) {
+            class_replaceMethod(class,
+                                swizzledSelector2,
+                                method_getImplementation(originalMethod2),
+                                method_getTypeEncoding(originalMethod2));
+        } else {
+            method_exchangeImplementations(originalMethod2, swizzledMethod2);
+        }
+        
     });
 }
 
+-(NSURLSessionDataTask *)xxx_dataTaskWithHTTPMethod:(NSString *)method URLString:(NSString *)URLString parameters:(id)parameters success:(void (^)(NSURLSessionDataTask * _Nonnull, id _Nonnull))success failure:(void (^)(NSURLSessionDataTask * _Nonnull, NSError * _Nonnull))failure {
+    
+    /*签名
+     parameters根据key从小到大排序，把排序后对应的value拼接成string1
+     string2 = md5(tupppaisignmd5)
+     string3 = 当月的第几天
+     string4 = string1~string2~string3
+     string5 = [[string4 md5]md5]
+     string5就是签名
+     */
+    
+    NSArray *sortedKeys = [[parameters allKeys] sortedArrayUsingSelector: @selector(compare:)];
+    NSMutableArray *sortedValues = [NSMutableArray array];
+    for (NSString *key in sortedKeys)
+        [sortedValues addObject: [parameters objectForKey: key]];
+    NSString *jointValuesString = [sortedValues componentsJoinedByString:@""];
+    
+    NSDate *date = [NSDate date];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *components = [calendar components:(NSCalendarUnitDay) fromDate:date];
+    NSInteger dayOfMonth = [components day];
+    
+    NSString *jointString = [NSString stringWithFormat:@"%@%@%zd",jointValuesString,[@"tupppaisignmd5" md5],dayOfMonth];
+    NSString *signingString = [[jointString md5]md5];
+    
+    NSMutableDictionary *params = [parameters mutableCopy];
+    [params setObject:signingString forKey:@"verify"];
+    [params setObject:@"2" forKey:@"v"];
+    
+    return [self xxx_dataTaskWithHTTPMethod:method URLString:URLString parameters:params success:success failure:failure];
+}
 
 -(NSURLSessionDataTask *)xxx_dataTaskWithRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLResponse * _Nonnull, id _Nullable, NSError * _Nullable))completionHandler {
     return [self xxx_dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id _Nullable responseObject, NSError * _Nullable error) {
