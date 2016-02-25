@@ -6045,7 +6045,6 @@
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/QQSDK",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/Reveal",
-					"$(PROJECT_DIR)/ATOMPSGod/Vendor/Reveal",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/lib/Channels",
 				);
 				GCC_PREFIX_HEADER = ./ATOMPSGod/psgod.pch;
@@ -6059,7 +6058,6 @@
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/UMessage_Sdk_1.1.0",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/SinaWeiboSDK",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/WeChatSDK",
-					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/UMAnalytics_Sdk_3.6.4",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/UMAnalytics_Sdk_3.6.7",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/lib/Channels",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/lib",
@@ -6099,7 +6097,6 @@
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/QQSDK",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/Reveal",
-					"$(PROJECT_DIR)/ATOMPSGod/Vendor/Reveal",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/lib/Channels",
 				);
 				GCC_PREFIX_HEADER = ./ATOMPSGod/psgod.pch;
@@ -6113,7 +6110,6 @@
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/UMessage_Sdk_1.1.0",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/SinaWeiboSDK",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/WeChatSDK",
-					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/UMAnalytics_Sdk_3.6.4",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/UMAnalytics_Sdk_3.6.7",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/lib/Channels",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/lib",
@@ -6233,7 +6229,6 @@
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/QQSDK",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/Reveal",
-					"$(PROJECT_DIR)/ATOMPSGod/Vendor/Reveal",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/lib/Channels",
 				);
 				GCC_PREFIX_HEADER = ./ATOMPSGod/psgod.pch;
@@ -6247,7 +6242,6 @@
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/UMessage_Sdk_1.1.0",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/SinaWeiboSDK",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/socialShare/libraries/extends/WeChatSDK",
-					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/UMAnalytics_Sdk_3.6.4",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/UMAnalytics_Sdk_3.6.7",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/lib/Channels",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/lib",
