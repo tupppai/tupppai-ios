@@ -76,9 +76,6 @@ typedef NS_ENUM(NSUInteger, PIEFriendViewControllerNavigationBarStyle) {
     [self getDataSource];
     [self setupPageMenu];
     [self setupTapGesture];
-    
-    
-    
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -109,7 +106,7 @@ typedef NS_ENUM(NSUInteger, PIEFriendViewControllerNavigationBarStyle) {
     
     UIButton *buttonLeft = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
     buttonLeft.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [buttonLeft setImage:[UIImage imageNamed:@"nav_back"] forState:UIControlStateNormal];
+    [buttonLeft setImage:[UIImage imageNamed:@"PIE_icon_back"] forState:UIControlStateNormal];
     
     if (self.navigationController.viewControllers.count <= 1) {
         [buttonLeft addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
