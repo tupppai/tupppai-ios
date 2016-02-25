@@ -11,8 +11,9 @@
 #import "PIERefreshCollectionView.h"
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "PIEReplyCollectionCell.h"
-#import "PIECarouselViewController.h"
+#import "PIECarouselViewController2.h"
 #import "PIEFriendViewController.h"
+#import "DeviceUtil.h"
 @interface PIEReplyCollectionViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout,PWRefreshBaseCollectionViewDelegate>
 @property (nonatomic, strong) NSMutableArray *source;
 @property (nonatomic, assign) NSInteger currentPage;
@@ -48,17 +49,12 @@
 - (void)getRemoteSource {
     _currentPage = 1;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setObject:@(SCREEN_WIDTH - 2 * kPadding15) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(1) forKey:@"page"];
     [param setObject:@(15) forKey:@"size"];
     DDHotDetailManager *manager = [DDHotDetailManager new];
     [manager fetchAllReply:param ID:_pageVM.askID withBlock:^(NSMutableArray *askArray, NSMutableArray *replyArray) {
         if (replyArray.count>0) {
-//            NSMutableArray* arrayAgent = [NSMutableArray new];
-//            for (PIEPageEntity *entity in replyArray) {
-//                PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
-//                [arrayAgent addObject:vm];
-//            }
             [_source removeAllObjects];
             [_source addObjectsFromArray:replyArray];
             [self.collectionView reloadData];
@@ -100,7 +96,7 @@
         _collectionView = [[PIERefreshCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
         _collectionView.toRefreshBottom = YES;
         _collectionView.toRefreshTop = YES;
-        _collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        _collectionView.backgroundColor = [UIColor colorWithHex:0xF8F8F8];
         _collectionView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         _collectionView.dataSource = self;
         _collectionView.delegate = self;
@@ -127,7 +123,7 @@
 //                vc.pageVM = vm;
 //                [self.navigationController pushViewController:vc animated:YES];
 //            } else if (CGRectContainsPoint(cell.imageView.frame, p)) {
-//                PIECarouselViewController* vc = [PIECarouselViewController new];
+//                PIECarouselViewController2* vc = [PIECarouselViewController2 new];
 //                vc.pageVM = vm;
 //                [self.navigationController pushViewController:vc animated:YES];
 //            } else {
@@ -141,26 +137,26 @@
 //        }
 //}
 
-- (void)like {
-    NSLog(@"like");
-    PIEPageVM* vm = [_source objectAtIndex:_selectedIndexPath.row];
-    PIEReplyCollectionCell* cell = (PIEReplyCollectionCell*)[self.collectionView cellForItemAtIndexPath:_selectedIndexPath];
-
-    cell.likeButton.selected = !cell.likeButton.selected;
-    [DDService toggleLike:cell.likeButton.selected ID:vm.ID type:vm.type withBlock:^(BOOL success) {
-        if (!success) {
-            cell.likeButton.selected = !cell.likeButton.selected;
-        } else {
-            
-            if (cell.likeButton.selected) {
-                vm.likeCount = [NSString stringWithFormat:@"%zd",vm.likeCount.integerValue + 1];
-            } else {
-                vm.likeCount = [NSString stringWithFormat:@"%zd",vm.likeCount.integerValue - 1];
-            }
-            vm.liked = cell.likeButton.selected;
-        }
-    }];
-}
+//- (void)like {
+//    NSLog(@"like");
+//    PIEPageVM* vm = [_source objectAtIndex:_selectedIndexPath.row];
+//    PIEReplyCollectionCell* cell = (PIEReplyCollectionCell*)[self.collectionView cellForItemAtIndexPath:_selectedIndexPath];
+//
+//    cell.likeButton.selected = !cell.likeButton.selected;
+//    [DDService toggleLike:cell.likeButton.selected ID:vm.ID type:vm.type withBlock:^(BOOL success) {
+//        if (!success) {
+//            cell.likeButton.selected = !cell.likeButton.selected;
+//        } else {
+//            
+//            if (cell.likeButton.selected) {
+//                vm.likeCount = [NSString stringWithFormat:@"%zd",vm.likeCount.integerValue + 1];
+//            } else {
+//                vm.likeCount = [NSString stringWithFormat:@"%zd",vm.likeCount.integerValue - 1];
+//            }
+//            vm.liked = cell.likeButton.selected;
+//        }
+//    }];
+//}
 
 #pragma mark - refresh delegate
 
@@ -203,9 +199,11 @@
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     PIEPageVM* vm = [_source objectAtIndex:indexPath.row];
-    PIECarouselViewController* vc = [PIECarouselViewController new];
+    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
     vc.pageVM = vm;
-    [self.navigationController pushViewController:vc animated:YES];
+    [self.navigationController presentViewController:vc animated:YES completion:nil];
+
+//    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
@@ -214,7 +212,7 @@
     CGFloat width;
     CGFloat height;
     width = (SCREEN_WIDTH) /2 - 20;
-    height = vm.imageHeight/vm.imageWidth * width  + 70;
+    height = vm.imageRatio * width  + 70;
     height = MAX(150, height);
     height = MIN(SCREEN_HEIGHT/2, height);
     return CGSizeMake(width, height);

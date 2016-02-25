@@ -7,7 +7,7 @@
 //
 
 #import "PIEEliteFollowAskTableViewCell.h"
-#import "PIEImageEntity.h"
+#import "PIEModelImage.h"
 #import "FXBlurView.h"
 @interface PIEEliteFollowAskTableViewCell()
 @property (nonatomic, strong) UIImageView* blurView;
@@ -24,8 +24,7 @@
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     self.clipsToBounds = YES;
-    _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
-    _avatarView.clipsToBounds = YES;
+
     _theImageView.contentMode = UIViewContentModeScaleAspectFit;
     _theImageView.clipsToBounds = YES;
     _theImageView.backgroundColor = [UIColor clearColor];
@@ -54,40 +53,61 @@
     return _blurView;
 }
 
+-(void)dealloc {
+    [self removeKVO];
+}
 -(void)prepareForReuse {
     [super prepareForReuse];
-    _followView.hidden = NO;
+    [self removeKVO];
 }
 - (void)injectSauce:(PIEPageVM *)viewModel {
     WS(ws);
-    _ID = viewModel.ID;
-    _askID = viewModel.askID;
-    _followView.highlighted = viewModel.followed;
+    
+    
+    _vm = viewModel;
+    [self addKVO];
+    NSString *urlString_avatar = [viewModel.avatarURL trimToImageWidth:_avatarView.frame.size.width*SCREEN_SCALE];
+    NSString *urlString_imageView = [viewModel.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
+    [_theImageView sd_setImageWithURL:[NSURL URLWithString:urlString_imageView]
+                            completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                ws.theImageView.image = image;
+                                ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
+                            }];
+    [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:urlString_avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+
+    _avatarView.isV = viewModel.isV;
+
+    
     _shareView.imageView.image = [UIImage imageNamed:@"hot_share"];
-    _shareView.numberString = viewModel.shareCount;
     _commentView.imageView.image = [UIImage imageNamed:@"hot_comment"];
+    _shareView.numberString = viewModel.shareCount;
     _commentView.numberString = viewModel.commentCount;
     _contentLabel.text = viewModel.content;
-    
-    [_avatarView setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
     _nameLabel.text = viewModel.username;
     _timeLabel.text = viewModel.publishTime;
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:viewModel.imageURL]];
-    [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
-    [_theImageView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"cellHolder"] success:^(NSURLRequest *  request, NSHTTPURLResponse *  response, UIImage *  image) {
-        ws.theImageView.image = image;
-        ws.blurView.image = [image blurredImageWithRadius:30 iterations:1 tintColor:nil];
-    } failure:nil];
-//    CGFloat imageViewHeight = viewModel.imageHeight <= SCREEN_HEIGHT/2 ? viewModel.imageHeight : SCREEN_HEIGHT/2;
-//    imageViewHeight = MAX(200, imageViewHeight);
+}
 
-//    [_theImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-//        make.height.equalTo(@(SCREEN_WIDTH)).with.priorityHigh();
-//    }];
-    
+- (void)addKVO {
+    [_vm addObserver:self forKeyPath:@"shareCount" options:NSKeyValueObservingOptionNew context:NULL];
+    [_vm addObserver:self forKeyPath:@"commentCount" options:NSKeyValueObservingOptionNew context:NULL];
+}
+- (void)removeKVO {
+    @try{
+        [_vm removeObserver:self forKeyPath:@"shareCount"];
+        [_vm removeObserver:self forKeyPath:@"commentCount"];
+    }@catch(id anException){
+        //do nothing, obviously it wasn't attached because an exception was thrown
+    }
+}
 
-    if (viewModel.userID == [DDUserManager currentUser].uid) {
-        _followView.hidden = YES;
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+      if ([keyPath isEqualToString:@"shareCount"]) {
+        NSString* value = [change objectForKey:@"new"];
+        self.shareView.numberString = value;
+    } else     if ([keyPath isEqualToString:@"commentCount"]) {
+        NSString* value = [change objectForKey:@"new"];
+        self.commentView.numberString = value;
     }
 }
 

@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PIEAvatarButton.h"
 
 @interface PIESearchContentCollectionViewCell : UICollectionViewCell
-@property (weak, nonatomic) IBOutlet UIButton *avatarButton;
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+//@property (weak, nonatomic) IBOutlet UIButton    *avatarButton;
+@property (weak, nonatomic) IBOutlet PIEAvatarButton *avatarButton;
+@property (weak, nonatomic) IBOutlet UILabel     *nameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *typeImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
-@property (weak, nonatomic) IBOutlet UILabel *contentLabel;
+@property (weak, nonatomic) IBOutlet UILabel     *contentLabel;
 - (void)injectSauce:(PIEPageVM*)vm ;
 @end

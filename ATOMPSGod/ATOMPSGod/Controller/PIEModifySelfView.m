@@ -8,6 +8,8 @@
 ;
 
 #import "PIEModifySelfView.h"
+#import "PIEUserModel.h"
+
 @interface PIEModifySelfView()
 @property (nonatomic, strong) UIView *nicknameView;
 @property (nonatomic, strong) UIView *protocolView;
@@ -27,8 +29,6 @@
         [self createSubView];
         [self createTopViewSubView];
         [self createNameSubView];
-//        [self createAreaSubView];
-//        [self createRegionPickerView];
         [self createProtocolSubView];
         [self injectSource];
     }
@@ -36,10 +36,13 @@
 }
 
 - (void)injectSource {
-    [self.userHeaderButton setImageForState:UIControlStateNormal withURL:[[NSURL alloc]initWithString:[DDUserManager currentUser].avatar]];
-    self.nicknameTextField.text = [DDUserManager currentUser].username;
-    NSInteger index = [DDUserManager currentUser].sex ? 0:1;
-    [self.sexSegment setSelectedSegmentIndex:index];
+    NSString* avatarUrl = [[DDUserManager currentUser].avatar trimToImageWidth:200];
+    [DDService sd_downloadImage:avatarUrl withBlock:^(UIImage *image) {
+        [self.userHeaderButton setImage:image forState:UIControlStateNormal];
+    }];
+    self.nicknameTextField.text = [DDUserManager currentUser].nickname;
+//    NSInteger index = [DDUserManager currentUser].sex ? 0:1;
+//    [self.sexSegment setSelectedSegmentIndex:index];
 }
 - (void)createSubView {
     WS(ws);
@@ -166,6 +169,7 @@
     arrowImageView.contentMode = UIViewContentModeCenter;
     arrowImageView.image = [UIImage imageNamed:@"ic_right-arrow"];
     [_areaView addSubview:arrowImageView];
+    
     [arrowImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(_areaView.mas_right).with.offset(-kPadding5);
         make.centerY.equalTo(_areaView.mas_centerY);
@@ -280,6 +284,9 @@
         _userHeaderButton = [UIButton new];
         _userHeaderButton.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.1];
         _userHeaderButton.layer.cornerRadius = kUserBigHeaderButtonWidth / 2;
+        _userHeaderButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
+        _userHeaderButton.contentHorizontalAlignment    = UIControlContentHorizontalAlignmentFill;
+        _userHeaderButton.contentVerticalAlignment      = UIControlContentHorizontalAlignmentFill;
         _userHeaderButton.clipsToBounds = YES;
         _maskImageView = [UIImageView new];
         _maskImageView.image =  [UIImage imageNamed:@"login_profile_mask"];
@@ -295,6 +302,7 @@
         NSArray* arraySelected = [NSArray arrayWithObjects:[UIImage imageNamed:@"createprofile_gender_male_selected"],[UIImage imageNamed:@"createprofile_gender_female_selected"], nil];
         _sexSegment = [[HMSegmentedControl alloc] initWithSectionImages:array sectionSelectedImages:arraySelected];
         _sexSegment.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationNone;
+        _sexSegment.hidden = YES;
         [_sexSegment setIndexChangeBlock:^(NSInteger index) {
             if (index == 0) {
                 _genderIsMan = YES;

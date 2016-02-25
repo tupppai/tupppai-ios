@@ -7,140 +7,87 @@
 //
 
 #import "DDUserManager.h"
-#import "PIEEntityUser.h"
 #import "ATOMUserDao.h"
+
+
 @implementation DDUserManager
 
-static dispatch_once_t onceToken;
-static  DDUserManager* _currentUser;
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        _region = [NSMutableDictionary new];
-        _bindWechat = NO;
-        _bindWeibo = NO;
-        _mobile = @"-1";
-        _username = @"我";
+
+static  PIEUserModel* shareUser = nil;
+
++ (PIEUserModel *)currentUser {
+    
+/*   
+ First of all when static is declared within function, it is declared only once. So, the line
+Will be executed only once when the function gets called for first time.
+ 
+ In the next line when you use dispath_once, it will be executed for only once. So the creation of shareUser will be done once only. So, thats a perfect way to create a singleton class.
+ 
+ 
+ static  PIEUserModel* shareUser = nil;
+ 
+ static dispatch_once_t onceToken;
+ dispatch_once(&onceToken, ^{
+ shareUser = [PIEUserModel new];
+ });
+ return shareUser;
+ 
+*/
+    
+
+    if (shareUser == nil) {
+        shareUser = [PIEUserModel new];
     }
-    return self;
-}
-
-+ (DDUserManager *)currentUser {
-    dispatch_once(&onceToken, ^{
-        _currentUser = [DDUserManager new];
-    });
-    return _currentUser;
+    return shareUser;
 }
 
 
-- (NSMutableDictionary *)dictionaryFromModel {
-    NSMutableDictionary *dict = [NSMutableDictionary new];
-    [dict setObject:_username forKey:@"nickname"];
-    [dict setObject:_mobile forKey:@"mobile"];
-    [dict setObject:_password forKey:@"password"];
-//    [dict setObject:[NSString stringWithFormat:@"%d", (int)_locationID] forKey:@"location"];
-    [dict setObject:[NSString stringWithFormat:@"%d", (int)_sex] forKey:@"sex"];
-    [dict setObject:[NSString stringWithFormat:@"%@", _avatar] forKey:@"avatar"];
-
-    switch (_signUpType) {
-        case ATOMSignUpWechat:
-            [dict setObject:_sourceData[@"openid"] forKey:@"openid"];
-            [dict setObject:_sourceData[@"headimgurl"] forKey:@"avatar_url"];
-            [dict setObject:@"weixin" forKey:@"type"];
-            break;
-        case ATOMSignUpQQ:
-            [dict setObject:_sourceData[@"openid"] forKey:@"openid"];
-            [dict setObject:_sourceData[@"headimgurl"] forKey:@"avatar_url"];
-            [dict setObject:@"qq" forKey:@"type"];
-            break;
-        case ATOMSignUpWeibo:
-            [dict setObject:_sourceData[@"idstr"] forKey:@"openid"];
-            [dict setObject:_sourceData[@"avatar_hd"] forKey:@"avatar_url"];
-            [dict setObject:_sourceData[@"province"] forKey:@"province"];
-            [dict setObject:_sourceData[@"city"] forKey:@"city"];
-            [dict setObject:@"weibo" forKey:@"type"];
-            break;
-        case ATOMSignUpMobile:
-            [dict setObject:[NSString stringWithFormat:@"%@", _region[@"cityID"]] forKey:@"city"];
-            [dict setObject:[NSString stringWithFormat:@"%@", _region[@"provinceID"]] forKey:@"province"];
-            [dict setObject:@"mobile" forKey:@"type"];
-            break;
-        default:
-            break;
-    }
-    return [dict mutableCopy];
++ (void)setCurrentUser:(PIEUserModel *)user {
+    self.currentUser.uid             = user.uid;
+    self.currentUser.mobile          = user.mobile;
+    self.currentUser.nickname        = user.nickname;
+    self.currentUser.sex             = user.sex;
+    self.currentUser.avatar          = user.avatar;
+    self.currentUser.likedCount      = user.likedCount;
+    self.currentUser.attentionNumber = user.attentionNumber;
+    self.currentUser.fansNumber      = user.fansNumber;
+    self.currentUser.likedCount      = user.likedCount;
+    self.currentUser.uploadNumber    = user.uploadNumber;
+    self.currentUser.replyNumber     = user.replyNumber;
+    self.currentUser.bindWechat      = user.bindWechat;
+    self.currentUser.bindWeibo       = user.bindWeibo;
+    self.currentUser.bindQQ          = user.bindQQ;
+    self.currentUser.token           = user.token;
+    self.currentUser.isV             = user.isV;
+    self.currentUser.balance             = user.balance;
 }
 
 
-- (void)setCurrentUser:(PIEEntityUser *)user {
-    _uid = user.uid;
-    _mobile = user.mobile;
-    _username = user.nickname;
-    _sex = user.sex;
-    _avatar = user.avatar;
-    _praisedCount = user.likedCount;
-    _attentionNumber = user.attentionNumber;
-    _fansNumber = user.fansNumber;
-//    _likeNumber = user.likeNumber;
-    _uploadNumber = user.uploadNumber;
-    _replyNumber = user.replyNumber;
-    _bindWechat = user.bindWechat;
-    _bindWeibo = user.bindWeibo;
-    _bindQQ = user.bindQQ;
-    _token = user.token;
+
++ (void)updateCurrentUserInDatabase {
+
+    [ATOMUserDAO updateUser:self.currentUser];
 }
 
-//embarrassing
-+ (void)updateDBUserFromCurrentUser {
-    PIEEntityUser* user = [PIEEntityUser new];
-    DDUserManager* cUser = [DDUserManager currentUser];
-    user.uid = cUser.uid;
-    user.mobile = cUser.mobile;
-    user.nickname = cUser.username;
-    user.sex = cUser.sex;
-    user.avatar = cUser.avatar;
-    user.attentionNumber = cUser.attentionNumber;
-    user.fansNumber = cUser.fansNumber;
-//    user.likeNumber = cUser.likeNumber;
-    user.uploadNumber = cUser.uploadNumber;
-    user.replyNumber = cUser.replyNumber;
-    user.bindWechat = cUser.bindWechat;
-    user.bindWeibo = cUser.bindWeibo;
-    user.bindQQ = cUser.bindQQ;
-    user.likedCount = cUser.praisedCount;
-    user.token = cUser.token;
-    [ATOMUserDAO updateUser:user];
+
++ (void)updateCurrentUserFromUserModel:(PIEUserModel *)user {
+    [ATOMUserDAO clearUsers];
+    [ATOMUserDAO insertUser:user completion:nil];
+    self.currentUser = user;
 }
 
--(void)tellMeEveryThingAboutYou {
-    NSLog(@"%@,%@,%@,_likeNumber%ld id %zd",_username,_mobile,_avatar,(long)_likeNumber,_uid);
-}
-- (void)saveAndUpdateUser:(PIEEntityUser *)user {
-    if ([ATOMUserDAO isExistUser:user]) {
-        [ATOMUserDAO updateUser:user];
-        [self setCurrentUser:[ATOMUserDAO  selectUserByUID:user.uid]];
-    } else {
-        [ATOMUserDAO insertUser:user];
-        [self setCurrentUser:user];
-    }
-}
--(void)wipe {
-    self.sourceData = nil;
-    self.uid = 0;
-    self.username = @"游客";
-    self.mobile = @"-1";
-    self.avatar = @"";
-    self.bindWechat = NO;
-    self.bindWeibo = NO;
-    self.bindQQ = NO;
+
+
++(void)clearCurrentUser {
+    self.currentUser = nil;
 }
 
-+(void)fetchUserInDBToCurrentUser:(void (^)(BOOL))block {
-  [ATOMUserDAO fetchUser:^(PIEEntityUser *user) {
+
++(void)getMyProfileFromDatabase:(void (^)(BOOL))block {
+  [ATOMUserDAO fetchUser:^(PIEUserModel *user) {
       if (user) {
-          [[DDUserManager currentUser] setCurrentUser:user];
+          self.currentUser = user;
           if (block) {
               block(YES);
           }
@@ -152,13 +99,34 @@ static  DDUserManager* _currentUser;
    }];
 }
 
-+ (void)DDGetUserInfoAndUpdateMe {
-    [DDService ddGetMyInfo:nil withBlock:^(NSDictionary *data) {
-        if (data) {
-            PIEEntityUser* user = [MTLJSONAdapter modelOfClass:[PIEEntityUser class] fromJSONDictionary:data error:NULL];
-            //保存更新数据库的user,并更新currentUser
-            [[DDUserManager currentUser]saveAndUpdateUser:user];
++ (void)getUserInfoFromServerToUpdateUserDatabase:(void (^)(BOOL success))block {
+    
+    [DDBaseService GET:nil url:@"view/info" block:^(id responseObject) {
+        NSDictionary* data = [responseObject objectForKey:@"data"];
+        PIEUserModel* user = [MTLJSONAdapter modelOfClass:[PIEUserModel class] fromJSONDictionary:data error:NULL];
+        user.token = [responseObject objectForKey:@"token"];
+        if (user) {
+            [self updateCurrentUserFromUserModel:user];
+            if (block) {
+                block (YES);
+            }
         }
+    }];
+
+}
++ (void)updateBalanceFromRemote {
+    [DDService GET:nil url:@"profile/view" block:^(id responseObject) {
+        NSDictionary *data = [responseObject objectForKey:@"data"];
+        if (data == nil) {
+            return ;
+        }
+        NSNumber* balanceNumber = [data objectForKey:@"balance"];
+        if (balanceNumber == nil) {
+            return;
+        }
+        CGFloat balance = [balanceNumber floatValue];
+        [DDUserManager currentUser].balance = balance;
+        [DDUserManager updateCurrentUserInDatabase];
     }];
 }
 
@@ -167,9 +135,10 @@ static  DDUserManager* _currentUser;
     [DDBaseService POST:param url:URL_ACRegister block:^(id responseObject) {
         NSDictionary *data = [ responseObject objectForKey:@"data"];
         if (data) {
-            PIEEntityUser* user = [MTLJSONAdapter modelOfClass:[PIEEntityUser class] fromJSONDictionary:data error:NULL];
+            PIEUserModel* user = [MTLJSONAdapter modelOfClass:[PIEUserModel class] fromJSONDictionary:data error:NULL];
             user.token = [responseObject objectForKey:@"token"];
-            [[DDUserManager currentUser]saveAndUpdateUser:user];
+            [self updateCurrentUserFromUserModel:user];
+
             if (block) { block(YES); }
         } else {
             if (block) { block(NO); }
@@ -186,11 +155,11 @@ static  DDUserManager* _currentUser;
         if (data) {
             {    //        data: { status: 1,正常  2，密码错误 3，未注册 }
                 if(status == 1) {
-                    PIEEntityUser* user = [MTLJSONAdapter modelOfClass:[PIEEntityUser class] fromJSONDictionary:data error:nil];
+                    PIEUserModel* user = [MTLJSONAdapter modelOfClass:[PIEUserModel class] fromJSONDictionary:data error:nil];
                     //保存更新数据库的user,并更新currentUser
                     user.token = [responseObject objectForKey:@"token"];
-                    NSLog(@"token%@",user.token);
-                    [[DDUserManager currentUser]saveAndUpdateUser:user];
+                    [self updateCurrentUserFromUserModel:user];
+
                     if (block) {block(YES);}
                 } else if (status == 2) {
                     [Util ShowTSMessageError:@"密码错误"];
@@ -207,7 +176,6 @@ static  DDUserManager* _currentUser;
 
 }
 
-
 + (void)DD3PartyAuth:(NSDictionary *)param AndType:(NSString *)type withBlock:(void (^)(bool isRegistered,NSString* info))block {
     NSString* url = [NSString stringWithFormat:@"%@%@",URL_AC3PaAuth,type];
     [DDBaseService POST:param url:url block:^(id responseObject) {
@@ -217,9 +185,10 @@ static  DDUserManager* _currentUser;
             NSDictionary* userObject = [data objectForKey:@"user_obj"];
             if (isRegistered) {
                 //已经注册，抓取服务器存储的user对象，更新本地user.
-                PIEEntityUser* user = [MTLJSONAdapter modelOfClass:[PIEEntityUser class] fromJSONDictionary:userObject error:NULL];
+                PIEUserModel* user = [MTLJSONAdapter modelOfClass:[PIEUserModel class] fromJSONDictionary:userObject error:NULL];
                 user.token = [responseObject objectForKey:@"token"];
-                [[DDUserManager currentUser]saveAndUpdateUser:user];
+                [self updateCurrentUserFromUserModel:user];
+
                 block(YES,@"登录成功");
             } else if (isRegistered == NO){
                 if (block) {
@@ -230,4 +199,34 @@ static  DDUserManager* _currentUser;
     }];
 
 }
+
+
++ (void)getMyFans:(NSDictionary *)param withBlock:(void (^)(NSArray *))block {
+    [DDService ddGetFans:param withBlock:^(NSArray *data) {
+        NSArray *resultArray = [MTLJSONAdapter modelsOfClass:[PIEUserModel class] fromJSONArray:data error:NULL];
+        if (block) {
+            block(resultArray);
+        }
+    }];
+}
+
++ (void)getMyFollows:(NSDictionary *)param withBlock:(void (^)(NSArray *recommendArray, NSArray *myFollowArray))block {
+    [DDService ddGetFollow:param withBlock:^(NSArray *recommendArray, NSArray *myFollowArray) {
+        
+        NSArray* recommends = [MTLJSONAdapter modelsOfClass:[PIEUserModel class] fromJSONArray:recommendArray error:NULL];
+        NSArray* followers = [MTLJSONAdapter modelsOfClass:[PIEUserModel class] fromJSONArray:myFollowArray error:NULL];
+        
+        if (block) {
+            block(recommends, followers);
+        }
+    }];
+}
+
+
+/** 返回用户是否是游客 */
++ (BOOL)isTourist
+{
+    return  ([self currentUser].uid == kPIETouristUID);
+}
+
 @end

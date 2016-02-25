@@ -11,9 +11,9 @@
 #import "DDPhoneRegisterVC.h"
 #import "ATOMHeaderImageCropperViewController.h"
 #import "PIEUploadManager.h"
-#import "PIEEntityImage.h"
+#import "PIEModelImageInfo.h"
 #import "JGActionSheet.h"
-#import "AppDelegate.h"
+
 #import "DDNavigationController.h"
 #import "PIEMeViewController.h"
 
@@ -42,15 +42,18 @@
     [super viewDidLoad];
 //    [self loadRegionResource];
     [self createUI];
+    [self setupNavBar];
 }
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    UIBarButtonItem *btnDone = [[UIBarButtonItem alloc] initWithTitle:@"确认修改" style:UIBarButtonItemStyleDone target:self action:@selector(clickRightButtonItem)];
-    self.navigationItem.rightBarButtonItem = btnDone;
+    [[IQKeyboardManager sharedManager]setEnable:YES];
+}
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[IQKeyboardManager sharedManager]setEnable:NO];
 }
 - (void)createUI {
     self.title = @"资料编辑";
-//    self.edgesForExtendedLayout = UIRectEdgeNone;
     _createProfileView = [PIEModifySelfView new];
     self.view = _createProfileView;
     
@@ -76,24 +79,23 @@
         [param setObject:_avatar forKey:@"avatar"];
     }
     [param setObject:@(_createProfileView.genderIsMan) forKey:@"sex"];
-    if (![[DDUserManager currentUser].username isEqualToString:_createProfileView.nicknameTextField.text]) {
+    if (![[DDUserManager currentUser].nickname isEqualToString:_createProfileView.nicknameTextField.text]) {
         [param setObject:_createProfileView.nicknameTextField.text forKey:@"nickname"];
     }
     [DDService updateProfile:param withBlock:^(BOOL success) {
         if (success) {
             [Hud success:@"修改成功"];
-            [DDUserManager currentUser].username = _createProfileView.nicknameTextField.text;
-            [DDUserManager currentUser].sex = _createProfileView.genderIsMan;
+            [DDUserManager currentUser].nickname = _createProfileView.nicknameTextField.text;
             if (_avatar) {
-                //use reactive cocoa to update all avatar view.
                 [DDUserManager currentUser].avatar = _avatar;
             }
-            [DDUserManager updateDBUserFromCurrentUser];
+            [DDUserManager updateCurrentUserInDatabase];
             
-            DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-            PIEMeViewController* mevc = [nav.viewControllers firstObject];
-            [mevc updateAvatar];
-            [self.navigationController popViewControllerAnimated:YES];
+            if (self.navigationController.viewControllers.count <= 1) {
+                [self dismiss];
+            } else {
+                [self.navigationController popViewControllerAnimated:YES];
+            }
             
         } else {
             [Hud error:@"修改失败" inView:self.view];
@@ -108,8 +110,28 @@
     [self.cameraActionsheet showInView:self.view animated:YES];
 }
 
+- (void)setupNavBar {
+    
+    UIBarButtonItem *btnDone = [[UIBarButtonItem alloc] initWithTitle:@"确认修改" style:UIBarButtonItemStyleDone target:self action:@selector(clickRightButtonItem)];
+    self.navigationItem.rightBarButtonItem = btnDone;
 
+    
+    if (self.navigationController.viewControllers.count <= 1) {
+        
+        UIButton *buttonLeft = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
+        buttonLeft.imageView.contentMode = UIViewContentModeScaleAspectFit;
+        [buttonLeft setImage:[UIImage imageNamed:@"PIE_icon_back"] forState:UIControlStateNormal];
+        UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonLeft];
+        self.navigationItem.leftBarButtonItem =  buttonItem;
+        [buttonLeft addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    
+}
 
+- (void)dismiss {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 #pragma mark - Gesture Event
 
 
@@ -137,7 +159,7 @@
     NSData *data = UIImageJPEGRepresentation(image, 0.2);
     [_createProfileView.userHeaderButton setImage:image forState:UIControlStateNormal];
     PIEUploadManager *uploadImage = [PIEUploadManager new];
-    [uploadImage UploadImage:data WithBlock:^(PIEEntityImage *imageInfomation, NSError *error) {
+    [uploadImage UploadImage:data WithBlock:^(PIEModelImageInfo *imageInfomation, NSError *error) {
         if (error) {
             return ;
         }
@@ -181,14 +203,18 @@
         [_cameraActionsheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
             switch (indexPath.row) {
                 case 0:
-                    ws.imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
-                    [ws presentViewController:ws.imagePickerController animated:YES completion:NULL];
-                    [ws.cameraActionsheet dismissAnimated:YES];
+                    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+                        ws.imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+                        [ws presentViewController:ws.imagePickerController animated:YES completion:NULL];
+                        [ws.cameraActionsheet dismissAnimated:YES];
+                    }
                     break;
                 case 1:
-                    ws.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-                    [ws presentViewController:ws.imagePickerController animated:YES completion:NULL];
-                    [ws.cameraActionsheet dismissAnimated:YES];
+                    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+                        ws.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                        [ws presentViewController:ws.imagePickerController animated:YES completion:NULL];
+                        [ws.cameraActionsheet dismissAnimated:YES];
+                    }
                     break;
                 case 2:
                     [ws.cameraActionsheet dismissAnimated:YES];
@@ -209,6 +235,13 @@
     }
     return _imagePickerController;
 }
+
+#pragma mark - touching methods
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
+
 
 
 @end

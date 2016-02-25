@@ -8,8 +8,9 @@
 
 #import "PIEFriendAskTableViewCell.h"
 #import "DDNavigationController.h"
-#import "PIECarouselViewController.h"
-#import "AppDelegate.h"
+#import "PIECarouselViewController2.h"
+
+#import "PIECommentViewController.h"
 
 @interface PIEFriendAskTableViewCell()
 @property (strong, nonatomic) NSMutableArray *source;
@@ -32,8 +33,8 @@
 //    _swipeView.itemsPerPage = 5;
 //    _swipeView.truncateFinalPage = YES;
     
-    _originView1.thumbImageView.image = [UIImage imageNamed:@"pie_origin"];
-    _originView2.thumbImageView.image = [UIImage imageNamed:@"pie_origin"];
+    _originView1.thumbImageView.image = [UIImage imageNamed:@"pie_origin_tag"];
+    _originView2.thumbImageView.image = [UIImage imageNamed:@"pie_origin_tag"];
     
     UITapGestureRecognizer* tapOnAsk1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnAsk1)];
     UITapGestureRecognizer* tapOnAsk2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnAsk2)];
@@ -46,18 +47,38 @@
 
 - (void)tapOnAsk1 {
     if (_vmAsk1) {
-        PIECarouselViewController* vc = [PIECarouselViewController new];
-        vc.pageVM = _vmAsk1;
-        DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-        [nav pushViewController:vc animated:YES ];
+        if ([_vmAsk1.replyCount integerValue]<=0) {
+            PIECommentViewController *vc_comment = [PIECommentViewController new];
+            vc_comment.vm = _vmAsk1;
+//            vc_comment.shouldDownloadVMSource = YES;
+            DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc_comment];
+            [self.viewController.parentViewController.view.superview.viewController.navigationController presentViewController:nav2 animated:NO completion:nil];
+
+        }   else    {
+            PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+            vc.pageVM = _vmAsk1;
+            [self.viewController.parentViewController.view.superview.viewController.navigationController  presentViewController:vc animated:YES completion:nil];
+        }
+
+
+//        [self.viewController.parentViewController.view.superview.viewController.navigationController pushViewController:vc animated:YES ];
     }
 }
 - (void)tapOnAsk2 {
     if (_vmAsk2) {
-        PIECarouselViewController* vc = [PIECarouselViewController new];
-        vc.pageVM = _vmAsk2;
-        DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-        [nav pushViewController:vc animated:YES ];
+        if ([_vmAsk2.replyCount integerValue]<=0) {
+            PIECommentViewController *vc_comment = [PIECommentViewController new];
+            vc_comment.vm = _vmAsk2;
+//            vc_comment.shouldDownloadVMSource = YES;
+            DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc_comment];
+            [self.viewController.parentViewController.view.superview.viewController.navigationController presentViewController:nav2 animated:NO completion:nil];
+            
+        }   else    {
+            PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+            vc.pageVM = _vmAsk2;
+            [self.viewController.parentViewController.view.superview.viewController.navigationController  presentViewController:vc animated:YES completion:nil];
+        }
+
     }
 }
 
@@ -72,14 +93,14 @@
 - (void)injectSource:(NSArray*)array {
     _source = [array mutableCopy];
     _vmAsk1 = [_source objectAtIndex:0];
-    [_originView1.imageView setImageWithURL:[NSURL URLWithString:_vmAsk1.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+    [_originView1.imageView sd_setImageWithURL:[NSURL URLWithString:_vmAsk1.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
     [_source removeObjectAtIndex:0];
 
     if (_source.count >= 1) {
         _vmAsk2 = [_source objectAtIndex:0];
         if (_vmAsk2.type != PIEPageTypeReply) {
             [_source removeObjectAtIndex:0];
-            [_originView2.imageView setImageWithURL:[NSURL URLWithString:_vmAsk2.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
+            [_originView2.imageView sd_setImageWithURL:[NSURL URLWithString:_vmAsk2.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
             [_originView2 mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.width.equalTo(@84);
                 make.leading.equalTo(_originView1.mas_trailing).with.offset(10);
@@ -122,7 +143,7 @@
     for (UIView *subView in view.subviews){
         if([subView isKindOfClass:[UIImageView class]]){
             UIImageView *imageView = (UIImageView *)subView;
-            [imageView setImageWithURL:[NSURL URLWithString:vm.imageURL]];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:vm.imageURL]];
         }
     }
     ;
@@ -130,10 +151,12 @@
 }
 
 -(void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index {
-        PIECarouselViewController* vc = [PIECarouselViewController new];
-        vc.pageVM = [_source objectAtIndex:index];
-        DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-        [nav pushViewController:vc animated:YES ];
+    DDNavigationController* nav = (DDNavigationController*)self.viewController.parentViewController.view.superview.viewController.navigationController;
+    PIEPageVM* vm = [_source objectAtIndex:index];
+        PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+        vc.pageVM = vm;
+        //汗，看来还是要写在controller里面
+        [nav  presentViewController:vc animated:YES completion:nil];
 }
 
 

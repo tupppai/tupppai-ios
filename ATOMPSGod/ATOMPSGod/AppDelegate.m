@@ -6,8 +6,9 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "AppDelegate.h"
-#import "PIELaunchViewController.h"
+
+//#import "PIELaunchViewController.h"
+#import "PIELaunchViewController_Black.h"
 #import "DDNavigationController.h"
 #import "DDLoginNavigationController.h"
 #import "DDIntroVC.h"
@@ -22,9 +23,10 @@
 #import "PIECommentViewController.h"
 #import "PIENotificationViewController.h"
 #import "MobClick.h"
-#import "UMCheckUpdate.h"
+#import "Pingpp.h"
 
 @interface AppDelegate ()
+//@property (nonatomic, strong) UINavigationController *baseNav;
 
 @end
 
@@ -39,15 +41,19 @@
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
     self.window.backgroundColor = [UIColor whiteColor];
-    [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
+//    [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
+    
+    //going to remove
+    [[IQKeyboardManager sharedManager] setEnable:NO];
+    [[IQKeyboardManager sharedManager] setEnableAutoToolbar:NO];
     [self initializeDatabase];
     [self initializeAfterDB];
     [self setupShareSDK];
     [self setupUmengPush:launchOptions];
     [self setupBarButtonItem];
-    [[IQKeyboardManager sharedManager] disableInViewControllerClass:[PIECommentViewController class]];
-    [[IQKeyboardManager sharedManager] disableInViewControllerClass:[PIENotificationViewController class]];
-    [[IQKeyboardManager sharedManager]setEnableAutoToolbar:NO];
+//    [[IQKeyboardManager sharedManager] disableInViewControllerClass:[PIECommentViewController class]];
+//    [[IQKeyboardManager sharedManager] disableInViewControllerClass:[PIENotificationViewController class]];
+//    [[IQKeyboardManager sharedManager]setEnableAutoToolbar:NO];
     
     [self setupUmengAnalytics];
     
@@ -66,16 +72,14 @@
     [MobClick setCrashReportEnabled:YES];
     [MobClick setEncryptEnabled:YES];
     [MobClick setLogEnabled:NO];
-    [UMCheckUpdate checkUpdateWithAppkey:@"55b1ecdbe0f55a1de9001164" channel:nil];
-    NSNumber *version =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    [UMCheckUpdate setVersion:[version integerValue]];
-//    [UMCheckUpdate checkUpdate:@"新版本更新！" cancelButtonTitle:@"继续用旧版" otherButtonTitles:@"更新" appkey:@"55b1ecdbe0f55a1de9001164" channel:nil];
-//    [UMCheckUpdate setLogEnabled:YES];
+//    [UMCheckUpdate checkUpdateWithAppkey:@"55b1ecdbe0f55a1de9001164" channel:nil];
+//    NSNumber *version =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+//    [UMCheckUpdate setVersion:[version integerValue]];
 }
 - (void)setupBarButtonItem {
-    NSShadow *shadow = [[NSShadow alloc] init];
+    NSShadow *shadow    = [[NSShadow alloc] init];
     shadow.shadowOffset = CGSizeMake(0.0, 1.0);
-    shadow.shadowColor = [UIColor whiteColor];
+    shadow.shadowColor  = [UIColor whiteColor];
     
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil]
      setTitleTextAttributes:
@@ -115,16 +119,14 @@
 }
 -(void)initializeAfterDB {
     
-//    DDIntroVC* vc = [DDIntroVC new];
-//    self.baseNav = [[DDLoginNavigationController alloc] initWithRootViewController:vc];
-//    self.window.rootViewController = self.baseNav;
-//            [self.window makeKeyAndVisible];
-//
-
-    [DDUserManager fetchUserInDBToCurrentUser:^(BOOL success) {
+    
+    // ## Step 1: 先尝试在本地沙盒加载用户的数据...
+    [DDUserManager getMyProfileFromDatabase:^(BOOL success) {
         if (success) {
             self.window.rootViewController = self.mainTabBarController;
         } else {
+            
+            // ## Step 2: 假如沙盒里没有用户数据，先判断在登录注册页面之前，是否有需要显示新版本展示页
             
             NSNumber *version =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
             NSString* launchKey = [NSString stringWithFormat:@"HasLaunchedOnce%@",version];
@@ -134,12 +136,10 @@
                 [[NSUserDefaults standardUserDefaults] setBool:YES forKey:launchKey];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 DDIntroVC* vc = [DDIntroVC new];
-                self.baseNav = [[DDLoginNavigationController alloc] initWithRootViewController:vc];
-                self.window.rootViewController = self.baseNav;
+                self.window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:vc];
             } else {
-                PIELaunchViewController *lvc = [[PIELaunchViewController alloc] init];
-                self.baseNav = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
-                self.window.rootViewController = self.baseNav;
+                PIELaunchViewController_Black *lvc = [[PIELaunchViewController_Black alloc] init];
+                self.window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
             }
         }
         [self.window makeKeyAndVisible];
@@ -213,29 +213,23 @@
               }
           }
      ];
+
 }
 
 
-- (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    BOOL canHandleURL = [Pingpp handleOpenURL:url withCompletion:nil];
+    return canHandleURL;
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-}
-
-- (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+- (BOOL)application:(UIApplication *)app
+            openURL:(NSURL *)url
+            options:(NSDictionary *)options {
+    BOOL canHandleURL = [Pingpp handleOpenURL:url withCompletion:nil];
+    return canHandleURL;
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
@@ -274,24 +268,32 @@
     [self.mainTabBarController.tabBar addSubview:redDot ];
 }
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
-    NSLog(@"userinfo:%@",userInfo);
-    NSInteger notifyType = [[userInfo objectForKey:@"type"]integerValue];
 
-    [self updateBadgeNumberForKey:@"NotificationAll" toAdd:1];
-    if (notifyType == 0) {
-        [self updateBadgeNumberForKey:@"NotificationSystem" toAdd:1];
-    } else if (notifyType == 5) {
-        [self updateBadgeNumberForKey:@"NotificationLike" toAdd:1];
-    } else {
-        [self updateBadgeNumberForKey:@"NotificationOthers" toAdd:1];
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
+    
+    NSInteger notifyType = [[userInfo objectForKey:@"type"] integerValue];
+    
+    [self updateBadgeNumberForKey:PIENotificationCountAllKey toAdd:1];
+    
+    if (notifyType == PIENotificationTypeSystem) {
+        [self updateBadgeNumberForKey:PIENotificationCountSystemKey toAdd:1];
+    } else if (notifyType == PIENotificationTypeLike) {
+        [self updateBadgeNumberForKey:PIENotificationCountLikeKey toAdd:1];
+    } else if (notifyType == PIENotificationTypeComment){
+        [self updateBadgeNumberForKey:PIENotificationCountCommentKey toAdd:1];
+    }
+    else {
+        [self updateBadgeNumberForKey:PIENotificationCountOthersKey toAdd:1];
     }
     
-    [[NSUserDefaults standardUserDefaults]setObject:@(YES) forKey:@"NotificationNew"];
+    [[NSUserDefaults standardUserDefaults]setObject:@(YES)
+                                             forKey:PIEHasNewNotificationFlagKey];
     [[NSUserDefaults standardUserDefaults]synchronize];
-    [self addRedDotToTabBarItemIndex:4];
-    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"updateNoticationStatus" object:nil]];
-
+    
+    [self addRedDotToTabBarItemIndex:3];
+    [[NSNotificationCenter defaultCenter] postNotification:
+     [NSNotification
+      notificationWithName:PIEUpdateNotificationStatusNotification object:nil]];
 }
 
 -(void)updateBadgeNumberForKey:(NSString*)key toAdd:(int)badgeNumber {
@@ -308,18 +310,31 @@
     NSLog(@"%@", error);
 }
 
+#pragma mark - private helpers
+- (void)switchToMainTabbarController
+{
+    
+    [AppDelegate APP].mainTabBarController = nil;
+    [[AppDelegate APP].window setRootViewController:[AppDelegate APP].mainTabBarController];
+    ;
+}
 
+- (void)switchToLoginViewController
+{
+    
+    
+    PIELaunchViewController_Black *lvc = [[PIELaunchViewController_Black alloc] init];
+    [AppDelegate APP].window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
+    
+    [AppDelegate APP].mainTabBarController = nil;
 
+}
 
+-(void)applicationWillEnterForeground:(UIApplication *)application {
+    
+    
+//    [DDUserManager updateBalanceFromRemote];
 
-
-
-
-
-
-
-
-
-
+}
 
 @end

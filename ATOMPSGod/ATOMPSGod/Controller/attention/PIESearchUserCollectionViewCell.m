@@ -13,15 +13,17 @@
 - (void)awakeFromNib {
     // Initialization code
     self.backgroundColor = [UIColor whiteColor];
-    _avatarButton.layer.cornerRadius = _avatarButton.frame.size.width/2;
-    _avatarButton.clipsToBounds = YES;
-    _avatarButton.backgroundColor = [UIColor lightGrayColor];
-    _countLabel.textColor = [UIColor colorWithHex:0x4a4a4a andAlpha:0.8];
+
     _followButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
     _nameButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [_nameButton.titleLabel setFont:[UIFont lightTupaiFontOfSize:14]];
+    _countLabel.font = [UIFont lightTupaiFontOfSize:11];
+    [_nameButton setTitleColor:[UIColor colorWithHex:0x000000 andAlpha:0.9] forState:UIControlStateNormal];
+    _countLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.8];
     _avatarButton.userInteractionEnabled = NO;
     _nameButton.userInteractionEnabled = NO;
     _followButton.userInteractionEnabled = NO;
+    _avatarButton.imageView.userInteractionEnabled = YES;
     _swipeView.dataSource = self;
 }
 - (void)addBottomBorder {
@@ -33,24 +35,32 @@
 
 - (void)injectSauce:(PIEUserViewModel*)vm {
     _vm = vm;
-    [_avatarButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:vm.avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+
+    NSString *avatar_url = [vm.avatar trimToImageWidth:_avatarButton.frame.size.width * SCREEN_SCALE];
+    [DDService sd_downloadImage:avatar_url
+                      withBlock:^(UIImage *image) {
+                          [_avatarButton setImage:image
+                                         forState:UIControlStateNormal];
+                          
+                      }];
+
+    _avatarButton.isV = vm.model.isV;
+    
     [_nameButton setTitle:vm.username forState:UIControlStateNormal];
-    _countLabel.text = [NSString stringWithFormat:@"%zd 作品   %zd 粉丝   %zd 关注",vm.replyNumber,vm.fansNumber,vm.attentionNumber];
-    _followButton.selected = vm.followed;
+    _countLabel.text = [NSString stringWithFormat:@"%@ 作品   %@ 粉丝   %@ 关注",vm.replyCount,vm.fansCount,vm.followCount];
+    _followButton.selected = vm.model.isMyFollow;
     [_swipeView reloadData];
+    
 }
 -(void)prepareForReuse {
     [super prepareForReuse];
 }
 
 #pragma mark iCarousel methods
-
-
 - (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
 {
-    return MIN(_vm.replies.count, 4);
+    return MIN(_vm.replyPages.count, 4);
 }
-
 - (UIView *)swipeView:(SwipeView *)swipeView viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
 {
     if (!view)
@@ -60,15 +70,14 @@
         UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 0, width, width)];
         imageView.backgroundColor = [UIColor lightGrayColor];
         imageView.contentMode = UIViewContentModeScaleAspectFill;
-        imageView.layer.cornerRadius = 3.0;
         imageView.clipsToBounds = YES;
         [view addSubview:imageView];
     }
-    PIEPageVM* vm = [_vm.replies objectAtIndex:index];
+    PIEPageVM* vm = [_vm.replyPages objectAtIndex:index];
     for (UIView *subView in view.subviews){
         if([subView isKindOfClass:[UIImageView class]]){
             UIImageView *imageView = (UIImageView *)subView;
-            [imageView setImageWithURL:[NSURL URLWithString:vm.imageURL]];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:vm.imageURL]];
         }
     }
     return view;

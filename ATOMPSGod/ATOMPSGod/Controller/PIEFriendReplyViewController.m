@@ -11,9 +11,11 @@
 #import "PIEFriendReplyCollectionViewCell.h"
 #import "PIERefreshCollectionView.h"
 #import "CHTCollectionViewWaterfallLayout.h"
-#import "PIECarouselViewController.h"
+#import "PIECarouselViewController2.h"
 #import "DDNavigationController.h"
-#import "AppDelegate.h"
+
+#import "DeviceUtil.h"
+
 @interface PIEFriendReplyViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,PWRefreshBaseCollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @property (nonatomic, strong) NSMutableArray *source;
 @property (nonatomic, assign) NSInteger currentIndex;
@@ -39,6 +41,7 @@ static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
     _source = [NSMutableArray array];
     _currentIndex = 1;
     _isfirstLoading = YES;
+    _canRefreshFooter = YES;
     
     [self.view addSubview: self.collectionView];
     
@@ -62,6 +65,7 @@ static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
         [param setObject:@(_uid) forKey:@"uid"];
     }
     [param setObject:@(15) forKey:@"size"];
+    
     [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(1) forKey:@"page"];
@@ -71,9 +75,8 @@ static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
         NSMutableArray* arrayAgent = [NSMutableArray array];
         if (returnArray.count) {
             _canRefreshFooter = YES;
-            for (PIEPageEntity *entity in returnArray) {
+            for (PIEPageModel *entity in returnArray) {
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
-                NSLog(@"NAME %@",vm.username);
                 [arrayAgent addObject:vm];
             }
             [_source removeAllObjects];
@@ -102,16 +105,20 @@ static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
     [DDOtherUserManager getFriendReply:param withBlock:^(NSMutableArray *returnArray) {
         NSMutableArray* arrayAgent = [NSMutableArray array];
         if (returnArray.count) {
-            _canRefreshFooter = YES;
-            for (PIEPageEntity *entity in returnArray) {
+            for (PIEPageModel *entity in returnArray) {
                 PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
                 [arrayAgent addObject:vm];
             }
             [_source addObjectsFromArray:arrayAgent];
         }
-        else {
+
+        
+        if (returnArray.count < 15) {
             _canRefreshFooter = NO;
+        }else{
+            _canRefreshFooter = YES;
         }
+        
         [_collectionView.mj_footer endRefreshing];
         [_collectionView reloadData];
     }];
@@ -150,7 +157,8 @@ static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
     if (_canRefreshFooter && !_collectionView.mj_header.isRefreshing) {
         [self getMoreRemoteSource];
     } else {
-        [_collectionView.mj_footer endRefreshing];
+        [Hud text:@"已经拉到底啦"];
+        [_collectionView.mj_footer endRefreshingWithNoMoreData];
     }
 }
 
@@ -182,7 +190,7 @@ static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
     CGFloat width;
     CGFloat height;
     width = (SCREEN_WIDTH) /2 - 20;
-    height = vm.imageHeight/vm.imageWidth * width;
+    height = vm.imageRatio * width;
     height = MAX(80, height);
     height = MIN(SCREEN_HEIGHT/2, height);
     return CGSizeMake(width, height);
@@ -215,10 +223,18 @@ static NSString *CellIdentifier = @"PIEFriendReplyCollectionViewCell";
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     PIEPageVM* vm = [_source objectAtIndex:indexPath.row];
-    PIECarouselViewController* vc = [PIECarouselViewController new];
+    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
     vc.pageVM = vm;
-    DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-    [nav pushViewController:vc animated:YES ];
+//    DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+    
+    /*
+     PIEFriendViewController -> CAPSViewController
+     PIEFriendViewController.view addSubView CAPSViewController.view
+     CAPSViewController subviewControllers -> friendAsk and friendReply
+     */
+    [self.view.viewController.parentViewController.view.superview.viewController.navigationController   presentViewController:vc animated:YES completion:nil];
+
+//    [self.view.viewController.parentViewController.view.superview.viewController.navigationController pushViewController:vc animated:YES ];
 }
 
 -(BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {

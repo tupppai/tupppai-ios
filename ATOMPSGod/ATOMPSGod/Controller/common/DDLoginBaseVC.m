@@ -11,9 +11,12 @@
 @implementation DDLoginBaseVC
 -(void)viewDidLoad {
     [super viewDidLoad];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorOccuredRET) name:@"NetworkErrorCall" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showInfoRET:) name:@"NetworkShowInfoCall" object:nil];
-    [self setupNav];
+    
+
 }
 
 - (void)setupNav {
@@ -38,15 +41,32 @@
 -(void) errorOccuredRET {
     [Hud text:@"网路好像有点问题～" inView:self.view];
 }
+
 -(void) showInfoRET:(NSNotification *)notification {
     NSString* info = [[notification userInfo] valueForKey:@"info"];
-    [Hud text:info inView:self.view];
+    NSString *prompt = [NSString stringWithFormat:@"%@", info];
+    [Hud text:prompt inView:self.view];
 }
+
 -(BOOL)prefersStatusBarHidden {
     return NO;
 }
 - (void)popCurrentController {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+- (void)dealloc
+{
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorOccuredRET) name:@"NetworkErrorCall" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showInfoRET:) name:@"NetworkShowInfoCall" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"NetworkErrorCall"
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"NetworkShowInfoCall"
+                                                  object:nil];
 }
 
 @end

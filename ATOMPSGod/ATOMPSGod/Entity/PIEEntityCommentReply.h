@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 ATOM. All rights reserved.
 //
 
-#import "ATOMBaseModel.h"
+#import "PIEBaseModel.h"
 
-@interface PIEEntityCommentReply : ATOMBaseModel;
+@interface PIEEntityCommentReply : PIEBaseModel;
 
 @property (nonatomic, assign) NSInteger ID;
 @property (nonatomic, assign) NSInteger uid;

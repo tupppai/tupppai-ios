@@ -11,13 +11,21 @@
 typedef NS_ENUM(NSInteger, PIEChannelType) {
     PIEChannelTypeChannel = 0,
     PIEChannelTypeActivity ,
+    PIEChannelTypeTutorial,
 };
 
 @interface PIEChannelViewModel : NSObject
-@property (nonatomic,assign) NSInteger ID;
-@property (nonatomic,copy  ) NSString  * imageUrl;
-@property (nonatomic,copy  ) NSString  * iconUrl;
-@property (nonatomic,copy  ) NSString  * title;
-@property (nonatomic,copy  ) NSString  * content;
-@property (nonatomic,copy  ) NSArray<PIEPageVM *> * threads;
+@property (nonatomic,assign ) NSInteger      ID;
+@property (nonatomic,assign ) NSInteger        askID;
+@property (nonatomic,copy   ) NSString       * imageUrl;
+@property (nonatomic,copy   ) NSString       * iconUrl;
+@property (nonatomic,copy   ) NSString       * url;
+@property (nonatomic,copy   ) NSString       * title;
+@property (nonatomic,copy   ) NSString       * content;
+@property (nonatomic,copy   ) NSString       * banner_pic;
+@property (nonatomic,copy   ) NSString       * post_btn;
+@property (nonatomic,copy   ) NSArray<PIEPageVM *> * threads;
+@property (nonatomic,assign ) PIEChannelType channelType;
+
+-(instancetype)initWithModel:(PIECategoryModel*)model;
 @end

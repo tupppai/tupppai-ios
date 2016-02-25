@@ -9,11 +9,12 @@
 #import "PIEMyCommentedPageViewController.h"
 #import "PIERefreshTableView.h"
 #import "PIEMyCommentedPageTableViewCell.h"
-#import "PIECarouselViewController.h"
+#import "PIECarouselViewController2.h"
 #import "DDNavigationController.h"
-#import "AppDelegate.h"
+
 #import "DDPageManager.h"
 #import "PIECommentViewController.h"
+#import "DeviceUtil.h"
 
 @interface PIEMyCommentedPageViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 @property (nonatomic,strong) PIERefreshTableView *tableView;
@@ -36,19 +37,17 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.hidesBarsOnSwipe = YES;
-    self.navigationController.navigationBar.backgroundColor = [UIColor colorWithHex:0xffffff andAlpha:0.5];
 }
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.navigationController.hidesBarsOnSwipe = NO;
-    //    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
 }
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 }
 -(void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+    self.navigationController.navigationBarHidden = NO;
 }
 
 - (void)initData {
@@ -93,7 +92,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    PIECarouselViewController* vc = [PIECarouselViewController new];
+//    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
     DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
     PIECommentViewController* vc = [PIECommentViewController new];
     vc.vm = [_dataSource objectAtIndex:indexPath.row];
@@ -120,7 +119,9 @@
     _timeStamp = [[NSDate date] timeIntervalSince1970];
     _currentPage = 1;
     [param setObject:@(_currentPage) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    
+    //我评论过的界面的图片一般都已经cache ,可以任性使用。
+    [param setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getCommentedPages:param withBlock:^(NSMutableArray *resultArray) {
@@ -143,7 +144,7 @@
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     _currentPage++;
     [param setObject:@(_currentPage) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getCommentedPages:param withBlock:^(NSMutableArray *resultArray) {

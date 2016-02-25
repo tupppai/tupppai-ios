@@ -12,6 +12,7 @@
 //#import "UITableView+FDTemplateLayoutCell.h"
 #import "PIEFriendAskTableViewCell.h"
 #import "DDPageManager.h"
+#import "DeviceUtil.h"
 
 @interface PIEFriendAskViewController ()<PWRefreshBaseTableViewDelegate,UITableViewDataSource,UITableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 @property (nonatomic, strong) NSMutableArray *source;
@@ -44,6 +45,8 @@
     self.table.emptyDataSetDelegate = self;
     _isfirstLoading = YES;
     [self getRemoteSource];
+    
+    _canRefreshFooter = YES;
     
 }
 
@@ -89,7 +92,9 @@
         [param setObject:@(_uid) forKey:@"uid"];
     }
     [param setObject:@(15) forKey:@"size"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+
+    [param setObject:@(SCREEN_WIDTH*0.5) forKey:@"width"];
+    
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(1) forKey:@"page"];
     [DDPageManager getAskWithReplies:param withBlock:^(NSArray *returnArray) {
@@ -117,7 +122,7 @@
         [param setObject:@(_uid) forKey:@"uid"];
     }
     [param setObject:@(15) forKey:@"size"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH*0.5) forKey:@"width"];
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(_currentIndex) forKey:@"page"];
     [DDPageManager getAskWithReplies:param withBlock:^(NSArray *returnArray) {
@@ -127,6 +132,13 @@
         } else {
             _canRefreshFooter = NO;
         }
+        
+        if (returnArray.count < 15) {
+            _canRefreshFooter = NO;
+        }else{
+            _canRefreshFooter = YES;
+        }
+        
         [self.table reloadData];
         [self.table.mj_footer endRefreshing];
     }];
@@ -136,7 +148,7 @@
     if (!_table) {
         _table = [[PIERefreshTableView alloc] initWithFrame:CGRectZero];
         _table.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _table.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        _table.backgroundColor = [UIColor colorWithHex:0xF8F8F8];
         _table.showsVerticalScrollIndicator = NO;
         _table.delegate = self;
         _table.dataSource = self;
@@ -155,7 +167,8 @@
     if (_canRefreshFooter && !_table.mj_header.isRefreshing) {
         [self getMoreRemoteSource];
     } else {
-        [_table.mj_footer endRefreshing];
+        [Hud text:@"已经拉到底啦"];
+        [_table.mj_footer endRefreshingWithNoMoreData];
     }
 }
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {

@@ -10,15 +10,17 @@
 #import "PIERefreshTableView.h"
 #import "PIENotificationManager.h"
 #import "PIENotificationVM.h"
-
 #import "PIENotificationSystemTableViewCell.h"
-//#import "PIENotificationReplyTableViewCell.h"
-//#import "PIENotificationLikeTableViewCell.h"
-//#import "PIENotificationFollowTableViewCell.h"
-//#import "PIENotificationCommentTableViewCell.h"
 
-@interface PIENotificationSystemViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
-@property (nonatomic, strong) NSMutableArray *source;
+@interface PIENotificationSystemViewController ()
+<
+    UITableViewDataSource,
+    UITableViewDelegate,
+    PWRefreshBaseTableViewDelegate,
+    DZNEmptyDataSetSource,
+    DZNEmptyDataSetDelegate
+>
+@property (nonatomic, strong) NSMutableArray<PIENotificationVM *> *source;
 @property (nonatomic, strong) PIERefreshTableView *tableView;
 @property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, assign) BOOL canRefreshFooter;
@@ -27,23 +29,24 @@
 @end
 
 @implementation PIENotificationSystemViewController
--(BOOL)hidesBottomBarWhenPushed {
-    return YES;
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"系统消息";
     // Do any additional setup after loading the view.
-    _source = [NSMutableArray array];
+    _source = [NSMutableArray<PIENotificationVM *> array];
     _canRefreshFooter = YES;
+    _isfirstLoading = YES;
+    
     self.view = self.tableView;
     //    [self getDataSource];
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
-    _isfirstLoading = YES;
+
     [self.tableView.mj_header beginRefreshing];
 }
-
+-(BOOL)hidesBottomBarWhenPushed {
+    return YES;
+}
 #pragma mark - GetDataSource
 - (void)getDataSource {
     _currentIndex = 1;
@@ -80,17 +83,18 @@
     [param setObject:@(_currentIndex) forKey:@"page"];
     [param setObject:@(timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    [param setObject:@"fold" forKey:@"type"];
+    [param setObject:@"system" forKey:@"type"];
 
     [PIENotificationManager getNotifications:param block:^(NSArray *source) {
-        if (source.count>0) {
-            [ws.source addObjectsFromArray:source];
-            [ws.tableView reloadData];
-            _canRefreshFooter = YES;
-        }
-        else {
+        if (source.count < 15) {
             _canRefreshFooter = NO;
         }
+        else {
+            _canRefreshFooter = YES;
+        }
+        
+        [ws.source addObjectsFromArray:source];
+        [ws.tableView reloadData];
         [self.tableView.mj_footer endRefreshing];
     }];
 }
@@ -102,7 +106,8 @@
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
-        [self.tableView.mj_footer endRefreshing];
+        [Hud text:@"已经拉到底啦"];
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
     }
 }
 -(PIERefreshTableView *)tableView {

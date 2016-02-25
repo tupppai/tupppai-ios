@@ -15,20 +15,16 @@
     [DDService getAsk:param withBlock:^(NSArray *data) {
             NSMutableArray *resultArray = [NSMutableArray array];
             for (int i = 0; i < data.count; i++) {
-                PIEPageEntity *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
+                PIEPageModel *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:data[i] error:NULL];
                 [resultArray addObject:homeImage];
             }
             if (block) {  block(resultArray);}
     }];
 }
 
-+ (void)getMyToHelp:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *))block {
++ (void)getMyToHelp:(NSDictionary *)param withBlock:(void (^)(NSArray *))block {
     [DDService getToHelp:param withBlock:^(NSArray *data) {
-        NSMutableArray *resultArray = [NSMutableArray array];
-        for (int i = 0; i < data.count; i++) {
-            PIEPageEntity *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
-            [resultArray addObject:homeImage];
-        }
+        NSArray *resultArray = [MTLJSONAdapter modelsOfClass:[PIEPageModel class] fromJSONArray:data error:nil];
         if (block) { block(resultArray); }
     }];
 }
@@ -37,7 +33,7 @@
     [DDService getDone:param withBlock:^(NSArray *data) {
         NSMutableArray *resultArray = [NSMutableArray array];
         for (int i = 0; i < data.count; i++) {
-            PIEPageEntity *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:data[i] error:NULL];
+            PIEPageModel *homeImage = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:data[i] error:NULL];
             [resultArray addObject:homeImage];
         }
         if (block) { block(resultArray); }

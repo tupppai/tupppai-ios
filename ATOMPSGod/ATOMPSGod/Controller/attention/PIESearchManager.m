@@ -7,22 +7,22 @@
 //
 
 #import "PIESearchManager.h"
-#import "PIEEntityUser.h"
+#import "PIEUserModel.h"
 #import "PIEUserViewModel.h"
 @implementation PIESearchManager
 + (void)getSearchUserResult:(NSDictionary *)param withBlock:(void (^)(NSMutableArray *))block {
     [DDService ddGetSearchUserResult:param withBlock:^(NSArray* data) {
         NSMutableArray* retArray = [NSMutableArray new];
         for (int i = 0; i<data.count; i++) {
-            PIEEntityUser *entity = [MTLJSONAdapter modelOfClass:[PIEEntityUser class] fromJSONDictionary:data[i] error:NULL];
+            PIEUserModel *entity = [MTLJSONAdapter modelOfClass:[PIEUserModel class] fromJSONDictionary:data[i] error:NULL];
             PIEUserViewModel* vm = [[PIEUserViewModel alloc]initWithEntity:entity];
             
            NSArray* replies = [data[i]objectForKey:@"replies"];
 
             for (NSDictionary* dic in replies) {
-                PIEPageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:dic error:NULL];
+                PIEPageModel *entity2 = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:dic error:NULL];
                 PIEPageVM* vm2 = [[PIEPageVM alloc]initWithPageEntity:entity2];
-                [vm.replies addObject:vm2];
+                [vm.replyPages addObject:vm2];
             }
             [retArray addObject:vm];
         }
@@ -37,7 +37,7 @@
         NSMutableArray* retArray = [NSMutableArray new];
 
         for (NSDictionary* dic in data) {
-            PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:dic error:NULL];
+            PIEPageModel *entity = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:dic error:NULL];
             PIEPageVM* vm = [[PIEPageVM alloc]initWithPageEntity:entity];
             [retArray addObject:vm];
         }

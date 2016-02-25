@@ -65,10 +65,12 @@
         make.bottom.equalTo(self);
     }];
     [self.thumbImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.equalTo(self).with.offset(-4);
-        make.top.equalTo(self).with.offset(-4);
-        make.width.equalTo(self).with.multipliedBy(0.4);
-        make.height.equalTo(@15);
+        make.leading.equalTo(self.imageView).with.offset(-1);
+        make.top.equalTo(self.imageView).with.offset(-2);
+        make.width.equalTo(self).with.multipliedBy(0.36);
+        make.width.equalTo(self).with.multipliedBy(0.36);
+//        make.height.equalTo(@15);
+//        make.size.mas_equalTo(CGSizeMake(32, 32));
     }];
 }
 

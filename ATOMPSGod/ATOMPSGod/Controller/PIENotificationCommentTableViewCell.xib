@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PIENotificationCommentTableViewCell"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PIENotificationCommentTableViewCell" rowHeight="100" id="CcD-Vc-oG2" customClass="PIENotificationCommentTableViewCell">
             <rect key="frame" x="0.0" y="0.0" width="354" height="100"/>
@@ -17,7 +17,6 @@
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aDZ-QY-GiV">
                         <rect key="frame" x="13" y="15" width="30" height="30"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="gwN-Og-gvK"/>
                             <constraint firstAttribute="width" constant="30" id="jnN-Kx-x4U"/>
@@ -25,21 +24,18 @@
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v3h-J0-50D">
                         <rect key="frame" x="54" y="15" width="33" height="16"/>
-                        <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="评论了" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hhX-vB-T4Q">
                         <rect key="frame" x="97" y="15" width="39" height="16"/>
-                        <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="deviceRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pie_notification_comment" translatesAutoresizingMaskIntoConstraints="NO" id="86O-Xl-Etv">
                         <rect key="frame" x="142" y="18" width="16" height="13"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="16" id="WbQ-jM-VEt"/>
                             <constraint firstAttribute="height" constant="13" id="Wtu-Mc-pnc"/>
@@ -47,14 +43,12 @@
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EkK-p3-K7E">
                         <rect key="frame" x="54" y="37" width="26.5" height="12"/>
-                        <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hBO-yz-c0C">
                         <rect key="frame" x="310" y="12" width="32" height="32"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="32" id="3Y9-SE-yvt"/>
                             <constraint firstAttribute="height" constant="32" id="5CM-1m-zS6"/>
@@ -62,7 +56,6 @@
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="回复ta" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aMj-ga-ufm">
                         <rect key="frame" x="307" y="58" width="35" height="14.5"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="SM1-SC-oeg"/>
                             <constraint firstAttribute="width" constant="38" id="gRC-as-coO"/>
@@ -79,7 +72,6 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="247" translatesAutoresizingMaskIntoConstraints="NO" id="mWh-Ir-XGg">
                         <rect key="frame" x="54" y="61" width="0.0" height="0.0"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="42" id="JaE-xY-rzT"/>
                             <constraint firstAttribute="height" constant="21" id="z3j-hf-S07"/>
@@ -95,7 +87,6 @@
                         </variation>
                     </label>
                 </subviews>
-                <animations/>
                 <constraints>
                     <constraint firstItem="mWh-Ir-XGg" firstAttribute="top" secondItem="EkK-p3-K7E" secondAttribute="bottom" constant="12" id="15J-1O-QuM"/>
                     <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="aMj-ga-ufm" secondAttribute="bottom" constant="1" id="2tN-RQ-1H7"/>
@@ -131,7 +122,6 @@
                     </mask>
                 </variation>
             </tableViewCellContentView>
-            <animations/>
             <connections>
                 <outlet property="avatarView" destination="aDZ-QY-GiV" id="hcp-kn-zPD"/>
                 <outlet property="contentLabel" destination="mWh-Ir-XGg" id="bdD-JO-kGf"/>
@@ -141,7 +131,7 @@
                 <outlet property="typeLabel" destination="hhX-vB-T4Q" id="eWj-Fo-1Qe"/>
                 <outlet property="usernameLabel" destination="v3h-J0-50D" id="Fg2-Q0-tEg"/>
             </connections>
-            <point key="canvasLocation" x="448" y="-171"/>
+            <point key="canvasLocation" x="6" y="-146"/>
         </tableViewCell>
     </objects>
     <resources>

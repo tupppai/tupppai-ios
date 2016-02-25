@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PIELoginViewController">
@@ -27,7 +27,6 @@
             <subviews>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="手机号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6Ff-6L-VIy">
                     <rect key="frame" x="156" y="54" width="288" height="30"/>
-                    <animations/>
                     <constraints>
                         <constraint firstAttribute="width" constant="288" id="KtN-Ht-SJh"/>
                         <constraint firstAttribute="height" constant="30" id="ngv-hi-dAy"/>
@@ -37,13 +36,11 @@
                 </textField>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="密码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cHh-zq-v92">
                     <rect key="frame" x="156" y="114" width="288" height="30"/>
-                    <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                 </textField>
                 <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dgS-JO-Jih" userLabel="line1">
                     <rect key="frame" x="156" y="89" width="288" height="1"/>
-                    <animations/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" priority="250" constant="1" id="eY7-KP-ioa"/>
@@ -51,7 +48,6 @@
                 </view>
                 <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Gs-bj-pji" userLabel="line2">
                     <rect key="frame" x="156" y="145" width="288" height="1"/>
-                    <animations/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" priority="250" constant="1" id="abo-Ee-63i"/>
@@ -59,7 +55,6 @@
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="登录" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ldl-W0-kNF">
                     <rect key="frame" x="156" y="190" width="288" height="36"/>
-                    <animations/>
                     <constraints>
                         <constraint firstAttribute="width" constant="267" id="5dB-29-NRh"/>
                         <constraint firstAttribute="height" constant="36" id="L2h-fq-EEz"/>
@@ -74,7 +69,6 @@
                 </label>
                 <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SmW-5u-Fzg">
                     <rect key="frame" x="167" y="294" width="88" height="1"/>
-                    <animations/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="88" id="AXT-t3-LNk"/>
@@ -83,14 +77,12 @@
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="社交账号登录" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M4c-0S-0D4">
                     <rect key="frame" x="261" y="287" width="78" height="16"/>
-                    <animations/>
                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pie_social_sinaweibo" translatesAutoresizingMaskIntoConstraints="NO" id="pV9-rd-Mow">
                     <rect key="frame" x="282" y="322" width="36" height="36"/>
-                    <animations/>
                     <constraints>
                         <constraint firstAttribute="width" constant="36" id="YgN-a2-Xwg"/>
                         <constraint firstAttribute="height" constant="36" id="pis-hL-wrr"/>
@@ -98,22 +90,18 @@
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pie_social_qq" translatesAutoresizingMaskIntoConstraints="NO" id="iiH-Qe-oDr">
                     <rect key="frame" x="173" y="322" width="36" height="36"/>
-                    <animations/>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pie_social_wechat" translatesAutoresizingMaskIntoConstraints="NO" id="dm4-Iu-Exo">
                     <rect key="frame" x="391" y="322" width="36" height="36"/>
-                    <animations/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="忘记密码" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IaO-mg-K8b">
                     <rect key="frame" x="392" y="154" width="52" height="16"/>
-                    <animations/>
                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JE2-As-NBI">
                     <rect key="frame" x="345" y="294" width="88" height="1"/>
-                    <animations/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="4Rc-4I-mIP"/>
@@ -121,7 +109,6 @@
                     </constraints>
                 </view>
             </subviews>
-            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="M4c-0S-0D4" firstAttribute="top" secondItem="ldl-W0-kNF" secondAttribute="bottom" constant="61" id="1fm-eg-qqY"/>

@@ -9,17 +9,11 @@
 #import "PIEMyFollowViewController.h"
 #import "PIEFriendFollowingTableCell.h"
 #import "PIEFriendViewController.h"
-#import "DDFollowManager.h"
-#import "PIEEntityFollow.h"
-#import "DDService.h"
-#import "PIEFollowViewModel.h"
 #import "PIERefreshFooterTableView.h"
-
 
 @interface PIEMyFollowViewController () < UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 
 @property (nonatomic, strong) PIERefreshFooterTableView *tableView;
-//@property (nonatomic, strong) UIView *concernView;
 @property (nonatomic, strong) UITapGestureRecognizer *tapConcernGesture;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, assign) NSInteger currentPage;
@@ -43,7 +37,7 @@
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
-        [_tableView.mj_footer endRefreshing];
+        [_tableView.mj_footer endRefreshingWithNoMoreData];
     }
 }
 
@@ -88,23 +82,23 @@
     CGPoint location = [gesture locationInView:_tableView];
     NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:location];
     if (indexPath) {
-        PIEFollowViewModel *viewModel = _dataSource[indexPath.row];
+        PIEUserViewModel *viewModel = _dataSource[indexPath.row];
         PIEFriendFollowingTableCell *cell = (PIEFriendFollowingTableCell *)[_tableView cellForRowAtIndexPath:indexPath];
         CGPoint p = [gesture locationInView:cell];
-        if (CGRectContainsPoint(cell.userHeaderButton.frame, p)) {
+        if (CGRectContainsPoint(cell.userHeaderButton.frame, p) || CGRectContainsPoint(cell.userNameLabel.frame, p)) {
+
+            PIEPageVM* vm = [[PIEPageVM alloc]initWithUserModel:viewModel.model];
             PIEFriendViewController *opvc = [PIEFriendViewController new];
-            PIEPageVM* vm = [PIEPageVM new];
-            vm.userID = viewModel.uid;
-            vm.username = viewModel.userName;
             opvc.pageVM = vm;
             [self.navigationController pushViewController:opvc animated:YES];
-        } else if (CGRectContainsPoint(cell.attentionButton.frame, p)) {
+            
+        }
+        else if (CGRectContainsPoint(cell.attentionButton.frame, p)) {
             cell.attentionButton.selected = !cell.attentionButton.selected;
             NSMutableDictionary* param = [NSMutableDictionary new];
-            [param setObject:@(cell.viewModel.uid) forKey:@"uid"];
-            if (!cell.attentionButton.selected) {
-                [param setObject:@0 forKey:@"status"];
-            }
+            [param setObject:@(cell.viewModel.model.uid) forKey:@"uid"];
+            [param setObject:@(cell.attentionButton.selected) forKey:@"status"];
+       
             [DDService follow:param withBlock:^(BOOL success) {
                 if (!success) {
                     cell.attentionButton.selected = !cell.attentionButton.selected;
@@ -177,12 +171,11 @@
     [param setObject:@(15) forKey:@"size"];
     [param setObject:@([DDUserManager currentUser].uid) forKeyedSubscript:@"uid"];
     [Hud activity:@"" inView:self.view];
-    [DDFollowManager getFollow:param withBlock:^(NSMutableArray *recommend,NSMutableArray* resultArray) {
+    [DDUserManager getMyFollows:param withBlock:^(NSArray *recommend,NSArray* resultArray) {
         [Hud dismiss:self.view];
-        for (PIEEntityFollow *concern in resultArray) {
-            PIEFollowViewModel *concernViewModel = [PIEFollowViewModel new];
-            [concernViewModel setViewModelData:concern];
-            [ws.dataSource addObject:concernViewModel];
+        for (PIEUserModel *model in resultArray) {
+            PIEUserViewModel *vm = [[PIEUserViewModel alloc]initWithEntity:model];
+            [ws.dataSource addObject:vm];
         }
         ws.isfirstLoading = NO;
         [ws.tableView reloadData];
@@ -197,11 +190,10 @@
     [param setObject:@(ws.currentPage) forKey:@"page"];
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
-    [DDFollowManager getFollow:param withBlock:^(NSMutableArray *resultArray,NSMutableArray* recommend) {
-        for (PIEEntityFollow *concern in resultArray) {
-            PIEFollowViewModel *concernViewModel = [PIEFollowViewModel new];
-            [concernViewModel setViewModelData:concern];
-            [ws.dataSource addObject:concernViewModel];
+    [DDUserManager getMyFollows:param withBlock:^(NSArray *recommend,NSArray* resultArray) {
+        for (PIEUserModel *model in resultArray) {
+            PIEUserViewModel *vm = [[PIEUserViewModel alloc]initWithEntity:model];
+            [ws.dataSource addObject:vm];
         }
         if (resultArray.count == 0) {
             ws.canRefreshFooter = NO;

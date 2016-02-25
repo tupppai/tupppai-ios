@@ -7,21 +7,50 @@
 //
 
 #import "PIEUploadManager.h"
-#import "DDSessionManager.h"
-#import "PIEEntityImage.h"
-@interface PIEUploadManager()
-@property (nonatomic, strong) NSMutableArray *uploadIdArray;
-@property (nonatomic, strong) NSMutableArray *ratioArray;
-@property (nonatomic, copy)  NSArray* toUploadInfoArray;
+#import "PIEModelImageInfo.h"
 
+@interface PIEUploadManager()
 @end
+
+static dispatch_once_t onceToken;
+static PIEUploadModel *shareModel;
+
 @implementation PIEUploadManager
 
-- (NSURLSessionDataTask *)UploadImage:(NSData *)data WithBlock:(void (^)(PIEEntityImage *, NSError *))block {
+
+- (instancetype)initWithShareModel {
+    self = [super init];
+    if (self) {
+        _model = [PIEUploadModel new];
+        _model.content = shareModel.content;
+//        _model.ID = shareModel.ID;
+        _model.ask_id = shareModel.ask_id;
+        _model.channel_id = shareModel.channel_id;
+        _model.type = shareModel.type;
+        _model.imageArray = [shareModel.imageArray copy];
+        _model.tagIDArray = shareModel.tagIDArray;
+        [self resetShareModel];
+    }
+    return self;
+}
+
++(PIEUploadModel *)shareModel {
+    dispatch_once(&onceToken, ^{
+        shareModel = [PIEUploadModel new];
+    });
+    return shareModel;
+}
+
+- (void)resetShareModel {
+    [shareModel reset];
+}
+
+
+- (NSURLSessionDataTask *)UploadImage:(NSData *)data WithBlock:(void (^)(PIEModelImageInfo *, NSError *))block {
     return [[DDSessionManager shareHTTPSessionManager] POST:@"image/upload" parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         [formData appendPartWithFileData:data name:@"images" fileName:@"iOSTupaiApp" mimeType:@"image/png"];
     } success:^(NSURLSessionDataTask *task, id responseObject) {
-        PIEEntityImage *imageInfomation = [MTLJSONAdapter modelOfClass:[PIEEntityImage class] fromJSONDictionary:responseObject error:NULL];
+        PIEModelImageInfo *imageInfomation = [MTLJSONAdapter modelOfClass:[PIEModelImageInfo class] fromJSONDictionary:responseObject error:NULL];
         if (block) {
             block(imageInfomation, nil);
         }
@@ -43,18 +72,15 @@
             }
             [formData appendPartWithFileData:imageData name:attachmentName fileName:@"AppTupaiImage_iOS" mimeType:@"image/png"];
         }  success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//            NSLog(@"operation success: %@\n %@", operation, responseObject);
-            [self.uploadIdArray addObject:responseObject[@"data"][@"id"]];
+            [self.model.uploadIdArray addObject:responseObject[@"data"][@"id"]];
             block(1,YES);
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//            NSLog(@"Error: %@", error);
         }];
         [requestOperation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
             double percentDone = (double)totalBytesWritten / (double)totalBytesExpectedToWrite;
             if (block) {
                 block(percentDone,NO);
             }
-//            NSLog(@"progress updated(percentDone) : %f ,totalBytesExpectedToWrite %lld", percentDone,totalBytesExpectedToWrite);
         }];
     } else {
         [Hud error:@"图片数据为空"];
@@ -63,38 +89,39 @@
 }
 
 - (void)upload:(void (^)(CGFloat percentage,BOOL success))block {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *filePath2 = [documentsDirectory stringByAppendingPathComponent:@"ToUpload.dat"];
-    //@"ask",image1,image2,tag_ids,desc
-    //@"reply",image1,tag_ids,desc
-
-    _toUploadInfoArray = [NSArray arrayWithContentsOfFile:filePath2];
+    
+    if (self.model.type == PIEPageTypeAsk) {
+        [Hud text:@"正在后台上传你的求P..."];
+    } else {
+        [Hud text:@"正在后台上传你的作品..."];
+    }
+    
     NSData* dataImage1;
     NSData* dataImage2;
     
     UIImage* image1;
     UIImage* image2;
-    NSInteger uploadCount = _toUploadInfoArray.count - 3;
+    NSInteger uploadCount = self.model.imageArray.count;
     
-    _type = [_toUploadInfoArray objectAtIndex:0];
     if (uploadCount == 1) {
-       dataImage1 = [_toUploadInfoArray objectAtIndex:1];
-        image1 = [UIImage imageWithData:dataImage1];
+        image1 = [self.model.imageArray objectAtIndex:0];
+        dataImage1 = UIImageJPEGRepresentation(image1, 1.0);
         CGFloat ratio1 = image1.size.height/image1.size.width;
-        [self.ratioArray addObject:@(ratio1)];
-    } else if (uploadCount == 2) {
-        dataImage1 = [_toUploadInfoArray objectAtIndex:1];
-        dataImage2 = [_toUploadInfoArray objectAtIndex:2];
-        image1 = [UIImage imageWithData:dataImage1];
-        image2 = [UIImage imageWithData:dataImage2];
+        [self.model.ratioArray addObject:@(ratio1)];
+    } else if (uploadCount >= 2) {
+        image1 = [self.model.imageArray objectAtIndex:0];
+        image2 = [self.model.imageArray objectAtIndex:1];
         CGFloat ratio1 = image1.size.height/image1.size.width;
         CGFloat ratio2 = image2.size.height/image2.size.width;
-        [self.ratioArray addObject:@(ratio1)];
-        [self.ratioArray addObject:@(ratio2)];
+        
+        dataImage1 = UIImageJPEGRepresentation(image1, 1.0);
+        dataImage2 = UIImageJPEGRepresentation(image2, 1.0);
+
+        [self.model.ratioArray addObject:@(ratio1)];
+        [self.model.ratioArray addObject:@(ratio2)];
     }
     
-    if ([_type isEqualToString: @"ask"]) {
+    if (self.model.type == PIEPageTypeAsk) {
         if (uploadCount == 1) {
             [self uploadImage:dataImage1 Type:@"ask" withBlock:^(CGFloat percentage,BOOL success) {
                 block(percentage/1.1,NO);
@@ -106,7 +133,7 @@
                     }];
                 }
             }];
-        } else  if (uploadCount == 2) {
+        } else  if (uploadCount >= 2) {
             [self uploadImage:dataImage1 Type:@"ask" withBlock:^(CGFloat percentage,BOOL success) {
                 if (!success) {
                     block(percentage/(100/45),NO);
@@ -125,8 +152,8 @@
                 
             }];
         }
-    } else if ([_type isEqualToString:@"reply"]) {
-        if (uploadCount == 1) {
+    } else if (self.model.type == PIEPageTypeReply) {
+        if (uploadCount >= 1) {
             [self uploadImage:dataImage1 Type:@"reply" withBlock:^(CGFloat percentage,BOOL success) {
                 block(percentage/1.1,NO);
                 if (success) {
@@ -144,31 +171,22 @@
 
 
 - (void)uploadRestInfo:(void (^) (BOOL success))block {
-
     NSMutableDictionary *param = [NSMutableDictionary new];
-    [param setObject:self.uploadIdArray forKey:@"upload_ids"];
-    [param setObject:self.ratioArray forKey:@"ratios"];
-    
-    NSInteger lastIndex = _toUploadInfoArray.count - 1;
-    NSArray* tag_ids = [_toUploadInfoArray objectAtIndex:lastIndex-1];
-    [param setObject:[_toUploadInfoArray lastObject] forKey:@"desc"];
-    [param setObject:tag_ids forKey:@"tag_ids"];
+    [param setObject:self.model.uploadIdArray forKey:@"upload_ids"];
+    [param setObject:self.model.ratioArray forKey:@"ratios"];
+    [param setObject:self.model.content forKey:@"desc"];
+    [param setObject:self.model.tagIDArray forKey:@"tag_ids"];
+    [param setObject:@(self.model.channel_id) forKey:@"category_id"];
 
-//    long long timeStamp = [[NSDate date] timeIntervalSince1970];
-//    [param setObject:@(timeStamp) forKey:@"last_updated"];
-    
-    [param setObject:[_toUploadInfoArray lastObject] forKey:@"desc"];
+
     [DDService ddSaveAsk:param withBlock:^(NSInteger newImageID) {
         if (newImageID!=-1) {
-//            [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:@"shouldNavToAskSegment"];
-//            [[NSUserDefaults standardUserDefaults] synchronize];
             [Hud success:@"求P成功"];
             if  (block) {
                 block(YES);
             }
         } else {
             [Hud error:@"求P失败,请重试"];
-//            self.navigationItem.rightBarButtonItem.enabled = YES;
             if  (block) {
                 block(NO);
             }
@@ -177,19 +195,17 @@
 }
 
 - (void)uploadReplyRestInfo:(void (^) (BOOL success))block {
-    
     NSMutableDictionary *param = [NSMutableDictionary new];
-    [param setObject:self.uploadIdArray forKey:@"upload_ids"];
-    [param setObject:self.ratioArray forKey:@"ratios"];
-    long long timeStamp = [[NSDate date] timeIntervalSince1970];
-    [param setObject:@(timeStamp) forKey:@"last_updated"];
-    [param setObject:[_toUploadInfoArray lastObject] forKey:@"desc"];
-    NSInteger askID = [[NSUserDefaults standardUserDefaults]
-                       integerForKey:@"AskIDToReply"];
-    [param setObject:@(askID) forKey:@"ask_id"];
+    [param setObject:self.model.uploadIdArray forKey:@"upload_ids"];
+    [param setObject:self.model.ratioArray forKey:@"ratios"];
+    [param setObject:self.model.content forKey:@"desc"];
+    [param setObject:@(self.model.channel_id) forKey:@"category_id"];
+    [param setObject:@(self.model.ask_id) forKey:@"ask_id"];
+    
+
     [DDService ddSaveReply:param withBlock:^(BOOL success) {
         if (success) {
-            [Hud success:@"提交作品成功"];
+            [Hud success:@"上传作品成功"];
             if  (block) {
                 block(YES);
             }
@@ -203,16 +219,4 @@
 }
 
 
--(NSMutableArray *)ratioArray {
-    if (!_ratioArray) {
-        _ratioArray = [NSMutableArray array];
-    }
-    return _ratioArray;
-}
--(NSMutableArray *)uploadIdArray {
-    if (!_uploadIdArray) {
-        _uploadIdArray = [NSMutableArray array];
-    }
-    return _uploadIdArray;
-}
 @end

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PIECarousel_ItemView">
             <connections>
                 <outlet property="bangView" destination="ws4-hF-8Cy" id="PmN-8R-j3s"/>
-                <outlet property="button_avatar" destination="naZ-AK-noy" id="6LQ-kX-WKz"/>
+                <outlet property="button_avatar" destination="naZ-AK-noy" id="FG8-gX-mdE"/>
                 <outlet property="button_name" destination="YhE-XW-aA7" id="7HJ-9b-bkF"/>
                 <outlet property="imageView_type" destination="OKZ-mD-zAS" id="D0v-pC-fvD"/>
                 <outlet property="label_time" destination="xfO-mT-AcC" id="jdk-27-Irt"/>
@@ -28,15 +28,13 @@
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OKZ-mD-zAS">
                     <rect key="frame" x="0.0" y="17" width="40" height="20"/>
-                    <animations/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="Pgh-rq-szI"/>
                         <constraint firstAttribute="width" constant="40" id="pR5-Pg-SD1"/>
                     </constraints>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YhE-XW-aA7">
-                    <rect key="frame" x="324" y="12" width="30" height="15"/>
-                    <animations/>
+                    <rect key="frame" x="326" y="12" width="30" height="15"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="15" id="jnK-ar-Meh"/>
                     </constraints>
@@ -46,24 +44,21 @@
                     </state>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="just now" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xfO-mT-AcC">
-                    <rect key="frame" x="313" y="29" width="40.5" height="12"/>
-                    <animations/>
+                    <rect key="frame" x="315" y="29" width="40.5" height="12"/>
                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="naZ-AK-noy">
-                    <rect key="frame" x="359" y="12" width="31" height="31"/>
-                    <animations/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="naZ-AK-noy" customClass="PIEAvatarButton">
+                    <rect key="frame" x="361" y="12" width="32" height="32"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="31" id="JgH-aK-W8e"/>
-                        <constraint firstAttribute="height" constant="31" id="b1o-Fw-8Lg"/>
+                        <constraint firstAttribute="width" constant="32" id="JgH-aK-W8e"/>
+                        <constraint firstAttribute="height" constant="32" id="b1o-Fw-8Lg"/>
                     </constraints>
                     <state key="normal" image="avatar_default"/>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aNv-0A-d8i" customClass="PIEPageButton">
-                    <rect key="frame" x="16" y="518" width="47" height="31"/>
-                    <animations/>
+                    <rect key="frame" x="16" y="508" width="47" height="31"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="47" id="31i-WW-jwr"/>
@@ -72,27 +67,24 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vJU-a3-rWk" customClass="PIEPageButton">
-                    <rect key="frame" x="73" y="518" width="47" height="31"/>
-                    <animations/>
+                    <rect key="frame" x="73" y="508" width="47" height="31"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="width" priority="250" constant="47" id="MLF-Qc-578"/>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="47" id="kql-67-3pn"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fW3-XH-iwv" customClass="PIEPageLikeButton">
-                    <rect key="frame" x="360" y="512.5" width="30" height="38"/>
-                    <animations/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fW3-XH-iwv" customClass="PIELoveButton">
+                    <rect key="frame" x="355" y="502.5" width="35" height="38"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="width" priority="250" constant="30" id="IOV-JK-c8W"/>
+                        <constraint firstAttribute="width" priority="750" constant="35" id="IOV-JK-c8W"/>
                         <constraint firstAttribute="height" constant="38" id="PmF-Gu-9w6"/>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="YSB-UG-VKi"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="35" id="YSB-UG-VKi"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IMs-GI-iS7" customClass="PIEImageView_BlurBG">
                     <rect key="frame" x="0.0" y="58" width="405" height="405"/>
-                    <animations/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="405" id="0AM-0B-zbP"/>
@@ -105,8 +97,7 @@
                     </variation>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ws4-hF-8Cy" customClass="PIEBangView">
-                    <rect key="frame" x="358" y="509" width="30" height="40"/>
-                    <animations/>
+                    <rect key="frame" x="358" y="499" width="30" height="40"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="4tS-F9-n2R"/>
@@ -114,8 +105,7 @@
                     </constraints>
                 </view>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="249" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="aYG-8y-pdz" customClass="PIETextView_linkDetection">
-                    <rect key="frame" x="15" y="478" width="375" height="30"/>
-                    <animations/>
+                    <rect key="frame" x="8" y="468" width="382" height="30"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" priority="250" constant="30" id="4lB-Nc-r0R"/>
@@ -130,20 +120,17 @@
                     </variation>
                 </textView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yXS-90-bQ6" userLabel="line">
-                    <rect key="frame" x="15" y="554" width="375" height="1"/>
-                    <animations/>
+                    <rect key="frame" x="15" y="544" width="375" height="1"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.080000000000000002" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="XeL-zd-rLV"/>
                     </constraints>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dY8-DP-nOS">
-                    <rect key="frame" x="0.0" y="557" width="405" height="128"/>
-                    <animations/>
+                    <rect key="frame" x="0.0" y="547" width="405" height="138"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
             </subviews>
-            <animations/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="yXS-90-bQ6" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="04c-2G-RnA"/>
@@ -161,7 +148,7 @@
                 <constraint firstItem="xfO-mT-AcC" firstAttribute="top" secondItem="YhE-XW-aA7" secondAttribute="bottom" constant="2" id="GQp-Gc-j0d"/>
                 <constraint firstItem="IMs-GI-iS7" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Gwa-Go-64b"/>
                 <constraint firstAttribute="trailing" secondItem="dY8-DP-nOS" secondAttribute="trailing" id="Hsm-ci-K5Q"/>
-                <constraint firstAttribute="trailing" secondItem="naZ-AK-noy" secondAttribute="trailing" constant="15" id="LyW-K2-2re"/>
+                <constraint firstAttribute="trailing" secondItem="naZ-AK-noy" secondAttribute="trailing" constant="12" id="LyW-K2-2re"/>
                 <constraint firstItem="YhE-XW-aA7" firstAttribute="top" secondItem="naZ-AK-noy" secondAttribute="top" id="Psm-Ew-3UM"/>
                 <constraint firstAttribute="trailing" secondItem="yXS-90-bQ6" secondAttribute="trailing" constant="15" id="T4q-Ar-rTy"/>
                 <constraint firstAttribute="trailing" secondItem="aYG-8y-pdz" secondAttribute="trailing" constant="15" id="UU5-4Z-Br0"/>
@@ -174,7 +161,7 @@
                 <constraint firstItem="fW3-XH-iwv" firstAttribute="centerY" secondItem="vJU-a3-rWk" secondAttribute="centerY" constant="-2" id="hlW-dX-Dt1"/>
                 <constraint firstAttribute="trailing" secondItem="yXS-90-bQ6" secondAttribute="trailing" constant="15" id="iX2-vF-IAn"/>
                 <constraint firstItem="IMs-GI-iS7" firstAttribute="top" secondItem="OKZ-mD-zAS" secondAttribute="bottom" constant="21" id="jBf-wU-8lz"/>
-                <constraint firstItem="aYG-8y-pdz" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="jtg-H8-vbw"/>
+                <constraint firstItem="aYG-8y-pdz" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="jtg-H8-vbw"/>
                 <constraint firstItem="ws4-hF-8Cy" firstAttribute="top" secondItem="aYG-8y-pdz" secondAttribute="bottom" constant="17" id="mHb-Tc-Jd9"/>
                 <constraint firstAttribute="trailing" secondItem="IMs-GI-iS7" secondAttribute="trailing" id="myk-vH-9G5"/>
                 <constraint firstItem="vJU-a3-rWk" firstAttribute="leading" secondItem="aNv-0A-d8i" secondAttribute="trailing" constant="10" id="oSe-VZ-5i1"/>
@@ -186,7 +173,7 @@
                 <constraint firstItem="aNv-0A-d8i" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="x19-S8-Iae"/>
                 <constraint firstItem="yXS-90-bQ6" firstAttribute="top" secondItem="fW3-XH-iwv" secondAttribute="bottom" constant="2" id="xjH-r4-f0X"/>
                 <constraint firstAttribute="bottom" secondItem="yXS-90-bQ6" secondAttribute="bottom" id="y9Y-38-wKV"/>
-                <constraint firstItem="aYG-8y-pdz" firstAttribute="top" secondItem="IMs-GI-iS7" secondAttribute="bottom" constant="15" id="zc4-HP-0bz"/>
+                <constraint firstItem="aYG-8y-pdz" firstAttribute="top" secondItem="IMs-GI-iS7" secondAttribute="bottom" constant="5" id="zc4-HP-0bz"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>

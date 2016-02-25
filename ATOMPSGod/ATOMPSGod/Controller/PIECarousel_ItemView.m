@@ -11,48 +11,62 @@
 #import "PIECommentTableCell.h"
 #import "PIEFriendViewController.h"
 #import "DDNavigationController.h"
-#import "PIECommentViewController2.h"
-#import "AppDelegate.h"
+#import "PIECommentViewController.h"
+
 #import "PIEActionSheet_PS.h"
-//#import "PIEWebViewViewController.h"
-//#import "DDNavigationController.h"
-//#import "AppDelegate.h"
+
 @interface PIECarousel_ItemView()
-@property (nonatomic, strong) NSMutableArray *source_newComment;
+//@property (nonatomic, strong) NSMutableArray *source_newComment;
 @property (nonatomic, strong)  PIEActionSheet_PS * psActionSheet;
 @property (nonatomic, strong)  PIEShareView * shareView;
+@property (nonatomic, strong)  RACDisposable * loveStatusHander;
+@property (nonatomic, strong)  RACDisposable * likeCountHander;
+@property (nonatomic, strong)  RACDisposable * shareCountHander;
+@property (nonatomic, strong)  RACDisposable * commentCountHander;
 
 @end
+
+/* Protocols */
+@interface PIECarousel_ItemView (UITableView)
+<UITableViewDataSource,UITableViewDelegate>
+@end
+
+@interface PIECarousel_ItemView (ShareView)
+<PIEShareViewDelegate>
+@end
+
+@interface PIECarousel_ItemView (JGActionSheet)
+<JGActionSheetDelegate>
+@end
+
+
 @implementation PIECarousel_ItemView
+
 
 -(instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
         _imageView_type.contentMode = UIViewContentModeScaleAspectFit;
-        _button_avatar.imageView.contentMode = UIViewContentModeScaleAspectFill;
-        _button_avatar.layer.cornerRadius = _button_avatar.frame.size.width/2;
-        _button_avatar.clipsToBounds = YES;
-        _pageButton_comment.imageView.image = [UIImage imageNamed:@"hot_comment"];
-        _pageButton_share.imageView.image   = [UIImage imageNamed:@"hot_share"];
+
+        _pageButton_comment.imageView.image = [UIImage imageNamed:@"pieSquaredCommentIcon"];
+        _pageButton_share.imageView.image   = [UIImage imageNamed:@"pieSquaredShareIcon"];
         
         _button_name.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
         _label_time.textAlignment = NSTextAlignmentRight;
 
-        [_button_avatar setTitleColor:[UIColor colorWithHex:0x000000 andAlpha:0.9] forState:UIControlStateNormal];
-        [_button_avatar.titleLabel setFont:[UIFont lightTupaiFontOfSize:13]];
         _label_time.textColor =[UIColor colorWithHex:0x000000 andAlpha:0.4];
         [_label_time setFont:[UIFont lightTupaiFontOfSize:10]];
-//        _textView_content.delegate = self;
-//        [_label_content setTintColor:[UIColor colorWithHex:0x000000 andAlpha:0.8]];
-//        [_label_content setFont:[UIFont lightTupaiFontOfSize:15]];
-
+        
+        _textView_content.font = [UIFont lightTupaiFontOfSize:14];
         [self setupTableView];
         [self addEvent];
-        
     }
     return self;
 }
+
+
+
 - (void)addEvent {
     [_button_avatar addTarget:self action:@selector(pushToUser) forControlEvents:UIControlEventTouchUpInside];
     [_button_name addTarget:self action:@selector(pushToUser) forControlEvents:UIControlEventTouchUpInside];
@@ -60,25 +74,33 @@
     UITapGestureRecognizer* tapShare = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapShare)];
     UITapGestureRecognizer* tapComment = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapComment)];
     UITapGestureRecognizer* tapLike = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapLike)];
-    
+    UILongPressGestureRecognizer* longpressLike = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longpressLike)];
     UITapGestureRecognizer* tapPS = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapPS)];
 
     [_bangView addGestureRecognizer:tapPS];
     [_pageButton_share addGestureRecognizer:tapShare];
     [_pageButton_comment addGestureRecognizer:tapComment];
     [_pageLikeButton addGestureRecognizer:tapLike];
+    [_pageLikeButton addGestureRecognizer:longpressLike];
 }
+
+
+
 -(void) tapPS {
     [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
 }
+
+- (void)longpressLike {
+    [_vm love:YES];
+}
 - (void)tapLike {
-    [self like:_pageLikeButton];
+    [_vm love:NO];
 }
 - (void)tapShare {
-    [self.shareView show];
+    [self showShareView];
 }
 - (void)tapComment {
-    PIECommentViewController2* vc = [PIECommentViewController2 new];
+    PIECommentViewController* vc = [PIECommentViewController new];
     vc.vm = _vm;
     [vc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     DDNavigationController* nav = [[DDNavigationController alloc]initWithRootViewController:vc];
@@ -94,7 +116,7 @@
     [self.viewController presentViewController:nav animated:YES completion:nil];
 }
 - (void)setupTableView {
-    _source_newComment = [NSMutableArray new];
+//    _source_newComment = [NSMutableArray new];
     _tableView_comment.dataSource = self;
     _tableView_comment.delegate = self;
     _tableView_comment.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -114,61 +136,9 @@
     return self;
 }
 
--(void)setVm:(PIEPageVM *)vm {
-    if (_vm != vm) {
-        _vm = vm;
-    }
-    _pageButton_comment.numberString = vm.commentCount;
-    _pageButton_share.numberString = vm.shareCount;
-    _label_time.text = vm.publishTime;
-//    _label_content.text = vm.content;
-    [_button_name setTitle:vm.username forState:UIControlStateNormal];
-    [_button_avatar setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
-    if (vm.type == PIEPageTypeAsk) {
-        _imageView_type.image = [UIImage imageNamed:@"carousel_type_ask"];
-        _pageLikeButton.hidden = YES;
-        _bangView.hidden = NO;
-        _pageLikeButton.imageView.image = [UIImage imageNamed:@""];
-    } else {
-        _pageLikeButton.hidden = NO;
-        _bangView.hidden = YES;
-        _imageView_type.image = [UIImage imageNamed:@"carousel_type_reply"];
-        _pageLikeButton.hidden = NO;
-        _pageLikeButton.highlighted = vm.liked;
-        _pageLikeButton.numberString = vm.likeCount;
-    }
-    
-//    [_imageView_page setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
-    [DDService downloadImage:vm.imageURL withBlock:^(UIImage *image) {
-        _view_pageImage.image = image;
-    }];
-    
-    
-    if ([vm.content isEqualToString:@""]) {
-        [_textView_content mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.equalTo(@0).with.priorityMedium();
-        }];
-    }
-//    else {
-//        NSString * htmlString = vm.content;
-//        NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSRTFTextDocumentType } documentAttributes:nil error:nil];
-//        [attrStr addAttribute:NSFontAttributeName value:[UIFont lightTupaiFontOfSize:15] range:NSMakeRange(0, attrStr.length)];
-//        [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0x000000 andAlpha:0.9] range:NSMakeRange(0, attrStr.length)];
-//        _textView_content.attributedText = attrStr;
-//    }
-    _textView_content.font = [UIFont lightTupaiFontOfSize:15];
-    _textView_content.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.9];
-    _textView_content.text = vm.content;
-    [self getDataSource];
-
-    
-}
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-    
-}
+#pragma mark 0 - <UITableViewDataSource>
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _source_newComment.count;
+    return self.vm.commentViewModelArray.count;
 }
 
 
@@ -178,38 +148,70 @@
         if (!cell) {
             cell = [[PIECommentTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellIdentifier"];
         }
-        [cell getSource:_source_newComment[indexPath.row]];
+
+        [cell getSource:self.vm.commentViewModelArray[indexPath.row]];
 
         return cell;
     }
     return nil;
 }
 
-
+#pragma mark - <UITableViewDelegate>
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 80;
 }
 
-#pragma mark - GetDataSource
-
-- (void)getDataSource {
-    WS(ws);
-    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setObject:@(_vm.ID) forKey:@"target_id"];
-    [param setObject:@(_vm.type) forKey:@"type"];
-    [param setObject:@(1) forKey:@"page"];
-    [param setObject:@(2) forKey:@"size"];
-    PIECommentManager *commentManager = [PIECommentManager new];
-    [commentManager ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
-        ws.source_newComment.array = recentCommentArray;
-        [self.tableView_comment reloadData];
-    }];
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+    
 }
 
 
--(PIEShareView *)shareView {
+#pragma mark - GetDataSource
+
+- (void)getDataSource {
+    if (self.vm.commentViewModelArray.count == 0 && self.vm.model.totalCommentNumber>0) {
+        NSMutableDictionary *param = [NSMutableDictionary dictionary];
+        [param setObject:@(_vm.ID) forKey:@"target_id"];
+        [param setObject:@(_vm.type) forKey:@"type"];
+        [param setObject:@(1) forKey:@"page"];
+        [param setObject:@(2) forKey:@"size"];
+        PIECommentManager *commentManager = [PIECommentManager new];
+        [commentManager ShowDetailOfComment:param withBlock:^(NSMutableArray *hotCommentArray, NSMutableArray *recentCommentArray, NSError *error) {
+            [self.vm.commentViewModelArray addObjectsFromArray:recentCommentArray];
+            [self.tableView_comment reloadData];
+        }];
+    }
+
+}
+
+
+
+#pragma mark - <PIEShareViewDelegate> and its related methods
+
+
+- (void)showShareView
+{
+    [self.shareView show:_vm];
+}
+
+- (void)shareViewDidShare:(PIEShareView *)shareView
+{
+    // refresh ui element on main thread after successful sharing, do nothing otherwise.
+//    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+//        [self updateShareStatus];
+//    }];
+}
+
+- (void)shareViewDidCancel:(PIEShareView *)shareView
+{
+    [shareView dismiss];
+}
+#pragma mark - Lazy loadings
+
+- (PIEShareView *)shareView {
     if (!_shareView) {
         _shareView = [PIEShareView new];
         _shareView.delegate = self;
@@ -225,60 +227,75 @@
 }
 
 
--(void)like:(PIEPageLikeButton*)likeView {
-    likeView.selected = !likeView.selected;
+#pragma mark - Setters
+-(void)setVm:(PIEPageVM *)vm {
     
-    [DDService toggleLike:likeView.selected ID:_vm.ID type:_vm.type  withBlock:^(BOOL success) {
-        if (success) {
-            if (likeView.selected) {
-                _vm.likeCount = [NSString stringWithFormat:@"%zd",_vm.likeCount.integerValue + 1];
-            } else {
-                _vm.likeCount = [NSString stringWithFormat:@"%zd",_vm.likeCount.integerValue - 1];
-            }
-            _vm.liked = likeView.selected;
-        } else {
-            likeView.selected = !likeView.selected;
-        }
+    [_loveStatusHander dispose];
+    [_likeCountHander dispose];
+    [_shareCountHander dispose];
+    [_commentCountHander dispose];
+    _vm = vm;
+     _loveStatusHander = [RACObserve(_vm,loveStatus)subscribeNext:^(id x) {
+         self.pageLikeButton.status = [x integerValue];
+     }];
+    _likeCountHander = [RACObserve(_vm,likeCount)subscribeNext:^(id x) {
+        self.pageLikeButton.numberString = x;
     }];
-}
-
-
-- (void)updateShareStatus {
-    _vm.shareCount = [NSString stringWithFormat:@"%zd",[_vm.shareCount integerValue]+1];
-}
-//sina
--(void)tapShare1 {
-    [DDShareManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeSinaWeibo block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
-}
-//qqzone
--(void)tapShare2 {
-    [DDShareManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeQQZone block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
+    _shareCountHander = [RACObserve(_vm,shareCount)subscribeNext:^(id x) {
+        self.pageButton_share.numberString = x;
+    }];
+    _commentCountHander = [RACObserve(_vm,commentCount)subscribeNext:^(id x) {
+        self.pageButton_comment.numberString = x;
+    }];
     
-}
-//wechat moments
--(void)tapShare3 {
-    [DDShareManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeWechatMoments block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
-}
-//wechat friends
--(void)tapShare4 {
-    [DDShareManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeWechatFriends block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
-}
--(void)tapShare5 {
-    [DDShareManager postSocialShare2:_vm withSocialShareType:ATOMShareTypeQQFriends block:^(BOOL success) {if (success) {[self updateShareStatus];}}];
+    _label_time.text = vm.publishTime;
+    [_button_name setTitle:vm.username forState:UIControlStateNormal];
     
-}
--(void)tapShare6 {
-    [DDShareManager copy:_vm];
-}
--(void)tapShare7 {
-    self.shareView.vm = _vm;
-}
--(void)tapShare8 {
-    [_vm collect];
+    NSString* urlString_avatar = [vm.avatarURL trimToImageWidth:_button_avatar.frame.size.height*SCREEN_SCALE];
+    
+    [DDService sd_downloadImage:urlString_avatar withBlock:^(UIImage *image) {
+        [_button_avatar setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+        [_button_avatar setImage:image forState:UIControlStateNormal];
+
+    }];
+    
+    
+    _button_avatar.isV = vm.isV;
+
+    
+    if (vm.type == PIEPageTypeAsk) {
+        _imageView_type.image = [UIImage imageNamed:@"carousel_type_ask"];
+        _pageLikeButton.hidden = YES;
+        _bangView.hidden = NO;
+        _pageLikeButton.imageView.image = [UIImage imageNamed:@""];
+    } else {
+        _pageLikeButton.hidden = NO;
+        _bangView.hidden = YES;
+        _imageView_type.image = [UIImage imageNamed:@"carousel_type_reply"];
+        _pageLikeButton.hidden = NO;
+    }
+    
+    _view_pageImage.url = [vm.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
+    
+    if ([vm.content isEqualToString:@""]) {
+        [_textView_content mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.equalTo(@0).with.priorityMedium();
+        }];
+    }
+//        else {
+//            NSString * htmlString = vm.content;
+//            _textView_content.backgroundColor = [UIColor lightGrayColor];
+//            NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSRTFTextDocumentType } documentAttributes:nil error:nil];
+//            [attrStr addAttribute:NSFontAttributeName value:[UIFont lightTupaiFontOfSize:15] range:NSMakeRange(0, attrStr.length)];
+//            [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0x000000 andAlpha:0.9] range:NSMakeRange(0, attrStr.length)];
+//            _textView_content.attributedText = attrStr;
+//        }
+    _textView_content.text = vm.content;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self getDataSource];
+    });
 }
 
--(void)tapShareCancel {
-    [self.shareView dismiss];
-}
+
 
 @end

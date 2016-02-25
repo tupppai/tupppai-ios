@@ -10,27 +10,23 @@
 #import "DDSessionManager.h"
 
 @implementation DDCollectManager
-+ (NSURLSessionDataTask *)toggleCollect:(NSDictionary *)param withPageType:(PIEPageType)type withID:(NSInteger)ID withBlock:(void (^)(NSError *))block {
++ (void)toggleCollect:(NSDictionary *)param withPageType:(PIEPageType)type withID:(NSInteger)ID withBlock:(void (^)(NSError *))block {
         NSString* url;
         if (type == PIEPageTypeAsk) {
             url = [NSString stringWithFormat:@"ask/focusask/%zd",ID];
         }   if (type == PIEPageTypeReply) {
             url = [NSString stringWithFormat:@"reply/collectreply/%zd",ID];
         }
-    return [[DDSessionManager shareHTTPSessionManager] GET:url parameters:param success:^(NSURLSessionDataTask *task, id responseObject) {
-            NSInteger ret = [(NSString*)[ responseObject objectForKey:@"ret"] integerValue];
-            if (ret == 1) {
-                if (block) {
-                    block(nil);
-                }
-            } else {
-                if (block) {
-                    block(nil);
-                }
+    
+    [DDBaseService GET:param url:url block:^(id responseObject) {
+        if (responseObject) {
+            if (block) {
+                block(nil);
             }
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        if (block) {
-            block(error);
+        } else {
+            if (block) {
+                block([NSError new]);
+            }
         }
     }];
 }

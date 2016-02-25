@@ -1,0 +1,783 @@
+//
+//  PIEEliteHotReplyViewController.m
+//  TUPAI
+//
+//  Created by huangwei on 15/12/17.
+//  Copyright © 2015年 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
+//
+
+#import "PIEEliteHotViewController.h"
+#import "PIEActionSheet_PS.h"
+#import "PIEShareView.h"
+#import "SwipeView.h"
+#import "PIEBannerModel.h"
+#import "PIERefreshTableView.h"
+#import "PIEWebViewViewController.h"
+#import "SMPageControl.h"
+#import "PIEEliteHotReplyTableViewCell.h"
+#import "PIEEliteHotAskTableViewCell.h"
+//#import "DeviceUtil.h"
+#import "PIEEliteManager.h"
+#import "PIECarouselViewController2.h"
+#import "PIEFriendViewController.h"
+
+#import "PIECommentViewController.h"
+#import "PIEReplyCollectionViewController.h"
+#import "PIEPageManager.h"
+
+
+@interface PIEEliteHotViewController ()
+
+@property (nonatomic, strong) PIERefreshTableView *tableHot;
+
+@property (nonatomic, strong) SwipeView *swipeView;
+
+@property (nonatomic, strong) NSMutableArray<PIEPageVM *> *sourceHot;
+
+@property (nonatomic, strong) NSMutableArray<PIEBannerModel *> *sourceBanner;
+
+@property (nonatomic, assign) BOOL isfirstLoadingHot;
+
+@property (nonatomic, assign) NSInteger currentIndex_hot;
+
+@property (nonatomic, assign) BOOL canRefreshFooterHot;
+
+@property (nonatomic, assign) long long timeStamp_hot;
+
+@property (nonatomic, strong) NSIndexPath *selectedIndexPath_hot;
+
+@property (nonatomic, strong) PIEActionSheet_PS * psActionSheet;
+
+@property (nonatomic, strong) PIEShareView * shareView;
+
+@property (nonatomic, strong) PIEPageVM *selectedVM;
+
+@property (nonatomic, strong) SMPageControl *pageControl_swipeView;
+
+@end
+
+/* Protocols */
+@interface PIEEliteHotViewController (TableView)
+<UITableViewDelegate,UITableViewDataSource>
+@end
+
+@interface PIEEliteHotViewController (RefreshBaseTableView)
+<PWRefreshBaseTableViewDelegate>
+@end
+
+@interface PIEEliteHotViewController (PIEShareView)
+<PIEShareViewDelegate>
+@end
+
+@interface PIEEliteHotViewController (SwipeView)
+<SwipeViewDelegate,SwipeViewDataSource>
+@end
+
+
+
+@implementation PIEEliteHotViewController
+
+static  NSString* hotReplyIndentifier = @"PIEEliteHotReplyTableViewCell";
+static  NSString* hotAskIndentifier   = @"PIEEliteHotAskTableViewCell";
+
+#pragma mark - UI life cycles
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    [self configData];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    
+    [self setupNotificationObserver];
+    
+    
+    [self configTableViewHot];
+    
+    [self setupGestures];
+   
+    [self getSourceIfEmpty_hot:nil];
+    
+   
+    
+    [self configureSwipeView];
+
+
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self.swipeView reloadData];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNavigation_Elite_Hot" object:nil];
+    
+}
+
+#pragma mark - data setup
+
+- (void)configData {
+    _canRefreshFooterHot    = YES;
+    
+    _currentIndex_hot       = 1;
+    
+    _isfirstLoadingHot      = YES;
+    
+    _sourceHot              = [NSMutableArray<PIEPageVM *> new];
+    
+    [[RACObserve(self, sourceHot)
+      filter:^BOOL(id value) {
+          NSArray *array = value;
+          return array.count>0;
+      }]
+     subscribeNext:^(id x) {
+         [self.tableHot reloadData];
+     }];
+    
+}
+
+#pragma mark - Notification setup
+- (void)setupNotificationObserver
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:@"RefreshNavigation_Elite_Hot" object:nil];    
+
+}
+
+#pragma mark - UI components setup
+
+- (void)configTableViewHot {
+    
+    // add as subview, then add constraints
+    [self.view addSubview:self.tableHot];
+    self.tableHot.separatorStyle = UITableViewCellSeparatorStyleNone;
+
+    __weak typeof(self) weakSelf = self;
+    [self.tableHot mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(weakSelf.view);
+    }];
+    
+
+    self.swipeView.dataSource = self;
+    self.swipeView.delegate = self;
+}
+
+- (void)configureSwipeView{
+    
+}
+
+- (void)setupGestures {
+    UITapGestureRecognizer* tapGestureHot = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureHot:)];
+    [self.tableHot addGestureRecognizer:tapGestureHot];
+    
+    UILongPressGestureRecognizer* longPressGestureHot = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnHot:)];
+    [self.tableHot addGestureRecognizer:longPressGestureHot];
+   
+    
+}
+
+
+
+
+#pragma mark - <SwipeViewDataSource>
+- (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
+{
+    return self.sourceBanner.count;
+}
+
+- (UIView *)swipeView:(SwipeView *)swipeView viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
+{
+    if (view == nil)
+    {
+        CGFloat width = self.swipeView.frame.size.width;
+        CGFloat height = self.swipeView.frame.size.height;
+        
+        view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
+        UIImageView* imageView = [[UIImageView alloc] initWithFrame:view.bounds];
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
+        [view addSubview:imageView];
+    }
+    PIEBannerModel* vm = [self.sourceBanner objectAtIndex:index];
+    for (UIView *subView in view.subviews){
+        if([subView isKindOfClass:[UIImageView class]]){
+            UIImageView *imageView = (UIImageView *)subView;
+            [imageView sd_setImageWithURL:[NSURL URLWithString:vm.imageUrl]];
+        }
+    }
+
+    return view;
+}
+
+#pragma mark - <SwipeViewDelegate>
+-(void)swipeViewCurrentItemIndexDidChange:(SwipeView *)swipeView {
+    _pageControl_swipeView.currentPage = swipeView.currentItemIndex;
+}
+
+-(void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index {
+    PIEWebViewViewController* vc = [PIEWebViewViewController new];
+    vc.viewModel = [self.sourceBanner objectAtIndex:index];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+
+#pragma mark - <UITableViewDataSource>
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return _sourceHot.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    PIEPageVM* vm = [_sourceHot objectAtIndex:indexPath.row];
+    
+    if (vm.type == PIEPageTypeAsk) {
+        PIEEliteHotAskTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:hotAskIndentifier];
+        [cell injectSauce:vm];
+        return cell;
+    }
+    else {
+        PIEEliteHotReplyTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:hotReplyIndentifier];
+        [cell injectSauce:vm];
+        
+        
+        @weakify(self);
+        // beginning of RAC-binding
+        [cell.tapOnAvatarOrUsernameSignal subscribeNext:^(id x) {
+            @strongify(self);
+            [self tapOnAvatarOrUsernameLabelAtIndexPath:indexPath];
+        }];
+        
+        [cell.tapOnFollowButtonSignal subscribeNext:^(id x) {
+            @strongify(self);
+            [self tapOnFollowButtonAtIndexPath:indexPath];
+        }];
+        
+        [cell.tapOnImageViewSignal subscribeNext:^(id x) {
+            @strongify(self);
+            [self tapOnImageViewAtIndexPath:indexPath];
+        }];
+        
+        [cell.longPressOnImageViewSignal subscribeNext:^(id x) {
+            @strongify(self);
+            [self longPressOnImageViewAtIndexPath:indexPath];
+        }];
+        
+        [cell.tapOnAllWorkSignal subscribeNext:^(id x) {
+            @strongify(self);
+            [self tapOnAllworkButtonAtIndexPath:indexPath];
+        }];
+        
+        [cell.tapOnCommentSignal subscribeNext:^(id x) {
+            @strongify(self);
+            [self tapOnCommentPageButtonAtIndexPath:indexPath];
+        }];
+        
+        [cell.tapOnShareSignal subscribeNext:^(id x) {
+            @strongify(self);
+            [self tapOnSharePageButtonAtIndexPath:indexPath];
+        }];
+        
+        [cell.tapOnLikeSignal subscribeNext:^(id x) {
+            @strongify(self);
+            [self tapOnLikePageButtonAtIndexPath:indexPath];
+        }];
+        
+        [cell.longPressOnLikeSignal subscribeNext:^(id x) {
+            @strongify(self);
+            [self longPressOnLikePageButtonAtIndexPath:indexPath];
+        }];
+        // --- end of RAC-binding
+        
+        return cell;
+    }
+}
+
+
+
+#pragma mark - <PIEShareViewDelegate> and its related methods
+
+
+- (void)shareViewDidCancel:(PIEShareView *)shareView
+{
+    [shareView dismiss];
+}
+
+
+/** 分享当前pageVM对应的图片 */
+- (void)showShareView:(PIEPageVM *)pageVM {
+    [self.shareView show:pageVM];
+}
+
+
+#pragma mark - <PWRefreshBaseTableViewDelegate>
+-(void)didPullRefreshDown:(UITableView *)tableView {
+    [self getRemoteSourceHot:nil];
+}
+-(void)didPullRefreshUp:(UITableView *)tableView {
+    if (_canRefreshFooterHot) {
+        [self getMoreRemoteSourceHot];
+    } else {
+        [Hud text:@"已经拉到底啦"];
+        [self.tableHot.mj_footer endRefreshingWithNoMoreData];
+    }
+
+}
+
+#pragma mark - <DZNEmptyDataSetSource> 
+
+-(UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIImage imageNamed:@"pie_empty"];
+}
+
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *text = @"好伤心，再下拉刷新试试";
+   
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:kTitleSizeForEmptyDataSet],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+-(CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+    return 100;
+}
+
+#pragma mark - <DZNEmptyDataSetDelegate>
+
+-(BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
+    
+    /* 如果是第一次加载数据之前，那么即使数据源为空也不要显示emptyDataSet */
+    if (_isfirstLoadingHot) {
+        return NO;
+    }
+    else{
+        return YES;
+    }
+    
+
+}
+-(BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView {
+    return YES;
+}
+
+#pragma mark - Gesture events
+- (void)longPressOnHot:(UILongPressGestureRecognizer *)gesture {
+    CGPoint location = [gesture locationInView:self.tableHot];
+    _selectedIndexPath_hot = [self.tableHot indexPathForRowAtPoint:location];
+    if (_selectedIndexPath_hot) {
+        //关注  求p
+        _selectedVM = _sourceHot[_selectedIndexPath_hot.row];
+        
+        if (_selectedVM.type == PIEPageTypeAsk) {
+            
+            PIEEliteHotAskTableViewCell* cell = [self.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
+            CGPoint p = [gesture locationInView:cell];
+            if (CGRectContainsPoint(cell.theImageView.frame, p)) {
+                [self showShareView:_selectedVM];
+            }          // 点赞
+        }
+        //关注  作品
+        
+        else {
+//            PIEEliteHotReplyTableViewCell* cell = [self.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
+//            CGPoint p = [gesture locationInView:cell];
+//            //点击大图
+//            if (CGRectContainsPoint(cell.blurAnimateView.frame, p)) {
+//                [self showShareView:_selectedVM];
+//            }
+//            else if (CGRectContainsPoint(cell.likeView.frame, p)) {
+//                [_selectedVM love:YES];
+//            }
+        }
+    }
+}
+
+- (void)tapGestureHot:(UITapGestureRecognizer *)gesture {
+    CGPoint location = [gesture locationInView:self.tableHot];
+    _selectedIndexPath_hot = [self.tableHot indexPathForRowAtPoint:location];
+    
+    if (_selectedIndexPath_hot == nil) {
+        return;
+    }
+    _selectedVM = _sourceHot[_selectedIndexPath_hot.row];
+    
+    if (_selectedVM == nil) {
+        return;
+    }
+    
+    if (_selectedVM.type == PIEPageTypeAsk) {
+        
+        PIEEliteHotAskTableViewCell* cell = [self.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
+        CGPoint p = [gesture locationInView:cell];
+        if (CGRectContainsPoint(cell.theImageView.frame, p)) {
+            //进入热门详情
+            PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+            vc.pageVM = _selectedVM;
+            [self presentViewController:vc animated:YES completion:nil];
+            
+        }
+        //点击头像
+        else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
+            PIEFriendViewController * friendVC = [PIEFriendViewController new];
+            friendVC.pageVM = _selectedVM;
+            [self.navigationController pushViewController:friendVC animated:YES];
+        }
+        //点击用户名
+        else if (CGRectContainsPoint(cell.nameLabel.frame, p)) {
+            PIEFriendViewController * friendVC = [PIEFriendViewController new];
+            friendVC.pageVM = _selectedVM;
+            [self.navigationController pushViewController:friendVC animated:YES];
+        }
+        else if (CGRectContainsPoint(cell.bangView.frame, p)) {
+            self.psActionSheet.vm = _selectedVM;
+            [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
+        }
+        else if (CGRectContainsPoint(cell.followView.frame, p)) {
+            [_selectedVM follow];
+        }
+        else if (CGRectContainsPoint(cell.shareView.frame, p)) {
+            [self showShareView:_selectedVM];
+        }
+        
+        else if ((CGRectContainsPoint(cell.commentView.frame, p))||(CGRectContainsPoint(cell.commentLabel1.frame, p))||(CGRectContainsPoint(cell.commentLabel2.frame, p)) ) {
+            PIECommentViewController* vc = [PIECommentViewController new];
+            vc.vm = _selectedVM;
+            vc.shouldShowHeaderView = NO;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        else if (CGRectContainsPoint(cell.allWorkView.frame, p)) {
+            PIEReplyCollectionViewController* vc = [PIEReplyCollectionViewController new];
+            vc.pageVM = _selectedVM;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        
+    }
+            else {
+//                PIEEliteHotReplyTableViewCell* cell = [self.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
+//                CGPoint p = [gesture locationInView:cell];
+//                //点击小图
+//                if (CGRectContainsPoint(cell.blurAnimateView.frame, p)) {
+//                    CGPoint pp = [gesture locationInView:cell.blurAnimateView.thumbView];
+//                    if (CGRectContainsPoint(cell.blurAnimateView.thumbView.leftView.frame,pp)) {
+//                        [cell animateWithType:PIEThumbAnimateViewTypeLeft];
+//                    }
+//                    
+//                    else if (CGRectContainsPoint(cell.blurAnimateView.thumbView.rightView.frame,pp)) {
+//                        [cell animateWithType:PIEThumbAnimateViewTypeRight];
+//                    }
+//                    
+//                    else  if (CGRectContainsPoint(cell.blurAnimateView.imageView.frame, p)) {
+//                        PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+//                        vc.pageVM = _selectedVM;
+//                        [self presentViewController:vc animated:YES completion:nil];
+//                    }
+//                }
+              
+//                //点击头像
+//                else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
+//                    PIEFriendViewController * friendVC = [PIEFriendViewController new];
+//                    friendVC.pageVM = _selectedVM;
+//                    [self.navigationController pushViewController:friendVC animated:YES];
+//                }
+//                //点击用户名
+//                else if (CGRectContainsPoint(cell.nameLabel.frame, p)) {
+//                    PIEFriendViewController * friendVC = [PIEFriendViewController new];
+//                    friendVC.pageVM = _selectedVM;
+//                    [self.navigationController pushViewController:friendVC animated:YES];
+//                }
+//                // 点赞
+//                else if (CGRectContainsPoint(cell.likeView.frame, p)) {
+//                    [_selectedVM love:NO];
+//                }
+//                // 关注
+//                else if (CGRectContainsPoint(cell.followView.frame, p)) {
+//                    [_selectedVM follow];
+//                }
+                // 分享
+//                else if (CGRectContainsPoint(cell.shareView.frame, p)) {
+//                    [self showShareView:_selectedVM];
+//                }
+//                // 评论
+//                else if ((CGRectContainsPoint(cell.commentView.frame, p))||(CGRectContainsPoint(cell.commentLabel1.frame, p))||(CGRectContainsPoint(cell.commentLabel2.frame, p)) ) {                    PIECommentViewController* vc = [PIECommentViewController new];
+//                    vc.vm = _selectedVM;
+//                    vc.shouldShowHeaderView = NO;
+//                    [self.navigationController pushViewController:vc animated:YES];
+//                }
+//                 全部作品
+//                else if (CGRectContainsPoint(cell.allWorkView.frame, p)) {
+//                    PIEReplyCollectionViewController* vc = [PIEReplyCollectionViewController new];
+//                    vc.pageVM = _selectedVM;
+//                    [self.navigationController pushViewController:vc animated:YES];
+//                }
+            }
+}
+
+
+
+#pragma mark - Notification methods
+
+- (void)refreshHeader {
+    if (self.tableHot.mj_header.isRefreshing == false) {
+        [self.tableHot.mj_header beginRefreshing];
+    }
+}
+
+
+#pragma mark - target-actions
+- (void) onTimer
+{
+    [self.swipeView scrollByNumberOfItems:1 duration:0.5];
+}
+
+#pragma mark - Fetch _source data
+- (void)getRemoteSourceBanner {
+    long long timeStamp = [[NSDate date] timeIntervalSince1970];
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    [param setObject:@(timeStamp) forKey:@"last_updated"];
+    
+    [param setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
+    
+    [PIEEliteManager getBannerSource:param withBlock:^(NSMutableArray *array) {
+        [self.sourceBanner removeAllObjects];
+        [self.sourceBanner addObjectsFromArray:array];
+        
+        _pageControl_swipeView.numberOfPages = self.sourceBanner.count;
+        [self.swipeView reloadData];
+ 
+
+    }];
+}
+
+/** getSourceIfEmpty_xxx : 以下两个方法是public 方法 */
+- (void)getSourceIfEmpty_banner {
+    if (self.sourceBanner.count <= 0) {
+        [self getRemoteSourceBanner];
+    }
+}
+
+- (void)getSourceIfEmpty_hot:(void (^)(BOOL finished))block {
+    if (_isfirstLoadingHot || _sourceHot.count <= 0) {
+        [self.tableHot.mj_header beginRefreshing];
+    }
+}
+
+- (void)getRemoteSourceHot:(void (^)(BOOL finished))block {
+    
+    [self.tableHot.mj_footer endRefreshing];
+    _currentIndex_hot = 1;
+    _timeStamp_hot = [[NSDate date] timeIntervalSince1970];
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    [param setObject:@(_timeStamp_hot) forKey:@"last_updated"];
+    
+    [param setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
+
+    [param setObject:@(1) forKey:@"page"];
+    [param setObject:@(8) forKey:@"size"];
+    
+    [PIEEliteManager getHotPages:param withBlock:^(NSMutableArray *returnArray) {
+        self.isfirstLoadingHot = NO;
+        if (returnArray.count == 0) {
+            _canRefreshFooterHot = NO;
+        } else {
+            _canRefreshFooterHot = YES;
+            [self.sourceHot removeAllObjects];
+            
+            NSMutableArray *fromKVC = [self mutableArrayValueForKey:@"sourceHot"];
+            [fromKVC addObjectsFromArray:returnArray];
+        }
+        [self.tableHot.mj_header endRefreshing];
+        if (block) {
+            block(YES);
+        }
+        
+        [self getSourceIfEmpty_banner];
+
+    }];
+    
+}
+
+- (void)getMoreRemoteSourceHot {
+    [self.tableHot.mj_header endRefreshing];
+    _currentIndex_hot ++;
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    [param setObject:@(_timeStamp_hot) forKey:@"last_updated"];
+    
+    [param setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
+    
+    [param setObject:@(_currentIndex_hot) forKey:@"page"];
+    [param setObject:@(15) forKey:@"size"];
+    
+    [PIEEliteManager getHotPages:param withBlock:^(NSMutableArray *returnArray) {
+        if (returnArray.count < 15) {
+            _canRefreshFooterHot = NO;
+        } else {
+            _canRefreshFooterHot = YES;
+        }
+        
+        NSMutableArray *fromKVC = [self mutableArrayValueForKey:@"sourceHot"];
+        [fromKVC addObjectsFromArray:returnArray];
+        [self.tableHot.mj_footer endRefreshing];
+    }];
+}
+
+#pragma mark - RAC signal response methods
+- (void)tapOnAvatarOrUsernameLabelAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEFriendViewController * friendVC = [PIEFriendViewController new];
+    friendVC.pageVM = _sourceHot[indexPath.row];
+    
+    [self.navigationController pushViewController:friendVC animated:YES];
+}
+
+- (void)tapOnFollowButtonAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM = _sourceHot[indexPath.row];
+    [selectedVM follow];
+}
+
+- (void)tapOnCommentPageButtonAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIECommentViewController* vc = [PIECommentViewController new];
+    vc.vm = _sourceHot[indexPath.row];
+    vc.shouldShowHeaderView = NO;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)tapOnSharePageButtonAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM = _sourceHot[indexPath.row];
+    [self showShareView:selectedVM];
+}
+
+- (void)tapOnImageViewAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    PIEPageVM *selectedVM          = _sourceHot[indexPath.row];
+    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+    vc.pageVM                      = selectedVM;
+    
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
+- (void)longPressOnImageViewAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM = _sourceHot[indexPath.row];
+    [self showShareView:selectedVM];
+}
+
+- (void)tapOnAllworkButtonAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM = _sourceHot[indexPath.row];
+    PIEReplyCollectionViewController* vc = [PIEReplyCollectionViewController new];
+    vc.pageVM = selectedVM;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)tapOnLikePageButtonAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM = _sourceHot[indexPath.row];
+    [selectedVM love:NO];
+}
+
+- (void)longPressOnLikePageButtonAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM = _sourceHot[indexPath.row];
+    [selectedVM love:YES];
+}
+
+
+
+#pragma mark - Lazy loadings
+
+- (PIERefreshTableView *)tableHot
+{
+    if (_tableHot == nil) {
+        _tableHot = [[PIERefreshTableView alloc] init];
+        _tableHot.dataSource           = self;
+        _tableHot.delegate             = self;
+        _tableHot.psDelegate           = self;
+        _tableHot.emptyDataSetDelegate = self;
+        _tableHot.emptyDataSetSource   = self;
+
+        _tableHot.estimatedRowHeight   = SCREEN_WIDTH+225;
+        _tableHot.rowHeight            = UITableViewAutomaticDimension;
+
+        _tableHot.tableHeaderView      = self.swipeView;
+
+        
+        UINib* nib = [UINib nibWithNibName:hotReplyIndentifier bundle:nil];
+        [_tableHot registerNib:nib forCellReuseIdentifier:hotReplyIndentifier];
+        UINib* nib2 = [UINib nibWithNibName:hotAskIndentifier bundle:nil];
+        [_tableHot registerNib:nib2 forCellReuseIdentifier:hotAskIndentifier];
+    }
+    
+    return _tableHot;
+}
+
+- (SwipeView *)swipeView
+{
+    if (_swipeView == nil) {
+        _swipeView = [[SwipeView alloc] init];
+        
+        CGFloat height = 333.0/750 * SCREEN_WIDTH;
+        _swipeView =
+        [[SwipeView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, height)];
+        _swipeView.backgroundColor = [UIColor clearColor];
+        _swipeView.wrapEnabled = YES;
+        
+        
+        [_swipeView addSubview:self.pageControl_swipeView];
+        
+        CGPoint center = self.pageControl_swipeView.center;
+        
+        center.x = _swipeView.center.x;
+        center.y = _swipeView.center.y+55;
+        self.pageControl_swipeView.center = center;
+        
+        [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(onTimer) userInfo:nil repeats:YES];
+    }
+    
+    return _swipeView;
+}
+
+-(PIEShareView *)shareView {
+    if (!_shareView) {
+        _shareView = [PIEShareView new];
+        _shareView.delegate = self;
+        
+    }
+    return _shareView;
+}
+
+-(PIEActionSheet_PS *)psActionSheet {
+    if (!_psActionSheet) {
+        _psActionSheet = [PIEActionSheet_PS new];
+    }
+    return _psActionSheet;
+}
+
+- (SMPageControl *)pageControl_swipeView
+{
+    if (_pageControl_swipeView == nil) {
+        _pageControl_swipeView =
+        [[SMPageControl alloc]initWithFrame:CGRectMake(0,0, 200, 20)];
+    }
+    
+    return _pageControl_swipeView;
+}
+
+- (NSMutableArray<PIEBannerModel *> *)sourceBanner
+{
+    if (_sourceBanner == nil) {
+        _sourceBanner = [NSMutableArray<PIEBannerModel *> array];
+    }
+    
+    return _sourceBanner;
+}
+
+@end

@@ -8,6 +8,8 @@
 
 #import "DDService.h"
 //负责处理key，返回要的json，不做任何数据库操作，mantle操作，这些操作交给Manager
+#import "Pingpp.h"
+
 @implementation DDService
 
 #pragma mark - Profile
@@ -110,9 +112,17 @@
     }];
 }
 + (void) follow :(NSDictionary*)param withBlock:(void (^)(BOOL success))block {
+    BOOL status = [[param objectForKey:@"status"]boolValue];
     [[self class]POST:param url:URL_PFFollow block:^(id responseObject) {
         if (responseObject) {
             if (block) { block(YES); }
+            if (status) {
+                [Hud text:@"成功关注"];
+                [DDUserManager currentUser].attentionNumber++;
+            } else {
+                [Hud text:@"取消关注成功"];
+                [DDUserManager currentUser].attentionNumber--;
+            }
         } else {
             if (block) { block(NO); }
         }
@@ -257,7 +267,7 @@
     }];
 }
 + (void)ddGetMyInfo:(NSDictionary*)param withBlock:(void (^)(NSDictionary* data))block {
-    [[self class]GET:param url:URL_UKGetInfo block:^(id responseObject) {
+    [[self class]GET:param url:URL_PFGetUserInfo block:^(id responseObject) {
             NSDictionary* data = [responseObject objectForKey:@"data"];
             if (block) { block(data); }
     }];
@@ -289,7 +299,7 @@
 }
 
 + (void)ddGetOtherUserInfo:(NSDictionary*)param withBlock:(void (^)(NSDictionary* data,NSArray *askArray,NSArray *replyArray))block {
-    [[self class]GET:param url:URL_PFGetOtherUserInfo block:^(id responseObject) {
+    [[self class]GET:param url:URL_PFGetUserInfo block:^(id responseObject) {
             NSDictionary *data = [responseObject objectForKey:@"data"];
             NSArray *askArray = [data objectForKey:@"asks"];
             NSArray *replyArray = [data objectForKey:@"replies"];
@@ -363,9 +373,9 @@
 + (void)toggleLike:(BOOL)like ID:(NSInteger)ID type:(PIEPageType)type  withBlock:(void (^)(BOOL success))block {
     NSString* url;
     if (type == PIEPageTypeAsk) {
-        url = [NSString stringWithFormat:@"ask/upask/%ld",(long)ID];
+        url = [NSString stringWithFormat:@"ask/upask/%zd",ID];
     } else if (type == PIEPageTypeReply) {
-        url = [NSString stringWithFormat:@"reply/upreply/%ld",(long)ID];
+        url = [NSString stringWithFormat:@"reply/upreply/%zd",ID];
     }
     NSInteger status = like?1:0;
     NSDictionary *param = [NSDictionary dictionaryWithObject:@(status) forKey:@"status"];
@@ -378,25 +388,100 @@
     }];
 }
 
-+ (void)downloadImage:(NSString*)url withBlock:(void (^)(UIImage* image))block {
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
-    NSURL *URL = [NSURL URLWithString:url];
-    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
-    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
-        NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSCachesDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
-        return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
-    } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
-        UIImage *image = [UIImage imageWithData: [NSData dataWithContentsOfURL:filePath]];
-        if (image) {
++ (void)sd_downloadImage:(NSString*)url withBlock:(void (^)(UIImage* image))block {
+    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+    [manager downloadImageWithURL:[NSURL URLWithString:url] options:SDWebImageAllowInvalidSSLCertificates progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+        if (block && !error) {
             block(image);
         } else {
             block(nil);
         }
     }];
-    [downloadTask resume];
+}
++ (void)loveReply:(NSMutableDictionary*)param ID:(NSInteger)ID  withBlock:(void (^)(BOOL succeed))block {
+    NSString* url = [NSString stringWithFormat:@"reply/loveReply/%zd",ID];
+ 
+    [DDBaseService GET:param url:url block:^(id responseObject) {
+        if (responseObject) {
+            block(YES);
+        } else {
+            block(NO);
+        }
+    }];}
+
++ (void)charge:(NSDictionary*)param withBlock:(void (^)(BOOL success))block {
+    
+    [DDBaseService POST:param url:@"money/charge" block:^(id responseObject) {
+        NSDictionary *dictionaryData = [responseObject objectForKey:@"data"];
+        if (dictionaryData == nil) {
+            if (block) {
+                block(NO);
+            }
+            return ;
+        }
+        NSData *data = [NSJSONSerialization dataWithJSONObject:dictionaryData options:NSJSONWritingPrettyPrinted error:nil];
+        NSString *jsonString = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+
+        
+        [Pingpp createPayment:jsonString appURLScheme:@"2088122565280825" withCompletion:^(NSString *result, PingppError *error) {
+            if ([result isEqualToString:@"success"]) {
+                // 支付成功
+                if (block) {
+                    block(YES);
+                }
+                [Hud text:@"支付成功"];
+                
+            } else {
+                // 支付失败或取消
+                if (block) {
+                    block(NO);
+                }
+                [Hud text:@"支付失败或取消"];
+            }
+        }];
+    }];
+    
 }
 
++ (void)withdraw:(NSDictionary*)param withBlock:(void (^)(BOOL success))block {
+    
+    [DDBaseService POST:param url:@"money/transfer" block:^(id responseObject) {
+//        NSDictionary *dictionaryData = [responseObject objectForKey:@"data"];
+//        if (dictionaryData == nil) {
+//            if (block) {
+//                block(NO);
+//            }
+//            return ;
+//        }
+        if (responseObject) {
+            if (block) {
+                block(YES);
+            }
+        } else {
+            if (block) {
+                block(NO);
+            }
+        }
+//        NSData *data = [NSJSONSerialization dataWithJSONObject:dictionaryData options:NSJSONWritingPrettyPrinted error:nil];
+//        NSString *jsonString = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+        
 
-
+//        [Pingpp createPayment:jsonString appURLScheme:@"2088122565280825" withCompletion:^(NSString *result, PingppError *error) {
+//            if ([result isEqualToString:@"success"]) {
+//                if (block) {
+//                    block(YES);
+//                }
+//                [Hud text:@"提现成功"];
+//                
+//            } else {
+//                // 支付失败或取消
+//                if (block) {
+//                    block(NO);
+//                }
+//                [Hud text:@"提现失败或取消"];
+//            }
+//        }];
+    }];
+    
+}
 @end

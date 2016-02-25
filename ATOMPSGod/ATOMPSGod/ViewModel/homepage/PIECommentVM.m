@@ -7,7 +7,7 @@
 //
 
 #import "PIECommentVM.h"
-#import "PIECommentEntity.h"
+#import "PIECommentModel.h"
 #import "PIEEntityCommentReply.h"
 #import "PIECommentManager.h"
 @implementation PIECommentVM
@@ -23,7 +23,8 @@
     return self;
 }
 
-- (void)setViewModelData:(PIECommentEntity *)comment {
+- (void)setViewModelData:(PIECommentModel *)comment {
+    _model = comment;
     _originText  = comment.content;
     _uid         = comment.uid;
     _username    = comment.nickname;
@@ -34,22 +35,26 @@
     NSDate* date = [NSDate dateWithTimeIntervalSince1970:comment.commentTime];
     _time        = [Util formatPublishTime:date];
     
+//    if (comment.atCommentArray && comment.atCommentArray.count > 0) {
+//        NSString *content = comment.content;
+//        for (NSDictionary* dic in comment.atCommentArray) {
+//            PIEEntityCommentReply *reply = [MTLJSONAdapter modelOfClass:[PIEEntityCommentReply class] fromJSONDictionary:dic error:NULL];
+//            if (reply) {
+//                [_replyArray addObject:reply];
+//            }
+//            if (_replyArray.count>2) {
+//                break;
+//            }
+//            content = [NSString stringWithFormat:@"%@//@%@:%@", content, reply.username, reply.text];
+//        }
+//        _text = content;
+//    }
     if (comment.atCommentArray && comment.atCommentArray.count > 0) {
-        NSString *content = comment.content;
-        for (NSDictionary* dic in comment.atCommentArray) {
-            PIEEntityCommentReply *reply = [MTLJSONAdapter modelOfClass:[PIEEntityCommentReply class] fromJSONDictionary:dic error:NULL];
-            if (reply) {
-                [_replyArray addObject:reply];
-            }
-            if (_replyArray.count>2) {
-                break;
-            }
-            content = [NSString stringWithFormat:@"%@//@%@:%@", content, reply.username, reply.text];
-        }
-        _text = content;
-    } else {
-        _text = comment.content;
+        NSDictionary* dic = [comment.atCommentArray objectAtIndex:0];
+        PIEEntityCommentReply *reply = [MTLJSONAdapter modelOfClass:[PIEEntityCommentReply class] fromJSONDictionary:dic error:NULL];
+        [_replyArray addObject:reply];
     }
+    _text = comment.content;
     _liked = comment.liked;
 }
 

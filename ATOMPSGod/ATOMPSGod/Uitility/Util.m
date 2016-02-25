@@ -11,6 +11,25 @@
 #import "PIEShareImageView.h"
 
 @implementation Util
+
++ (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize circlize:(BOOL)circlize {
+    //UIGraphicsBeginImageContext(newSize);
+    // In next line, pass 0.0 to use the current device's pixel scaling factor (and thus account for Retina resolution).
+    // Pass 1.0 to force exact pixel size.
+    
+    
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
+    CGRect rect = CGRectMake(0, 0, newSize.width, newSize.height);
+    if (circlize) {
+        [[UIBezierPath bezierPathWithRoundedRect:rect
+                                    cornerRadius:newSize.width/2] addClip];
+    }
+    [image drawInRect:rect];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
 + (UIImage *)imageWithColor:(UIColor *)color {
     CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
     UIGraphicsBeginImageContext(rect.size);
@@ -50,17 +69,21 @@
     return s;
 }
 
-+ (void) imageWithVm:(PIEPageVM*)vm block:(void(^)(UIImage*))block
++ (void) generateShareImageFromViewModel:(PIEPageVM*)vm block:(void(^)(UIImage*))block
 {
     
     PIEShareImageView* view = [PIEShareImageView new];
     [view injectSauce:vm withBlock:^(BOOL success) {
-        UIGraphicsBeginImageContextWithOptions(view.bounds.size, view.opaque, 0.0f);
-        [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:YES];
-        UIImage * snapshotImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        if (block) {
-            block(snapshotImage);
+        if (success) {
+            UIGraphicsBeginImageContextWithOptions(view.bounds.size, view.opaque, 0.0f);
+            [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:YES];
+            UIImage * snapshotImage = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            if (block) {
+                block(snapshotImage);
+            }
+        } else {
+            NSLog(@"无法生成图片");
         }
     }];
 }
@@ -180,70 +203,91 @@ NSString* deviceName()
 @implementation Hud
 
 +(void)text:(NSString*)message {
+    [Hud dismiss];
     if ([UIApplication sharedApplication].keyWindow) {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-    // Configure for text only and offset down
+    hud.color = [UIColor colorWithHex:0x000000 andAlpha:0.6];
     hud.mode = MBProgressHUDModeText;
     hud.labelText = message;
-    hud.margin = 30.f;
-    hud.cornerRadius = 4;
+    hud.margin = 16.f;
+    hud.cornerRadius = 8;
     hud.removeFromSuperViewOnHide = YES;
     [hud hide:YES afterDelay:1];
     }
 }
+
++(void)text:(NSString*)message backgroundColor:(UIColor*)color margin:(CGFloat)margin cornerRadius:(CGFloat)cornerRadius {
+    [Hud dismiss];
+    if ([UIApplication sharedApplication].keyWindow) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+        // Configure for text only and offset down
+        hud.color = color;
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = message;
+        hud.margin = margin;
+        hud.cornerRadius = cornerRadius;
+        hud.removeFromSuperViewOnHide = YES;
+        [hud hide:YES afterDelay:1];
+    }
+}
 +(void)textWithLightBackground:(NSString*)message {
+    [Hud dismiss];
     if ([UIApplication sharedApplication].keyWindow) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
         hud.color = [UIColor colorWithHex:0xffffff andAlpha:0.5];
         // Configure for text only and offset down
         hud.mode = MBProgressHUDModeText;
         hud.labelText = message;
-        hud.margin = 30.f;
-        hud.cornerRadius = 4;
+        hud.margin = 18.f;
+        hud.cornerRadius = 8;
         hud.removeFromSuperViewOnHide = YES;
         [hud hide:YES afterDelay:1];
     }
 }
 
 +(void)text:(NSString*)message inView:(UIView*)view {
+    [Hud dismiss:view];
     if (view) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
         // Configure for text only and offset down
         hud.mode = MBProgressHUDModeText;
         hud.labelText = message;
-        hud.margin = 30.f;
-        hud.cornerRadius = 4;
+        hud.margin = 18.0f;
+        hud.cornerRadius = 8;
         hud.removeFromSuperViewOnHide = YES;
         [hud hide:YES afterDelay:1];
     }
 }
 +(void)customText:(NSString*)message inView:(UIView*)view {
+    [Hud dismiss:view];
     if (view) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
         // Configure for text only and offset down
         hud.mode = MBProgressHUDModeText;
         hud.labelText = message;
-        hud.margin = 30.f;
-        hud.cornerRadius = 4;
+        hud.margin = 18.f;
+        hud.cornerRadius = 8;
         hud.removeFromSuperViewOnHide = YES;
         [hud hide:YES afterDelay:1];
     }
 }
 +(void)activity:(NSString*)message {
+    [Hud dismiss];
     if ([UIApplication sharedApplication].keyWindow) {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
-    hud.margin = 30;
-    hud.cornerRadius = 4;
+    hud.margin = 20;
+    hud.cornerRadius = 6;
     hud.color = [UIColor colorWithHex:0x000000 andAlpha:0.2];
     hud.labelText = message;
     }
 }
 +(void)activity:(NSString*)message inView:(UIView*)view {
+    [Hud dismiss:view];
     if (view) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
-        hud.margin = 30;
-        hud.cornerRadius = 4;
+        hud.margin = 20;
+        hud.cornerRadius = 6;
         hud.color = [UIColor colorWithHex:0x000000 andAlpha:0.2];
         hud.mode = MBProgressHUDModeIndeterminate;
         hud.labelText = message;
@@ -261,6 +305,7 @@ NSString* deviceName()
     }
 }
 +(void)success:(NSString*)message inView:(UIView*)view {
+    [Hud dismiss:view];
     if (view) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
         hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hud_checkmark"]];
@@ -271,6 +316,7 @@ NSString* deviceName()
     }
 }
 +(void)success:(NSString*)message {
+    [Hud dismiss];
     if ([UIApplication sharedApplication].keyWindow) {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
     hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hud_checkmark"]];
@@ -282,6 +328,7 @@ NSString* deviceName()
 }
 
 +(void)error:(NSString*)message inView:(UIView*)view {
+    [Hud dismiss:view];
     if (view) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
         hud.mode = MBProgressHUDModeCustomView;
@@ -292,6 +339,7 @@ NSString* deviceName()
     }
 }
 +(void)error:(NSString*)message {
+    [Hud dismiss];
     if ([UIApplication sharedApplication].keyWindow) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
         hud.mode = MBProgressHUDModeCustomView;

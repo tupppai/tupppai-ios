@@ -30,6 +30,7 @@
     } else if (_url) {
         urlB= [NSString stringWithFormat:@"%@?version=%@&token=%@",_url,version,[DDUserManager currentUser].token];
     }
+//    NSLog(@"%@ url",urlB);
 
     NSURL *nsurl=[NSURL URLWithString:urlB];
     NSURLRequest *nsrequest=[NSURLRequest requestWithURL:nsurl];
@@ -51,7 +52,7 @@
     NSString *XpathQueryStringTitle = @"//title";
     NSArray *nodes = [parser searchWithXPathQuery:XpathQueryStringTitle];
     
-    NSLog(@"%@",nodes);
+//    NSLog(@"nodes%@",nodes);
 //    NSMutableArray *dataArray = [[NSMutableArray alloc]initWithCapacity:0];
     for (TFHppleElement *element in nodes) {
         self.title = [[element firstChild]content];

@@ -12,12 +12,13 @@
 #import "PIERefreshCollectionView.h"
 #import "DDPageManager.h"
 #import "PIETabBarController.h"
-#import "AppDelegate.h"
+
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "PIEMyReplyCollectionViewCell.h"
 
 #import "DDNavigationController.h"
-#import "PIECarouselViewController.h"
+#import "PIECarouselViewController2.h"
+#import "DeviceUtil.h"
 
 @interface PIEMyReplyViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,CHTCollectionViewDelegateWaterfallLayout>
 
@@ -28,6 +29,8 @@
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) BOOL isfirstLoading;
 @property (nonatomic, assign)  long long timeStamp;
+
+//@property (nonatomic, assign)  BOOL shouldGetNewDataSourceWhenViewWillAppear;
 
 @end
 
@@ -48,9 +51,9 @@
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
-        [_collectionView.mj_footer endRefreshing];
+        [Hud text:@"已经拉到底啦"];
+        [_collectionView.mj_footer endRefreshingWithNoMoreData];
     }
-    
 }
 
 #pragma mark - GetDataSource
@@ -63,12 +66,18 @@
     _timeStamp = [[NSDate date] timeIntervalSince1970];
     _currentPage = 1;
     [param setObject:@(_currentPage) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH) forKey:@"width"]; 
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getReply:param withBlock:^(NSMutableArray *resultArray) {
+        if (resultArray.count == 0) {
+            _canRefreshFooter = NO;
+        }else{
+            _canRefreshFooter = YES;
+        }
+        
         NSMutableArray* arrayAgent = [NSMutableArray new];
-        for (PIEPageEntity *entity in resultArray) {
+        for (PIEPageModel *entity in resultArray) {
             PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
             [arrayAgent addObject:vm];
         }
@@ -95,14 +104,16 @@
     [param setObject:@(15) forKey:@"size"];
     
     [DDPageManager getReply:param withBlock:^(NSMutableArray *resultArray) {
-        for (PIEPageEntity *entity in resultArray) {
+        
+        if (resultArray.count < 15) {
+            _canRefreshFooter = NO;
+        } else {
+            _canRefreshFooter = YES;
+        }
+        
+        for (PIEPageModel *entity in resultArray) {
             PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
             [ws.dataSource addObject:vm];
-        }
-        if (resultArray.count == 0) {
-            ws.canRefreshFooter = NO;
-        } else {
-            ws.canRefreshFooter = YES;
         }
         [ws.collectionView.mj_footer endRefreshing];
         [ws.collectionView reloadData];
@@ -114,7 +125,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
+    [self setupObservers];
 }
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
+- (void)setupObservers {
+    [[RACObserve([DDUserManager currentUser],replyNumber)
+      skip:1]
+     subscribeNext:^(id x) {
+         [self.collectionView.mj_header beginRefreshing];
+     }];
+}
+
 
 - (void)createUI {
     CHTCollectionViewWaterfallLayout *layout = [[CHTCollectionViewWaterfallLayout alloc] init];
@@ -164,10 +189,10 @@
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    PIECarouselViewController* vc = [PIECarouselViewController new];
+    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
     vc.pageVM = [_dataSource objectAtIndex:indexPath.row];
     DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-    [nav pushViewController:vc animated:YES ];
+    [nav presentViewController:vc animated:YES completion:nil];
 }
 
 
@@ -192,13 +217,18 @@
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView
+{
+    return 20;
+}
+
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     PIEPageVM* vm = [_dataSource objectAtIndex:indexPath.row];
     CGFloat width;
     CGFloat height;
     width = (SCREEN_WIDTH) /2 - 20;
-    height = vm.imageHeight/vm.imageWidth * width;
+    height = vm.imageRatio * width;
     height = MAX(150, height);
     height = MIN(SCREEN_HEIGHT/2, height);
 
@@ -216,7 +246,6 @@
         }
     });
 }
-
 
 
 @end

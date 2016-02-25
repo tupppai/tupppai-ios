@@ -10,14 +10,14 @@
 #import "PIERefreshTableView.h"
 #import "DDPageManager.h"
 #import "PIEMyCollectionTableViewCell.h"
-#import "PIECarouselViewController.h"
+#import "PIECarouselViewController2.h"
 #import "DDNavigationController.h"
-#import "AppDelegate.h"
 
+#import "DeviceUtil.h"
+#import "PIECommentViewController.h"
 @interface PIEMyCollectionViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @property (nonatomic, strong)  PIERefreshTableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
-@property (nonatomic, strong) UITapGestureRecognizer *tapMyCollectionGesture;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) BOOL canRefreshFooter;
 @property (nonatomic, assign) BOOL isfirstLoading;
@@ -73,10 +73,20 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    PIECarouselViewController* vc = [PIECarouselViewController new];
-    vc.pageVM = [_dataSource objectAtIndex:indexPath.row];
-    DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-    [nav pushViewController:vc animated:YES ];
+    
+    PIEPageVM* vm = [_dataSource objectAtIndex:indexPath.row];
+    if ([vm.replyCount integerValue] <= 0 && vm.type == PIEPageTypeAsk) {
+        PIECommentViewController *vc_comment = [PIECommentViewController new];
+        vc_comment.vm = vm;
+        DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+        DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc_comment];
+        [nav presentViewController:nav2 animated:NO completion:nil];
+    } else {
+        PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+        vc.pageVM = vm;
+        DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+        [nav presentViewController:vc animated:NO completion:nil];
+    }
 }
 -(void)didPullRefreshDown:(UITableView *)tableView {
     [self getDataSource];
@@ -86,7 +96,8 @@
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
-        [_tableView.mj_footer endRefreshing];
+        [Hud text:@"已经拉到底啦"];
+        [_tableView.mj_footer endRefreshingWithNoMoreData];
     }
 }
 #pragma mark - GetDataSource
@@ -100,12 +111,12 @@
 
     _currentPage = 1;
     [param setObject:@(_currentPage) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH*0.5) forKey:@"width"];
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getCollection:param withBlock:^(NSMutableArray *resultArray) {
         NSMutableArray* arrayAgent = [NSMutableArray new];
-        for (PIEPageEntity *entity in resultArray) {
+        for (PIEPageModel *entity in resultArray) {
             PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
             [arrayAgent addObject:vm];
         }
@@ -128,17 +139,17 @@
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     _currentPage++;
     [param setObject:@(_currentPage) forKey:@"page"];
-    [param setObject:@(SCREEN_WIDTH) forKey:@"width"];
+    [param setObject:@(SCREEN_WIDTH*0.5) forKey:@"width"];
     [param setObject:@(_timeStamp) forKey:@"last_updated"];
     [param setObject:@(15) forKey:@"size"];
     [DDPageManager getCollection:param withBlock:^(NSMutableArray *resultArray) {
-        for (PIEPageEntity *entity in resultArray) {
+        for (PIEPageModel *entity in resultArray) {
             PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:entity];
             [_dataSource addObject:vm];
         }
         [ws.tableView reloadData];
         [ws.tableView.mj_footer endRefreshing];
-        if (resultArray.count == 0) {
+        if (resultArray.count < 15) {
             ws.canRefreshFooter = NO;
         } else {
             ws.canRefreshFooter = YES;
@@ -177,6 +188,10 @@
                                  NSForegroundColorAttributeName: [UIColor darkGrayColor]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView{
+    return 20;
 }
 
 @end

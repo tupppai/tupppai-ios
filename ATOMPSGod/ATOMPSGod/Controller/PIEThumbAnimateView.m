@@ -7,22 +7,26 @@
 //
 
 #import "PIEThumbAnimateView.h"
+@interface PIEThumbAnimateView()
+@property (nonatomic,strong) MASConstraint *masContraint_rightViewWidth;
 
+@end
 @implementation PIEThumbAnimateView
 -(instancetype)init {
     self = [super init];
     if (self) {
-        self.frame = CGRectMake(0, 0, 100, 100);
-        _toExpand = YES;
-        self.userInteractionEnabled = YES;
-        self.clipsToBounds = YES;
-        self.backgroundColor = [UIColor colorWithHex:0xffffff andAlpha:0.95];
-        [self setupSubviews];
+        [self commonInit];
     }
     return self;
 }
 
 
+- (void)commonInit {
+    [self setupSubviews];
+    self.leftView.userInteractionEnabled = YES;
+    self.rightView.userInteractionEnabled = YES;
+    self.userInteractionEnabled = YES;
+}
 - (void)setupSubviews {
     [self addSubview:self.blurView];
     [self addSubview:self.leftView];
@@ -30,31 +34,30 @@
     [self addSubview:self.originView];
     
     [self.blurView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self);
-        make.trailing.equalTo(self);
-        make.bottom.equalTo(self);
-        make.leading.equalTo(self);
+        make.edges.equalTo(self);
     }];
     
-    [_rightView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self);
+    [self.leftView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.and.bottom.equalTo(self);
+        make.leading.equalTo(self);
+        make.trailing.equalTo(self.rightView.mas_leading);
+    }];
+    
+    //default when thumb view has only 1
+    [self.rightView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.and.bottom.equalTo(self);
         make.trailing.equalTo(self);
-        make.bottom.equalTo(self);
-        make.leading.equalTo(self);
+        self.masContraint_rightViewWidth = make.width.equalTo(self.mas_width).priorityLow();
     }];
-    [_leftView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self);
-        make.leading.equalTo(self);
-        make.bottom.equalTo(self);
-        make.trailing.equalTo(_rightView.mas_leading);
-    }];
-    [_originView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self);
-        make.leading.equalTo(self);
+
+    [self.originView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self).with.offset(-1);
+        make.leading.equalTo(self).with.offset(-3);
         make.width.equalTo(@34);
         make.height.equalTo(@16);
     }];
 }
+
 
 
 
@@ -94,40 +97,58 @@
 }
 - (void)setSubviewCounts:(NSInteger)subviewCounts {
     _subviewCounts = subviewCounts;
-    if (subviewCounts == 2) {
-        [_rightView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self);
-            make.trailing.equalTo(self);
-            make.bottom.equalTo(self);
-            make.width.equalTo(self).with.multipliedBy(0.5).with.priorityLow();
+    if (_subviewCounts == 2) {
+        [self.masContraint_rightViewWidth uninstall];
+        [self.rightView mas_updateConstraints:^(MASConstraintMaker *make) {
+           self.masContraint_rightViewWidth = make.width.equalTo(self).multipliedBy(0.5).with.priorityLow();
         }];
-        [_leftView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self);
-            make.leading.equalTo(self);
-            make.bottom.equalTo(self);
-            make.trailing.equalTo(_rightView.mas_leading);
+    } else {
+        [self.masContraint_rightViewWidth uninstall];
+        [self.rightView mas_updateConstraints:^(MASConstraintMaker *make) {
+            self.masContraint_rightViewWidth = make.width.equalTo(self).multipliedBy(1).with.priorityLow();
         }];
+    }
+}
+
+- (void)animateWithType:(PIEThumbAnimateViewType)type {
+    
+    //变小
+    if (_subviewCounts == 2) {
+        if (self.enlarged) {
+            [self.masContraint_rightViewWidth uninstall];
+            [self.rightView mas_updateConstraints:^(MASConstraintMaker *make) {
+                self.masContraint_rightViewWidth = make.width.equalTo(self).multipliedBy(0.5);
+            }];
+        } else {
+            if (type == PIEThumbAnimateViewTypeLeft) {
+                [self.masContraint_rightViewWidth uninstall];
+                [self.rightView mas_updateConstraints:^(MASConstraintMaker *make) {
+                    self.masContraint_rightViewWidth = make.width.equalTo(@0);
+                }];
+            } else {
+                [self.masContraint_rightViewWidth uninstall];
+                [self.rightView mas_updateConstraints:^(MASConstraintMaker *make) {
+                    self.masContraint_rightViewWidth = make.width.equalTo(self);
+                }];
+            }
+        }
         
     }
-    else {
-        [_rightView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self);
-            make.trailing.equalTo(self);
-            make.bottom.equalTo(self);
-            make.width.equalTo(self).with.multipliedBy(1);
-        }];
-        [_leftView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self);
-            make.leading.equalTo(self);
-            make.bottom.equalTo(self);
-            make.width.equalTo(@0);
-        }];
-    }
-    [self layoutIfNeeded];
+    self.enlarged = !self.enlarged;
+
 }
 
 
-
-
+- (void)prepareForReuse {
+    if (self.enlarged) {
+        if (_subviewCounts == 2) {
+            [self.masContraint_rightViewWidth uninstall];
+            [self.rightView mas_updateConstraints:^(MASConstraintMaker *make) {
+                self.masContraint_rightViewWidth = make.width.equalTo(self).multipliedBy(0.5).with.priorityLow();
+            }];
+        }
+        self.enlarged = NO;
+    }
+}
 
 @end

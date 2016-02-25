@@ -7,8 +7,9 @@
 //
 
 #import "PIECommentTableHeaderView_Reply.h"
-#import "PIEImageEntity.h"
+#import "PIEModelImage.h"
 #import "FXBlurView.h"
+
 
 #define MAXHEIGHT (SCREEN_WIDTH-kPadding15*2)*4/3
 
@@ -26,7 +27,6 @@
     return self;
 }
 - (void)configSubviews {
-    //to avoid contraints break error.
     
     [self addSubview:self.avatarView];
     [self addSubview:self.usernameLabel];
@@ -34,7 +34,7 @@
     [self addSubview:self.followButton];
     [self addSubview:self.imageViewBlur];
     [self addSubview:self.imageViewMain];
-    [self addSubview:self.imageViewRight];
+//    [self addSubview:self.imageViewRight];
     [self addSubview:self.textView_content];
     [self addSubview:self.commentButton];
     [self addSubview:self.shareButton];
@@ -53,6 +53,7 @@
     [self mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@(SCREEN_WIDTH));
     }];
+    
     [self.avatarView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self).with.offset(10);
         make.right.equalTo(self).with.offset(-12);
@@ -77,16 +78,12 @@
     [self.imageViewMain mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_timeLabel.mas_bottom).with.offset(10);
         make.left.equalTo(self).with.offset(0);
-        make.width.equalTo(self).with.priorityHigh();
-        make.height.equalTo(self.mas_width);
+//        make.width.equalTo(self).with.priorityHigh();
+        make.right.equalTo(self).with.offset(0);
+
+        make.height.equalTo(self.imageViewMain.mas_width);
     }];
     
-    [self.imageViewRight mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.imageViewMain.mas_top);
-        make.left.equalTo(self.imageViewMain.mas_right).with.offset(0);
-        make.right.equalTo(self).with.offset(0);
-        make.bottom.equalTo(self.imageViewMain.mas_bottom).with.offset(0);
-    }];
     [self.imageViewBlur mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.imageViewMain);
         make.bottom.equalTo(self.imageViewMain);
@@ -102,12 +99,12 @@
     
     [self.moreWorkButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.commentButton);
-        make.width.equalTo(@50);
-        make.height.equalTo(@25);
+        make.width.equalTo(@70);
+        make.height.equalTo(@15);
         make.left.equalTo(self).with.offset(11);
     }];
     
-    [self.commentButton mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.textView_content.mas_bottom).with.offset(6).with.priorityLow();
         make.width.equalTo(@40).with.priorityMedium();
         make.width.greaterThanOrEqualTo(@40);
@@ -115,18 +112,18 @@
         make.left.equalTo(self.moreWorkButton.mas_right).with.offset(18);
 //        make.bottom.equalTo(self).with.offset(-15);
     }];
-    [self.shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.commentButton);
+    [self.commentButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.shareButton);
         make.width.equalTo(@40).with.priorityMedium();
         make.width.greaterThanOrEqualTo(@40);
         make.height.equalTo(@30);
-        make.left.equalTo(self.commentButton.mas_right).with.offset(18);
+        make.left.equalTo(self.shareButton.mas_right).with.offset(12);
     }];
   
     [self.likeButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.commentButton);
-        make.width.equalTo(@32).priorityHigh();
-        make.width.greaterThanOrEqualTo(@32);
+        make.width.equalTo(@35).priorityHigh();
+        make.width.greaterThanOrEqualTo(@35);
         make.height.equalTo(@32);
         make.right.equalTo(self).with.offset(-17);
     }];
@@ -148,37 +145,66 @@
 -(void)setVm:(PIEPageVM *)vm {
     if (vm) {
         _vm = vm;
-        [_avatarView setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
-        _usernameLabel.text = vm.username;
-        _timeLabel.text = vm.publishTime;
-        _followButton.selected = vm.followed;
-//        [_imageViewMain setImageWithURL:[NSURL URLWithString:vm.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
         
-        [DDService downloadImage:vm.imageURL withBlock:^(UIImage *image) {
-            _imageViewBlur.image = [image blurredImageWithRadius:80 iterations:1 tintColor:[UIColor blackColor]];
-            _imageViewMain.image = image;
+        [RACObserve(vm, followed)subscribeNext:^(id x) {
+            self.followButton.selected = [x boolValue];
+        }];
+        [RACObserve(vm, shareCount)subscribeNext:^(id x) {
+            self.shareButton.numberString = x;
+        }];
+        [RACObserve(vm, commentCount)subscribeNext:^(id x) {
+            self.commentButton.numberString = x;
         }];
 
-        CGFloat height = vm.imageHeight/vm.imageWidth *SCREEN_WIDTH;
-        if (height > 100) {
-            [_imageViewMain mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.height.equalTo(@(height));
-            }];
+        [RACObserve(vm, likeCount)subscribeNext:^(id x) {
+            self.likeButton.numberString = x;
+        }];
+        [RACObserve(vm, loveStatus)subscribeNext:^(id x) {
+            self.likeButton.status = [x integerValue];
+        }];
+        [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:vm.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+        
+        _avatarView.isV = vm.isV;
+        
+        _usernameLabel.text = vm.username;
+        _timeLabel.text = vm.publishTime;
+        
+        if (vm.isMyFan) {
+            [_followButton setImage:[UIImage imageNamed:@"pie_mutualfollow"] forState:UIControlStateSelected];
         } else {
-            _imageViewMain.contentMode = UIViewContentModeScaleAspectFit;
+            [_followButton setImage:[UIImage imageNamed:@"new_reply_followed"] forState:UIControlStateSelected];
         }
+        _followButton.selected = vm.followed;
+        
+        if (vm.userID == [DDUserManager currentUser].uid) {
+            _followButton.hidden = YES;
+        } else {
+            _followButton.hidden = NO;
+        }
+        
+        [DDService sd_downloadImage:vm.imageURL withBlock:^(UIImage *image) {
+            _imageViewBlur.image = [image blurredImageWithRadius:80 iterations:1 tintColor:[UIColor blackColor]];
+            _imageViewMain.image = image;
+            
+            
+            NSString* imageUrl2 = [vm.imageURL trimToImageWidth:SCREEN_WIDTH_RESOLUTION];
+            [DDService sd_downloadImage:imageUrl2 withBlock:^(UIImage *image) {
+                _imageViewBlur.image = [image blurredImageWithRadius:80 iterations:1 tintColor:[UIColor blackColor]];
+                _imageViewMain.image = image;
+            }];
+
+        }];
+        
 
         _commentButton.numberString = vm.commentCount;
         _shareButton.numberString = vm.shareCount;
-        _likeButton.numberString = vm.likeCount;
-        _likeButton.highlighted = vm.liked;
+        [_likeButton initStatus:vm.loveStatus numberString:vm.likeCount];
         
         NSString * htmlString = vm.content;
         NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
         [attrStr addAttribute:NSFontAttributeName value:[UIFont lightTupaiFontOfSize:15] range:NSMakeRange(0, attrStr.length)];
         [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0x000000 andAlpha:0.9] range:NSMakeRange(0, attrStr.length)];
         _textView_content.attributedText = attrStr;
-
 
     }
     else {
@@ -194,14 +220,11 @@
 
 
 
-- (UIImageView *)avatarView
+- (PIEAvatarView *)avatarView
 {
     if (!_avatarView) {
-        _avatarView = [UIImageView new];
+        _avatarView = [[PIEAvatarView alloc]initWithFrame:CGRectMake(0, 0, 32, 32)];
         _avatarView.userInteractionEnabled = YES;
-        _avatarView.contentMode = UIViewContentModeScaleToFill;
-        _avatarView.clipsToBounds = YES;
-        _avatarView.layer.cornerRadius = 16;
     }
     return _avatarView;
 }
@@ -212,7 +235,7 @@
         _usernameLabel = [UILabel new];
         _usernameLabel.userInteractionEnabled = YES;
         _usernameLabel.textColor = [UIColor colorWithHex:0x000000 andAlpha:0.9];
-        _usernameLabel.font = [UIFont lightTupaiFontOfSize:13];
+        _usernameLabel.font = [UIFont mediumTupaiFontOfSize:13];
     }
     return _usernameLabel;
 }
@@ -231,7 +254,6 @@
     if (!_imageViewMain) {
         _imageViewMain = [UIImageView new];
         _imageViewMain.contentMode = UIViewContentModeScaleAspectFit;
-        //        _imageViewMain.clipsToBounds = YES;
         _imageViewMain.userInteractionEnabled = YES;
     }
     return _imageViewMain;
@@ -244,19 +266,20 @@
     }
     return _imageViewBlur;
 }
--(UIImageView*)imageViewRight {
-    if (!_imageViewRight) {
-        _imageViewRight = [UIImageView new];
-        _imageViewMain.contentMode = UIViewContentModeScaleAspectFit;
-        //        _imageViewMain.clipsToBounds = YES;
-        _imageViewRight.userInteractionEnabled = YES;
-        _imageViewRight.backgroundColor= [ UIColor groupTableViewBackgroundColor];
-    }
-    return _imageViewRight;
-}
+//-(UIImageView*)imageViewRight {
+//    if (!_imageViewRight) {
+//        _imageViewRight = [UIImageView new];
+//        _imageViewMain.contentMode = UIViewContentModeScaleAspectFit;
+//        //        _imageViewMain.clipsToBounds = YES;
+//        _imageViewRight.userInteractionEnabled = YES;
+//        _imageViewRight.backgroundColor= [ UIColor groupTableViewBackgroundColor];
+//    }
+//    return _imageViewRight;
+//}
 - (PIETextView_linkDetection *)textView_content {
     if (!_textView_content) {
         _textView_content = [PIETextView_linkDetection new];
+        _textView_content.font = [UIFont lightTupaiFontOfSize:14];
     }
     return _textView_content;
 }
@@ -278,9 +301,9 @@
     return _shareButton;
 }
 
--(PIEPageLikeButton *)likeButton {
+-(PIELoveButton *)likeButton {
     if (!_likeButton) {
-        _likeButton = [PIEPageLikeButton new];
+        _likeButton = [PIELoveButton new];
         _likeButton.imageSize = CGSizeMake(19,19);
     }
     return _likeButton;
@@ -291,14 +314,10 @@
     if (!_moreWorkButton) {
         _moreWorkButton = [UIButton new];
         [_moreWorkButton setImage:[UIImage imageNamed:@"hot_allwork"] forState:UIControlStateNormal];
-        _moreWorkButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
+        _moreWorkButton.imageView.contentMode = UIViewContentModeScaleToFill;
     }
     return _moreWorkButton;
 }
-
-
-
-
 
 -(UIButton *)followButton {
     if (!_followButton) {
@@ -308,38 +327,12 @@
         [_followButton setImage:[UIImage imageNamed:@"new_reply_follow"] forState:UIControlStateNormal];
         [_followButton setImage:[UIImage imageNamed:@"new_reply_followed"] forState:UIControlStateHighlighted];
         [_followButton setImage:[UIImage imageNamed:@"new_reply_followed"] forState:UIControlStateSelected];
-        [_followButton addTarget:self action:@selector(follow:) forControlEvents:UIControlEventTouchUpInside];
+        [_followButton addTarget:self action:@selector(follow) forControlEvents:UIControlEventTouchDown];
     }
     return _followButton;
 }
--(void)follow:(UIButton*)followView {
-    
-    followView.selected = !followView.selected;
-    NSMutableDictionary *param = [NSMutableDictionary new];
-    [param setObject:@(_vm.userID) forKey:@"uid"];
-    if (followView.selected) {
-        [param setObject:@1 forKey:@"status"];
-    }
-    else {
-        [param setObject:@0 forKey:@"status"];
-    }
-    
-    [DDService follow:param withBlock:^(BOOL success) {
-        if (success) {
-            _vm.followed = followView.selected;
-        } else {
-            followView.selected = !followView.selected;
-        }
-    }];
+-(void)follow {
+    [self.vm follow];
 }
-//
-//-(BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
-//    PIEWebViewViewController* vc = [PIEWebViewViewController new];
-//    vc.url = [URL absoluteString];
-//    
-//    DDNavigationController* nav = (DDNavigationController*)[AppDelegate APP].mainTabBarController.presentedViewController.presentedViewController;
-//    [nav pushViewController:vc animated:YES ];
-//    return NO;
-//}
 
 @end

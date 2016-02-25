@@ -30,7 +30,8 @@
     // Configure the view for the selected state
 }
 - (void)injectSauce:(PIENotificationVM*)vm {
-    [_avatarView setImageWithURL:[NSURL URLWithString:vm.avatarUrl]placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+    NSString* avatarUrl = [vm.avatarUrl trimToImageWidth:_avatarView.frame.size.width*SCREEN_SCALE];
+    [_avatarView sd_setImageWithURL:[NSURL URLWithString:avatarUrl]placeholderImage:[UIImage imageNamed:@"avatar_default"]];
     _usernameLabel.text = vm.username;
     _timeLabel.text = vm.time;
 }

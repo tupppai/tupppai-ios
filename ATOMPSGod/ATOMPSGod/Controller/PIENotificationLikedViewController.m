@@ -12,7 +12,7 @@
 #import "PIENotificationVM.h"
 #import "PIENotificationLikeTableViewCell.h"
 #import "PIEFriendViewController.h"
-#import "PIECarouselViewController.h"
+#import "PIECarouselViewController2.h"
 
 @interface PIENotificationLikedViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @property (nonatomic, strong) NSMutableArray *source;
@@ -47,7 +47,6 @@
 - (void)getDataSource {
     _currentIndex = 1;
     [self.tableView.mj_footer endRefreshing];
-    WS(ws);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     _timeStamp = [[NSDate date] timeIntervalSince1970];
     [param setObject:@(1) forKey:@"page"];
@@ -56,16 +55,16 @@
     [param setObject:@"like" forKey:@"type"];
     
     [PIENotificationManager getNotifications:param block:^(NSArray *source) {
-        ws.isfirstLoading = NO;
+        _isfirstLoading = NO;
         if (source.count>0) {
-            ws.source = [source mutableCopy];
+            _source = [source mutableCopy];
             _canRefreshFooter = YES;
         }
         else {
             _canRefreshFooter = NO;
         }
         
-        [ws.tableView reloadData];
+        [_tableView reloadData];
         [self.tableView.mj_header endRefreshing];
     }];
 }
@@ -82,14 +81,15 @@
     [param setObject:@"like" forKey:@"type"];
     
     [PIENotificationManager getNotifications:param block:^(NSArray *source) {
-        if (source.count>0) {
-            [ws.source addObjectsFromArray:source];
-            [ws.tableView reloadData];
-            _canRefreshFooter = YES;
-        }
-        else {
+        if (source.count < 15) {
             _canRefreshFooter = NO;
         }
+        else {
+            _canRefreshFooter = YES;
+        }
+        
+        [ws.source addObjectsFromArray:source];
+        [ws.tableView reloadData];
         [self.tableView.mj_footer endRefreshing];
     }];
 }
@@ -101,7 +101,8 @@
     if (_canRefreshFooter) {
         [self getMoreDataSource];
     } else {
-        [self.tableView.mj_footer endRefreshing];
+        [Hud text:@"已经拉到底啦"];
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
     }
 }
 -(PIERefreshTableView *)tableView {
@@ -140,14 +141,13 @@
                 vc.uid = vm.senderID;
                 vc.name = vm.username;
                 [self.navigationController pushViewController:vc animated:YES];
-            } else  if (CGRectContainsPoint(cell.pageImageView.frame,p)) {
-                PIECarouselViewController* vc = [PIECarouselViewController new];
-                PIEPageVM* pageVM = [PIEPageVM new];
-                pageVM.ID = vm.targetID;
-                pageVM.askID = vm.askID;
-                pageVM.type = vm.targetType;
+       } else  if (CGRectContainsPoint(cell.pageImageView.frame,p)) {
+                PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+                PIEPageVM* pageVM = [self transformNotificationVMToPageVM:vm];
                 vc.pageVM = pageVM;
-                [self.navigationController pushViewController:vc animated:YES];
+                [self.navigationController presentViewController:vc animated:YES completion:nil];
+
+//                [self.navigationController pushViewController:vc animated:YES];
             }
     }
 }
@@ -191,6 +191,20 @@
     return YES;
 }
 
+#pragma mark - private helpers
+- (PIEPageVM*)transformNotificationVMToPageVM:(PIENotificationVM*)vm {
+    PIEPageModel* model = [PIEPageModel new];
+    model.ID = vm.model.targetID;
+    model.type = vm.model.targetType;
+    model.imageURL = vm.model.imageUrl;
+    model.avatar = vm.model.avatarUrl;
+    model.askID = vm.model.askID;
+    model.nickname = vm.model.username;
+    model.uid = vm.model.senderID;
+    model.uploadTime = vm.model.time;
+    PIEPageVM* pageVM  = [[PIEPageVM alloc]initWithPageEntity:model];
+    return pageVM;
+}
 
 
 @end

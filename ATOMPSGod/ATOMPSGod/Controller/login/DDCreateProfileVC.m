@@ -11,7 +11,7 @@
 #import "DDPhoneRegisterVC.h"
 #import "ATOMHeaderImageCropperViewController.h"
 #import "PIEUploadManager.h"
-#import "PIEEntityImage.h"
+#import "PIEModelImageInfo.h"
 #import "JGActionSheet.h"
 #import "DDLoginNavigationController.h"
 #import "PIEAgreementsViewController.h"
@@ -81,7 +81,9 @@
     
     [_createProfileView.protocolButton addTarget:self action:@selector(tapProtocol) forControlEvents:UIControlEventTouchUpInside];
     
-    if ([DDUserManager currentUser].sdkUser.gender == 1) {
+    NSDictionary* sdkUser = [[NSUserDefaults standardUserDefaults]valueForKey:@"SdkUser"];
+
+    if ([sdkUser[@"gender"]integerValue] == 1) {
         [_createProfileView.sexSegment setSelectedSegmentIndex:1];
     }
     
@@ -96,10 +98,11 @@
 
 #pragma mark - Third party sign up
 -(void)setupWithSourceData {
-    if ([DDUserManager currentUser].signUpType != ATOMSignUpMobile) {
-        NSString* avatarUrl = [DDUserManager currentUser].sdkUser.icon;
-        [DDUserManager currentUser].sex = [DDUserManager currentUser].sdkUser.gender == 0 ? YES:NO;
-        NSString* name = [DDUserManager currentUser].sdkUser.nickname;
+    if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"SignUpType"]integerValue] != ATOMSignUpMobile) {
+        NSDictionary* sdkUser = [[NSUserDefaults standardUserDefaults]valueForKey:@"SdkUser"];
+        NSString* avatarUrl = sdkUser[@"icon"];
+        [DDUserManager currentUser].sex = [sdkUser[@"gender"]integerValue] == 0 ? YES:NO;
+        NSString* name = sdkUser[@"nickname"];
         [DDUserManager currentUser].avatar = avatarUrl;
         [_createProfileView.userHeaderButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString: avatarUrl] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
         _createProfileView.nicknameTextField.text = name;
@@ -118,7 +121,7 @@
         return ;
     }
     [DDUserManager currentUser].sex = _createProfileView.genderIsMan;
-    [DDUserManager currentUser].username = str;
+    [DDUserManager currentUser].nickname = str;
     DDPhoneRegisterVC *mrvc = [[DDPhoneRegisterVC alloc] init];
     [self.navigationController pushViewController:mrvc animated:YES];
 }
@@ -174,7 +177,7 @@
     NSData *data = UIImageJPEGRepresentation(image, 0.2);
     [_createProfileView.userHeaderButton setBackgroundImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
     PIEUploadManager *uploadImage = [PIEUploadManager new];
-    [uploadImage UploadImage:data WithBlock:^(PIEEntityImage *imageInfomation, NSError *error) {
+    [uploadImage UploadImage:data WithBlock:^(PIEModelImageInfo *imageInfomation, NSError *error) {
         if (error) {
             return ;
         }
@@ -248,12 +251,12 @@
     NSString* cityName = @"";
     if(cities.count > _selectedRowComponent2) {
          cityName = [[cities[_selectedRowComponent2] allValues]objectAtIndex:0];
-        [[DDUserManager currentUser].region setValue:[[[cities objectAtIndex:_selectedRowComponent2] allKeys]objectAtIndex:0] forKey:@"cityID"];
+//        [[DDUserManager currentUser].region setValue:[[[cities objectAtIndex:_selectedRowComponent2] allKeys]objectAtIndex:0] forKey:@"cityID"];
     }
     _createProfileView.showAreaLabel.text = [NSString stringWithFormat:@"%@,%@",provinceName,cityName];
-    [[DDUserManager currentUser].region setValue:cityName forKey:@"cityName"];
-    [[DDUserManager currentUser].region setValue:provinceName forKey:@"provinceName"];
-    [[DDUserManager currentUser].region setValue:_provinces[_selectedRowComponent1][@"id"] forKey:@"provinceID"];
+//    [[DDUserManager currentUser].region setValue:cityName forKey:@"cityName"];
+//    [[DDUserManager currentUser].region setValue:provinceName forKey:@"provinceName"];
+//    [[DDUserManager currentUser].region setValue:_provinces[_selectedRowComponent1][@"id"] forKey:@"provinceID"];
 }
 //load region.csv before doing anything
 -(void)loadRegionResource {

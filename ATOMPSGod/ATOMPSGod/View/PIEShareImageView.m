@@ -7,7 +7,7 @@
 //
 
 #import "PIEShareImageView.h"
-#import "PIEImageEntity.h"
+#import "PIEModelImage.h"
 @interface PIEShareImageView()
 @property (nonatomic,strong) UIView* bottomView;
 @property (nonatomic,assign) NSInteger height;
@@ -112,19 +112,27 @@
 -(void)injectSauce:(PIEPageVM*)vm withBlock:(void(^)(BOOL success))block {
     _nameLabel.text = vm.username;
     
-    [DDService downloadImage:vm.imageURL withBlock:^(UIImage *image) {
+    [DDService sd_downloadImage:vm.imageURL withBlock:^(UIImage *image) {
         if (!image) {
             block(NO);
         }
         _imageView.image = image;
         [self adjustHeight:image.size];
         
-        [DDService downloadImage:vm.avatarURL withBlock:^(UIImage *image) {
+        [DDService sd_downloadImage:vm.avatarURL withBlock:^(UIImage *image) {
+
             _avatarView.image = image;
             if (vm.type == PIEPageTypeReply) {
-                if (vm.thumbEntityArray.count>0) {
-                    PIEImageEntity* entity = [vm.thumbEntityArray objectAtIndex:0];
-                    [DDService downloadImage:entity.url withBlock:^(UIImage *image) {
+                if (vm.models_image.count>0) {
+                    PIEModelImage *entity = nil;
+                    id object = [vm.models_image objectAtIndex:0];
+                    if ([object isKindOfClass:[PIEModelImage class]]) {
+                        entity = object;
+                    } else if ([object isKindOfClass:[NSDictionary class]]) {
+                        entity = [MTLJSONAdapter modelOfClass:[PIEModelImage class] fromJSONDictionary:object error:NULL];
+                    }
+                    NSString* url = [entity.url trimToImageWidth:SCREEN_WIDTH_RESOLUTION*0.5];
+                    [DDService sd_downloadImage:url withBlock:^(UIImage *image) {
                         _imageView_thumb.image = image;
                         _imageView_thumb.hidden = NO;
                         _imageView_thumb_bg.hidden = NO;
@@ -132,13 +140,10 @@
                         
                         [DDBaseService GET:nil url:@"app/qrcode" block:^(id responseObject) {
                             NSString* url = [[responseObject objectForKey:@"data"]objectForKey:@"url"];
-                            NSLog(@"url %@",url);
-                            [DDService downloadImage:url withBlock:^(UIImage *image) {
+                            [DDService sd_downloadImage:url withBlock:^(UIImage *image) {
                                 _QRCodeView.image = image;
                                 block(YES);
                             }];
-                            NSDictionary* dic;
-                            [dic objectForKey:@"test"];
                         }];
                     }];
                 }

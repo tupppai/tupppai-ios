@@ -9,12 +9,15 @@
 #import "PIENotificationVM.h"
 
 @implementation PIENotificationVM
--(instancetype)initWithEntity:(PIENotificationEntity *)entity {
+-(instancetype)initWithEntity:(PIENotificationModel *)entity {
     self = [super init];
     if (self) {
+        _model = entity;
         _avatarUrl          = entity.avatarUrl;
         _commentId          = entity.commentId;
+        _originalCommentId  = entity.originalCommentId;
         _content            = entity.content;
+        _desc               = entity.desc;
         _ID                 = entity.ID;
         _username           = entity.username;
         _imageUrl           = entity.imageUrl;

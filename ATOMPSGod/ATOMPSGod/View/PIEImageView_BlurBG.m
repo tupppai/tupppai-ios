@@ -42,8 +42,8 @@
         [self addSubview:self.imageView_blur];
         [self addSubview:self.imageView];
         [self.imageView_blur mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self).with.offset(2);
-            make.bottom.equalTo(self).with.offset(-1);
+            make.top.equalTo(self).with.offset(0);
+            make.bottom.equalTo(self).with.offset(0);
             make.leading.equalTo(self).with.offset(-1);
             make.trailing.equalTo(self).with.offset(-1);
         }];
@@ -59,6 +59,14 @@
 -(void)setImage:(UIImage *)image {
     self.imageView.image = image;
     self.imageView_blur.image = [image blurredImageWithRadius:80 iterations:1 tintColor:[UIColor blackColor]];
+}
+
+-(void)setUrl:(NSString *)url {
+    _url = url;
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"cellHolder"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        self.imageView.image = image;
+        self.imageView_blur.image = [image blurredImageWithRadius:80 iterations:1 tintColor:[UIColor blackColor]];
+    }];
 }
 
 -(UIImageView *)imageView {

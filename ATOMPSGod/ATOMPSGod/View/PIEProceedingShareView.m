@@ -7,7 +7,7 @@
 //
 
 #import "PIEProceedingShareView.h"
-#import "AppDelegate.h"
+
 #import "POP.h"
 #define height_sheet 251.0f
 
@@ -16,9 +16,9 @@
 -(instancetype)init {
     self = [super init];
     if (self) {
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = [UIColor colorWithHex:0x000000 andAlpha:0.6];
         self.frame = [AppDelegate APP].window.bounds;
-        [self addSubview:self.dimmingView];
+//        [self addSubview:self.dimmingView];
 
         [self addSubview:self.sheetView];
         

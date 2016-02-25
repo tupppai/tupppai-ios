@@ -9,21 +9,33 @@
 #import <Foundation/Foundation.h>
 @class PIEChannelViewModel;
 @class PIEPageVM;
+@class PIEChannelTutorialModel;
+
 @interface PIEChannelManager : NSObject
 
 + (void)getSource_Channel:(NSDictionary *)params
                     block:(void (^)(NSMutableArray<PIEChannelViewModel *> *))block;
 
++ (void)getSource_channelPages:(NSDictionary *)params
+                   resultBlock:(void (^)
+                                (NSMutableArray<PIEPageVM *>
+                                 *pageArray))resultBlock
+                    completion:(void (^)(void))completionBlock;
 
-//+ (void)getSource_latestAskForPS:(NSDictionary *)params
-//                    block:(void (^)(NSMutableArray<PIEPageVM *> *))block;
 
-//+ (void)getSource_usersPSByChannelID:(NSDictionary *)params
-//                              block:(void (^)(NSMutableArray<PIEPageVM *> *))block;
 
-+ (void)getSource_pageViewModels:(NSDictionary *)params
-             latestAskForPSBlock:(void (^)(NSMutableArray<PIEPageVM *> *latestAskForPSResultArray))latestAskForPSBlock
-                    usersPSBlock:(void (^)(NSMutableArray<PIEPageVM *> *usersPSResultArray))usersPSBlock
-                      completion:(void (^)(void))completionBlock;
++ (void)getSource_channelTutorialList:(NSDictionary *)params
+                                block:(void (^)(NSArray<PIEChannelTutorialModel *> *retArray))block
+                         failureBlock:(void (^)(void))failure;
+
++ (void)getSource_channelTutorialDetail:(NSDictionary *)params
+                                  block:(void(^)(PIEChannelTutorialModel *model))block
+                           failureBlock:(void (^)(void))failure;
+
+/*
+    TODO: rollDiceReward的处理未知，先在外面写好了之后再refactor
+ */
+//+ (void)rollDiceReward:(NSDictionary *)params
+
 @end
 

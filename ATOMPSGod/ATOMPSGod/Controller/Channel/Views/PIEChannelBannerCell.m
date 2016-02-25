@@ -13,39 +13,46 @@
 - (void)awakeFromNib {
     // Initialization code
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-//    [_leftButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentFill];
-//    [_leftButton setContentVerticalAlignment:UIControlContentVerticalAlignmentFill];
-//
-//    [_rightbutton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentFill];
-//    [_rightbutton setContentVerticalAlignment:UIControlContentVerticalAlignmentFill];
 
-//    _leftButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
-//    _rightbutton.imageView.contentMode = UIViewContentModeScaleToFill;
-//    [_leftButton setImage:[UIImage imageNamed:@"pieChannelBannerCellButton2"] forState:UIControlStateNormal];
-//    [_rightbutton setImage:[UIImage imageNamed:@"pieChannelBannerCellButton1"] forState:UIControlStateNormal];
+    _leftButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
+    _leftButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
+    _leftButton.contentVerticalAlignment = UIControlContentVerticalAlignmentFill;
+    
+    _rightbutton.imageView.contentMode = UIViewContentModeScaleAspectFill;
+    _rightbutton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
+    _rightbutton.contentVerticalAlignment = UIControlContentVerticalAlignmentFill;
+
 
 }
 
+-(instancetype)initWithCoder:(NSCoder *)aDecoder {
+    NSLog(@"initWithCoder");
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+
+    }
+    return self;
+}
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
 }
 
-#pragma mark - Target-actions
-- (IBAction)bannerCellDidClickLeftButton:(UIButton *)sender {
+
+- (IBAction)tapLeft:(id)sender {
     if ([self.delegate respondsToSelector:@selector(channelBannerCell:didClickLeftButton:)]) {
         [self.delegate channelBannerCell:self
                       didClickLeftButton:sender];
     }
-    
 }
-- (IBAction)bannerCellDidClickRightButton:(UIButton *)sender {
+
+
+- (IBAction)tapRight:(id)sender {
     if ([self.delegate respondsToSelector:@selector(channelBannerCell:didClickRightButton:)]) {
         [self.delegate channelBannerCell:self
                      didClickRightButton:sender];
     }
-
 }
 
 #pragma mark - Reuse methods

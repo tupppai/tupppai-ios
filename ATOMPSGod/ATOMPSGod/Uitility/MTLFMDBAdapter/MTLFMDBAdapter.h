@@ -27,8 +27,8 @@
  Any property keys not present in the dictionary are assumed to match the column
  name that should be used. Any keys associated with NSNull will not participate
  in serialization.
-
- @return a dictionary mapping property keys to FMDB columns (as strings) or 
+ 
+ @return a dictionary mapping property keys to FMDB columns (as strings) or
  NSNull values.
  */
 + (NSDictionary *)FMDBColumnsByPropertyKey;
@@ -95,9 +95,9 @@ extern const NSInteger MTLFMDBAdapterErrorInvalidFMResultSetMapping;
  
  @param modelClass The MTLModel subclass to attempt to parse from the FMResultSet.
  @param resultSet  An FMResultSet with the data to be converted to a MTLModel.
-                   If this argument is nil, the method returns nil.
+ If this argument is nil, the method returns nil.
  @param error      If not NULL, this may be set to an error that occurs during
-                   parsing or initializing an instance of `modelClass`
+ parsing or initializing an instance of `modelClass`
  
  @return an instance of `modelClass` upon success, or nil if a parsing error
  occurred.

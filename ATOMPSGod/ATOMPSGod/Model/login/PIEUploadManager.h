@@ -7,12 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-@class PIEEntityImage;
-
+#import "PIEUploadModel.h"
+@class PIEModelImageInfo;
 @interface PIEUploadManager : NSObject
-@property (nonatomic, copy) NSString *type;
+@property (nonatomic, strong)  PIEUploadModel *model;
 
-- (NSURLSessionDataTask *)UploadImage:(NSData *)data WithBlock:(void (^)(PIEEntityImage *imageInformation, NSError *error))block;
+- (instancetype)initWithShareModel;
++ (PIEUploadModel *)shareModel;
 - (void)upload:(void (^)(CGFloat percentage,BOOL success))block ;
+- (NSURLSessionDataTask *)UploadImage:(NSData *)data WithBlock:(void (^)(PIEModelImageInfo *imageInformation, NSError *error))block;
 
 @end

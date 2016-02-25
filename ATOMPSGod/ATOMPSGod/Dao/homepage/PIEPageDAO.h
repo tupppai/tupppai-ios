@@ -7,17 +7,17 @@
 //
 
 #import "ATOMBaseDAO.h"
-@class PIEPageEntity;
+@class PIEPageModel;
 
 @interface PIEPageDAO : ATOMBaseDAO
 
-- (void)insertHomeImage:(PIEPageEntity *)page;
-- (void)updateHomeImage:(PIEPageEntity *)page;
-- (PIEPageEntity *)selectHomeImageByImageID:(NSInteger)imageID;
-- (NSArray *)selectHomeImages;
-//- (NSArray *)selectHomeImagesWithHomeType:(NSInteger)homeType;
-- (BOOL)isExistHomeImage:(PIEPageEntity *)homeImage;
-- (void)clearHomeImages;
-- (void)clearHomeImagesWithHomeType:(NSString *)homeType;
+//- (void)insertHomeImage:(PIEPageModel *)page;
+//- (void)updateHomeImage:(PIEPageModel *)page;
+//- (PIEPageModel *)selectHomeImageByImageID:(NSInteger)imageID;
+//- (NSArray *)selectHomeImages;
+////- (NSArray *)selectHomeImagesWithHomeType:(NSInteger)homeType;
+//- (BOOL)isExistHomeImage:(PIEPageModel *)homeImage;
+//- (void)clearHomeImages;
+//- (void)clearHomeImagesWithHomeType:(NSString *)homeType;
 
 @end

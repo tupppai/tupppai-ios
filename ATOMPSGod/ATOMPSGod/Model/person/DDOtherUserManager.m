@@ -9,15 +9,15 @@
 #import "DDOtherUserManager.h"
 
 //
-#import "PIEEntityUser.h"
-#import "PIEImageEntity.h"
+#import "PIEUserModel.h"
+#import "PIEModelImage.h"
 @implementation DDOtherUserManager
 
-+ (void)getUserInfo:(NSDictionary *)param withBlock:(void (^)(PIEEntityUser *user))block {
++ (void)getUserInfo:(NSDictionary *)param withBlock:(void (^)(PIEUserModel *user))block {
     [DDService ddGetOtherUserInfo:param withBlock:^(NSDictionary *data, NSArray *askArray, NSArray *replyArray) {
         {
 
-            PIEEntityUser* user = [MTLJSONAdapter modelOfClass:[PIEEntityUser class] fromJSONDictionary:data error:NULL];
+            PIEUserModel* user = [MTLJSONAdapter modelOfClass:[PIEUserModel class] fromJSONDictionary:data error:NULL];
             if (block) {
                 block(user);
             }
@@ -28,18 +28,7 @@
     [DDService ddGetReply:param withBlock:^(NSArray *returnArray) {
             NSMutableArray *array = [NSMutableArray array];
             for (int i = 0; i < returnArray.count; i++) {
-                PIEPageEntity *entity = [MTLJSONAdapter modelOfClass:[PIEPageEntity class] fromJSONDictionary:returnArray[i] error:NULL];
-                NSMutableArray* thumbArray = [NSMutableArray new];
-                for (int i = 0; i<entity.thumbEntityArray.count; i++) {
-                    PIEImageEntity *entity2 = [MTLJSONAdapter modelOfClass:[PIEImageEntity class] fromJSONDictionary:                    entity.thumbEntityArray[i] error:NULL];
-                    [thumbArray addObject:entity2];
-                }
-                
-                if (thumbArray.count > 0) {
-                    entity.thumbEntityArray = thumbArray;
-                } else {
-                    entity.thumbEntityArray = nil;
-                }
+                PIEPageModel *entity = [MTLJSONAdapter modelOfClass:[PIEPageModel class] fromJSONDictionary:returnArray[i] error:NULL];
                 [array addObject:entity];
             }
             if (block) {

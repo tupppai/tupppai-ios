@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "PIEUserViewModel.h"
 #import "SwipeView.h"
+#import "PIEAvatarButton.h"
+
 @interface PIESearchUserSimpleCollectionCell : UICollectionViewCell
-@property (weak, nonatomic) IBOutlet UIButton *avatarButton;
+@property (weak, nonatomic) IBOutlet PIEAvatarButton *avatarButton;
 @property (weak, nonatomic) IBOutlet UIButton *nameButton;
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
 @property (weak, nonatomic) IBOutlet UIButton *followButton;
@@ -18,6 +20,5 @@
 @property (nonatomic, strong) PIEUserViewModel* vm;
 
 - (void)injectSauce:(PIEUserViewModel*)vm;
-
 
 @end

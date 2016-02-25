@@ -8,21 +8,23 @@
 
 #import <UIKit/UIKit.h>
 #import "PIECustomViewFromXib.h"
-#import "PIEPageLikeButton.h"
+#import "PIELoveButton.h"
 #import "PIEPageButton.h"
 #import "PIEImageView_BlurBG.h"
 #import "PIEBangView.h"
 #import "PIETextView_linkDetection.h"
 #import "JGActionSheet.h"
 #import "PIEShareView.h"
+#import "PIEAvatarButton.h"
 
-@interface PIECarousel_ItemView : PIECustomViewFromXib<UITableViewDataSource,UITableViewDelegate,PIEShareViewDelegate,JGActionSheetDelegate>
+@interface PIECarousel_ItemView : PIECustomViewFromXib
 @property (weak, nonatomic) IBOutlet UIImageView *imageView_type;
 @property (weak, nonatomic) IBOutlet UIButton *button_name;
 @property (weak, nonatomic) IBOutlet UILabel *label_time;
 @property (weak, nonatomic) IBOutlet UITableView *tableView_comment;
-@property (weak, nonatomic) IBOutlet UIButton *button_avatar;
-//@property (weak, nonatomic) IBOutlet UIImageView *imageView_page;
+//@property (weak, nonatomic) IBOutlet UIButton *button_avatar;
+@property (weak, nonatomic) IBOutlet PIEAvatarButton *button_avatar;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView_page;
 @property (weak, nonatomic) IBOutlet PIEImageView_BlurBG *view_pageImage;
 @property (weak, nonatomic) IBOutlet PIEBangView *bangView;
 @property (weak, nonatomic) IBOutlet PIETextView_linkDetection *textView_content;
@@ -30,6 +32,6 @@
 //@property (weak, nonatomic) IBOutlet UILabel *label_content;
 @property (weak, nonatomic) IBOutlet PIEPageButton *pageButton_share;
 @property (weak, nonatomic) IBOutlet PIEPageButton *pageButton_comment;
-@property (weak, nonatomic) IBOutlet PIEPageLikeButton *pageLikeButton;
+@property (weak, nonatomic) IBOutlet PIELoveButton *pageLikeButton;
 @property (nonatomic,strong) PIEPageVM* vm;
 @end

@@ -14,7 +14,7 @@
 #import "ATOMUserDAO.h"
 #import "PIEPageDAO.h"
 #import "DDLoginNavigationController.h"
-#import "AppDelegate.h"
+
 #import "SIAlertView.h"
 #import "PIEPageManager.h"
 #import "PIEModifyProfileViewController.h"
@@ -23,7 +23,11 @@
 #import "PIEMyLikedPagesViewController.h"
 #import "PIEFeedbackViewController.h"
 #import "PIEAboutUsViewController.h"
-#import "UMCheckUpdate.h"
+//#import "UMCheckUpdate.h"
+#import "PIELaunchViewController_Black.h"
+#import "PIEBindCellphoneViewController.h"
+#import "PIEMyWalletViewController.h"
+
 
 @interface PIESettingsViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -46,11 +50,9 @@
 }
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-//    self.navigationController.navigationBar.backgroundColor = [UIColor colorWithHex:0xffffff andAlpha:0.9];
 }
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-//    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
 }
 
 -(UITableView *)tableView {
@@ -83,7 +85,7 @@
     } else if (section == 1) {
         return 3;
     } else if (section ==2) {
-        return 3;
+        return 2;
     } else if (section ==3) {
         return 3;
     }
@@ -91,9 +93,6 @@
 }
 
 #pragma mark - UITableViewDelegate
-
-
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 3 && indexPath.row == 2) {
         return 72;
@@ -119,7 +118,6 @@
         if (!cell) {
             cell = [[PIESettingsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AccountSettingCell"];
         }
-        
         NSInteger section = indexPath.section;
         NSInteger row = indexPath.row;
         if (section == 0) {
@@ -134,20 +132,16 @@
                 cell.textLabel.text = @"消息通知";
             } else if (row == 1) {
                 cell.textLabel.text = @"我赞过的";
-            } else if (row == 2) {
+            } else if (row == 2){
                 cell.textLabel.text = @"我评论过的";
             }
         }
         else if (section == 2) {
             if (row == 0) {
-                cell.textLabel.text = @"版本更新";
-            } else if (row == 1) {
                 cell.textLabel.text = @"清理缓存";
             }
-//            else if (row == 2) {
-//                cell.textLabel.text = @"推荐应用给好友";
-//            }
-            else if (row == 2) {
+
+            else if (row == 1) {
                 cell.textLabel.text = @"给图派评分";
             }
         }
@@ -171,21 +165,31 @@
     NSInteger row = indexPath.row;
     if (section == 0) {
         if (row == 0) {
-            PIEThirdPartyBindingViewController *abvc = [PIEThirdPartyBindingViewController new];
-            [self.navigationController pushViewController:abvc animated:YES];
+            /* if isTourist, please finish binding cellphone first */
+            if ([self isTourist]) {
+                PIEBindCellphoneViewController *bindCellphoneVC =
+                [[PIEBindCellphoneViewController alloc] init];
+                [self presentViewController:bindCellphoneVC
+                                   animated:YES
+                                 completion:nil];
+            }else{
+                PIEThirdPartyBindingViewController *abvc = [PIEThirdPartyBindingViewController new];
+                [self.navigationController pushViewController:abvc animated:YES];
+            }
         } else if (row == 1) {
             PIEModifyProfileViewController *mpvc = [PIEModifyProfileViewController new];
             [self.navigationController pushViewController:mpvc animated:YES];
         }
     } else if (section == 1) {
-        if (row == 0) {
+       if (row == 0) {
+            //消息通知
             PIEMessagePushSettingViewController *mrvc = [PIEMessagePushSettingViewController new];
             [self.navigationController pushViewController:mrvc animated:YES];
         } else if (row == 1) {
             //我赞过的
             PIEMyLikedPagesViewController * vc = [PIEMyLikedPagesViewController new];
             [self.navigationController pushViewController:vc animated:YES];
-        } else if (row == 2) {
+        }else if (row == 2){
             //我评论过的
             PIEMyCommentedPageViewController* vc = [PIEMyCommentedPageViewController new];
             [self.navigationController pushViewController:vc animated:YES];
@@ -193,12 +197,17 @@
     } else if (section == 2) {
         
         if (row == 0) {
-            [UMCheckUpdate checkUpdateWithDelegate:self selector:@selector(UMCheckUpdateReturn:) appkey:@"55b1ecdbe0f55a1de9001164" channel:nil];
-        } else if (row == 1) {
             [self clearCache];
-        } else if (row == 2) {
+
+//            [UMCheckUpdate checkUpdateWithDelegate:self selector:@selector(UMCheckUpdateReturn:) appkey:@"55b1ecdbe0f55a1de9001164" channel:nil];
+        } else if (row == 1) {
             [self alert_evaluation];
+
+//            [self clearCache];
         }
+//        else if (row == 2) {
+//            [self alert_evaluation];
+//        }
     }
     else if (section == 3) {
         if (row == 0) {
@@ -237,9 +246,13 @@
                               //清空数据库用户表
                               [ATOMUserDAO clearUsers];
                               //清空当前用户
-                              [[DDUserManager currentUser]wipe];
+                              [DDUserManager clearCurrentUser];
+                              [DDSessionManager resetSharedInstance];
+                              
+
+                              
                               self.navigationController.viewControllers = @[];
-                              PIELaunchViewController *lvc = [[PIELaunchViewController alloc] init];
+                              PIELaunchViewController_Black *lvc = [[PIELaunchViewController_Black alloc] init];
                               [AppDelegate APP].window.rootViewController = [[DDLoginNavigationController alloc] initWithRootViewController:lvc];
                           }];
     alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
@@ -268,7 +281,7 @@
                              type:SIAlertViewButtonTypeCancel
                           handler:^(SIAlertView *alert) {
                           }];
-    [alertView addButtonWithTitle:@"欣然前往"
+    [alertView addButtonWithTitle:@"前往"
                              type:SIAlertViewButtonTypeDefault
                           handler:^(SIAlertView *alert) {
                               NSString *iTunesLink = @"http://itunes.apple.com/app/id1056871759";
@@ -299,7 +312,7 @@
                              type:SIAlertViewButtonTypeCancel
                           handler:^(SIAlertView *alert) {
                           }];
-    [alertView addButtonWithTitle:@"坚决清理"
+    [alertView addButtonWithTitle:@"清理"
                              type:SIAlertViewButtonTypeDefault
                           handler:^(SIAlertView *alert) {
                               [[NSURLCache sharedURLCache]removeAllCachedResponses];
@@ -309,5 +322,10 @@
                           }];
     alertView.transitionStyle = SIAlertViewTransitionStyleDropDown;
     [alertView show];
+}
+
+#pragma mark - private helpers
+- (BOOL)isTourist{
+    return ([DDUserManager currentUser].uid == kPIETouristUID);
 }
 @end

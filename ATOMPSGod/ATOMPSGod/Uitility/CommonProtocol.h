@@ -36,6 +36,8 @@
 - (void)ATOMViewControllerDismissWithLiked:(BOOL)liked;
 - (void)ATOMViewControllerDismissWithInfo:(NSDictionary*)info;
 
+/** navigationController, pop out from stack */
+- (void)ATOMViewControllerPopedFromNavAfterSendingCommment;
 @end
 
 @protocol PIEShareFunctionViewDelegate <NSObject>

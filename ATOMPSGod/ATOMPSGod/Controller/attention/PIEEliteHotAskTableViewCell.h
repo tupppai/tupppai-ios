@@ -11,9 +11,17 @@
 #import "PIEThumbAnimateView.h"
 #import "PIEPageButton.h"
 #import "PIEBangView.h"
+#import "PIEAvatarImageView.h"
+#import "PIEAvatarView.h"
+
 
 @interface PIEEliteHotAskTableViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIImageView *avatarView;
+@property (nonatomic,strong) PIEPageVM* vm;
+//@property (weak, nonatomic) IBOutlet UIImageView *avatarView;
+//@property (weak, nonatomic) IBOutlet PIEAvatarImageView *avatarView;
+
+@property (weak, nonatomic) IBOutlet PIEAvatarView *avatarView;
+
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 //@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *theImageView;
@@ -28,7 +36,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *commentLabel2;
 
 @property (weak, nonatomic) IBOutlet UIImageView *followView;
-@property (nonatomic, assign) NSInteger ID;
-@property (nonatomic, assign) NSInteger askID;
+//@property (nonatomic, assign) NSInteger ID;
+//@property (nonatomic, assign) NSInteger askID;
 - (void)injectSauce:(PIEPageVM *)viewModel;
 @end

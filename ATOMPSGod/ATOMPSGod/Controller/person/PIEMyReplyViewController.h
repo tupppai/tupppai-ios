@@ -9,5 +9,4 @@
 #import "DDBaseVC.h"
 
 @interface PIEMyReplyViewController : DDBaseVC
-
 @end

@@ -69,5 +69,53 @@ CGFloat const kPublishTimeFontSizeSmall = 13.f;
 
 CGFloat const kTitleSizeForEmptyDataSet = 17.f;
 
+NSInteger const kPIETouristUID = -233;
+
+NSString * const PIETouristOpenIdKey = @"PIETouristOpenIdKey";
+
+NSString * const PIETouristLoginTypeStringKey = @"PIETouristLoginTypeStringKey";
+
+NSString * const PIENetworkCallForFurtherRegistrationNotification =
+@"PIENetworkCallForFurtherRegistrationNotification";
+
+NSString * const PIEUpdateNotificationStatusNotification =
+@"PIEUpdateNotificationStatusNotification";
+
+NSString * const PIENotificationCountAllKey =
+@"PIENotificationCountAllKey";
+
+NSString * const PIENotificationCountSystemKey =
+@"PIENotificationCountSystemKey";
+
+NSString * const PIENotificationCountCommentKey =
+@"PIENotificationCountCommentKey";
+
+NSString * const PIENotificationCountReplyKey =
+@"PIENotificationCountReplyKey";
+
+NSString * const PIENotificationCountFollowKey =
+@"PIENotificationCountFollowKey";
+
+NSString * const PIENotificationCountLikeKey =
+@"PIENotificationCountLikeKey";
+
+NSString * const PIENotificationCountOthersKey =
+@"PIENotificationCountOthersKey";
+
+NSString * const PIEHasNewNotificationFlagKey =
+@"PIEHasNewNotificationFlagKey";
+
+NSString * const PIERefreshNavigationChannelFromTabBarNotification =
+@"PIERefreshNavigationChannelFromTabBarNotification";
+
+NSString * const PIEPrefreshNavigationProceedingFromTabBarNotification =
+@"PIEPrefreshNavigationProceedingFromTabBarNotification";
 
 
+NSInteger kPIERewardFailedInteger = -8;
+
+
+NSInteger kPIERewardSuccessInteger = 1;
+
+
+double kPIEChargeMinimumAmount = 0.01;

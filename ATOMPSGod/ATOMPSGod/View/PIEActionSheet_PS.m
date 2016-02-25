@@ -7,7 +7,8 @@
 //
 
 #import "PIEActionSheet_PS.h"
-#import "AppDelegate.h"
+
+#import "PIECategoryModel.h"
 @implementation PIEActionSheet_PS
 
 -(instancetype)init {
@@ -49,11 +50,17 @@
     NSMutableDictionary* param = [NSMutableDictionary new];
     [param setObject:@(_vm.ID) forKey:@"target"];
     [param setObject:@"ask" forKey:@"type"];
+    if (_vm.models_catogory.count >= 1) {
+       
+        [param setObject:@(_vm.model.channelID) forKey:@"category_id"];
+    }
     
     [DDService signProceeding:param withBlock:^(NSString *imageUrl) {
         if (imageUrl != nil) {
             if (shouldDownload) {
-                [DDService downloadImage:imageUrl withBlock:^(UIImage *image) {
+                [Hud activity:@"下载图片中..."];
+                [DDService sd_downloadImage:imageUrl withBlock:^(UIImage *image) {
+                    [Hud dismiss];
                     UIImageWriteToSavedPhotosAlbum(image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
                 }];
             }

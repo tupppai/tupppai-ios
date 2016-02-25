@@ -27,4 +27,8 @@ typedef NS_ENUM(NSInteger, ATOMShareType) {
 + (void)authorize2:(SSDKPlatformType)type withBlock:(void (^)(SSDKUser* user ))block;
 + (void)getRemoteShareInfo:(PIEPageVM*)vm withSocialShareType:(ATOMShareType)shareType withBlock:(void (^)(ATOMShare* share))block;
 +(void)copy:(PIEPageVM*)vm;
+
+
++ (void)postSocialShare3:(PIEPageVM*)vm withSocialShareType:(ATOMShareType)shareType block:(void (^)(BOOL success))block;
+
 @end

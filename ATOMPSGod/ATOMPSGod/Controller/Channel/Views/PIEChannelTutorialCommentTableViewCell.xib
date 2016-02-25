@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PIEChannelTutorialCommentTableViewCell" rowHeight="98" id="KGk-i7-Jjw" customClass="PIEChannelTutorialCommentTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="494" height="98"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="494" height="97.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pt1-44-5PQ" customClass="PIEAvatarView">
+                        <rect key="frame" x="17" y="15" width="25" height="25"/>
+                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="25" id="78E-6q-pWR"/>
+                            <constraint firstAttribute="height" constant="25" id="Pod-0s-6kO"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="userName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PSb-BF-b66">
+                        <rect key="frame" x="52" y="15" width="197.5" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NkN-rd-Rs1" userLabel="publishTimeLabel">
+                        <rect key="frame" x="329" y="15" width="148" height="13.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="commentText" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y7y-f8-Pzr">
+                        <rect key="frame" x="52" y="44" width="425" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jSp-K2-3DB" userLabel="cell_separator_bottom">
+                        <rect key="frame" x="52" y="96.5" width="425" height="1"/>
+                        <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.8980392157" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" priority="250" constant="1" id="aX1-Gw-i0i"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="y7y-f8-Pzr" firstAttribute="leading" secondItem="PSb-BF-b66" secondAttribute="leading" id="3Sd-qo-YrG"/>
+                    <constraint firstItem="PSb-BF-b66" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.4" id="BCs-Ux-wbW"/>
+                    <constraint firstItem="NkN-rd-Rs1" firstAttribute="top" secondItem="PSb-BF-b66" secondAttribute="top" id="CrN-3p-UmF"/>
+                    <constraint firstItem="NkN-rd-Rs1" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.3" id="Hax-UJ-tL5"/>
+                    <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="y7y-f8-Pzr" secondAttribute="bottom" constant="14" id="OOh-Ue-e9P"/>
+                    <constraint firstAttribute="trailing" secondItem="NkN-rd-Rs1" secondAttribute="trailing" constant="17" id="Ric-dl-aLa"/>
+                    <constraint firstItem="Pt1-44-5PQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="VT7-FZ-hga"/>
+                    <constraint firstItem="y7y-f8-Pzr" firstAttribute="top" secondItem="PSb-BF-b66" secondAttribute="bottom" constant="12" id="XuZ-gO-Qbg"/>
+                    <constraint firstItem="NkN-rd-Rs1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="adC-m6-b17"/>
+                    <constraint firstAttribute="bottom" secondItem="jSp-K2-3DB" secondAttribute="bottom" id="d7H-Bj-Deq"/>
+                    <constraint firstItem="jSp-K2-3DB" firstAttribute="trailing" secondItem="NkN-rd-Rs1" secondAttribute="trailing" id="fU1-mv-i3m"/>
+                    <constraint firstItem="Pt1-44-5PQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="17" id="kc8-QT-GPz"/>
+                    <constraint firstItem="PSb-BF-b66" firstAttribute="leading" secondItem="Pt1-44-5PQ" secondAttribute="trailing" constant="10" id="oYL-80-Y7J"/>
+                    <constraint firstItem="PSb-BF-b66" firstAttribute="top" secondItem="Pt1-44-5PQ" secondAttribute="top" id="uAu-uK-5br"/>
+                    <constraint firstItem="y7y-f8-Pzr" firstAttribute="trailing" secondItem="NkN-rd-Rs1" secondAttribute="trailing" id="v3a-j6-XJX"/>
+                    <constraint firstItem="jSp-K2-3DB" firstAttribute="leading" secondItem="y7y-f8-Pzr" secondAttribute="leading" id="yJy-Fd-0zI"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="avatarView" destination="Pt1-44-5PQ" id="YhT-nk-Le7"/>
+                <outlet property="cell_separator_bottom" destination="jSp-K2-3DB" id="LOV-9P-HyD"/>
+                <outlet property="commentTextLabel" destination="y7y-f8-Pzr" id="D9M-aV-rnR"/>
+                <outlet property="publishTimeLabel" destination="NkN-rd-Rs1" id="dCw-On-4KF"/>
+                <outlet property="userNameLabel" destination="PSb-BF-b66" id="aV8-lF-evu"/>
+            </connections>
+            <point key="canvasLocation" x="4" y="33"/>
+        </tableViewCell>
+    </objects>
+</document>

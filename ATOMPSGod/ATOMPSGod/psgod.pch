@@ -35,7 +35,7 @@
 #import "FMDB.h"
 #import "MTLFMDBAdapter.h"
 #import "MJRefresh.h"
-#import "NSString+ATOMValidate.h"
+#import "NSString+Tupai.h"
 #import "JSONKit.h"
 #import "UIImageView+AFNetworking.h"
 #import "UIButton+AFNetworking.h"
@@ -53,9 +53,13 @@
 #import "DDService.h"
 #import "DDBaseService.h"
 
-#import "PIEPageEntity.h"
+#import "PIEPageModel.h"
 #import "PIEPageVM.h"
 #import "UIButton+Pop.h"
+#import "NYXImagesKit.h"
+#import "AppDelegate.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
+#import "UIImageView+WebCache.h"
 #endif
 
 
