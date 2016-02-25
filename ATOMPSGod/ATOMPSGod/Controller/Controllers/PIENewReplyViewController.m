@@ -185,6 +185,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
                          [self.takePhotoButton layoutIfNeeded];
                      }];
 }
+
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     [self.takePhotoButtonBottomMarginConstraint setOffset:0];
@@ -201,7 +202,6 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     
     
 }
-
 
 
 #pragma mark - <UITableViewDataSource>
