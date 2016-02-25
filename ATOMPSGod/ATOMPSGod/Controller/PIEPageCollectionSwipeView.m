@@ -13,7 +13,6 @@
 @property (nonatomic,strong) UIImageView *iconImageView;
 @property (nonatomic,strong) MASConstraint *askImageView2WidthMasConstraint;
 
-
 @end
 @implementation PIEPageCollectionSwipeView
 
@@ -30,7 +29,6 @@
         return;
     }
     PIEPageVM *vm = [_askSourceArray objectAtIndex:0];
-//    [_askImageView sd_setImageWithURL:[NSURL URLWithString:vm.imageURL]];
     [DDService sd_downloadImage:vm.imageURL withBlock:^(UIImage *image) {
         _askImageView.image = image;
     }];
@@ -117,8 +115,6 @@
     if (!_swipeView) {
         _swipeView = [SwipeView new];
         _swipeView.backgroundColor = [UIColor whiteColor];
-//        _swipeView.dataSource = self;
-//        _swipeView.delegate = self;
     }
     return _swipeView;
 }
