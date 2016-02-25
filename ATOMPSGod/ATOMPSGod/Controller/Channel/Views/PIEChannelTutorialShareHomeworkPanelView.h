@@ -14,7 +14,7 @@
 
 @protocol PIEChannelTutorialShareHomeworkPanelViewDelegate <NSObject>
 
-@required
+@optional
 - (void)shareHomeworkPanelView:(PIEChannelTutorialShareHomeworkPanelView *)panelView didShareHomeworkWithType:(ATOMShareType)shareType;
 
 @end

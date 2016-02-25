@@ -103,8 +103,13 @@
 +(void)postSocialShare2:(PIEPageVM*)vm withSocialShareType:(ATOMShareType)shareType block:(void (^)(BOOL success))block {
     
     //先获取服务器传输过来的信息
+    [Hud activity:@""];
     [self getRemoteShareInfo:vm withSocialShareType:shareType withBlock:^(ATOMShare *share) {
-        if (share) {
+        [Hud dismiss];
+        if (share == nil) {
+            [Hud text:@"获取分享信息失败"];
+            return ;
+        }
             NSString* shareTitle = share.title;
             NSString* desc = share.desc;
             if ([shareTitle isEqualToString:@""]) {
@@ -229,7 +234,7 @@
                 }];
 
             }
-        }
+        
     }];
     
 }
@@ -257,7 +262,6 @@
             NSString* imageUrl_trimmed = [share.imageUrl trimToImageWidth:100];
             NSURL* imageUrl = [[NSURL alloc]initWithString:[NSString stringWithFormat:@"%@",imageUrl_trimmed]];
             NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
-            //注释掉的话 微博自动分享
             [shareParams SSDKEnableUseClientShare];
             
             if (shareType == ATOMShareTypeWechatFriends) {
@@ -325,19 +329,24 @@
              {
                  if (block) {
                      block(YES);
+                     [Hud success:@"分享成功"];
                  }
-                 [Hud textWithLightBackground:@"分享成功"];
                  break;
              }
              case SSDKResponseStateFail:
              {
                  if (block) {
-                     block(YES);
+                     block(NO);
+                     [Hud text:@"分享失败,您可能没有安装客户端"];
                  }
                  break;
              }
              case SSDKResponseStateCancel:
              {
+                 if (block) {
+                     block(NO);
+                     [Hud text:@"取消分享"];
+                 }
                  break;
              }
              default:

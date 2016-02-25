@@ -68,13 +68,12 @@ static DDSessionManager *shareInstance = nil;
     dispatch_once(&onceToken, ^{
         Class class = [self class];
         
-        SEL originalSelector = @selector(dataTaskWithRequest:completionHandler:);
-        SEL swizzledSelector = @selector(xxx_dataTaskWithRequest:completionHandler:);
+        SEL originalSelector = @selector(dataTaskWithHTTPMethod:URLString:parameters:success:failure:);
+        SEL swizzledSelector = @selector(xxx_dataTaskWithHTTPMethod:URLString:parameters:success:failure:);
         Method originalMethod = class_getInstanceMethod(class, originalSelector);
         Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
         
-
-
+        
         // When swizzling a class method, use the following:
         // Class class = object_getClass((id)self);
         // ...
@@ -98,26 +97,44 @@ static DDSessionManager *shareInstance = nil;
     });
 }
 
+-(NSURLSessionDataTask *)xxx_dataTaskWithHTTPMethod:(NSString *)method URLString:(NSString *)URLString parameters:(id)parameters success:(void (^)(NSURLSessionDataTask * _Nonnull, id _Nonnull))success failure:(void (^)(NSURLSessionDataTask * _Nonnull, NSError * _Nonnull))failure {
+    
+    /*签名
+     parameters根据key从小到大排序，把排序后对应的value拼接成string1
+     string2 = md5(tupppaisignmd5)
+     string3 = 当月的第几天
+     string4 = string1~string2~string3
+     string5 = [[string4 md5]md5]
+     string5就是签名
+     */
+    NSArray *sortedKeys = [[parameters allKeys] sortedArrayUsingSelector: @selector(compare:)];
+    NSMutableArray *sortedValues = [NSMutableArray array];
+    for (NSString *key in sortedKeys)
+        [sortedValues addObject: [parameters objectForKey: key]];
+    
+    NSString *jointValuesString = [sortedValues componentsJoinedByString:@""];
 
--(NSURLSessionDataTask *)xxx_dataTaskWithRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLResponse * _Nonnull, id _Nullable, NSError * _Nullable))completionHandler {
-    return [self xxx_dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id _Nullable responseObject, NSError * _Nullable error) {
-        if (error) {
-            [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NetworkErrorCall" object:nil]];
-        } else if (responseObject) {
+    NSDate *date = [NSDate date];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *components = [calendar components:(NSCalendarUnitDay) fromDate:date];
+    NSInteger dayOfMonth = [components day];
+    
+    NSString *jointString = [NSString stringWithFormat:@"%@%@%zd",jointValuesString,[@"tupppaisignmd5" md5],dayOfMonth];
+    NSString *signingString = [[jointString md5]md5];
+    
+    NSMutableDictionary *params = [parameters mutableCopy];
+    [params setObject:signingString forKey:@"verify"];
+    [params setObject:@"2" forKey:@"v"];
+    
+    return [self xxx_dataTaskWithHTTPMethod:method URLString:URLString parameters:params success:^(NSURLSessionDataTask * dataTask, id responseObject) {
+        if (responseObject) {
             int ret = [[ responseObject objectForKey:@"ret"] intValue];
             if (ret == 2) {
                 // 服务器没有监测到“登陆态”——需要用户重新登录, 或者是因为游客状态想要做一些对服务器有着“写”操作的行为
                 
                 if ([DDUserManager currentUser].uid == kPIETouristUID) {
                     // 游客    -> "没有登录态" == "完成注册的最后一步：绑定手机号"
-//                    NSString *openID = [[NSUserDefaults standardUserDefaults]
-//                                        objectForKey:PIETouristOpenIdKey];
                     
-//                    NSString *prompt = [NSString stringWithFormat:
-//                                        @"ret == 2，游客没有登陆态\n openid = %@", openID];
-//                    [Hud text:prompt];
-                    
-                    // post notification
                     [[NSNotificationCenter defaultCenter]
                      postNotificationName:PIENetworkCallForFurtherRegistrationNotification
                      object:nil
@@ -126,7 +143,6 @@ static DDSessionManager *shareInstance = nil;
                 else{
                     // 正常用户 -> "没有登录态" == "重新登录"
                     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NetworkSignOutCall" object:nil]];
-//                    [Hud text:@"ret == 2, 正常用户没有登录态"];
                 }
             } else if (ret != 1) {
                 
@@ -137,11 +153,15 @@ static DDSessionManager *shareInstance = nil;
                 [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NetworkShowInfoCall" object:nil userInfo:userInfo]];
             }
         }
-        if (completionHandler) {
-            completionHandler(response,responseObject,error);
-        }
+        success(dataTask,responseObject);
+    } failure:^(NSURLSessionDataTask * dataTask, NSError * error) {
+                if (error) {
+                    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NetworkErrorCall" object:nil]];
+                }
+        failure(dataTask,error);
     }];
 }
+
 
 
 @end

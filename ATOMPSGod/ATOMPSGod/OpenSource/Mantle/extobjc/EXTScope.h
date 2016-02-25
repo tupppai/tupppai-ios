@@ -28,6 +28,9 @@
  * (like a one line \c if). In practice, this is not an issue, since \@onExit is
  * a useless construct in such a case anyways.
  */
+
+#undef onExit
+
 #define onExit \
     try {} @finally {} \
     __strong mtl_cleanupBlock_t metamacro_concat(mtl_exitBlock_, __LINE__) __attribute__((cleanup(mtl_executeCleanupBlock), unused)) = ^
@@ -42,6 +45,9 @@
  *
  * See #strongify for an example of usage.
  */
+
+#undef weakify
+
 #define weakify(...) \
     try {} @finally {} \
     metamacro_foreach_cxt(mtl_weakify_,, __weak, __VA_ARGS__)
@@ -50,6 +56,9 @@
  * Like #weakify, but uses \c __unsafe_unretained instead, for targets or
  * classes that do not support weak references.
  */
+
+#undef unsafeify
+
 #define unsafeify(...) \
     try {} @finally {} \
     metamacro_foreach_cxt(mtl_weakify_,, __unsafe_unretained, __VA_ARGS__)
@@ -80,6 +89,8 @@
 
  * @endcode
  */
+
+#undef strongify
 #define strongify(...) \
     try {} @finally {} \
     _Pragma("clang diagnostic push") \
