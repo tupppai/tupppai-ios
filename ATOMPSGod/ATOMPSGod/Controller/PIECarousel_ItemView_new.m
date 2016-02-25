@@ -54,6 +54,7 @@
     [self.detailButton setBackgroundImage:[UIImage imageNamed:@"launchViewControllerButtonBackground"]
                                  forState:UIControlStateNormal];
     
+    self.blurAnimateImageView.hideThumbView = YES;
 }
 
 - (void)setupTouchingEvents
