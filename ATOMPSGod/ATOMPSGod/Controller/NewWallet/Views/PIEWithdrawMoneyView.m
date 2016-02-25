@@ -25,6 +25,7 @@
      setBackgroundImage:[UIImage imageNamed:@"pie_myWallet_chargeButton"]
      forState:UIControlStateNormal];
     
+    self.inputAmountTextField.keyboardType  = UIKeyboardTypePhonePad;
 }
 
 + (PIEWithdrawMoneyView *)withdrawMoneyView
