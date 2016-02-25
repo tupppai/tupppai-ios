@@ -80,7 +80,6 @@
     UITapGestureRecognizer *tapOnSelf =
     [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnSelf:)];
     [self.view addGestureRecognizer:tapOnSelf];
-    self.view.userInteractionEnabled = YES;
 
 }
 
@@ -144,45 +143,33 @@
 }
 
 - (UIView *)carousel:(iCarousel *)carousel
-  viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
+  viewForItemAtIndex:(NSInteger)index reusingView:(PIECarousel_ItemView_new *)view
 {
     if (view == nil) {
         CGFloat width  = SCREEN_WIDTH *scale_h;
         CGFloat height = width * (930.0 / 700);
-        
-        view =
-        [[UIView alloc]
-         initWithFrame:CGRectMake(0, 0, width, height)];
-        
-        PIECarousel_ItemView_new *itemView = [PIECarousel_ItemView_new itemView];
-        itemView.frame = CGRectMake(0, 0, width, height);
-        
-        
 
-        
-        [view addSubview:itemView];
+        view= [PIECarousel_ItemView_new itemView];
+        view.frame = CGRectMake(0, 0, width, height);
+
     }
     
-    
     PIEPageVM* vm = [_pageVMs objectAtIndex:index];
-    for (id subview in view.subviews) {
-        if ([subview isKindOfClass:[PIECarousel_ItemView_new class]]) {
-            PIECarousel_ItemView_new* itemView = subview;
-            
-            if (_hideDetailButtonIndex != kDontHideDetailButton) {
-                /**
-                    当且仅当调用carousel的控制器有特地设置这个hideDetailIndex的时候，才需要有这一步判断
-                    (需求：PIEPageDetailViewController和PIECarouselViewController3的互动)
-                 */
-                [itemView setShouldHideDetailButton:(index == _hideDetailButtonIndex)];
-            }
-            [itemView injectPageVM:vm];
-        }
+    [view injectPageVM:vm];
+    if (_hideDetailButtonIndex != kDontHideDetailButton) {
+        /**
+         当且仅当调用carousel的控制器有特地设置这个hideDetailIndex的时候，才需要有这一步判断
+         (需求：PIEPageDetailViewController和PIECarouselViewController3的互动)
+         */
+        [view setShouldHideDetailButton:(index == _hideDetailButtonIndex)];
     }
     
     return view;
 }
 
+-(void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index {
+    
+}
 #pragma mark - target-actions
 - (void)handleGesture_pan:(UIPanGestureRecognizer *)panGesture
 {
@@ -274,7 +261,10 @@
 
 -(iCarousel *)carousel {
     if (!_carousel) {
-        _carousel = [[iCarousel alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, SCREEN_HEIGHT)];
+        
+        CGFloat width  = SCREEN_WIDTH *scale_h;
+        CGFloat height = width * (930.0 / 700);
+        _carousel = [[iCarousel alloc]initWithFrame:CGRectMake(0, (SCREEN_HEIGHT-height)*0.5, self.view.frame.size.width, height)];
         _carousel.type          = iCarouselTypeLinear;
         _carousel.scrollSpeed   = 2.0;
         _carousel.delegate      = self;
