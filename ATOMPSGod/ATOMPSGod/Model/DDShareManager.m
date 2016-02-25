@@ -103,8 +103,13 @@
 +(void)postSocialShare2:(PIEPageVM*)vm withSocialShareType:(ATOMShareType)shareType block:(void (^)(BOOL success))block {
     
     //先获取服务器传输过来的信息
+    [Hud activity:@""];
     [self getRemoteShareInfo:vm withSocialShareType:shareType withBlock:^(ATOMShare *share) {
-        if (share) {
+        [Hud dismiss];
+        if (share == nil) {
+            [Hud text:@"获取分享信息失败"];
+            return ;
+        }
             NSString* shareTitle = share.title;
             NSString* desc = share.desc;
             if ([shareTitle isEqualToString:@""]) {
@@ -229,7 +234,7 @@
                 }];
 
             }
-        }
+        
     }];
     
 }
@@ -325,19 +330,24 @@
              {
                  if (block) {
                      block(YES);
+                     [Hud success:@"分享成功"];
                  }
-                 [Hud textWithLightBackground:@"分享成功"];
                  break;
              }
              case SSDKResponseStateFail:
              {
                  if (block) {
-                     block(YES);
+                     block(NO);
+                     [Hud text:@"分享失败,您可能没有安装客户端"];
                  }
                  break;
              }
              case SSDKResponseStateCancel:
              {
+                 if (block) {
+                     block(NO);
+                     [Hud text:@"取消分享"];
+                 }
                  break;
              }
              default:
