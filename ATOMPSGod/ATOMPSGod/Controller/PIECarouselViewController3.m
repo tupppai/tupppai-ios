@@ -77,7 +77,8 @@
     
     UITapGestureRecognizer *tapOnSelf =
     [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnSelf:)];
-    [self.carousel addGestureRecognizer:tapOnSelf];
+    [self.view addGestureRecognizer:tapOnSelf];
+    self.view.userInteractionEnabled = YES;
 
 }
 
@@ -154,11 +155,7 @@
         itemView.frame = CGRectMake(0, 0, width, height);
         
         
-//        // add gestures
-//        UITapGestureRecognizer *tapOnSelf =
-//            [[UITapGestureRecognizer alloc]
-//             initWithTarget:self action:@selector(tapOnSelf:)];
-//        [view addGestureRecognizer:tapOnSelf];
+
         
         [view addSubview:itemView];
     }
@@ -249,7 +246,7 @@
  **/
 
 - (void)tapOnSelf:(UIGestureRecognizer*)sender {
-    if ([self.carousel hitTest:[sender locationInView:self.view] withEvent:nil] == self.carousel )
+    if ([self.view hitTest:[sender locationInView:self.view] withEvent:nil] == self.view)
     {
         [self dismissViewControllerAnimated:YES completion:nil];
     }
