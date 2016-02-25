@@ -10,7 +10,7 @@
 #import "iCarousel.h"
 
 #import "PIECustomPresentViewController.h"
-//@interface PIECarouselViewController2 : PIECustomPresentViewController<iCarouselDataSource, iCarouselDelegate>
+
 @interface PIECarouselViewController2 : PIECustomPresentViewController<iCarouselDataSource, iCarouselDelegate>
 
 @property (nonatomic, strong) PIEPageVM *pageVM;

@@ -7,6 +7,7 @@
 //
 
 #import "PIELoveLabel.h"
+#import "UIView+RoundedCorner.h"
 
 @implementation PIELoveLabel
 
@@ -15,11 +16,7 @@
     _number = 0;
     self.font = [UIFont lightTupaiFontOfSize:10];
     
-    //======== TO BE REFINED
-    self.layer.cornerRadius = 6.5;
-    self.clipsToBounds = YES;
-    //========
-    self.layer.shouldRasterize = YES;
+    [self setRoundedCorners:UIRectCornerAllCorners radius:6.5];
     
     self.textColor = [UIColor whiteColor];
     self.textAlignment = NSTextAlignmentCenter;
@@ -30,8 +27,7 @@
         _numberString = @"0";
         _number = 0;
         self.font = [UIFont systemFontOfSize:10];
-        self.layer.cornerRadius = 6.5;
-        self.clipsToBounds = YES;
+        [self setRoundedCorners:UIRectCornerAllCorners radius:6.5];
         self.textColor = [UIColor whiteColor];
         self.textAlignment = NSTextAlignmentCenter;
     }
@@ -79,19 +75,5 @@
     self.text = numberString;
 }
 
-//- (void)drawRect:(CGRect)rect
-//{
-//    [super drawRect:rect];
-//    
-////    // 1. 获取上下文
-////    CGContextRef contextRef = UIGraphicsGetCurrentContext();
-////    
-////    // 2. 拼接路径
-////    UIBezierPath *path = [UIBezierPath bezierPath];
-//    
-//    //
-//    
-//    
-//}
 
 @end

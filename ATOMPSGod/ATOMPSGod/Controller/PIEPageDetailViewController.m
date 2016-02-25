@@ -20,6 +20,7 @@
 #import "SwipeView.h"
 #import "PIEPageCollectionSwipeView.h"
 #import "DDHotDetailManager.h"
+#import "PIECarouselViewController3.h"
 
 @interface PIEPageDetailViewController ()<UITableViewDataSource,UITableViewDelegate,PIEPageDetailTextInputBarDelegate,SwipeViewDelegate,SwipeViewDataSource>
 @property (nonatomic,strong) UITableView *tableView;
@@ -254,11 +255,6 @@
 }
 
 
-
-
-     
-     
-
 #pragma mark - tableView dataSource & delegate
 
 
@@ -379,22 +375,44 @@
 
 
 - (void)tapPageCollectionSwipeView_askImageView1 {
-    NSLog(@"tapPageCollectionSwipeView_askImageView1 ");
-    if (_askSourceArray.count >= 1) {
-        
-    }
+//    NSLog(@"tapPageCollectionSwipeView_askImageView1 ");
+//    if (_askSourceArray.count >= 1) {
+//        
+//    }
+    [self presentCarouselVCWithIndex:0];
 }
 - (void)tapPageCollectionSwipeView_askImageView2 {
-    NSLog(@"tapPageCollectionSwipeView_askImageView2 ");
-    if (_askSourceArray.count >= 2) {
-        
-    }
+//    NSLog(@"tapPageCollectionSwipeView_askImageView2 ");
+//    if (_askSourceArray.count >= 2) {
+//        
+//    }
+    [self presentCarouselVCWithIndex:1];
 }
 
 -(void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index {
-    NSLog(@"swipeView %zd",index);
+//    NSLog(@"swipeView %zd",index);
+    
+    if (_askSourceArray.count == 1) {
+        [self presentCarouselVCWithIndex:index + 1];
+    }else{
+        [self presentCarouselVCWithIndex:index + 2];
+    }
 }
 
+- (void)presentCarouselVCWithIndex:(NSInteger)index
+{
+    PIECarouselViewController3 *carouselVC = [PIECarouselViewController3 new];
+    
+    if (_askSourceArray == nil) {
+        // 保护措施，否则下面 [nil addObjectsFromArray: nonNilArray] 直接也会返回nil
+        carouselVC.pageVMs = _replySourceArray;
+    }else{
+        carouselVC.pageVMs =
+        [_askSourceArray arrayByAddingObjectsFromArray:_replySourceArray];
+    }
+    [self presentViewController:carouselVC animated:YES completion:nil];
+    [carouselVC scrollToIndex:index];
+}
 
 
 - (void)tapAvatar_Header {

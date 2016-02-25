@@ -26,7 +26,6 @@
 }
 
 -(instancetype)initWithCoder:(NSCoder *)aDecoder {
-    NSLog(@"initWithCoder");
     self = [super initWithCoder:aDecoder];
     if (self) {
 
