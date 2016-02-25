@@ -73,6 +73,7 @@
 {
     
     PIEShareImageView* view = [PIEShareImageView new];
+    [Hud text:@"正在生成图片..."];
     [view injectSauce:vm withBlock:^(BOOL success) {
         if (success) {
             UIGraphicsBeginImageContextWithOptions(view.bounds.size, view.opaque, 0.0f);

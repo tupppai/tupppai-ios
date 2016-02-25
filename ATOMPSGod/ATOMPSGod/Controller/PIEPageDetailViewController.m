@@ -50,12 +50,37 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+
+    [self setupNav];
     [self setupData];
     [self setupViews];
     [self registerObservers];
     [self setupActions];
     [self getCommentSource];
     [self getPageCollectionSwipeViewDataSource];
+}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
+- (void)setupNav {
+    UIButton *buttonLeft = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
+    buttonLeft.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [buttonLeft setImage:[UIImage imageNamed:@"PIE_icon_back"] forState:UIControlStateNormal];
+    
+    if (self.navigationController.viewControllers.count == 1) {
+        [buttonLeft addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+    }   else {
+        [buttonLeft addTarget:self action:@selector(pop) forControlEvents:UIControlEventTouchUpInside];
+    }
+    UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonLeft];
+    self.navigationItem.leftBarButtonItem =  buttonItem;
+}
+- (void)pop {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+- (void)dismiss {
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void)setupViews {
