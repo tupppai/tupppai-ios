@@ -14,6 +14,7 @@
 
 #define scale_h                  (414-40)/414.0
 #define kCarouselItemMaxChangedY 100
+#define kDontHideDetailButton    -7
 
 @interface PIECarouselViewController3 ()
 <
@@ -24,6 +25,7 @@
 @property (nonatomic, strong) iCarousel *carousel;
 @property (nonatomic, assign) CGFloat   carouselItemViewY;
 @property (nonatomic, assign) CGPoint   originCarouselItemViewCenter;
+@property (nonatomic, assign) NSInteger hideDetailButtonIndex;
 
 @end
 
@@ -89,7 +91,8 @@
 
 - (void)setupData
 {
-    _carouselItemViewY = 0;
+    _carouselItemViewY     = 0;
+    _hideDetailButtonIndex = kDontHideDetailButton;
 }
 
 #pragma mark - <iCarouselDelegate>
@@ -165,7 +168,14 @@
     for (id subview in view.subviews) {
         if ([subview isKindOfClass:[PIECarousel_ItemView_new class]]) {
             PIECarousel_ItemView_new* itemView = subview;
-            [itemView setShouldHideDetailButton:(index % 2 == 0)];
+            
+            if (_hideDetailButtonIndex != kDontHideDetailButton) {
+                /**
+                    当且仅当调用carousel的控制器有特地设置这个hideDetailIndex的时候，才需要有这一步判断
+                    (需求：PIEPageDetailViewController和PIECarouselViewController3的互动)
+                 */
+                [itemView setShouldHideDetailButton:(index == _hideDetailButtonIndex)];
+            }
             [itemView injectPageVM:vm];
         }
     }
@@ -255,7 +265,9 @@
 #pragma mark - Public methods
 - (void)scrollToIndex:(NSInteger)index
 {
+    _hideDetailButtonIndex = index;
     [self.carousel scrollToItemAtIndex:index animated:NO];
+    
 }
 
 #pragma mark - lazy loadings
@@ -274,5 +286,9 @@
     }
     return _carousel;
 }
+
+
+#pragma mark - Private helpers
+
 
 @end

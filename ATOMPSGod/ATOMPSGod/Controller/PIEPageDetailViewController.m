@@ -403,17 +403,12 @@
 {
     PIECarouselViewController3 *carouselVC = [PIECarouselViewController3 new];
     
-    if (_askSourceArray == nil) {
-        // 保护措施，否则下面 [nil addObjectsFromArray: nonNilArray] 直接也会返回nil
-        carouselVC.pageVMs = _replySourceArray;
-    }else{
-        carouselVC.pageVMs =
-        [_askSourceArray arrayByAddingObjectsFromArray:_replySourceArray];
-    }
+    carouselVC.pageVMs  = [self pageVMsToCarouselWithSwitchedPageVM:_pageViewModel];
+    
     [self presentViewController:carouselVC animated:YES completion:nil];
+    
     [carouselVC scrollToIndex:index];
 }
-
 
 - (void)tapAvatar_Header {
     PIEFriendViewController *opvc = [PIEFriendViewController new];
@@ -540,8 +535,35 @@
     self.textInputBar.textView.text = @"";
 }
 
+#pragma mark - private helper
 
-#pragma mark lazy initialization
+
+- (NSArray <PIEPageVM *> *)pageVMsToCarouselWithSwitchedPageVM:(PIEPageVM *)pageVM
+{
+    /**
+     将 pageDetailVC.pageViewModel 替换到carouselVC.pageVMs[index]中
+     否则RAC 绑定可能绑定到两个内容相同但是内存地址不一样的两个实例上.
+     */
+    
+    // BECAREFUL _askSourceArray == nil! 否则下面 [nil addObjectsFromArray: nonNilArray] 直接也会返回nil
+    NSMutableArray<PIEPageVM *> *retArray =
+    [NSMutableArray
+     arrayWithArray:[_askSourceArray arrayByAddingObjectsFromArray:_replySourceArray]];
+    
+    // look for the duplicate pageVM, and replace it.
+    for (int i = 0; i < retArray.count; i++) {
+        PIEPageVM *pageVM = retArray[i];
+        if (pageVM.type == _pageViewModel.type &&
+            pageVM.ID == _pageViewModel.ID) {
+            [retArray replaceObjectAtIndex:i withObject:_pageViewModel];
+            break;
+        }
+    }
+    
+    return retArray;
+}
+
+#pragma mark - lazy initialization
 
 -(PIEPageDetailTextInputBar *)textInputBar {
     if (!_textInputBar) {
