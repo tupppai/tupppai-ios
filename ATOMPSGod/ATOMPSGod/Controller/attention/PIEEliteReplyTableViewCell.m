@@ -193,10 +193,15 @@
 /** 第三种cell：动态 */
 - (void)setAllWorkButtonHidden:(BOOL)hidden
 {
-    if (hidden) {
-        self.allWorkButton.hidden = YES;
-    }
+    self.allWorkButton.hidden = hidden;
 }
+
+- (void)setThumbViewHidden:(BOOL)hidden
+{
+    self.blurAnimateImageView.thumbView.hidden = hidden;
+}
+
+
 
 - (void)prepareForReuse
 {

@@ -431,6 +431,15 @@
     
     [self presentViewController:carouselVC animated:YES completion:nil];
     
+    // 找到本页面pageVM在这个pageVMs的位置
+    for (int i = 0; i < carouselVC.pageVMs.count; i++) {
+        if (_pageViewModel.type == carouselVC.pageVMs[i].type &&
+            _pageViewModel.ID == carouselVC.pageVMs[i].ID) {
+            carouselVC.hideDetailButtonIndex = i;
+            break;
+        }
+    }
+    
     [carouselVC scrollToIndex:index];
 }
 

@@ -351,15 +351,6 @@ shouldSelectViewController:(UIViewController *)viewController
     manager.model = uploadModel;
     
     @weakify(self);
-//    [manager upload:^(CGFloat percentage, BOOL success) {
-//        @strongify(self);
-//        if (success) {
-//            [self setSelectedIndex:0];
-//            PIEEliteViewController *eliteViewController = _navigation_elite.viewControllers[0];
-//            
-//            [eliteViewController refreshMoments];
-//        }
-//    }];
     [manager uploadMoment:^(CGFloat percentage, BOOL success) {
         @strongify(self);
         if (success) {

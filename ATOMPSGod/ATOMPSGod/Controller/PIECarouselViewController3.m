@@ -25,7 +25,7 @@
 @property (nonatomic, strong) iCarousel *carousel;
 @property (nonatomic, assign) CGFloat   carouselItemViewY;
 @property (nonatomic, assign) CGPoint   originCarouselItemViewCenter;
-@property (nonatomic, assign) NSInteger hideDetailButtonIndex;
+
 
 @end
 
@@ -91,7 +91,6 @@
 - (void)setupData
 {
     _carouselItemViewY     = 0;
-    _hideDetailButtonIndex = kDontHideDetailButton;
 }
 
 #pragma mark - <iCarouselDelegate>
@@ -170,6 +169,9 @@
 -(void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index {
     
 }
+
+
+
 #pragma mark - target-actions
 - (void)handleGesture_pan:(UIPanGestureRecognizer *)panGesture
 {
@@ -252,7 +254,6 @@
 #pragma mark - Public methods
 - (void)scrollToIndex:(NSInteger)index
 {
-    _hideDetailButtonIndex = index;
     [self.carousel scrollToItemAtIndex:index animated:NO];
     
 }

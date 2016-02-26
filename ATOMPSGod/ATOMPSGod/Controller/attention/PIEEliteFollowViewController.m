@@ -232,9 +232,11 @@ static NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
         if (vm.askID == 0) {
             // 类型三：动态（像朋友圈那样，只是发一张图片而已）
             [replyCell setAllWorkButtonHidden:YES];
+            [replyCell setThumbViewHidden:YES];
         }else{
             // 类型二：帮P
             [replyCell setAllWorkButtonHidden:NO];
+            [replyCell setThumbViewHidden:NO];
         }
         
         // begin RAC binding
