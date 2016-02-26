@@ -39,6 +39,25 @@
                           }];
 }
 
+- (void)uploadMoment:(void (^)(CGFloat percentage, BOOL success))block
+{
+    [Hud text:@"正在上传你的动态..." backgroundColor:[UIColor colorWithHex:0x000000 andAlpha:0.3] margin:15 cornerRadius:7];
+    
+    PHAsset *asset = [self.model.imageArray firstObject];
+    CGFloat ratio1 = [self getAssetRatio:asset];
+    
+    [self.model.ratioArray addObject:@(ratio1)];
+    [self getImageDataFromAsset:asset
+                          block:^(NSData *data) {
+                              _dataImage1 = data;
+                              [self uploadMomentStep2:^(CGFloat percentage, BOOL success) {
+                                  if (block != nil) {
+                                      block(percentage, success);
+                                  }
+                              }];
+                          }];
+}
+
 - (void)upload:(void (^)(CGFloat percentage,BOOL success))block {
     
     if (self.model.type == PIEPageTypeAsk) {
@@ -189,6 +208,20 @@
             }];
 }
 
+- (void)uploadMomentStep2:(void (^)(CGFloat percentage, BOOL success))block
+{
+    [self uploadImage:_dataImage1
+                 Type:PIEPageTypeReply
+            withBlock:^(CGFloat percentage, BOOL success) {
+                block(percentage / 1.1, NO);
+                if (success) {
+                    [self uploadMomentRestInfo:^(BOOL success) {
+                        block(1.0, success);
+                    }];
+                }
+            }];
+}
+
 - (CGFloat)getAssetRatio:(PHAsset*)asset{
     return ((CGFloat)asset.pixelHeight/(CGFloat)asset.pixelWidth);
 }
@@ -277,6 +310,32 @@
              
              if (block != nil) {
                  block(YES, pageModel);
+             }
+         }
+     }];
+    // LeesinUploadManager 只负责把图片上传到七牛并且通知服务器绑定reply_id。
+}
+
+- (void)uploadMomentRestInfo:(void (^)(BOOL success))block
+{
+    NSMutableDictionary *params = [NSMutableDictionary new];
+    [params setObject:self.model.uploadIdArray forKey:@"upload_ids"];
+    [params setObject:self.model.ratioArray forKey:@"ratios"];
+    [params setObject:self.model.content forKey:@"desc"];
+    [params setObject:@(self.model.ask_id) forKey:@"ask_id"];
+    
+    // 先调用 reply/multi 将七牛给我的id转换成在服务器的reply_id, 对应的ask_id和category_id
+    [DDBaseService
+     POST:params
+     url:@"timeline/multi"
+     block:^(id responseObject) {
+         if (responseObject == nil) {
+             if (block != nil) {
+                 block(NO);
+             }
+         }else{
+             if (block != nil) {
+                 block(YES);
              }
          }
      }];

@@ -11,4 +11,7 @@
 
 @interface PIEEliteViewController : DDBaseVC
 @property (nonatomic, strong) MRNavigationBarProgressView *progressView;
+
+- (void)refreshMoments;
+
 @end

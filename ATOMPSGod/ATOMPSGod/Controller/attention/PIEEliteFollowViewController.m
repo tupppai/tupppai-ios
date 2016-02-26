@@ -384,13 +384,18 @@ static NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
     }];
 }
 
-/** 以下方法设置为Public */
+#pragma mark - Public methods
+
 - (void)getSourceIfEmpty_follow:(void (^)(BOOL finished))block {
     if (_isfirstLoadingFollow || _sourceFollow.count <= 0) {
         [self.tableFollow.mj_header beginRefreshing];
     }
 }
 
+- (void)refreshMoments
+{
+    [self.tableFollow.mj_header beginRefreshing];
+}
 #pragma mark - <PWRefreshBaseTableViewDelegate>
 
 -(void)didPullRefreshDown:(UITableView *)tableView {

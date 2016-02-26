@@ -228,6 +228,19 @@ typedef NS_ENUM(NSInteger, PIEEliteType) {
     
 }
 
+#pragma mark - Public methods
+- (void)refreshMoments
+{
+    [self.segmentedControl setSelectedSegmentIndex:1 animated:YES];
+    [self toggleWithType:PIEEliteTypeFollow];
+
+    // frefresh follow immediately
+    PIEEliteFollowViewController *followVC = (PIEEliteFollowViewController *)
+    self.eliteViewControllers[1];
+    [followVC refreshMoments];
+    
+}
+
 #pragma mark - Lazy loadings
 - (UIScrollView *)scrollView
 {
