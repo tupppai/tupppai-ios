@@ -16,7 +16,14 @@
     _number = 0;
     self.font = [UIFont lightTupaiFontOfSize:10];
     
-    [self setRoundedCorners:UIRectCornerAllCorners radius:6.5];
+    /**
+        以前setRoundedCorners是可以用的，不知道为何现在失效；
+        改回原先使用cornerRadius
+     */
+    
+//    [self setRoundedCorners:UIRectCornerAllCorners radius:0.1];
+    self.layer.cornerRadius  = 6.5;
+    self.layer.masksToBounds = YES;
     
     self.textColor = [UIColor whiteColor];
     self.textAlignment = NSTextAlignmentCenter;
@@ -27,7 +34,10 @@
         _numberString = @"0";
         _number = 0;
         self.font = [UIFont systemFontOfSize:10];
-        [self setRoundedCorners:UIRectCornerAllCorners radius:6.5];
+//        [self setRoundedCorners:UIRectCornerAllCorners radius:0.1];
+        
+        self.layer.cornerRadius  = 6.5;
+        self.layer.masksToBounds = YES;
         self.textColor = [UIColor whiteColor];
         self.textAlignment = NSTextAlignmentCenter;
     }

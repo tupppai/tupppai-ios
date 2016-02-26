@@ -241,7 +241,10 @@
 - (RACSignal *)longPressOnImageSignal
 {
     if (_longPressOnImageSignal == nil) {
-        _longPressOnImageSignal = [[self.longPressOnBlurAnimateImageView rac_gestureSignal]
+        _longPressOnImageSignal = [[[self.longPressOnBlurAnimateImageView rac_gestureSignal]
+                                   filter:^BOOL(UILongPressGestureRecognizer *longPress) {
+                                       return (longPress.state == UIGestureRecognizerStateBegan);
+                                   }]
                                    takeUntil:self.rac_prepareForReuseSignal];
     }
     return _longPressOnImageSignal;

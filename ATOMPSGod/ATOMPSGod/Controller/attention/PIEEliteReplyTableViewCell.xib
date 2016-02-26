@@ -90,7 +90,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="28" id="DRf-uf-cjP"/>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="27" id="SOM-B5-J8N"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="35" id="SOM-B5-J8N"/>
                             <constraint firstAttribute="width" priority="250" constant="35" id="rc6-7q-rfX"/>
                         </constraints>
                     </view>

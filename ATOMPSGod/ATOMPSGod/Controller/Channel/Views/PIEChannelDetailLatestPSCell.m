@@ -14,7 +14,7 @@
 - (void)awakeFromNib {
     // Initialization code
     
-//    [self setSelectionStyle:UITableViewCellSelectionStyleNone];
+    [self setSelectionStyle:UITableViewCellSelectionStyleNone];
     // configure _swipeView
     _swipeView.alignment         = SwipeViewAlignmentEdge;
 }

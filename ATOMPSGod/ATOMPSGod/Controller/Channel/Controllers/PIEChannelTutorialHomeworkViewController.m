@@ -10,7 +10,7 @@
 #import "PIEPageManager.h"
 #import "PIERefreshTableView.h"
 #import "PIEChannelTutorialModel.h"
-#import "PIEEliteHotReplyTableViewCell.h"
+#import "PIEEliteReplyTableViewCell.h"
 #import "LxDBAnything.h"
 #import "PIEFriendViewController.h"
 #import "PIECommentViewController.h"
@@ -27,17 +27,15 @@
 @property (nonatomic, strong) PIERefreshTableView *tableView;
 @property (nonatomic, strong) NSMutableArray<PIEPageVM *> *source_homework;
 @property (nonatomic, assign) NSInteger currentPageIndex;
-
 @property (nonatomic, assign) BOOL canRefreshFooter;
-
 @property (nonatomic, assign) BOOL isFirstLoadingHomework;
 
 @end
 
 @implementation PIEChannelTutorialHomeworkViewController
 
-static NSString *PIEEliteHotReplyTableViewCellIdentifier =
-@"PIEEliteHotReplyTableViewCell";
+static NSString *PIEEliteReplyTableViewCellIdentifier =
+@"PIEEliteReplyTableViewCell";
 
 #pragma mark - UI life cycles
 - (void)viewDidLoad {
@@ -82,10 +80,10 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
         
         tableView.estimatedRowHeight   = SCREEN_WIDTH+155;
         tableView.rowHeight            = UITableViewAutomaticDimension;
-        
-        [tableView registerNib:[UINib nibWithNibName:@"PIEEliteHotReplyTableViewCell"
+
+        [tableView registerNib:[UINib nibWithNibName:@"PIEEliteReplyTableViewCell"
                                               bundle:nil]
-        forCellReuseIdentifier:PIEEliteHotReplyTableViewCellIdentifier];
+        forCellReuseIdentifier:PIEEliteReplyTableViewCellIdentifier];
         
         [self.view addSubview:tableView];
         [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -174,15 +172,15 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PIEEliteHotReplyTableViewCell *replyCell =
-    [tableView dequeueReusableCellWithIdentifier:PIEEliteHotReplyTableViewCellIdentifier];
+    PIEEliteReplyTableViewCell *replyCell =
+    [tableView dequeueReusableCellWithIdentifier:PIEEliteReplyTableViewCellIdentifier];
     
-    [replyCell injectSauce:_source_homework[indexPath.row]];
+    [replyCell bindVM:_source_homework[indexPath.row]];
     
     // setup RAC here
     @weakify(self);
     
-    [replyCell.tapOnAvatarOrUsernameSignal subscribeNext:^(id x) {
+    [replyCell.tapOnUserSignal subscribeNext:^(id x) {
         @strongify(self);
         [self tapOnAvatarOrUsernameAtIndexPath:indexPath];
     }];
@@ -192,7 +190,7 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
         [self tapOnFollowViewAtIndexPath:indexPath];
     }];
     
-    [replyCell.tapOnImageViewSignal subscribeNext:^(id x) {
+    [replyCell.tapOnImageSignal subscribeNext:^(id x) {
         @strongify(self);
         [self tapOnImageViewAtIndexPath:indexPath];
     }];
@@ -200,14 +198,17 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
     /*
         BUG FOUND HERE: 监听cell的longPressOnImageViewSignal，不知道为什么一次长点击会发出两次信号，所以
                         shareView会弹出两次（下面代码解除注释即可重现bug）。而在PIEEliteHotVC中一切正常。
+        UPDATED: 从PIEEliteHotReplyCell 到 PIEEliteReplyCell, 问题依旧。所以是这个控制器的问题？
+     
+        BUG FIXED: LongPress的Began 和 Canceled 两个状态都发出了信号。在信号源过滤一下即可。
      */
     
-//    [replyCell.longPressOnImageViewSignal  subscribeNext:^(id x) {
-//        @strongify(self);
-//        [self longPressOnImageViewAtIndexPath:indexPath];
-//    }];
+    [replyCell.longPressOnImageSignal subscribeNext:^(id x) {
+        @strongify(self);
+        [self longPressOnImageViewAtIndexPath:indexPath];
+    }];
     
-    [replyCell.tapOnAllWorkSignal subscribeNext:^(id x) {
+    [replyCell.tapOnRelatedWorkSignal subscribeNext:^(id x) {
         @strongify(self);
         [self tapOnAllWorkAtIndexPath:indexPath];
     }];
@@ -222,18 +223,18 @@ static NSString *PIEEliteHotReplyTableViewCellIdentifier =
         [self tapOnCommentViewAtIndexPath:indexPath];
     }];
     
-    [replyCell.tapOnLikeSignal subscribeNext:^(id x) {
+    [replyCell.tapOnLoveSignal subscribeNext:^(id x) {
         @strongify(self);
         [self tapOnLikeViewAtIndexPath:indexPath];
     }];
     
-    [replyCell.longPressOnLikeSignal subscribeNext:^(id x) {
-        @strongify(self);
 
+    [replyCell.longPressOnLoveSignal subscribeNext:^(id x) {
+        @strongify(self);
         [self longPressOnLikeViewAtIndexPath:indexPath];
     }];
     
-    // ---- end of setting RAC
+    // ---- end of RAC settings
     
     return replyCell;
 }
