@@ -16,7 +16,8 @@
 #import "PIECommentViewController.h"
 #import "PIEReplyCollectionViewController.h"
 #import "PIEShareView.h"
-#import "PIECarouselViewController2.h"
+//#import "PIECarouselViewController2.h"
+#import "PIEPageDetailViewController.h"
 
 
 @interface PIEChannelTutorialHomeworkViewController ()
@@ -272,10 +273,15 @@ static NSString *PIEEliteReplyTableViewCellIdentifier =
 - (void)tapOnImageViewAtIndexPath:(NSIndexPath *)indexPath
 {
     PIEPageVM *selectedVM          = _source_homework[indexPath.row];
-    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-    vc.pageVM                      = selectedVM;
-    
-    [self presentViewController:vc animated:YES completion:nil];
+//    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+//    vc.pageVM                      = selectedVM;
+//    
+//    [self presentViewController:vc animated:YES completion:nil];
+    PIEPageDetailViewController *pageDetailVC =
+    [PIEPageDetailViewController new];
+    pageDetailVC.pageViewModel = selectedVM;
+    [self.parentViewController.navigationController pushViewController:pageDetailVC
+                                                              animated:YES];
 }
 
 - (void)longPressOnImageViewAtIndexPath:(NSIndexPath *)indexPath

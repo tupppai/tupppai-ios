@@ -12,7 +12,8 @@
 #import "MRNavigationBarProgressView.h"
 #import "DDService.h"
 #import "PIEUploadManager.h"
-#import "PIECarouselViewController2.h"
+//#import "PIECarouselViewController2.h"
+
 #import "PIEFriendViewController.h"
 #import "PIECommentViewController.h"
 #import "PIEShareView.h"
@@ -22,6 +23,7 @@
 #import "PIEToHelpViewController.h"
 #import "LeesinViewController.h"
 #import "PIEEliteReplyTableViewCell.h"
+#import "PIEPageDetailViewController.h"
 
 /* Variables */
 @interface PIENewReplyViewController ()<LeesinViewControllerDelegate>
@@ -377,10 +379,17 @@ static  NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
 - (void)tapOnImageViewAtIndexPath:(NSIndexPath *)indexPath
 {
     PIEPageVM *selectedVM = _sourceReply[indexPath.row];
-    PIECarouselViewController2 *carouselVC = [PIECarouselViewController2 new];
-    carouselVC.pageVM = selectedVM;
+//    PIECarouselViewController2 *carouselVC = [PIECarouselViewController2 new];
+//    carouselVC.pageVM = selectedVM;
     
-    [self presentViewController:carouselVC animated:YES completion:nil];
+    PIEPageDetailViewController *pageDetailVC =
+    [PIEPageDetailViewController new];
+    pageDetailVC.pageViewModel = selectedVM;
+    
+    DDNavigationController *navigationController =
+    [[DDNavigationController alloc] initWithRootViewController:pageDetailVC];
+    
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 - (void)longPressOnImageViewAtIndexPath:(NSIndexPath *)indexPath

@@ -11,7 +11,9 @@
 #import "PIESearchContentCollectionViewCell.h"
 #import "PIESearchManager.h"
 #import "PIEFriendViewController.h"
-#import "PIECarouselViewController2.h"
+//#import "PIECarouselViewController2.h"
+#import "PIEPageDetailViewController.h"
+#import "DDNavigationController.h"
 @interface PIESearchPageViewController ()
 <
     UICollectionViewDataSource,
@@ -144,10 +146,18 @@
                 vc.pageVM = vm;
                 [self.parentViewController.view.superview.viewController.navigationController pushViewController:vc animated:YES];
             } else if (CGRectContainsPoint(cell.imageView.frame, p)) {
-                PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-                vc.pageVM = vm;
-                [self.parentViewController.view.superview.viewController.navigationController  presentViewController:vc animated:YES completion:nil];
-                //                [self.navigationController pushViewController:vc animated:YES];
+//                PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+//                vc.pageVM = vm;
+                
+                PIEPageDetailViewController *pageDetailVC =
+                [PIEPageDetailViewController new];
+                
+                pageDetailVC.pageViewModel = vm;
+                
+                DDNavigationController *navigationController =
+                [[DDNavigationController alloc] initWithRootViewController:pageDetailVC];
+                
+                [self.parentViewController.view.superview.viewController.navigationController  presentViewController:navigationController animated:YES completion:nil];
             }
         }
     

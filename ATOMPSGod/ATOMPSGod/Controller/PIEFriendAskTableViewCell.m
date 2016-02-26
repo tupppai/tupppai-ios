@@ -8,9 +8,10 @@
 
 #import "PIEFriendAskTableViewCell.h"
 #import "DDNavigationController.h"
-#import "PIECarouselViewController2.h"
+//#import "PIECarouselViewController2.h"
 
 #import "PIECommentViewController.h"
+#import "PIEPageDetailViewController.h"
 
 @interface PIEFriendAskTableViewCell()
 @property (strong, nonatomic) NSMutableArray *source;
@@ -55,9 +56,16 @@
             [self.viewController.parentViewController.view.superview.viewController.navigationController presentViewController:nav2 animated:NO completion:nil];
 
         }   else    {
-            PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-            vc.pageVM = _vmAsk1;
-            [self.viewController.parentViewController.view.superview.viewController.navigationController  presentViewController:vc animated:YES completion:nil];
+            /*
+                TODO: 这里应该用Delegate，应该是控制器负责视图的切换
+             **/
+//            PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+//            vc.pageVM = _vmAsk1;
+            PIEPageDetailViewController *pageDetailVC = [PIEPageDetailViewController new];
+            pageDetailVC.pageViewModel = _vmAsk1;
+            DDNavigationController *nav =
+            [[DDNavigationController alloc] initWithRootViewController:pageDetailVC];
+            [self.viewController.parentViewController.view.superview.viewController.navigationController  presentViewController:nav animated:YES completion:nil];
         }
 
 
@@ -74,9 +82,16 @@
             [self.viewController.parentViewController.view.superview.viewController.navigationController presentViewController:nav2 animated:NO completion:nil];
             
         }   else    {
-            PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-            vc.pageVM = _vmAsk2;
-            [self.viewController.parentViewController.view.superview.viewController.navigationController  presentViewController:vc animated:YES completion:nil];
+//            PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+//            vc.pageVM = _vmAsk2;
+//            [self.viewController.parentViewController.view.superview.viewController.navigationController  presentViewController:vc animated:YES completion:nil];
+            PIEPageDetailViewController *pageDetailVC =
+            [PIEPageDetailViewController new];
+            pageDetailVC.pageViewModel = _vmAsk2;
+            DDNavigationController *nav =
+            [[DDNavigationController alloc] initWithRootViewController:pageDetailVC];
+            
+            [self.viewController.parentViewController.view.superview.viewController.navigationController  presentViewController:nav animated:YES completion:nil];
         }
 
     }
@@ -153,10 +168,17 @@
 -(void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index {
     DDNavigationController* nav = (DDNavigationController*)self.viewController.parentViewController.view.superview.viewController.navigationController;
     PIEPageVM* vm = [_source objectAtIndex:index];
-        PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-        vc.pageVM = vm;
-        //汗，看来还是要写在controller里面
-        [nav  presentViewController:vc animated:YES completion:nil];
+//        PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+//        vc.pageVM = vm;
+    
+    PIEPageDetailViewController *pageDetailVC =
+    [PIEPageDetailViewController new];
+    pageDetailVC.pageViewModel = vm;
+    
+    DDNavigationController *navigationVC =
+    [[DDNavigationController alloc] initWithRootViewController:pageDetailVC];
+    
+    [nav  presentViewController:navigationVC animated:YES completion:nil];
 }
 
 

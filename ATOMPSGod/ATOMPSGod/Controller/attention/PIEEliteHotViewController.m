@@ -22,7 +22,7 @@
 
 //#import "DeviceUtil.h"
 #import "PIEEliteManager.h"
-#import "PIECarouselViewController2.h"
+//#import "PIECarouselViewController2.h"
 #import "PIEFriendViewController.h"
 
 #import "PIECommentViewController.h"

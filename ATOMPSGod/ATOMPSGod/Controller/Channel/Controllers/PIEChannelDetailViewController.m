@@ -15,7 +15,7 @@
 
 #import "PIEChannelViewModel.h"
 #import "PIEShareView.h"
-#import "PIECarouselViewController2.h"
+//#import "PIECarouselViewController2.h"
 #import "PIEFriendViewController.h"
 #import "PIECommentViewController.h"
 #import "PIEReplyCollectionViewController.h"
@@ -31,6 +31,7 @@
 #import "MRNavigationBarProgressView.h"
 #import "PIEChannelDetailIntoViewController.h"
 #import "PIEEliteReplyTableViewCell.h"
+#import "PIEPageDetailViewController.h"
 
 @interface PIEChannelDetailViewController ()<LeesinViewControllerDelegate>
 @property (nonatomic, strong) PIERefreshTableView           *tableView;
@@ -518,10 +519,10 @@ static  NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
 - (void)tapOnImageViewAtIndexPath:(NSIndexPath *)indexPath
 {
     PIEPageVM *selectedVM = _source_reply[indexPath.row];
-    PIECarouselViewController2 *carouselVC = [PIECarouselViewController2 new];
-    carouselVC.pageVM = selectedVM;
-    
-    [self presentViewController:carouselVC animated:YES completion:nil];
+    PIEPageDetailViewController *pageDetailVC =
+    [PIEPageDetailViewController new];
+    pageDetailVC.pageViewModel = selectedVM;
+    [self.navigationController pushViewController:pageDetailVC animated:YES];
 }
 
 - (void)longPressOnImageViewAtIndexPath:(NSIndexPath *)indexPath

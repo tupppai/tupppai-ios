@@ -14,7 +14,7 @@
 #import "PIEFriendViewController.h"
 #import "PIECommentViewController.h"
 #import "DDNavigationController.h"
-#import "PIECarouselViewController2.h"
+//#import "PIECarouselViewController2.h"
 
 //#import "PIEUploadVC.h"
 #import "PIEProceedingManager.h"
@@ -24,6 +24,7 @@
 #import "MRNavigationBarProgressView.h"
 #import "PIEProceedingToHelpHeaderView.h"
 #import "PIEProceedingToHelpHeaderView_undone.h"
+#import "PIEPageDetailViewController.h"
 
 /* Variables */
 @interface PIEProceedingToHelpViewController ()<LeesinViewControllerDelegate>
@@ -244,10 +245,19 @@ static NSString *PIEProceedingToHelpTableViewCellIdentifier =
                 DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc_comment];
                 [nav presentViewController:nav2 animated:NO completion:nil];
             } else {
-                PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-                vc.pageVM = vm;
+//                PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+//                vc.pageVM = vm;
+                
+                PIEPageDetailViewController *pageDetailVC =
+                [PIEPageDetailViewController new];
+                
+                pageDetailVC.pageViewModel = vm;
+                
+                DDNavigationController *navigationController =
+                [[DDNavigationController alloc] initWithRootViewController:pageDetailVC];
+                
                 DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-                [nav presentViewController:vc animated:YES completion:nil];
+                [nav presentViewController:navigationController animated:YES completion:nil];
             }
         }
     }

@@ -17,8 +17,11 @@
 #import "PIEMyReplyCollectionViewCell.h"
 
 #import "DDNavigationController.h"
-#import "PIECarouselViewController2.h"
+//#import "PIECarouselViewController2.h"
+
+
 #import "DeviceUtil.h"
+#import "PIEPageDetailViewController.h"
 
 @interface PIEMyReplyViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,CHTCollectionViewDelegateWaterfallLayout>
 
@@ -189,10 +192,18 @@
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-    vc.pageVM = [_dataSource objectAtIndex:indexPath.row];
+//    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+//    vc.pageVM = [_dataSource objectAtIndex:indexPath.row];
+    
+    PIEPageDetailViewController *pageDetailVC =
+    [PIEPageDetailViewController new];
+    pageDetailVC.pageViewModel = [_dataSource objectAtIndex:indexPath.row];
+    
+    DDNavigationController *navigationVC =
+    [[DDNavigationController alloc] initWithRootViewController:pageDetailVC];
+    
     DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-    [nav presentViewController:vc animated:YES completion:nil];
+    [nav presentViewController:navigationVC animated:YES completion:nil];
 }
 
 

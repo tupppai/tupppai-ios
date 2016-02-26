@@ -10,7 +10,7 @@
 #import "PIERefreshTableView.h"
 #import "PIEChannelViewModel.h"
 #import "PIEChannelManager.h"
-#import "PIECarouselViewController2.h"
+//#import "PIECarouselViewController2.h"
 #import "PIEFriendViewController.h"
 #import "PIECommentViewController.h"
 #import "PIEReplyCollectionViewController.h"
@@ -27,6 +27,7 @@
 #import "LeesinViewController.h"
 #import "MRNavigationBarProgressView.h"
 #import "PIEEliteReplyTableViewCell.h"
+#import "PIEPageDetailViewController.h"
 /* Variables */
 @interface PIEChannelActivityViewController ()<LeesinViewControllerDelegate>
 
@@ -423,10 +424,11 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 - (void)tapOnImageViewAtIndexPath:(NSIndexPath *)indexPath
 {
     PIEPageVM *selectedVM = _source_reply[indexPath.row];
-    PIECarouselViewController2 *carouselVC = [PIECarouselViewController2 new];
-    carouselVC.pageVM = selectedVM;
+    PIEPageDetailViewController *pageDetailVC =
+    [PIEPageDetailViewController new];
+    pageDetailVC.pageViewModel = selectedVM;
     
-    [self presentViewController:carouselVC animated:YES completion:nil];
+    [self.navigationController pushViewController:pageDetailVC animated:YES];
 }
 
 - (void)longPressOnImageViewAtIndexPath:(NSIndexPath *)indexPath
