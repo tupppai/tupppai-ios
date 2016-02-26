@@ -104,14 +104,14 @@ static DDSessionManager *shareInstance = nil;
      string2 = md5(tupppaisignmd5)
      string3 = 当月的第几天
      string4 = string1~string2~string3
-     string5 = [[string4 md5]md5]
+     string5 = [[[string4 lowercase] md5]md5]
      string5就是签名
      */
     NSArray *sortedKeys = [[parameters allKeys] sortedArrayUsingSelector: @selector(compare:)];
     NSMutableArray *sortedValues = [NSMutableArray array];
     for (NSString *key in sortedKeys)
         [sortedValues addObject: [parameters objectForKey: key]];
-    
+
     NSString *jointValuesString = [sortedValues componentsJoinedByString:@""];
 
     NSDate *date = [NSDate date];
@@ -119,7 +119,8 @@ static DDSessionManager *shareInstance = nil;
     NSDateComponents *components = [calendar components:(NSCalendarUnitDay) fromDate:date];
     NSInteger dayOfMonth = [components day];
     
-    NSString *jointString = [NSString stringWithFormat:@"%@%@%zd",jointValuesString,[@"tupppaisignmd5" md5],dayOfMonth];
+    NSString *jointString = [[NSString stringWithFormat:@"%@%@%zd",jointValuesString,[@"tupppaisignmd5" md5],dayOfMonth]lowercaseString];
+    
     NSString *signingString = [[jointString md5]md5];
     
     NSMutableDictionary *params = [parameters mutableCopy];
@@ -128,6 +129,8 @@ static DDSessionManager *shareInstance = nil;
     
     return [self xxx_dataTaskWithHTTPMethod:method URLString:URLString parameters:params success:^(NSURLSessionDataTask * dataTask, id responseObject) {
         if (responseObject) {
+            
+
             int ret = [[ responseObject objectForKey:@"ret"] intValue];
             if (ret == 2) {
                 // 服务器没有监测到“登陆态”——需要用户重新登录, 或者是因为游客状态想要做一些对服务器有着“写”操作的行为
@@ -147,7 +150,6 @@ static DDSessionManager *shareInstance = nil;
             } else if (ret != 1) {
                 
                 // ret != 1, 表示网络不正常，或者是某种数据的异常, 向用户显示info字段的消息
-                
                 NSString* info = [responseObject objectForKey:@"info"];
                 NSDictionary* userInfo = [NSDictionary dictionaryWithObject:info forKey:@"info"];
                 [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NetworkShowInfoCall" object:nil userInfo:userInfo]];
