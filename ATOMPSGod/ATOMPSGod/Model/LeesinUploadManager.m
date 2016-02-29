@@ -24,7 +24,7 @@
     [Hud text:@"正在上传你的作业..." backgroundColor:[UIColor colorWithHex:0x000000 andAlpha:0.3] margin:15 cornerRadius:7];
 
     PHAsset *asset = [self.model.imageArray firstObject];
-    CGFloat ratio1 = [self getAssetRatio:asset];
+    float ratio1 = [self getAssetRatio:asset];
     
     [self.model.ratioArray addObject:@(ratio1)];
     
@@ -44,7 +44,7 @@
 //    [Hud text:@"正在上传你的动态..." backgroundColor:[UIColor colorWithHex:0x000000 andAlpha:0.3] margin:15 cornerRadius:7];
     
     PHAsset *asset = [self.model.imageArray firstObject];
-    CGFloat ratio1 = [self getAssetRatio:asset];
+    float ratio1 = [self getAssetRatio:asset];
     
     [self.model.ratioArray addObject:@(ratio1)];
     [self getImageDataFromAsset:asset
@@ -74,7 +74,7 @@
     
     if (uploadCount == 1) {
         asset1 = [self.model.imageArray objectAtIndex:0];
-        CGFloat ratio1 = [self getAssetRatio:asset1];
+        float ratio1 = [self getAssetRatio:asset1];
         [self.model.ratioArray addObject:@(ratio1)];
         
         [self getImageDataFromAsset:asset1 block:^(NSData *data) {
@@ -89,8 +89,8 @@
         asset1 = [self.model.imageArray objectAtIndex:0];
         asset2 = [self.model.imageArray objectAtIndex:1];
         
-        CGFloat ratio1 = [self getAssetRatio:asset1];
-        CGFloat ratio2 = [self getAssetRatio:asset2];
+        float ratio1 = [self getAssetRatio:asset1];
+        float ratio2 = [self getAssetRatio:asset2];
         [self.model.ratioArray addObject:@(ratio1)];
         [self.model.ratioArray addObject:@(ratio2)];
         
@@ -222,8 +222,10 @@
             }];
 }
 
-- (CGFloat)getAssetRatio:(PHAsset*)asset{
-    return ((CGFloat)asset.pixelHeight/(CGFloat)asset.pixelWidth);
+- (float)getAssetRatio:(PHAsset*)asset{
+    NSString* rationString = [NSString stringWithFormat:@"%.4f", ((CGFloat)asset.pixelHeight/(CGFloat)asset.pixelWidth)];
+    float ratio = [rationString floatValue];
+    return ratio;
 }
 
 - (void)getImageDataFromAsset:(PHAsset*)asset block:(void (^)(NSData *data))block {

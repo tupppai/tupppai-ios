@@ -107,24 +107,26 @@ static DDSessionManager *shareInstance = nil;
      string5 = [[[string4 lowercase] md5]md5]
      string5就是签名
      */
+    
+    NSMutableDictionary *params = [parameters mutableCopy];
+
     NSArray *sortedKeys = [[parameters allKeys] sortedArrayUsingSelector: @selector(compare:)];
     NSMutableArray *sortedValues = [NSMutableArray array];
     for (NSString *key in sortedKeys) {
         NSObject *obj = [parameters objectForKey: key];
-        
         //array->jsonString再去签名
         if ([obj isKindOfClass:[NSArray class]]) {
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:obj options:NSJSONWritingPrettyPrinted error:nil];
+            NSArray *sortedArray = [(NSArray*)obj sortedArrayUsingSelector:@selector(compare:)];
+            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:sortedArray options:0 error:nil];
             NSString *jsonString = [[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]lowercaseString];
             [sortedValues addObject: jsonString];
         } else {
             [sortedValues addObject: obj];
         }
-
     }
 
     NSString *jointValuesString = [sortedValues componentsJoinedByString:@""];
-
+    
     NSDate *date = [NSDate date];
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSDateComponents *components = [calendar components:(NSCalendarUnitDay) fromDate:date];
@@ -132,18 +134,18 @@ static DDSessionManager *shareInstance = nil;
     
     NSString *jointString =
     [[NSString stringWithFormat:@"%@%@%zd",jointValuesString,[@"tupppaisignmd5" md5],dayOfMonth]lowercaseString];
-    
     NSString *signingString = [[jointString md5]md5];
     
-    NSMutableDictionary *params = [parameters mutableCopy];
     [params setObject:signingString forKey:@"verify"];
     [params setObject:@"2" forKey:@"v"];
     
-    return [self xxx_dataTaskWithHTTPMethod:method URLString:URLString parameters:parameters success:^(NSURLSessionDataTask * dataTask, id responseObject) {
+    return [self xxx_dataTaskWithHTTPMethod:method URLString:URLString parameters:params success:^(NSURLSessionDataTask * dataTask, id responseObject) {
         
-#if DEBUG
-        NSLog(@"%@,%@,%@",URLString,params,responseObject);
-#endif
+//#if DEBUG
+//        NSLog(@"%@,%@,%@",URLString,params,responseObject);
+//        [Hud text:@"Debug Mode"];
+//#endif
+        
         if (responseObject) {
             
 
@@ -173,6 +175,9 @@ static DDSessionManager *shareInstance = nil;
         }
         success(dataTask,responseObject);
     } failure:^(NSURLSessionDataTask * dataTask, NSError * error) {
+//#if DEBUG
+//        NSLog(@"%@,%@,%@",URLString,params,error);
+//#endif
                 if (error) {
                     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NetworkErrorCall" object:nil]];
                 }
