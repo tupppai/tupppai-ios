@@ -138,7 +138,7 @@ typedef NS_ENUM(NSUInteger, PIEChannelTutorialControllerType) {
                                     target:self action:@selector(uploadHomework)];
     self.navigationItem.rightBarButtonItem = uploadHomeworkBarButton;
     
-    
+    self.navigationController.navigationBar.tintColor = [UIColor colorWithHex:0x4a4a4a andAlpha:0.93];
     self.progressView = [MRNavigationBarProgressView progressViewForNavigationController:self.navigationController];
     self.progressView.tintColor = [UIColor colorWithHex:0x4A4A4A andAlpha:0.93];
     [self.navigationController.navigationBar setBackgroundImage:nil

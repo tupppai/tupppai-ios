@@ -22,7 +22,7 @@
 - (void)uploadHomework:(void (^)(CGFloat percentage, BOOL success, PIEPageModel *pageModel))block
 {
     [Hud text:@"正在上传你的作业..." backgroundColor:[UIColor colorWithHex:0x000000 andAlpha:0.3] margin:15 cornerRadius:7];
-    
+
     PHAsset *asset = [self.model.imageArray firstObject];
     CGFloat ratio1 = [self getAssetRatio:asset];
     
@@ -41,7 +41,7 @@
 
 - (void)uploadMoment:(void (^)(CGFloat percentage, BOOL success))block
 {
-    [Hud text:@"正在上传你的动态..." backgroundColor:[UIColor colorWithHex:0x000000 andAlpha:0.3] margin:15 cornerRadius:7];
+//    [Hud text:@"正在上传你的动态..." backgroundColor:[UIColor colorWithHex:0x000000 andAlpha:0.3] margin:15 cornerRadius:7];
     
     PHAsset *asset = [self.model.imageArray firstObject];
     CGFloat ratio1 = [self getAssetRatio:asset];

@@ -284,7 +284,7 @@
                                              forKey:PIEHasNewNotificationFlagKey];
     [[NSUserDefaults standardUserDefaults]synchronize];
     
-    [self addRedDotToTabBarItemIndex:3];
+    [self addRedDotToTabBarItemIndex:4];
     [[NSNotificationCenter defaultCenter] postNotification:
      [NSNotification
       notificationWithName:PIEUpdateNotificationStatusNotification object:nil]];

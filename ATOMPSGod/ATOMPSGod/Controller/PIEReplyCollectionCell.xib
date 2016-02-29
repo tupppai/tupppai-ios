@@ -22,7 +22,7 @@
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KSU-ac-WOM" userLabel="avatarView" customClass="PIEAvatarView">
                         <rect key="frame" x="8" y="7.5" width="25" height="25"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="25" id="5a0-i2-f3O"/>
                             <constraint firstAttribute="height" constant="25" id="PwR-7S-ujU"/>
@@ -83,7 +83,7 @@
                 <outlet property="likeImageView" destination="INQ-BJ-16B" id="sRf-SL-quE"/>
                 <outlet property="usernameLabel" destination="5JV-PE-0Yh" id="8PR-jI-V9W"/>
             </connections>
-            <point key="canvasLocation" x="887" y="741.25"/>
+            <point key="canvasLocation" x="627" y="672.75"/>
         </collectionViewCell>
     </objects>
 </document>

@@ -7,15 +7,15 @@
 //
 
 #import "PIEReplyCollectionCell.h"
+#import "UIView+RoundedCorner.h"
 
 @implementation PIEReplyCollectionCell
 
 - (void)awakeFromNib {
     // Initialization code
-//    _avatarView.layer.cornerRadius = _avatarView.frame.size.width/2;
-//    _avatarView.clipsToBounds = YES;
-    self.backgroundColor = [UIColor whiteColor];
-    self.layer.cornerRadius = 8;
+
+    self.backgroundColor     = [UIColor whiteColor];
+    self.layer.cornerRadius  = 8;
     _imageView.clipsToBounds = YES;
     _imageView.contentMode = UIViewContentModeScaleAspectFill;
 //    _likeButton.userInteractionEnabled = NO;
@@ -27,7 +27,6 @@
 //                 forState:UIControlStateNormal];
 
     [_likeImageView setImage:[UIImage imageNamed:@"sharpCornerLike"]];
-    
 }
 -(void)setSelected:(BOOL)selected {
     
@@ -36,11 +35,10 @@
 - (void)injectSauce:(PIEPageVM *)viewModel {
     _viewModel = viewModel;
     [_imageView sd_setImageWithURL:[NSURL URLWithString:viewModel.imageURL] placeholderImage:[UIImage imageNamed:@"cellHolder"]];
-    [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
-//    _avatarView.isV = YES;
+//    [_avatarView.avatarImageView sd_setImageWithURL:[NSURL URLWithString:viewModel.avatarURL] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+//    
     
-    // testing:
-//    _avatarView.isV = ([viewModel.likeCount integerValue] % 2 == 0);
+    _avatarView.url = viewModel.avatarURL;
     
     _avatarView.isV = viewModel.isV;
     
