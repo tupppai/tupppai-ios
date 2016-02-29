@@ -13,8 +13,6 @@
 #import "PIELaunchTextField.h"
 #import "PIEVerificationCodeCountdownButton.h"
 
-
-
 /* Variables */
 @interface PIEBindCellphoneViewController ()
 
@@ -184,8 +182,7 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
         NSMutableDictionary *params =
         [NSMutableDictionary dictionary];
         
-        params[@"phone"] =
-        @([self.cellphoneNumberTextField.text integerValue]);
+        params[@"phone"] = self.cellphoneNumberTextField.text;
         [DDBaseService GET:params
                        url:@"account/requestAuthCode"
                      block:^(id responseObject) {
