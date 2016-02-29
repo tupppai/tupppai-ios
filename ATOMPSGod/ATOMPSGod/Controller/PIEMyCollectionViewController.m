@@ -10,11 +10,14 @@
 #import "PIERefreshTableView.h"
 #import "DDPageManager.h"
 #import "PIEMyCollectionTableViewCell.h"
-#import "PIECarouselViewController2.h"
+//#import "PIECarouselViewController2.h"
 #import "DDNavigationController.h"
 
 #import "DeviceUtil.h"
 #import "PIECommentViewController.h"
+#import "PIEPageDetailViewController.h"
+
+
 @interface PIEMyCollectionViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @property (nonatomic, strong)  PIERefreshTableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -82,10 +85,16 @@
         DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc_comment];
         [nav presentViewController:nav2 animated:NO completion:nil];
     } else {
-        PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-        vc.pageVM = vm;
+//        PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+//        vc.pageVM = vm;
+        
+        PIEPageDetailViewController *pageDetailVC = [PIEPageDetailViewController new];
+        pageDetailVC.pageViewModel = vm;
+        DDNavigationController *navigationController =
+        [[DDNavigationController alloc] initWithRootViewController:pageDetailVC];
+        
         DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-        [nav presentViewController:vc animated:NO completion:nil];
+        [nav presentViewController:navigationController animated:NO completion:nil];
     }
 }
 -(void)didPullRefreshDown:(UITableView *)tableView {

@@ -16,9 +16,12 @@
 
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "PIEImageCollectionViewCell.h"
-#import "PIECarouselViewController2.h"
+//#import "PIECarouselViewController2.h"
+
+
 #import "DDNavigationController.h"
 #import "DeviceUtil.h"
+#import "PIEPageDetailViewController.h"
 @interface PIEMyLikedPagesViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource,CHTCollectionViewDelegateWaterfallLayout,DZNEmptyDataSetDelegate>
 @property (nonatomic, strong) PIERefreshCollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -160,10 +163,18 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-    vc.pageVM = [_dataSource objectAtIndex:indexPath.row];
+//    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+//    vc.pageVM = [_dataSource objectAtIndex:indexPath.row];
+    
+    PIEPageDetailViewController *pageDetailVC =
+    [PIEPageDetailViewController new];
+    pageDetailVC.pageViewModel = [_dataSource objectAtIndex:indexPath.row];
+    
+    DDNavigationController *navigationController =
+    [[DDNavigationController alloc] initWithRootViewController:pageDetailVC];
+    
     DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-    [nav presentViewController:vc animated:YES completion:nil];
+    [nav presentViewController:navigationController animated:YES completion:nil];
 }
 
 

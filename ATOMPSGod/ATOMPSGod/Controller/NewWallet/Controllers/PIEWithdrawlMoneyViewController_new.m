@@ -9,11 +9,8 @@
 #import "PIEWithdrawlMoneyViewController_new.h"
 #import "PIEWithdrawMoneyView.h"
 
-
 #import "PIEWithdrawAuthCodeVerificationViewController.h"
 #import "PIEBindWeixinPaymentViewController_new.h"
-
-
 
 @interface PIEWithdrawlMoneyViewController_new ()
 
@@ -40,6 +37,12 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
 }
 
 #pragma mark - UI components setup
@@ -165,7 +168,7 @@
              double inputAmount = [inputAmoutStr doubleValue];
              
              @strongify(self);
-             if (inputAmount > 1 &&
+             if (inputAmount >= 1 &&
                  inputAmount < self.remainingBalance) {
                  return @YES;
              }else{

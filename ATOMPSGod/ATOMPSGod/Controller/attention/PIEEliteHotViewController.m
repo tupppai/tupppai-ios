@@ -22,7 +22,7 @@
 
 //#import "DeviceUtil.h"
 #import "PIEEliteManager.h"
-#import "PIECarouselViewController2.h"
+//#import "PIECarouselViewController2.h"
 #import "PIEFriendViewController.h"
 
 #import "PIECommentViewController.h"
@@ -826,7 +826,9 @@ static  NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
 
 - (void)tapOnBangIconAtIndexPath:(NSIndexPath *)indexPath
 {
-    [Hud text:@"BANG!"];
+    PIEPageVM *selectedVM = _sourceHot[indexPath.row];
+    self.psActionSheet.vm = selectedVM;
+    [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
 }
 
 - (void)tapOnLikePageButtonAtIndexPath:(NSIndexPath *)indexPath

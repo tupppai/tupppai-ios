@@ -193,10 +193,15 @@
 /** 第三种cell：动态 */
 - (void)setAllWorkButtonHidden:(BOOL)hidden
 {
-    if (hidden) {
-        self.allWorkButton.hidden = YES;
-    }
+    self.allWorkButton.hidden = hidden;
 }
+
+- (void)setThumbViewHidden:(BOOL)hidden
+{
+    self.blurAnimateImageView.thumbView.hidden = hidden;
+}
+
+
 
 - (void)prepareForReuse
 {
@@ -241,7 +246,10 @@
 - (RACSignal *)longPressOnImageSignal
 {
     if (_longPressOnImageSignal == nil) {
-        _longPressOnImageSignal = [[self.longPressOnBlurAnimateImageView rac_gestureSignal]
+        _longPressOnImageSignal = [[[self.longPressOnBlurAnimateImageView rac_gestureSignal]
+                                   filter:^BOOL(UILongPressGestureRecognizer *longPress) {
+                                       return (longPress.state == UIGestureRecognizerStateBegan);
+                                   }]
                                    takeUntil:self.rac_prepareForReuseSignal];
     }
     return _longPressOnImageSignal;

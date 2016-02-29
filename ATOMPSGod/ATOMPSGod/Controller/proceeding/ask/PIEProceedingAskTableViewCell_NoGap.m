@@ -7,12 +7,13 @@
 //
 
 #import "PIEProceedingAskTableViewCell_NoGap.h"
-#import "PIECarouselViewController2.h"
+//#import "PIECarouselViewController2.h"
 #import "DDNavigationController.h"
 
 #import "PIECommentViewController.h"
 #import "PIECategoryModel.h"
 #import "PIEReplyCollectionViewController.h"
+#import "PIEPageDetailViewController.h"
 
 #define kPIEProceedingAskMaxCountForShowingMoreReply 10
 
@@ -116,11 +117,19 @@
             DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc_comment];
             [nav presentViewController:nav2 animated:NO completion:nil];
         } else {
-            PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-            vc.pageVM = _vmAsk1;
+//            PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+//            vc.pageVM = _vmAsk1;
+ 
+            PIEPageDetailViewController *pageDetailVC =
+            [PIEPageDetailViewController new];
+            
+            pageDetailVC.pageViewModel = _vmAsk1;
+            
+            DDNavigationController *navigationController =
+            [[DDNavigationController alloc] initWithRootViewController:pageDetailVC];
+            
             DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-            //        [nav pushViewController:vc animated:YES ];
-            [nav presentViewController:vc animated:YES completion:nil];
+            [nav presentViewController:navigationController animated:YES completion:nil];
         }
     }
 }
@@ -133,11 +142,18 @@
             DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc_comment];
             [nav presentViewController:nav2 animated:NO completion:nil];
         } else {
-            PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-            vc.pageVM = _vmAsk2;
+//            PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+//            vc.pageVM = _vmAsk2;
+            PIEPageDetailViewController *pageDetailVC =
+            [PIEPageDetailViewController new];
+            
+            pageDetailVC.pageViewModel = _vmAsk1;
+            
+            DDNavigationController *navigationController =
+            [[DDNavigationController alloc] initWithRootViewController:pageDetailVC];
+            
             DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-            //        [nav pushViewController:vc animated:YES ];
-            [nav presentViewController:vc animated:YES completion:nil];
+            [nav presentViewController:navigationController animated:YES completion:nil];
         }
     }
     
@@ -283,10 +299,19 @@
     }
     else
     {
-        PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-        vc.pageVM = [_source objectAtIndex:index];
+//        PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+//        vc.pageVM = [_source objectAtIndex:index];
+        
+        PIEPageDetailViewController *pageDetailVC =
+        [PIEPageDetailViewController new];
+        
+        pageDetailVC.pageViewModel = _vmAsk1;
+        
+        DDNavigationController *navigationController =
+        [[DDNavigationController alloc] initWithRootViewController:pageDetailVC];
+        
         DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-        [nav presentViewController:vc animated:YES completion:nil];
+        [nav presentViewController:navigationController animated:YES completion:nil];
 
     }
 }

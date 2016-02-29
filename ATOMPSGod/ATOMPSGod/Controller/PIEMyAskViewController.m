@@ -12,10 +12,12 @@
 
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "PIEImageCollectionViewCell.h"
-#import "PIECarouselViewController2.h"
+//#import "PIECarouselViewController2.h"
 #import "DDNavigationController.h"
 #import "DeviceUtil.h"
 #import "PIECommentViewController.h"
+#import "PIEPageDetailViewController.h"
+
 @interface PIEMyAskViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,PWRefreshBaseCollectionViewDelegate,DZNEmptyDataSetSource,CHTCollectionViewDelegateWaterfallLayout,DZNEmptyDataSetDelegate>
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *homeImageDataSource;
@@ -179,10 +181,19 @@
         DDNavigationController* nav2 = [[DDNavigationController alloc]initWithRootViewController:vc_comment];
         [nav presentViewController:nav2 animated:NO completion:nil];
     } else {
-        PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-        vc.pageVM = vm;
-        DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-        [nav presentViewController:vc animated:NO completion:nil];
+//        PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+//        vc.pageVM = vm;
+//        DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
+//        [nav presentViewController:vc animated:NO completion:nil];
+        
+        PIEPageDetailViewController *pageDetailVC =
+        [PIEPageDetailViewController new];
+        pageDetailVC.pageViewModel = vm;
+        DDNavigationController *navigationController =
+        [[DDNavigationController alloc] initWithRootViewController:pageDetailVC];
+        DDNavigationController *nav =
+        [AppDelegate APP].mainTabBarController.selectedViewController;
+        [nav presentViewController:navigationController animated:NO completion:nil];
     }
     
 //    [nav pushViewController:vc animated:YES ];

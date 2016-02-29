@@ -14,4 +14,5 @@
 
 - (void)scrollToIndex:(NSInteger)index;
 
+@property (nonatomic, assign) NSInteger hideDetailButtonIndex;
 @end

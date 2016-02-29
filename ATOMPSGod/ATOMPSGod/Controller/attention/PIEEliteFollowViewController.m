@@ -232,9 +232,11 @@ static NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
         if (vm.askID == 0) {
             // 类型三：动态（像朋友圈那样，只是发一张图片而已）
             [replyCell setAllWorkButtonHidden:YES];
+            [replyCell setThumbViewHidden:YES];
         }else{
             // 类型二：帮P
             [replyCell setAllWorkButtonHidden:NO];
+            [replyCell setThumbViewHidden:NO];
         }
         
         // begin RAC binding
@@ -384,13 +386,18 @@ static NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
     }];
 }
 
-/** 以下方法设置为Public */
+#pragma mark - Public methods
+
 - (void)getSourceIfEmpty_follow:(void (^)(BOOL finished))block {
     if (_isfirstLoadingFollow || _sourceFollow.count <= 0) {
         [self.tableFollow.mj_header beginRefreshing];
     }
 }
 
+- (void)refreshMoments
+{
+    [self.tableFollow.mj_header beginRefreshing];
+}
 #pragma mark - <PWRefreshBaseTableViewDelegate>
 
 -(void)didPullRefreshDown:(UITableView *)tableView {
@@ -652,7 +659,9 @@ static NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
 
 - (void)tapOnBangIconAtIndexPath:(NSIndexPath *)indexPath
 {
-    [Hud text:@"BANG!"];
+    PIEPageVM *selectedVM = _sourceFollow[indexPath.row];
+    self.psActionSheet.vm = selectedVM;
+    [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
 }
 
 - (void)tapOnLikePageButtonAtIndexPath:(NSIndexPath *)indexPath

@@ -14,7 +14,7 @@
 #import "PIEFriendReplyViewController.h"
 #import "PIEFriendFollowingViewController.h"
 #import "PIEFriendFansViewController.h"
-#import "PIECarouselViewController2.h"
+
 #import "FXBlurView.h"
 #import "PIEActionSheet_UserAbuse.h"
 

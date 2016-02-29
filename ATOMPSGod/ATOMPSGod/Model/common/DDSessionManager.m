@@ -99,35 +99,36 @@ static DDSessionManager *shareInstance = nil;
 
 -(NSURLSessionDataTask *)xxx_dataTaskWithHTTPMethod:(NSString *)method URLString:(NSString *)URLString parameters:(id)parameters success:(void (^)(NSURLSessionDataTask * _Nonnull, id _Nonnull))success failure:(void (^)(NSURLSessionDataTask * _Nonnull, NSError * _Nonnull))failure {
     
-    /*签名
-     parameters根据key从小到大排序，把排序后对应的value拼接成string1
-     string2 = md5(tupppaisignmd5)
-     string3 = 当月的第几天
-     string4 = string1~string2~string3
-     string5 = [[[string4 lowercase] md5]md5]
-     string5就是签名
-     */
-    NSArray *sortedKeys = [[parameters allKeys] sortedArrayUsingSelector: @selector(compare:)];
-    NSMutableArray *sortedValues = [NSMutableArray array];
-    for (NSString *key in sortedKeys)
-        [sortedValues addObject: [parameters objectForKey: key]];
-
-    NSString *jointValuesString = [sortedValues componentsJoinedByString:@""];
-
-    NSDate *date = [NSDate date];
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    NSDateComponents *components = [calendar components:(NSCalendarUnitDay) fromDate:date];
-    NSInteger dayOfMonth = [components day];
+//    /*签名
+//     parameters根据key从小到大排序，把排序后对应的value拼接成string1
+//     string2 = md5(tupppaisignmd5)
+//     string3 = 当月的第几天
+//     string4 = string1~string2~string3
+//     string5 = [[[string4 lowercase] md5]md5]
+//     string5就是签名
+//     */
+//    NSArray *sortedKeys = [[parameters allKeys] sortedArrayUsingSelector: @selector(compare:)];
+//    NSMutableArray *sortedValues = [NSMutableArray array];
+//    for (NSString *key in sortedKeys)
+//        [sortedValues addObject: [parameters objectForKey: key]];
+//
+//    NSString *jointValuesString = [sortedValues componentsJoinedByString:@""];
+//
+//    NSDate *date = [NSDate date];
+//    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+//    NSDateComponents *components = [calendar components:(NSCalendarUnitDay) fromDate:date];
+//    NSInteger dayOfMonth = [components day];
+//    
+//    NSString *jointString =
+//    [[NSString stringWithFormat:@"%@%@%zd",jointValuesString,[@"tupppaisignmd5" md5],dayOfMonth]lowercaseString];
+//    
+//    NSString *signingString = [[jointString md5]md5];
+//    
+//    NSMutableDictionary *params = [parameters mutableCopy];
+//    [params setObject:signingString forKey:@"verify"];
+//    [params setObject:@"2" forKey:@"v"];
     
-    NSString *jointString = [[NSString stringWithFormat:@"%@%@%zd",jointValuesString,[@"tupppaisignmd5" md5],dayOfMonth]lowercaseString];
-    
-    NSString *signingString = [[jointString md5]md5];
-    
-    NSMutableDictionary *params = [parameters mutableCopy];
-    [params setObject:signingString forKey:@"verify"];
-    [params setObject:@"2" forKey:@"v"];
-    
-    return [self xxx_dataTaskWithHTTPMethod:method URLString:URLString parameters:params success:^(NSURLSessionDataTask * dataTask, id responseObject) {
+    return [self xxx_dataTaskWithHTTPMethod:method URLString:URLString parameters:parameters success:^(NSURLSessionDataTask * dataTask, id responseObject) {
         if (responseObject) {
             
 

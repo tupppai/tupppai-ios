@@ -12,7 +12,9 @@
 #import "PIENewAskCollectionCell.h"
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "PIEShareView.h"
-#import "PIECarouselViewController2.h"
+//#import "PIECarouselViewController2.h"
+
+
 #import "PIECommentViewController.h"
 #import "PIEFriendViewController.h"
 #import "PIEActionSheet_PS.h"
@@ -27,6 +29,8 @@
 
 #import "LeesinViewController.h"
 #import "MRNavigationBarProgressView.h"
+#import "PIEPageDetailViewController.h"
+#import "DDNavigationController.h"
 
 /* Variables */
 @interface PIENewAskViewController ()<LeesinViewControllerDelegate>
@@ -392,9 +396,16 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 //                [self.navigationController pushViewController:vc animated:YES];
 //            }
             
-            PIECarouselViewController2 *vc = [PIECarouselViewController2 new];
-            vc.pageVM = _selectedVM;
-            [self presentViewController:vc animated:NO completion:nil];
+            PIEPageDetailViewController *pageDetailVC =
+            [PIEPageDetailViewController new];
+            pageDetailVC.pageViewModel = _selectedVM;
+            
+            DDNavigationController *navigationController =
+            [[DDNavigationController alloc] initWithRootViewController:pageDetailVC];
+            
+//            PIECarouselViewController2 *vc = [PIECarouselViewController2 new];
+//            vc.pageVM = _selectedVM;
+            [self presentViewController:navigationController animated:NO completion:nil];
         }
         //点击头像
         else if (CGRectContainsPoint(cell.avatarView.frame, p)) {

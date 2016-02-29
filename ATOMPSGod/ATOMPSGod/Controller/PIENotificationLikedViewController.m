@@ -12,7 +12,10 @@
 #import "PIENotificationVM.h"
 #import "PIENotificationLikeTableViewCell.h"
 #import "PIEFriendViewController.h"
-#import "PIECarouselViewController2.h"
+//#import "PIECarouselViewController2.h"
+#import "PIEPageDetailViewController.h"
+#import "DDNavigationController.h"
+
 
 @interface PIENotificationLikedViewController ()<UITableViewDataSource,UITableViewDelegate,PWRefreshBaseTableViewDelegate,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 @property (nonatomic, strong) NSMutableArray *source;
@@ -142,13 +145,22 @@
                 vc.name = vm.username;
                 [self.navigationController pushViewController:vc animated:YES];
        } else  if (CGRectContainsPoint(cell.pageImageView.frame,p)) {
-                PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-                PIEPageVM* pageVM = [self transformNotificationVMToPageVM:vm];
-                vc.pageVM = pageVM;
-                [self.navigationController presentViewController:vc animated:YES completion:nil];
+//                PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+//                vc.pageVM = pageVM;
+           PIEPageVM* pageVM = [self transformNotificationVMToPageVM:vm];
+           
+           PIEPageDetailViewController *pageDetailVC =
+           [PIEPageDetailViewController new];
+           pageDetailVC.pageViewModel = pageVM;
+           
+           DDNavigationController *navigationController =
+           [[DDNavigationController alloc] initWithRootViewController:pageDetailVC];
+           
+           [self.navigationController presentViewController:navigationController
+                                                   animated:YES completion:nil];
 
-//                [self.navigationController pushViewController:vc animated:YES];
-            }
+
+       }
     }
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

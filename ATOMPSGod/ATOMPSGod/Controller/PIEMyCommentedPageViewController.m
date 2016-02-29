@@ -9,7 +9,7 @@
 #import "PIEMyCommentedPageViewController.h"
 #import "PIERefreshTableView.h"
 #import "PIEMyCommentedPageTableViewCell.h"
-#import "PIECarouselViewController2.h"
+//#import "PIECarouselViewController2.h"
 #import "DDNavigationController.h"
 
 #import "DDPageManager.h"

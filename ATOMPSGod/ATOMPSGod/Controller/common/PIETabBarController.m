@@ -24,9 +24,17 @@
 #import "PIELaunchViewController_Black.h"
 #import "PIEBindCellphoneViewController.h"
 #import "UIViewController+RecursiveModal.h"
+#import "RengarViewController.h"
+#import "LeesinUploadModel.h"
+#import "LeesinUploadManager.h"
+#import "MRNavigationBarProgressView.h"
 
 
-@interface PIETabBarController ()<UITabBarControllerDelegate>
+@interface PIETabBarController ()
+<
+    UITabBarControllerDelegate,
+    RengarViewControllerDelegate
+>
 @property (nonatomic, strong) DDNavigationController *navigation_new;
 @property (nonatomic, strong) DDNavigationController *navigation_elite;
 //@property (nonatomic, strong) DDNavigationController *centerNav;
@@ -34,6 +42,9 @@
 @property (nonatomic, strong) DDNavigationController *navigation_me;
 @property (nonatomic, strong) DDNavigationController *preNav;
 @property (nonatomic, assign) long long timeStamp_error;
+@property (nonatomic, strong) DDNavigationController *navigationPlaceholder_center;
+
+//@property (nonatomic, strong) MRNavigationBarProgressView *progressView;
 
 @end
 
@@ -73,6 +84,21 @@
         [self updateTabbarAvatar];
     }];
 
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+//    [self setupNavBar];
+}
+
+- (void)setupNavBar
+{
+    
+//    self.progressView = [MRNavigationBarProgressView progressViewForNavigationController:]
+    
+    // TODO: NO navigationBar to attach on
 }
 
 - (void)setupTitle {
@@ -129,6 +155,12 @@
                           handler:^(SIAlertView *alert) {
                               //清空数据库用户表
                               [ATOMUserDAO clearUsers];
+                              
+                              /*
+                                    Potential bug found: 
+                                    没有清理cookies。假如用户等处置后用另外一个账号登录就会出事
+                               */
+                              
                               //清空当前用户
                               [DDUserManager clearCurrentUser];
                               [DDSessionManager resetSharedInstance];
@@ -177,6 +209,8 @@
     _navigation_proceeding = [[DDNavigationController alloc] initWithRootViewController:proceedingViewController];
     _navigation_me = [[DDNavigationController alloc] initWithRootViewController:aboutMeVC];
     _preNav = _navigation_elite;
+    _navigationPlaceholder_center = [[DDNavigationController alloc] init];
+    
     
     _navigation_elite.tabBarItem.image =
     [[UIImage imageNamed:@"tab_home_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
@@ -197,8 +231,18 @@
     [[UIImage imageNamed:@"pie_tab_5"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     _navigation_me.tabBarItem.selectedImage =
     [[UIImage imageNamed:@"pie_tab_5_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    _navigationPlaceholder_center.title = nil;
+    _navigationPlaceholder_center.tabBarItem.image =
+    [[UIImage imageNamed:@"tab_post"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    _navigationPlaceholder_center.tabBarItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0);
+    
     [self updateTabbarAvatar];
-    self.viewControllers = [NSArray arrayWithObjects:_navigation_elite, _navigation_new,_navigation_proceeding, _navigation_me, nil];
+    self.viewControllers = [NSArray arrayWithObjects:_navigation_elite,
+                            _navigation_new,
+                            _navigationPlaceholder_center,
+                            _navigation_proceeding,
+                            _navigation_me, nil];
 }
 
 
@@ -267,6 +311,59 @@
 //    }
 //    return YES;
 //}
+- (BOOL)tabBarController:(UITabBarController *)tabBarController
+shouldSelectViewController:(UIViewController *)viewController
+{
+    if (viewController == _navigationPlaceholder_center) {
+        [self presentRengarViewController];
+        return NO;
+    }
+    return YES;
+}
+
+- (void)presentRengarViewController
+{
+    
+    RengarViewController *rengarVC = [RengarViewController new];
+    rengarVC.delegate              = self;
+    rengarVC.titleStr              = @"发布动态";
+    
+    DDNavigationController *nav =
+    [[DDNavigationController alloc] initWithRootViewController:rengarVC];
+    
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+
+#pragma mark - <RengarViewControllerDelegate>
+- (void)rengarViewController:(RengarViewController *)rengarViewController
+  didFinishPickingPhotoAsset:(PHAsset *)asset
+           descriptionString:(NSString *)descriptionString
+{
+    // upload 'momonet', a.k.a reply with ask_ID == 0
+    LeesinUploadModel *uploadModel = [LeesinUploadModel new];
+    LeesinUploadManager *manager   = [LeesinUploadManager new];
+    
+    uploadModel.ask_id     = 0;
+    uploadModel.type       = PIEPageTypeReply;
+    uploadModel.content    = descriptionString;
+    uploadModel.imageArray = [NSMutableOrderedSet orderedSetWithObject:asset];
+    
+    manager.model = uploadModel;
+    
+    @weakify(self);
+    [manager uploadMoment:^(CGFloat percentage, BOOL success) {
+        @strongify(self);
+        if (success) {
+            [self setSelectedIndex:0];
+            PIEEliteViewController *eliteViewController = _navigation_elite.viewControllers[0];
+            [eliteViewController refreshMoments];
+        }
+    }];
+    
+}
+
+
 //- (void)presentBlurViewController {
 //    PIECameraViewController *pvc = [PIECameraViewController new];
 //    pvc.blurStyle = UIBlurEffectStyleDark;

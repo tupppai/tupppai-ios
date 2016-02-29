@@ -11,9 +11,11 @@
 #import "PIERefreshCollectionView.h"
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "PIEReplyCollectionCell.h"
-#import "PIECarouselViewController2.h"
+//#import "PIECarouselViewController2.h"
 #import "PIEFriendViewController.h"
 #import "DeviceUtil.h"
+#import "PIEPageDetailViewController.h"
+#import "DDNavigationController.h"
 @interface PIEReplyCollectionViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout,PWRefreshBaseCollectionViewDelegate>
 @property (nonatomic, strong) NSMutableArray *source;
 @property (nonatomic, assign) NSInteger currentPage;
@@ -199,11 +201,18 @@
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     PIEPageVM* vm = [_source objectAtIndex:indexPath.row];
-    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-    vc.pageVM = vm;
-    [self.navigationController presentViewController:vc animated:YES completion:nil];
+//    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
+//    vc.pageVM = vm;
+    PIEPageDetailViewController *pageDetailVC =
+    [PIEPageDetailViewController new];
+    
+    pageDetailVC.pageViewModel = vm;
+    
+    DDNavigationController *navigationController =
+    [[DDNavigationController alloc] initWithRootViewController:pageDetailVC];
+    
+    [self.navigationController presentViewController:navigationController animated:YES completion:nil];
 
-//    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout

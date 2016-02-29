@@ -13,4 +13,6 @@
 
 - (void)getSourceIfEmpty_follow:(void (^)(BOOL finished))block;
 
+- (void)refreshMoments;
+
 @end

@@ -397,7 +397,8 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
         [[NSUserDefaults standardUserDefaults] objectForKey:PIETouristLoginTypeStringKey];
         params[@"type"]   = type;
         
-        [Hud activity:@"绑定中..."];
+//        [Hud activity:@"绑定中..."];
+        [Hud activity:@""];
         
         @weakify(self);
         [DDBaseService POST:params url:URL_ACRegister

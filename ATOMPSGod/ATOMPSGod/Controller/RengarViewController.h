@@ -20,6 +20,6 @@
 @interface RengarViewController : DDBaseVC
 
 @property (nonatomic, weak) id<RengarViewControllerDelegate> delegate;
-
+@property (nonatomic, strong) NSString *titleStr;
 
 @end

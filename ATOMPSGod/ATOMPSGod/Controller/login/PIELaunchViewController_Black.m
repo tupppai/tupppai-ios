@@ -146,6 +146,7 @@ PIEVerificationCodeCountdownButton *countdownButton;
         textField.placeholder  = @"密码";
         textField.secureTextEntry = YES;
         
+        
         [self.view addSubview:textField];
 
         @weakify(self);
@@ -587,6 +588,8 @@ PIEVerificationCodeCountdownButton *countdownButton;
 
         [self.nextStepButton setTitle:@"登录" forState:UIControlStateNormal];
     }];
+    
+    [self.passwordTextField becomeFirstResponder];
 }
 
 - (void)updateUIForSignup{
@@ -603,6 +606,7 @@ PIEVerificationCodeCountdownButton *countdownButton;
         [self.nextStepButton setTitle:@"注册" forState:UIControlStateNormal];
     }];
     
+    [self.passwordTextField becomeFirstResponder];
     
 }
 

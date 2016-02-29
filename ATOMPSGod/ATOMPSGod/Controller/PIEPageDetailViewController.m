@@ -403,41 +403,44 @@
 //    if (_askSourceArray.count >= 1) {
 //        
 //    }
-    [self presentCarouselVCWithIndex:0];
+    [self presentCarouselVCAtIndex:0];
 }
 - (void)tapPageCollectionSwipeView_askImageView2 {
 //    NSLog(@"tapPageCollectionSwipeView_askImageView2 ");
 //    if (_askSourceArray.count >= 2) {
 //        
 //    }
-    [self presentCarouselVCWithIndex:1];
+    [self presentCarouselVCAtIndex:1];
 }
 
 -(void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index {
-//    NSLog(@"swipeView %zd",index);
     
     if (_askSourceArray.count == 1) {
-        [self presentCarouselVCWithIndex:index + 1];
+        [self presentCarouselVCAtIndex:index + 1];
     }else{
-        [self presentCarouselVCWithIndex:index + 2];
+        [self presentCarouselVCAtIndex:index + 2];
     }
 }
 
-- (void)presentCarouselVCWithIndex:(NSInteger)index
+- (void)presentCarouselVCAtIndex:(NSInteger)index
 {
     PIECarouselViewController3 *carouselVC = [PIECarouselViewController3 new];
     
-    if (_askSourceArray == nil) {
-        // 保护措施，否则下面 [nil addObjectsFromArray: nonNilArray] 直接也会返回nil
-        carouselVC.pageVMs = _replySourceArray;
-    }else{
-        carouselVC.pageVMs =
-        [_askSourceArray arrayByAddingObjectsFromArray:_replySourceArray];
-    }
+    carouselVC.pageVMs  = [self pageVMsToCarouselWithSwitchedPageVM:_pageViewModel];
+    
     [self presentViewController:carouselVC animated:YES completion:nil];
+    
+    // 找到本页面pageVM在这个pageVMs的位置, 其对应的CarouselItemView不需要显示“详情”按钮--否则就是循环页面了
+    for (int i = 0; i < carouselVC.pageVMs.count; i++) {
+        if (_pageViewModel.type == carouselVC.pageVMs[i].type &&
+            _pageViewModel.ID == carouselVC.pageVMs[i].ID) {
+            carouselVC.hideDetailButtonIndex = i;
+            break;
+        }
+    }
+    
     [carouselVC scrollToIndex:index];
 }
-
 
 - (void)tapAvatar_Header {
     PIEFriendViewController *opvc = [PIEFriendViewController new];
@@ -564,8 +567,35 @@
     self.textInputBar.textView.text = @"";
 }
 
+#pragma mark - private helper
 
-#pragma mark lazy initialization
+
+- (NSArray <PIEPageVM *> *)pageVMsToCarouselWithSwitchedPageVM:(PIEPageVM *)pageVM
+{
+    /**
+     将 pageDetailVC.pageViewModel 替换到carouselVC.pageVMs[index]中
+     否则RAC 绑定可能绑定到两个内容相同但是内存地址不一样的两个实例上.
+     */
+    
+    // BECAREFUL _askSourceArray == nil! 否则下面 [nil addObjectsFromArray: nonNilArray] 直接也会返回nil
+    NSMutableArray<PIEPageVM *> *retArray =
+    [NSMutableArray
+     arrayWithArray:[_askSourceArray arrayByAddingObjectsFromArray:_replySourceArray]];
+    
+    // look for the duplicate pageVM, and replace it.
+    for (int i = 0; i < retArray.count; i++) {
+        PIEPageVM *pageVM = retArray[i];
+        if (pageVM.type == _pageViewModel.type &&
+            pageVM.ID == _pageViewModel.ID) {
+            [retArray replaceObjectAtIndex:i withObject:_pageViewModel];
+            break;
+        }
+    }
+    
+    return retArray;
+}
+
+#pragma mark - lazy initialization
 
 -(PIEPageDetailTextInputBar *)textInputBar {
     if (!_textInputBar) {

@@ -34,5 +34,6 @@
 @property (nonatomic, strong) RACSignal *tapOnRelatedWorkSignal;
 
 - (void)setAllWorkButtonHidden:(BOOL)hidden;
+- (void)setThumbViewHidden:(BOOL)hidden;
 
 @end

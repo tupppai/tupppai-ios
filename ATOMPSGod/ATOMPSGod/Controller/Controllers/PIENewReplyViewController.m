@@ -8,29 +8,29 @@
 
 #import "PIENewReplyViewController.h"
 #import "PIERefreshTableView.h"
-#import "PIENewReplyTableCell.h"
 #import "PIEPageManager.h"
 #import "MRNavigationBarProgressView.h"
 #import "DDService.h"
 #import "PIEUploadManager.h"
-#import "PIECarouselViewController2.h"
+//#import "PIECarouselViewController2.h"
+
 #import "PIEFriendViewController.h"
 #import "PIECommentViewController.h"
 #import "PIEShareView.h"
 #import "PIEReplyCollectionViewController.h"
 #import "DDCollectManager.h"
 #import "DDNavigationController.h"
-
 #import "PIEToHelpViewController.h"
-
 #import "LeesinViewController.h"
+#import "PIEEliteReplyTableViewCell.h"
+#import "PIEPageDetailViewController.h"
 
 /* Variables */
 @interface PIENewReplyViewController ()<LeesinViewControllerDelegate>
 
 @property (nonatomic, assign) BOOL isfirstLoadingReply;
 
-@property (nonatomic, strong) NSMutableArray *sourceReply;
+@property (nonatomic, strong) NSMutableArray<PIEPageVM *> *sourceReply;
 
 @property (nonatomic, assign) NSInteger currentIndex_reply;
 
@@ -40,15 +40,9 @@
 
 @property (nonatomic, strong) PIERefreshTableView *tableViewReply;
 
-@property (nonatomic, strong) PIENewReplyTableCell *selectedReplyCell;
-
-@property (nonatomic, strong) NSIndexPath *selectedIndexPath;
-
 @property (nonatomic, strong)  MRNavigationBarProgressView* progressView;
 
 @property (nonatomic, weak) PIERefreshTableView *tableViewActivity;
-
-@property (nonatomic, strong) PIEPageVM *selectedVM;
 
 @property (nonatomic, strong) PIEShareView *shareView;
 
@@ -75,13 +69,11 @@
 <DZNEmptyDataSetDelegate, DZNEmptyDataSetSource>
 @end
 
-// =================================================================
 @implementation PIENewReplyViewController
 
-static NSString *CellIdentifier = @"PIENewReplyTableCell";
+static  NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
 
-
-#pragma mark - 
+#pragma mark -
 #pragma mark UI life cycles
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -89,11 +81,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.tableViewReply ];
     [self configureTakePhotoButton];
-    [self setupGestures];
     [self setupData];
-    
-    [self setupNotificationObserver];
-    
     [self firstGetSourceIfEmpty_Reply];
 }
 
@@ -133,11 +121,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 
     _currentIndex_reply     = 1;
 
-    _sourceReply            = [NSMutableArray new];
-}
-
-- (void)setupNotificationObserver
-{
+    _sourceReply            = [NSMutableArray<PIEPageVM *> new];
 }
 
 
@@ -170,12 +154,6 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     [self presentViewController:vc animated:YES completion:nil];
 }
 
-/**
- *  remove observers while being deallocated.
- */
--(void)dealloc {
-}
-
 #pragma mark - <UITableViewDelegate>
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
@@ -185,6 +163,7 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
                          [self.takePhotoButton layoutIfNeeded];
                      }];
 }
+
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     [self.takePhotoButtonBottomMarginConstraint setOffset:0];
@@ -203,7 +182,6 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 }
 
 
-
 #pragma mark - <UITableViewDataSource>
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -217,10 +195,83 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    PIENewReplyTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    [cell injectSauce:_sourceReply[indexPath.row]];
-    return cell;
-   
+    PIEEliteReplyTableViewCell *replyCell =
+    [tableView dequeueReusableCellWithIdentifier:PIEEliteReplyCellIdentifier];
+    
+    PIEPageVM *viewModel = _sourceReply[indexPath.row];
+    
+    [replyCell bindVM:viewModel];
+    
+    if (viewModel.askID == 0) {
+        // 类型三： 动态（像朋友圈那样，只是发一张图片而已）
+        [replyCell setAllWorkButtonHidden:YES];
+    }else{
+        // 类型二：帮P
+        [replyCell setAllWorkButtonHidden:NO];
+    }
+    
+    // begin RAC binding
+    @weakify(self);
+    
+    [replyCell.tapOnUserSignal
+     subscribeNext:^(id x) {
+         @strongify(self);
+         [self tapOnAvatarOrUsernameAtIndexPath:indexPath];
+     }];
+    
+    [replyCell.tapOnFollowButtonSignal
+     subscribeNext:^(UITapGestureRecognizer *tap) {
+         @strongify(self);
+         [self tapOnFollowViewAtIndexPath:indexPath];
+         
+         tap.view.hidden = YES;
+     }];
+    
+    [replyCell.tapOnImageSignal
+     subscribeNext:^(id x) {
+         @strongify(self);
+         [self tapOnImageViewAtIndexPath:indexPath];
+     }];
+    
+    [replyCell.longPressOnImageSignal
+     subscribeNext:^(id x) {
+         @strongify(self);
+         [self longPressOnImageViewAtIndexPath:indexPath];
+     }];
+    
+    [replyCell.tapOnCommentSignal
+     subscribeNext:^(id x) {
+         @strongify(self);
+         [self tapOnCommentViewAtIndexPath:indexPath];
+     }];
+    
+    [replyCell.tapOnShareSignal
+     subscribeNext:^(id x) {
+         @strongify(self);
+         [self tapOnShareViewAtIndexPath:indexPath];
+     }];
+    
+    [replyCell.tapOnLoveSignal
+     subscribeNext:^(id x) {
+         @strongify(self);
+         [self tapOnLikeViewAtIndexPath:indexPath];
+     }];
+    
+    [replyCell.longPressOnLoveSignal
+     subscribeNext:^(id x) {
+         @strongify(self);
+         [self longPressOnLikeViewAtIndexPath:indexPath];
+     }];
+    
+    [replyCell.tapOnRelatedWorkSignal
+     subscribeNext:^(id x) {
+         @strongify(self);
+         [self tapOnAllWorkAtIndexPath:indexPath];
+     }];
+    
+    // --- end of RAC binding
+    
+    return replyCell;
 }
 
 #pragma mark - Fetch Data from Server
@@ -311,150 +362,78 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     [self loadMoreData_reply];
 }
 
-
-#pragma mark - Gesture Event
-
-- (void)setupGestures {
-    UITapGestureRecognizer* tapGestureReply = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnReply:)];
-    UILongPressGestureRecognizer* longPressGestureReply = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnReply:)];
-    [_tableViewReply addGestureRecognizer:longPressGestureReply];
-    [_tableViewReply addGestureRecognizer:tapGestureReply];
-    
-}
-
-- (void)tapOnReply:(UITapGestureRecognizer *)gesture {
-        CGPoint location = [gesture locationInView:_tableViewReply];
-        _selectedIndexPath = [_tableViewReply indexPathForRowAtPoint:location];
-        if (_selectedIndexPath) {
-            _selectedReplyCell = [_tableViewReply cellForRowAtIndexPath:_selectedIndexPath];
-            _selectedVM = _sourceReply[_selectedIndexPath.row];
-            CGPoint p = [gesture locationInView:_selectedReplyCell];
-            
-            //点击小图
-            if (CGRectContainsPoint(_selectedReplyCell.blurAnimateImageView.frame, p)) {
-                CGPoint pp = [gesture locationInView:_selectedReplyCell.blurAnimateImageView];
-                if (CGRectContainsPoint(_selectedReplyCell.blurAnimateImageView.thumbView.frame,pp)) {
-                    CGPoint ppp = [gesture locationInView:_selectedReplyCell.blurAnimateImageView.thumbView];
-
-                    if (CGRectContainsPoint(_selectedReplyCell.blurAnimateImageView.thumbView.leftView.frame,ppp)) {
-                        [_selectedReplyCell.blurAnimateImageView animateWithType:PIEThumbAnimateViewTypeLeft];
-                    }
-                    else if (CGRectContainsPoint(_selectedReplyCell.blurAnimateImageView.thumbView.rightView.frame,ppp)) {
-                        [_selectedReplyCell.blurAnimateImageView animateWithType:PIEThumbAnimateViewTypeRight];
-                    }
-
-                }
-                else if (CGRectContainsPoint(_selectedReplyCell.blurAnimateImageView.imageView.frame,pp)) {
-                    PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-                    vc.pageVM = _selectedVM;
-                    [self presentViewController:vc animated:NO completion:nil];
-                }
-            }
-
-            //点击头像
-            else if (CGRectContainsPoint(_selectedReplyCell.avatarView.frame, p)) {
-                PIEFriendViewController * friendVC = [PIEFriendViewController new];
-                friendVC.pageVM = _selectedVM;
-                [self.navigationController pushViewController:friendVC animated:YES];
-            }
-            //点击用户名
-            else if (CGRectContainsPoint(_selectedReplyCell.nameLabel.frame, p)) {
-                PIEFriendViewController * friendVC = [PIEFriendViewController new];
-                friendVC.pageVM = _selectedVM;
-                [self.navigationController pushViewController:friendVC animated:YES];
-            }
-            //            else if (CGRectContainsPoint(_selectedReplyCell.collectView.frame, p)) {
-            //                //should write this logic in viewModel
-            ////                [self collect:_selectedReplyCell.collectView shouldShowHud:NO];
-            //                [self collect];
-            //            }
-            else if (CGRectContainsPoint(_selectedReplyCell.likeView.frame, p)) {
-//                [self like:_selectedReplyCell.likeView revert:NO];
-                [_selectedVM love:NO];
-            }
-            else if (CGRectContainsPoint(_selectedReplyCell.followView.frame, p)) {
-//                [self followReplier];
-                [_selectedVM follow];
-                _selectedReplyCell.followView.hidden = YES;
-            }
-            else if (CGRectContainsPoint(_selectedReplyCell.shareView.frame, p)) {
-//                [self showShareView];
-                [self showShareView:_selectedVM];
-            }
-            else if (CGRectContainsPoint(_selectedReplyCell.commentView.frame, p)) {
-                PIECommentViewController* vc = [PIECommentViewController new];
-                vc.vm = _selectedVM;
-                vc.shouldShowHeaderView = NO;
-                [self.navigationController pushViewController:vc animated:YES];
-            }
-            else if (CGRectContainsPoint(_selectedReplyCell.allWorkView.frame, p)) {
-                PIEReplyCollectionViewController* vc = [PIEReplyCollectionViewController new];
-                vc.pageVM = _selectedVM;
-                [self.navigationController pushViewController:vc animated:YES];
-            }
-        }
-    
-}
-- (void)longPressOnReply:(UILongPressGestureRecognizer *)gesture {
-    
-    CGPoint location   = [gesture locationInView:_tableViewReply];
-    _selectedIndexPath = [_tableViewReply indexPathForRowAtPoint:location];
-    if (_selectedIndexPath) {
-        _selectedReplyCell = [_tableViewReply cellForRowAtIndexPath:_selectedIndexPath];
-        _selectedVM        = _sourceReply[_selectedIndexPath.row];
-        CGPoint p          = [gesture locationInView:_selectedReplyCell];
-        
-        //点击大图
-        if (CGRectContainsPoint(_selectedReplyCell.blurAnimateImageView.frame, p)) {
-            [self showShareView:_selectedVM];
-        }          else if (CGRectContainsPoint(_selectedReplyCell.likeView.frame, p)) {
-            [_selectedVM love:YES];
-        }
-
-    }
-
-    
-}
-
-#pragma mark - <PIEShareViewDelegate> and its related methods
-
-- (void)shareViewDidShare:(PIEShareView *)shareView
+#pragma mark - RAC response actions
+- (void)tapOnAvatarOrUsernameAtIndexPath:(NSIndexPath *)indexPath
 {
-//    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-//        [self updateShareStatus];
-//    }];
+    PIEFriendViewController *friendVC = [PIEFriendViewController new];
+    friendVC.pageVM = _sourceReply[indexPath.row];
+    [self.navigationController pushViewController:friendVC animated:YES];
 }
 
-- (void)shareViewDidCancel:(PIEShareView *)shareView
+- (void)tapOnFollowViewAtIndexPath:(NSIndexPath *)indexPath
 {
-    [shareView dismiss];
+    PIEPageVM *selectedVM = _sourceReply[indexPath.row];
+    [selectedVM follow];
 }
 
-/**
- *  用户点击了updateShareStatus之后（在弹出的窗口完成分享，点赞），刷新本页面ReplyCell的分享数
- */
-- (void)updateShareStatus {
-    /*
-     _vm.shareCount ++ 这个副作用集中发生在PIEShareView之中。
-     
-     */
-//    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
-    // 将分散在updateShareStatus 和 updateStatus  "同步分享数"的方法写到一起。
-    //    [self updateStatus];
-    if (_selectedIndexPath) {
-        [_tableViewReply reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-    }
+- (void)tapOnImageViewAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM = _sourceReply[indexPath.row];
+//    PIECarouselViewController2 *carouselVC = [PIECarouselViewController2 new];
+//    carouselVC.pageVM = selectedVM;
+    
+    PIEPageDetailViewController *pageDetailVC =
+    [PIEPageDetailViewController new];
+    pageDetailVC.pageViewModel = selectedVM;
+    
+    DDNavigationController *navigationController =
+    [[DDNavigationController alloc] initWithRootViewController:pageDetailVC];
+    
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
-/**
- *  打开shareView
- *
- *  @param pageVM 想要分享的求P作品
- */
-- (void)showShareView:(PIEPageVM *)pageVM {
-    [self.shareView show:pageVM];
+- (void)longPressOnImageViewAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEShareView *shareView = [PIEShareView new];
+    PIEPageVM *selectedVM = _sourceReply[indexPath.row];
+    [shareView show:selectedVM];
 }
 
+- (void)tapOnAllWorkAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM = _sourceReply[indexPath.row];
+    PIEReplyCollectionViewController *replyCollectionVC =
+    [PIEReplyCollectionViewController new];
+    replyCollectionVC.pageVM = selectedVM;
+    [self.navigationController pushViewController:replyCollectionVC animated:YES];
+}
+
+- (void)tapOnShareViewAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM = _sourceReply[indexPath.row];
+    [self.shareView show:selectedVM];
+    
+}
+
+- (void)tapOnCommentViewAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIECommentViewController *commentVC = [PIECommentViewController new];
+    commentVC.vm = _sourceReply[indexPath.row];
+    commentVC.shouldShowHeaderView = NO;
+    [self.navigationController pushViewController:commentVC animated:YES];
+}
+
+- (void)tapOnLikeViewAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM = _sourceReply[indexPath.row];
+    [selectedVM love:NO];
+}
+
+- (void)longPressOnLikeViewAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM = _sourceReply[indexPath.row];
+    [selectedVM love:YES];
+}
 
 #pragma mark - lazy loadings
 -(PIERefreshTableView *)tableViewReply {
@@ -471,8 +450,11 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
         _tableViewReply.emptyDataSetDelegate = self;
         _tableViewReply.estimatedRowHeight = SCREEN_WIDTH+145;
         _tableViewReply.rowHeight          = UITableViewAutomaticDimension;
-        UINib* nib = [UINib nibWithNibName:CellIdentifier bundle:nil];
-        [_tableViewReply registerNib:nib forCellReuseIdentifier:CellIdentifier];
+        
+        UINib *replyCellNib =
+        [UINib nibWithNibName:@"PIEEliteReplyTableViewCell" bundle:nil];
+        [_tableViewReply registerNib:replyCellNib forCellReuseIdentifier:PIEEliteReplyCellIdentifier];
+        
         _tableViewReply.estimatedRowHeight = SCREEN_HEIGHT-NAV_HEIGHT-TAB_HEIGHT;
         _tableViewReply.scrollsToTop       = YES;
         
@@ -500,10 +482,11 @@ static NSString *CellIdentifier = @"PIENewReplyTableCell";
     
 }
 
+
 -(PIEShareView *)shareView {
     if (!_shareView) {
         _shareView          = [PIEShareView new];
-        _shareView.delegate = self;
+//        _shareView.delegate = self;
     }
     return _shareView;
 }

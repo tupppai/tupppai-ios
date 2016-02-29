@@ -19,4 +19,5 @@
 /** 专为教程频道设计，比upload:方法多回调了一个PIEPageModel,供后续shareView分享用 */
 - (void)uploadHomework:(void(^)(CGFloat percentage, BOOL success,PIEPageModel *pageModel))block;
 
+- (void)uploadMoment:(void (^)(CGFloat percentage, BOOL success))block;
 @end

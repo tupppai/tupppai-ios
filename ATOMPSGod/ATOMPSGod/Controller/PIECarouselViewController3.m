@@ -14,6 +14,7 @@
 
 #define scale_h                  (414-40)/414.0
 #define kCarouselItemMaxChangedY 100
+#define kDontHideDetailButton    -7
 
 @interface PIECarouselViewController3 ()
 <
@@ -24,6 +25,7 @@
 @property (nonatomic, strong) iCarousel *carousel;
 @property (nonatomic, assign) CGFloat   carouselItemViewY;
 @property (nonatomic, assign) CGPoint   originCarouselItemViewCenter;
+
 
 @end
 
@@ -88,7 +90,7 @@
 
 - (void)setupData
 {
-    _carouselItemViewY = 0;
+    _carouselItemViewY     = 0;
 }
 
 #pragma mark - <iCarouselDelegate>
@@ -152,9 +154,14 @@
     }
     
     PIEPageVM* vm = [_pageVMs objectAtIndex:index];
-    [view setShouldHideDetailButton:(index % 2 == 0)];
     [view injectPageVM:vm];
-
+    if (_hideDetailButtonIndex != kDontHideDetailButton) {
+        /**
+         当且仅当调用carousel的控制器有特地设置这个hideDetailIndex的时候，才需要有这一步判断
+         (需求：PIEPageDetailViewController和PIECarouselViewController3的互动)
+         */
+        [view setShouldHideDetailButton:(index == _hideDetailButtonIndex)];
+    }
     
     return view;
 }
@@ -162,6 +169,9 @@
 -(void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index {
     
 }
+
+
+
 #pragma mark - target-actions
 - (void)handleGesture_pan:(UIPanGestureRecognizer *)panGesture
 {
@@ -245,6 +255,7 @@
 - (void)scrollToIndex:(NSInteger)index
 {
     [self.carousel scrollToItemAtIndex:index animated:NO];
+    
 }
 
 #pragma mark - lazy loadings
@@ -260,11 +271,15 @@
         _carousel.delegate      = self;
         _carousel.dataSource    = self;
         _carousel.pagingEnabled = YES;
-        _carousel.bounces        = YES;
+        _carousel.bounces       = YES;
 //        _carousel.bounceDistance = 0.11;
 //        _carousel.bounces       = NO;
     }
     return _carousel;
 }
+
+
+#pragma mark - Private helpers
+
 
 @end

@@ -8,11 +8,9 @@
 
 #import "PIEChannelActivityViewController.h"
 #import "PIERefreshTableView.h"
-#import "PIENewReplyTableCell.h"
-#import "PIEPageVM.h"
 #import "PIEChannelViewModel.h"
 #import "PIEChannelManager.h"
-#import "PIECarouselViewController2.h"
+//#import "PIECarouselViewController2.h"
 #import "PIEFriendViewController.h"
 #import "PIECommentViewController.h"
 #import "PIEReplyCollectionViewController.h"
@@ -28,6 +26,8 @@
 
 #import "LeesinViewController.h"
 #import "MRNavigationBarProgressView.h"
+#import "PIEEliteReplyTableViewCell.h"
+#import "PIEPageDetailViewController.h"
 /* Variables */
 @interface PIEChannelActivityViewController ()<LeesinViewControllerDelegate>
 
@@ -40,17 +40,11 @@
 
 /*ViewModels*/
 @property (nonatomic, strong) NSMutableArray<PIEPageVM *> *source_reply;
-@property (nonatomic, strong) PIEPageVM                   *selectedVM;
-
 
 /* HTTP Request parameter */
 @property (nonatomic, assign) long long timeStamp;
 
 /* ======= */
-
-@property (nonatomic, strong) NSIndexPath *selectedIndexPath;
-
-@property (nonatomic, strong) PIENewReplyTableCell *selectedReplyCell;
 
 /** 点击弹出的分享页面 */
 @property (nonatomic, strong) PIEShareView *shareView;
@@ -88,8 +82,8 @@
 
 @implementation PIEChannelActivityViewController
 
-static NSString *
-PIEChannelActivityReplyCellIdentifier = @"PIENewReplyTableCell";
+
+static  NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
 
 static NSString *
 PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifier";
@@ -105,19 +99,13 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     self.title = [NSString stringWithFormat:
                   @"#%@", self.currentChannelVM.title];
     
-    // setup data
     [self setupData];
-    // configure subviews
     [self configureTableView];
     [self configureGoPsButton];
-    
-    /* 设置可以区分reply cell中不同UI元素（头像，关注按钮，分享, etc.）的点击事件回调 */
-    [self setupGestures];
     
     // load data for the first time.
     [self.tableView.mj_header beginRefreshing];
     
-
 }
 
 
@@ -202,9 +190,7 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
                          [self.goPsButtonBottomConstraint setOffset:50.0];
                          [self.goPsButton layoutIfNeeded];
                      }];
-    
-    
-    
+
 }
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
@@ -232,26 +218,80 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    PIEEliteReplyTableViewCell *replyCell =
+    [tableView dequeueReusableCellWithIdentifier:PIEEliteReplyCellIdentifier];
     
-    PIENewReplyTableCell *replyCell =
-    [tableView dequeueReusableCellWithIdentifier:PIEChannelActivityReplyCellIdentifier];
-    replyCell.blurAnimateImageView.thumbView.hidden = YES;
-    [replyCell injectSauce:_source_reply[indexPath.row]];
-   
+    PIEPageVM *viewModel = _source_reply[indexPath.row];
+    
+    [replyCell bindVM:viewModel];
     
     /*去掉ChannelActivity中的cell的“其它作品”按钮*/
-    replyCell.allWorkView.hidden = YES;
-    [replyCell.shareView mas_updateConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(replyCell.allWorkView.mas_left);
-    }];
+    [replyCell setAllWorkButtonHidden:YES];
     
+    // Begin RAC Binding
+    @weakify(self);
+    
+    [replyCell.tapOnUserSignal
+     subscribeNext:^(id x) {
+         @strongify(self);
+         [self tapOnAvatarOrUsernameAtIndexPath:indexPath];
+     }];
+    
+    [replyCell.tapOnFollowButtonSignal
+     subscribeNext:^(UITapGestureRecognizer *tap) {
+         @strongify(self);
+         [self tapOnFollowViewAtIndexPath:indexPath];
+         
+         tap.view.hidden = YES;
+     }];
+    
+    [replyCell.tapOnImageSignal
+     subscribeNext:^(id x) {
+         @strongify(self);
+         [self tapOnImageViewAtIndexPath:indexPath];
+     }];
+    
+    [replyCell.longPressOnImageSignal
+     subscribeNext:^(id x) {
+         @strongify(self);
+         [self longPressOnImageViewAtIndexPath:indexPath];
+     }];
+    
+    [replyCell.tapOnCommentSignal
+     subscribeNext:^(id x) {
+         @strongify(self);
+         [self tapOnCommentViewAtIndexPath:indexPath];
+     }];
+    
+    [replyCell.tapOnShareSignal
+     subscribeNext:^(id x) {
+         @strongify(self);
+         [self tapOnShareViewAtIndexPath:indexPath];
+     }];
+    
+    [replyCell.tapOnLoveSignal
+     subscribeNext:^(id x) {
+         @strongify(self);
+         [self tapOnLikeViewAtIndexPath:indexPath];
+     }];
+    
+    [replyCell.longPressOnLoveSignal
+     subscribeNext:^(id x) {
+         @strongify(self);
+         [self longPressOnLikeViewAtIndexPath:indexPath];
+     }];
+    
+    [replyCell.tapOnRelatedWorkSignal
+     subscribeNext:^(id x) {
+         @strongify(self);
+         [self tapOnAllWorkAtIndexPath:indexPath];
+     }];
+    
+    // --- end of RAC binding
     
     return replyCell;
 }
 #pragma mark - <PWRefreshBaseTableViewDelegate>
-
-
 - (void)didPullRefreshDown:(UITableView *)tableView
 {
     [self getSource_Reply:nil];
@@ -266,6 +306,7 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     }
 }
 
+#pragma mark - Network request
 - (void)getSource_Reply:(void (^)(BOOL success))block {
     WS(ws);
     _currentPage_Reply = 1;
@@ -280,7 +321,6 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 
     [PIEChannelManager getSource_channelPages:params
                                   resultBlock:^(NSMutableArray<PIEPageVM *> *pageArray) {
-                                      
                                       if (pageArray.count == 0) {
                                           _canRefreshFooter = NO;
                                       }else{
@@ -323,21 +363,6 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
     }];
 }
 
-#pragma mark - Notification Methods
-/**
- *  用户点击了updateShareStatus之后（在弹出的窗口完成分享），刷新本页面的分享数（两个页面的UI元素的同步）
- */
-- (void)updateShareStatus {
-    
-    // _vm.shareCount ++ 这个副作用集中发生在PIEShareView之中。
-    
-    //    _selectedVM.shareCount = [NSString stringWithFormat:@"%zd",[_selectedVM.shareCount integerValue]+1];
-    //    [self updateStatus]; 将刷新的方法摆到了这里
-    if (_selectedIndexPath) {
-        [self.tableView reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-    }
-}
-
 #pragma mark - Target-actions
 - (void)goPSButtonClicked:(UIButton *)button
 {
@@ -362,140 +387,6 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 
 }
 
-#pragma mark - Gesture Event - 识别PIENewReplyCell中的不同元素(头像，关注按钮，etc.)的点击事件
-
-- (void)setupGestures {
-    UITapGestureRecognizer* tapGestureReply =
-    [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnReply:)];
-    UILongPressGestureRecognizer* longPressGestureReply =
-    [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnReply:)];
-    [self.tableView addGestureRecognizer:longPressGestureReply];
-    [self.tableView addGestureRecognizer:tapGestureReply];
-}
-
-- (void)tapOnReply:(UITapGestureRecognizer *)gesture {
-    
-
-    
-    CGPoint location = [gesture locationInView:self.tableView];
-    _selectedIndexPath = [self.tableView indexPathForRowAtPoint:location];
-    if (_selectedIndexPath == nil) {
-        return;
-    }
-        _selectedReplyCell = [self.tableView cellForRowAtIndexPath:_selectedIndexPath];
-        _selectedVM = self.source_reply[_selectedIndexPath.row];
-        CGPoint p = [gesture locationInView:_selectedReplyCell];
-        
-
-        //点击大图
-          if (CGRectContainsPoint(_selectedReplyCell.blurAnimateImageView.frame, p)) {
-            //进入热门详情
-            PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-            vc.pageVM = _selectedVM;
-            NSLog(@"!!%@,%zd,%zd",_selectedVM,_selectedVM.askID,_selectedVM.ID);
-            [self presentViewController:vc animated:YES completion:nil];
-        }
-        //点击头像
-        else if (CGRectContainsPoint(_selectedReplyCell.avatarView.frame, p)) {
-            PIEFriendViewController * friendVC = [PIEFriendViewController new];
-            friendVC.pageVM = _selectedVM;
-            [self.navigationController pushViewController:friendVC animated:YES];
-        }
-        //点击用户名
-        else if (CGRectContainsPoint(_selectedReplyCell.nameLabel.frame, p)) {
-            PIEFriendViewController * friendVC = [PIEFriendViewController new];
-            friendVC.pageVM = _selectedVM;
-            [self.navigationController pushViewController:friendVC animated:YES];
-        }
-        //            else if (CGRectContainsPoint(_selectedReplyCell.collectView.frame, p)) {
-        //                //should write this logic in viewModel
-        ////                [self collect:_selectedReplyCell.collectView shouldShowHud:NO];
-        //                [self collect];
-        //            }
-        else if (CGRectContainsPoint(_selectedReplyCell.likeView.frame, p)) {
-//            [PIEPageManager love:_selectedReplyCell.likeView viewModel:_selectedVM revert:NO];
-            [_selectedVM love:NO];
-        }
-        else if (CGRectContainsPoint(_selectedReplyCell.followView.frame, p)) {
-//            [self followReplier];
-            [_selectedVM follow];
-            _selectedReplyCell.followView.hidden = YES;
-        }
-        else if (CGRectContainsPoint(_selectedReplyCell.shareView.frame, p)) {
-            [self showShareView:_selectedVM];
-        }
-        else if (CGRectContainsPoint(_selectedReplyCell.commentView.frame, p)) {
-            PIECommentViewController* vc = [PIECommentViewController new];
-            vc.vm = _selectedVM;
-            vc.shouldShowHeaderView = NO;
-            [self.navigationController pushViewController:vc animated:YES];
-        }
-        
-        
-        /*去掉ChannelActivity中的cell的“其它作品”按钮*/
-
-//        else if (CGRectContainsPoint(_selectedReplyCell.allWorkView.frame, p)) {
-//            PIEReplyCollectionViewController* vc = [PIEReplyCollectionViewController new];
-//            vc.pageVM = _selectedVM;
-//            [self.navigationController pushViewController:vc animated:YES];
-//        }
-    
-}
-- (void)longPressOnReply:(UILongPressGestureRecognizer *)gesture {
-    
-
-    
-    CGPoint location   = [gesture locationInView:self.tableView];
-    _selectedIndexPath = [self.tableView indexPathForRowAtPoint:location];
-    if (_selectedIndexPath) {
-        _selectedReplyCell = [self.tableView cellForRowAtIndexPath:_selectedIndexPath];
-        _selectedVM        = self.source_reply[_selectedIndexPath.row];
-        CGPoint p          = [gesture locationInView:_selectedReplyCell];
-        
-        //点击大图
-        if (CGRectContainsPoint(_selectedReplyCell.blurAnimateImageView.frame, p)) {
-            [self showShareView:_selectedVM];
-        }        else if (CGRectContainsPoint(_selectedReplyCell.likeView.frame, p)) {
-//            [PIEPageManager love:_selectedReplyCell.likeView viewModel:_selectedVM revert:YES];
-            [_selectedVM love:YES];
-        }
-
-    }
-    
-    
-}
-
-#pragma mark - reply cell 中的点击事件：喜欢该P图，关注P图主。
-
-
-
-#pragma mark - <PIEShareViewDelegate>
-- (void)shareViewDidShare:(PIEShareView *)shareView
-{
-    // refresh ui element on main thread after successful sharing, do nothing otherwise.
-//    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-//        [self updateShareStatus];
-//    }];
-}
-
-
-
-- (void)shareViewDidCancel:(PIEShareView *)shareView
-{
-    [shareView dismiss];
-}
-
-#pragma mark - Sharing-related method
-
-
-- (void)showShareView:(PIEPageVM *)pageVM {
-    [self.shareView show:pageVM];
-    
-}
-
-
-
-
 //#pragma mark - qb_imagePickerController delegate
 //-(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAssets:(NSArray *)assets {
 //    
@@ -514,6 +405,75 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 //    [self.QBImagePickerController.selectedAssetURLs removeAllObjects];
 //    [self dismissViewControllerAnimated:YES completion:NULL];
 //}
+
+
+#pragma mark - RAC response actions
+- (void)tapOnAvatarOrUsernameAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEFriendViewController *friendVC = [PIEFriendViewController new];
+    friendVC.pageVM = _source_reply[indexPath.row];
+    [self.navigationController pushViewController:friendVC animated:YES];
+}
+
+- (void)tapOnFollowViewAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM = _source_reply[indexPath.row];
+    [selectedVM follow];
+}
+
+- (void)tapOnImageViewAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM = _source_reply[indexPath.row];
+    PIEPageDetailViewController *pageDetailVC =
+    [PIEPageDetailViewController new];
+    pageDetailVC.pageViewModel = selectedVM;
+    
+    [self.navigationController pushViewController:pageDetailVC animated:YES];
+}
+
+- (void)longPressOnImageViewAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEShareView *shareView = [PIEShareView new];
+    PIEPageVM *selectedVM = _source_reply[indexPath.row];
+    [shareView show:selectedVM];
+}
+
+- (void)tapOnAllWorkAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM = _source_reply[indexPath.row];
+    PIEReplyCollectionViewController *replyCollectionVC =
+    [PIEReplyCollectionViewController new];
+    replyCollectionVC.pageVM = selectedVM;
+    [self.navigationController pushViewController:replyCollectionVC animated:YES];
+}
+
+- (void)tapOnShareViewAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM = _source_reply[indexPath.row];
+    [self.shareView show:selectedVM];
+    
+}
+
+- (void)tapOnCommentViewAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIECommentViewController *commentVC = [PIECommentViewController new];
+    commentVC.vm = _source_reply[indexPath.row];
+    commentVC.shouldShowHeaderView = NO;
+    [self.navigationController pushViewController:commentVC animated:YES];
+}
+
+- (void)tapOnLikeViewAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM = _source_reply[indexPath.row];
+    [selectedVM love:NO];
+}
+
+- (void)longPressOnLikeViewAtIndexPath:(NSIndexPath *)indexPath
+{
+    PIEPageVM *selectedVM = _source_reply[indexPath.row];
+    [selectedVM love:YES];
+}
+
 
 
 #pragma mark - Lazy loadings
@@ -538,9 +498,10 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
         // register cells
-        [_tableView registerNib:[UINib nibWithNibName:@"PIENewReplyTableCell"
-                                               bundle:nil]
-         forCellReuseIdentifier:PIEChannelActivityReplyCellIdentifier];
+        UINib *replyCellNib =
+        [UINib nibWithNibName:@"PIEEliteReplyTableViewCell" bundle:nil];
+        [_tableView registerNib:replyCellNib
+         forCellReuseIdentifier:PIEEliteReplyCellIdentifier];
         
         [_tableView registerClass:[UITableViewCell class]
            forCellReuseIdentifier:PIEChannelActivityNormalCellIdentifier];
@@ -561,7 +522,10 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
         NSURL *bannerImageUrl = [NSURL URLWithString:urlString];
         
         SDWebImageManager* manager = [SDWebImageManager sharedManager];
-        [manager downloadImageWithURL:bannerImageUrl options:SDWebImageAllowInvalidSSLCertificates progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+        [manager downloadImageWithURL:bannerImageUrl
+                              options:SDWebImageAllowInvalidSSLCertificates
+                             progress:nil
+                            completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
             [_headerBannerView setBackgroundImage:image forState:UIControlStateNormal];
         }];
         
@@ -608,16 +572,11 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 - (PIEShareView *)shareView
 {
     if (_shareView == nil) {
-        // instantiate only for once
         _shareView = [[PIEShareView alloc] init];
-        
-        _shareView.delegate = self;
+//        _shareView.delegate = self;
     }
     return  _shareView;
 }
-
-
-
 
 
 @end
