@@ -271,7 +271,7 @@
         _carousel.delegate      = self;
         _carousel.dataSource    = self;
         _carousel.pagingEnabled = YES;
-        _carousel.bounces        = YES;
+        _carousel.bounces       = YES;
 //        _carousel.bounceDistance = 0.11;
 //        _carousel.bounces       = NO;
     }

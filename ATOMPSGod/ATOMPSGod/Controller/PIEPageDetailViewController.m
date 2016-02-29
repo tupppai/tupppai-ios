@@ -403,27 +403,26 @@
 //    if (_askSourceArray.count >= 1) {
 //        
 //    }
-    [self presentCarouselVCWithIndex:0];
+    [self presentCarouselVCAtIndex:0];
 }
 - (void)tapPageCollectionSwipeView_askImageView2 {
 //    NSLog(@"tapPageCollectionSwipeView_askImageView2 ");
 //    if (_askSourceArray.count >= 2) {
 //        
 //    }
-    [self presentCarouselVCWithIndex:1];
+    [self presentCarouselVCAtIndex:1];
 }
 
 -(void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index {
-//    NSLog(@"swipeView %zd",index);
     
     if (_askSourceArray.count == 1) {
-        [self presentCarouselVCWithIndex:index + 1];
+        [self presentCarouselVCAtIndex:index + 1];
     }else{
-        [self presentCarouselVCWithIndex:index + 2];
+        [self presentCarouselVCAtIndex:index + 2];
     }
 }
 
-- (void)presentCarouselVCWithIndex:(NSInteger)index
+- (void)presentCarouselVCAtIndex:(NSInteger)index
 {
     PIECarouselViewController3 *carouselVC = [PIECarouselViewController3 new];
     
@@ -431,7 +430,7 @@
     
     [self presentViewController:carouselVC animated:YES completion:nil];
     
-    // 找到本页面pageVM在这个pageVMs的位置
+    // 找到本页面pageVM在这个pageVMs的位置, 其对应的CarouselItemView不需要显示“详情”按钮--否则就是循环页面了
     for (int i = 0; i < carouselVC.pageVMs.count; i++) {
         if (_pageViewModel.type == carouselVC.pageVMs[i].type &&
             _pageViewModel.ID == carouselVC.pageVMs[i].ID) {
