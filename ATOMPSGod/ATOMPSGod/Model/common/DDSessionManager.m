@@ -107,6 +107,9 @@ static DDSessionManager *shareInstance = nil;
      string5 = [[[string4 lowercase] md5]md5]
      string5就是签名
      */
+    
+    NSMutableDictionary *params = [parameters mutableCopy];
+
     NSArray *sortedKeys = [[parameters allKeys] sortedArrayUsingSelector: @selector(compare:)];
     NSMutableArray *sortedValues = [NSMutableArray array];
     for (NSString *key in sortedKeys) {
@@ -117,6 +120,7 @@ static DDSessionManager *shareInstance = nil;
             NSData *jsonData = [NSJSONSerialization dataWithJSONObject:obj options:NSJSONWritingPrettyPrinted error:nil];
             NSString *jsonString = [[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]lowercaseString];
             [sortedValues addObject: jsonString];
+            [params setObject:jsonString forKey:key];
         } else {
             [sortedValues addObject: obj];
         }
@@ -135,11 +139,10 @@ static DDSessionManager *shareInstance = nil;
     
     NSString *signingString = [[jointString md5]md5];
     
-    NSMutableDictionary *params = [parameters mutableCopy];
     [params setObject:signingString forKey:@"verify"];
     [params setObject:@"2" forKey:@"v"];
     
-    return [self xxx_dataTaskWithHTTPMethod:method URLString:URLString parameters:parameters success:^(NSURLSessionDataTask * dataTask, id responseObject) {
+    return [self xxx_dataTaskWithHTTPMethod:method URLString:URLString parameters:params success:^(NSURLSessionDataTask * dataTask, id responseObject) {
         
 #if DEBUG
         NSLog(@"%@,%@,%@",URLString,params,responseObject);
@@ -173,6 +176,9 @@ static DDSessionManager *shareInstance = nil;
         }
         success(dataTask,responseObject);
     } failure:^(NSURLSessionDataTask * dataTask, NSError * error) {
+#if DEBUG
+        NSLog(@"%@,%@,%@",URLString,params,error);
+#endif
                 if (error) {
                     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NetworkErrorCall" object:nil]];
                 }
