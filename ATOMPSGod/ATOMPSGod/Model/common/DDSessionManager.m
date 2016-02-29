@@ -141,10 +141,10 @@ static DDSessionManager *shareInstance = nil;
     
     return [self xxx_dataTaskWithHTTPMethod:method URLString:URLString parameters:params success:^(NSURLSessionDataTask * dataTask, id responseObject) {
         
-#if DEBUG
-        NSLog(@"%@,%@,%@",URLString,params,responseObject);
-        [Hud text:@"Debug Mode"];
-#endif
+//#if DEBUG
+//        NSLog(@"%@,%@,%@",URLString,params,responseObject);
+//        [Hud text:@"Debug Mode"];
+//#endif
         
         if (responseObject) {
             
@@ -175,9 +175,9 @@ static DDSessionManager *shareInstance = nil;
         }
         success(dataTask,responseObject);
     } failure:^(NSURLSessionDataTask * dataTask, NSError * error) {
-#if DEBUG
-        NSLog(@"%@,%@,%@",URLString,params,error);
-#endif
+//#if DEBUG
+//        NSLog(@"%@,%@,%@",URLString,params,error);
+//#endif
                 if (error) {
                     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NetworkErrorCall" object:nil]];
                 }
