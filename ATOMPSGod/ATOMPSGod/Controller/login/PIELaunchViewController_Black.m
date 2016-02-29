@@ -178,8 +178,7 @@ PIEVerificationCodeCountdownButton *countdownButton;
                  NSMutableDictionary *params =
                  [NSMutableDictionary dictionary];
         
-                 params[@"phone"] =
-                 @([self.cellPhoneNumberTextField.text integerValue]);
+                 params[@"phone"] = self.cellPhoneNumberTextField.text;
                  [DDBaseService GET:params
                                 url:@"account/requestAuthCode"
                               block:^(id responseObject) {

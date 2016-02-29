@@ -185,7 +185,7 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
         [NSMutableDictionary dictionary];
         
         params[@"phone"] =
-        @([self.cellphoneNumberTextField.text integerValue]);
+        self.cellphoneNumberTextField.text;
         [DDBaseService GET:params
                        url:@"account/requestAuthCode"
                      block:^(id responseObject) {
