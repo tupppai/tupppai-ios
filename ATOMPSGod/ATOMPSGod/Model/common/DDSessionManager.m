@@ -114,21 +114,19 @@ static DDSessionManager *shareInstance = nil;
     NSMutableArray *sortedValues = [NSMutableArray array];
     for (NSString *key in sortedKeys) {
         NSObject *obj = [parameters objectForKey: key];
-        
         //array->jsonString再去签名
         if ([obj isKindOfClass:[NSArray class]]) {
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:obj options:NSJSONWritingPrettyPrinted error:nil];
+            NSArray *sortedArray = [(NSArray*)obj sortedArrayUsingSelector:@selector(compare:)];
+            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:sortedArray options:0 error:nil];
             NSString *jsonString = [[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]lowercaseString];
             [sortedValues addObject: jsonString];
-            [params setObject:jsonString forKey:key];
         } else {
             [sortedValues addObject: obj];
         }
-
     }
 
     NSString *jointValuesString = [sortedValues componentsJoinedByString:@""];
-
+    
     NSDate *date = [NSDate date];
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSDateComponents *components = [calendar components:(NSCalendarUnitDay) fromDate:date];
@@ -136,7 +134,6 @@ static DDSessionManager *shareInstance = nil;
     
     NSString *jointString =
     [[NSString stringWithFormat:@"%@%@%zd",jointValuesString,[@"tupppaisignmd5" md5],dayOfMonth]lowercaseString];
-    
     NSString *signingString = [[jointString md5]md5];
     
     [params setObject:signingString forKey:@"verify"];
@@ -146,7 +143,9 @@ static DDSessionManager *shareInstance = nil;
         
 #if DEBUG
         NSLog(@"%@,%@,%@",URLString,params,responseObject);
+        [Hud text:@"Debug Mode"];
 #endif
+        
         if (responseObject) {
             
 
