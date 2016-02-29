@@ -121,7 +121,12 @@
 
 -(void)setupNavBar {
     UILabel *titleView = [UILabel new];
-    titleView.text = @"上传作业";
+    if (_titleStr == nil) {
+        titleView.text = @"上传作业";
+    }else{
+        titleView.text = _titleStr;
+    }
+    
     titleView.font = [UIFont lightTupaiFontOfSize:16];
     titleView.textColor = [UIColor blackColor];
     self.navigationItem.titleView = titleView;
@@ -130,7 +135,10 @@
     UIButton *barButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30, 30)];
     [barButton setTitle:@"发布" forState:UIControlStateNormal];
     [barButton setTitleColor:[UIColor colorWithHex:0x000000 andAlpha:0.6] forState:UIControlStateNormal];
+    
+    @weakify(self);
     [[barButton rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(id x) {
+        @strongify(self);
         [self tapNavBarRightBarButton];
     }];
     barButton.titleLabel.font = [UIFont lightTupaiFontOfSize:15];
@@ -140,7 +148,28 @@
 
     self.navigationItem.rightBarButtonItem = barButtonItem;
     
+    // for 新需求：
+    UIButton *buttonLeft = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
+    buttonLeft.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [buttonLeft setImage:[UIImage imageNamed:@"PIE_icon_back"] forState:UIControlStateNormal];
     
+    if (self.navigationController.viewControllers.count == 1) {
+        [buttonLeft addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+    }   else {
+        [buttonLeft addTarget:self action:@selector(pop) forControlEvents:UIControlEventTouchUpInside];
+    }
+    UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonLeft];
+    self.navigationItem.leftBarButtonItem =  buttonItem;
+    
+    // --- end of new demand(发布动态，目前都没有设计所以只能随便找一个过来弄，代码有点乱望见谅)
+    
+}
+
+- (void)pop {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+- (void)dismiss {
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 -(void)setupViews {

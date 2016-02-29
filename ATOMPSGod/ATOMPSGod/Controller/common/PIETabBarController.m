@@ -325,7 +325,8 @@ shouldSelectViewController:(UIViewController *)viewController
 {
     
     RengarViewController *rengarVC = [RengarViewController new];
-    rengarVC.delegate = self;
+    rengarVC.delegate              = self;
+    rengarVC.titleStr              = @"发布动态";
     
     DDNavigationController *nav =
     [[DDNavigationController alloc] initWithRootViewController:rengarVC];
