@@ -60,6 +60,7 @@
 
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [self resignFirstResponder];
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
 }
 
