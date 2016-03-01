@@ -319,15 +319,22 @@ shouldSelectViewController:(UIViewController *)viewController
 
 - (void)presentRengarViewController
 {
+    if ([DDUserManager currentUser].uid == kPIETouristUID) {
+        [[NSNotificationCenter defaultCenter]
+         postNotificationName:PIENetworkCallForFurtherRegistrationNotification
+         object:nil
+         userInfo:nil];
+    }else{
+        RengarViewController *rengarVC = [RengarViewController new];
+        rengarVC.delegate              = self;
+        rengarVC.titleStr              = @"发布动态";
+        
+        DDNavigationController *nav =
+        [[DDNavigationController alloc] initWithRootViewController:rengarVC];
+        
+        [self presentViewController:nav animated:YES completion:nil];
+    }
     
-    RengarViewController *rengarVC = [RengarViewController new];
-    rengarVC.delegate              = self;
-    rengarVC.titleStr              = @"发布动态";
-    
-    DDNavigationController *nav =
-    [[DDNavigationController alloc] initWithRootViewController:rengarVC];
-    
-    [self presentViewController:nav animated:YES completion:nil];
 }
 
 

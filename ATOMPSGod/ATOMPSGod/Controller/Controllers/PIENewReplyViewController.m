@@ -148,10 +148,19 @@ static  NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
     }
 }
 - (void)takePhoto {
-    LeesinViewController* vc = [LeesinViewController new];
-    vc.type = LeesinViewControllerTypeReply;
-    vc.delegate = self;
-    [self presentViewController:vc animated:YES completion:nil];
+    
+    if ([DDUserManager currentUser].uid == kPIETouristUID) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:PIENetworkCallForFurtherRegistrationNotification object:nil];
+        
+    }else{
+        LeesinViewController* vc = [LeesinViewController new];
+        vc.type = LeesinViewControllerTypeReply;
+        vc.delegate = self;
+        [self presentViewController:vc animated:YES completion:nil];
+    }
+    
+    
 }
 
 #pragma mark - <UITableViewDelegate>

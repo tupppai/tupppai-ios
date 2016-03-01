@@ -420,19 +420,31 @@ static  NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
 }
 
 #pragma mark - Target-actions
-- (void)tapAsk {
-    LeesinViewController* vc = [LeesinViewController new];
-    vc.delegate = self;
-    vc.type = LeesinViewControllerTypeAsk;
-    vc.channel_id = self.currentChannelViewModel.ID;
-    [self presentViewController:vc animated:YES completion:nil];
+- (void)tapAsk{
+    if ([DDUserManager currentUser].uid == kPIETouristUID) {
+        [[NSNotificationCenter defaultCenter]
+        postNotificationName:PIENetworkCallForFurtherRegistrationNotification
+         object:nil];
+    }else{
+        LeesinViewController* vc = [LeesinViewController new];
+        vc.delegate = self;
+        vc.type = LeesinViewControllerTypeAsk;
+        vc.channel_id = self.currentChannelViewModel.ID;
+        [self presentViewController:vc animated:YES completion:nil];
+    }
 }
 - (void)tapReply {
-    LeesinViewController* vc = [LeesinViewController new];
-    vc.delegate = self;
-    vc.type = LeesinViewControllerTypeReply;
-    vc.channel_id = self.currentChannelViewModel.ID;
-    [self presentViewController:vc animated:YES completion:nil];
+    if ([DDUserManager currentUser].uid == kPIETouristUID) {
+        [[NSNotificationCenter defaultCenter]
+         postNotificationName:PIENetworkCallForFurtherRegistrationNotification
+         object:nil];
+    }else{
+        LeesinViewController* vc = [LeesinViewController new];
+        vc.delegate = self;
+        vc.type = LeesinViewControllerTypeReply;
+        vc.channel_id = self.currentChannelViewModel.ID;
+        [self presentViewController:vc animated:YES completion:nil];
+    }
 }
 
 - (void)tapRightBarButton

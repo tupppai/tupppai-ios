@@ -366,11 +366,17 @@ PIEChannelActivityNormalCellIdentifier = @"PIEChannelActivityNormalCellIdentifie
 #pragma mark - Target-actions
 - (void)goPSButtonClicked:(UIButton *)button
 {
-    LeesinViewController* vc = [LeesinViewController new];
-    vc.delegate = self;
-    vc.type = LeesinViewControllerTypeReplyNoMissionSelection;
-    vc.channel_id = self.currentChannelVM.ID;
-    [self presentViewController:vc animated:YES completion:nil];
+    if ([DDUserManager currentUser].uid == kPIETouristUID) {
+        [[NSNotificationCenter defaultCenter]
+        postNotificationName:PIENetworkCallForFurtherRegistrationNotification
+         object:nil];
+    }else{
+        LeesinViewController* vc = [LeesinViewController new];
+        vc.delegate = self;
+        vc.type = LeesinViewControllerTypeReplyNoMissionSelection;
+        vc.channel_id = self.currentChannelVM.ID;
+        [self presentViewController:vc animated:YES completion:nil];
+    }
 }
 
 - (void)headerBannerViewClicked:(UIButton *)button
