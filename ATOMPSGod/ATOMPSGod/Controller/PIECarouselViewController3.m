@@ -11,7 +11,6 @@
 #import "PIECarousel_ItemView_new.h"
 #import "UIView+RoundedCorner.h"
 
-
 #define scale_h                  (414-40)/414.0
 #define kCarouselItemMaxChangedY 100
 #define kDontHideDetailButton    -7
@@ -23,7 +22,7 @@
 >
 
 @property (nonatomic, strong) iCarousel *carousel;
-@property (nonatomic, assign) CGFloat   carouselItemViewY;
+@property (nonatomic, assign) CGFloat   carouselItemViewTotalChangedY;
 @property (nonatomic, assign) CGPoint   originCarouselItemViewCenter;
 
 
@@ -90,7 +89,7 @@
 
 - (void)setupData
 {
-    _carouselItemViewY     = 0;
+    _carouselItemViewTotalChangedY     = 0;
 }
 
 #pragma mark - <iCarouselDelegate>
@@ -184,54 +183,56 @@
         CGFloat changedY = [panGesture translationInView:self.view].y;
         newCenter.y        += changedY;
         
-        _carouselItemViewY += changedY;
+        _carouselItemViewTotalChangedY += changedY;
         
         icarousel.currentItemView.center = newCenter;
         
         // reset the translation
         [panGesture setTranslation:CGPointZero inView:self.view];
-        
+ 
     }else if (panGesture.state == UIGestureRecognizerStateEnded){
-        //有一个阈值
-        if (fabs(_carouselItemViewY) > kCarouselItemMaxChangedY) {
-            _carouselItemViewY = 0.0;
+        //有一个阈值, 阈值以内回归原位，阈值以外沿着方向弹出界面
+        if (fabs(_carouselItemViewTotalChangedY) > kCarouselItemMaxChangedY) {
+
+            if (_carouselItemViewTotalChangedY > 0) {
+                // 往下弹出itemView
+                CGPoint newCenter = icarousel.currentItemView.center;
+                newCenter.y = SCREEN_HEIGHT * 1.5;
+
+                [UIView animateWithDuration:0.2
+                                 animations:^{
+                                     icarousel.currentItemView.center = newCenter;
+                                 } completion:^(BOOL finished) {
+                                     if (finished) {
+                                         [self dismissViewControllerAnimated:NO completion:nil];
+                                     }
+                                 }];
+                
+            }else{
+                // 往上弹出itemView
+                CGPoint newCenter = icarousel.currentItemView.center;
+                newCenter.y = -SCREEN_HEIGHT;
+
+                [UIView animateWithDuration:0.2
+                                 animations:^{
+                                     icarousel.currentItemView.center = newCenter;
+                                 } completion:^(BOOL finished) {
+                                     if (finished) {
+                                         [self dismissViewControllerAnimated:NO completion:nil];
+                                     }
+                                 }];
+            }
             
-//            if (_carouselItemViewY > 0) {
-//                // 往下弹出itemView
-//                CGPoint newCenter = icarousel.currentItemView.center;
-//                newCenter.y = SCREEN_HEIGHT;
-//                
-//                [UIView animateWithDuration:0.1
-//                                 animations:^{
-//                                     icarousel.currentItemView.center = newCenter;
-//                                 }];
-//                
-//            }else{
-//                // 往上弹出itemView
-//                CGPoint newCenter = icarousel.currentItemView.center;
-//                newCenter.y = -SCREEN_HEIGHT;
-//                
-//                [UIView animateWithDuration:0.1
-//                                 animations:^{
-//                                     icarousel.currentItemView.center = newCenter;
-//                                 }];
-//                
-//            }
-            
-//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//                [self dismissViewControllerAnimated:YES completion:nil];
-//            });
-            [self dismissViewControllerAnimated:YES completion:nil];
-            
+            // 累积量归零
+            _carouselItemViewTotalChangedY = 0.0;
         }else{
+            _carouselItemViewTotalChangedY = 0.0;
             [UIView animateWithDuration:0.3
                              animations:^{
                                  icarousel.currentItemView.center = _originCarouselItemViewCenter;
                              }];
         }
     }
-    
-    
 }
 
 /** Dismiss view controller while tap on the edge */
