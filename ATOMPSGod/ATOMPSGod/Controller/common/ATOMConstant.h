@@ -154,7 +154,16 @@ extern NSInteger kPIERewardSuccessInteger;
 extern double kPIEChargeMinimumAmount;
 
 
+/**====================== Openshare 相关*/
 
+extern NSString *kSNSPlatformWeiboID;
 
+extern NSString *kSNSPlatformQQID;
+
+extern NSString *kSNSPlatformQQKey;
+
+extern NSString *kSNSPlatformWeixinID;
+
+extern NSString *kSNSPlatformWeixinSecret;
 
 @end

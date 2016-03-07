@@ -156,6 +156,8 @@
 		9013E9BE1C575EDD00459905 /* PIEChannelTutorialDetailToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 9013E9BD1C575EDD00459905 /* PIEChannelTutorialDetailToolbar.m */; };
 		9013E9CC1C575EF600459905 /* PIEChannelTutorialDetailToolbar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9013E9CB1C575EF600459905 /* PIEChannelTutorialDetailToolbar.xib */; };
 		9021B96C1C2D2591008C8F0B /* PIEAvatarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9021B96B1C2D2591008C8F0B /* PIEAvatarButton.m */; };
+		9022D70C1C8D551F00389878 /* TWSNSRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 9022D70B1C8D551F00389878 /* TWSNSRequest.m */; };
+		9022D71B1C8D580C00389878 /* NSString+SNSAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 9022D71A1C8D580C00389878 /* NSString+SNSAddition.m */; };
 		903D51EC1C3A67710020D5BF /* PIELaunchViewController_Black.m in Sources */ = {isa = PBXBuildFile; fileRef = 903D51EB1C3A67710020D5BF /* PIELaunchViewController_Black.m */; };
 		903E09DE1C23DF9E006C87B8 /* PIEEliteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 903E09DD1C23DF9E006C87B8 /* PIEEliteViewController.m */; };
 		903E62FD1C54A538008F9A28 /* PIEChooseChargeSourceActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 903E62FC1C54A538008F9A28 /* PIEChooseChargeSourceActionSheet.m */; };
@@ -181,6 +183,13 @@
 		90738B1C1C4763FE00EE6137 /* PIENotificationCommentOnImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90738B1A1C4763FE00EE6137 /* PIENotificationCommentOnImageTableViewCell.xib */; };
 		90738B2C1C477A4400EE6137 /* PIENotificationCommentFromOtherTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90738B2A1C477A4400EE6137 /* PIENotificationCommentFromOtherTableViewCell.m */; };
 		90738B2D1C477A4400EE6137 /* PIENotificationCommentFromOtherTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90738B2B1C477A4400EE6137 /* PIENotificationCommentFromOtherTableViewCell.xib */; };
+		9076DEF41C8C6935004CEE3A /* OpenShare+Alipay.m in Sources */ = {isa = PBXBuildFile; fileRef = 9076DEE81C8C6935004CEE3A /* OpenShare+Alipay.m */; };
+		9076DEF51C8C6935004CEE3A /* OpenShare+QQ.m in Sources */ = {isa = PBXBuildFile; fileRef = 9076DEEA1C8C6935004CEE3A /* OpenShare+QQ.m */; };
+		9076DEF61C8C6935004CEE3A /* OpenShare+Renren.m in Sources */ = {isa = PBXBuildFile; fileRef = 9076DEEC1C8C6935004CEE3A /* OpenShare+Renren.m */; };
+		9076DEF71C8C6935004CEE3A /* OpenShare+Weibo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9076DEEE1C8C6935004CEE3A /* OpenShare+Weibo.m */; };
+		9076DEF81C8C6935004CEE3A /* OpenShare+Weixin.m in Sources */ = {isa = PBXBuildFile; fileRef = 9076DEF01C8C6935004CEE3A /* OpenShare+Weixin.m */; };
+		9076DEF91C8C6935004CEE3A /* OpenShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 9076DEF21C8C6935004CEE3A /* OpenShare.m */; };
+		9076DF081C8D17B4004CEE3A /* OpenshareAuthUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 9076DF071C8D17B4004CEE3A /* OpenshareAuthUser.m */; };
 		907A431E1C40FC1C002542E6 /* PIELaunchTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 907A431D1C40FC1C002542E6 /* PIELaunchTextField.m */; };
 		907A432D1C40FCA6002542E6 /* PIELaunchNextStepButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 907A432C1C40FCA6002542E6 /* PIELaunchNextStepButton.m */; };
 		907A43301C410C7E002542E6 /* PIEVerificationCodeCountdownButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 907A432F1C410C7E002542E6 /* PIEVerificationCodeCountdownButton.m */; };
@@ -1142,6 +1151,10 @@
 		9013E9CB1C575EF600459905 /* PIEChannelTutorialDetailToolbar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEChannelTutorialDetailToolbar.xib; sourceTree = "<group>"; };
 		9021B96A1C2D2591008C8F0B /* PIEAvatarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEAvatarButton.h; sourceTree = "<group>"; };
 		9021B96B1C2D2591008C8F0B /* PIEAvatarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEAvatarButton.m; sourceTree = "<group>"; };
+		9022D70A1C8D551F00389878 /* TWSNSRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWSNSRequest.h; sourceTree = "<group>"; };
+		9022D70B1C8D551F00389878 /* TWSNSRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWSNSRequest.m; sourceTree = "<group>"; };
+		9022D7191C8D580C00389878 /* NSString+SNSAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SNSAddition.h"; sourceTree = "<group>"; };
+		9022D71A1C8D580C00389878 /* NSString+SNSAddition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SNSAddition.m"; sourceTree = "<group>"; };
 		903D51EA1C3A67710020D5BF /* PIELaunchViewController_Black.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIELaunchViewController_Black.h; sourceTree = "<group>"; };
 		903D51EB1C3A67710020D5BF /* PIELaunchViewController_Black.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIELaunchViewController_Black.m; sourceTree = "<group>"; };
 		903E09DC1C23DF9E006C87B8 /* PIEEliteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEEliteViewController.h; sourceTree = "<group>"; };
@@ -1185,6 +1198,21 @@
 		90738B2A1C477A4400EE6137 /* PIENotificationCommentFromOtherTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIENotificationCommentFromOtherTableViewCell.m; sourceTree = "<group>"; };
 		90738B2B1C477A4400EE6137 /* PIENotificationCommentFromOtherTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIENotificationCommentFromOtherTableViewCell.xib; sourceTree = "<group>"; };
 		90769F011C4DCDD50005E108 /* LxDBAnything.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LxDBAnything.h; sourceTree = "<group>"; };
+		9076DEE71C8C6935004CEE3A /* OpenShare+Alipay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OpenShare+Alipay.h"; sourceTree = "<group>"; };
+		9076DEE81C8C6935004CEE3A /* OpenShare+Alipay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OpenShare+Alipay.m"; sourceTree = "<group>"; };
+		9076DEE91C8C6935004CEE3A /* OpenShare+QQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OpenShare+QQ.h"; sourceTree = "<group>"; };
+		9076DEEA1C8C6935004CEE3A /* OpenShare+QQ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OpenShare+QQ.m"; sourceTree = "<group>"; };
+		9076DEEB1C8C6935004CEE3A /* OpenShare+Renren.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OpenShare+Renren.h"; sourceTree = "<group>"; };
+		9076DEEC1C8C6935004CEE3A /* OpenShare+Renren.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OpenShare+Renren.m"; sourceTree = "<group>"; };
+		9076DEED1C8C6935004CEE3A /* OpenShare+Weibo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OpenShare+Weibo.h"; sourceTree = "<group>"; };
+		9076DEEE1C8C6935004CEE3A /* OpenShare+Weibo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OpenShare+Weibo.m"; sourceTree = "<group>"; };
+		9076DEEF1C8C6935004CEE3A /* OpenShare+Weixin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OpenShare+Weixin.h"; sourceTree = "<group>"; };
+		9076DEF01C8C6935004CEE3A /* OpenShare+Weixin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OpenShare+Weixin.m"; sourceTree = "<group>"; };
+		9076DEF11C8C6935004CEE3A /* OpenShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenShare.h; sourceTree = "<group>"; };
+		9076DEF21C8C6935004CEE3A /* OpenShare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenShare.m; sourceTree = "<group>"; };
+		9076DEF31C8C6935004CEE3A /* OpenShareHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenShareHeader.h; sourceTree = "<group>"; };
+		9076DF061C8D17B4004CEE3A /* OpenshareAuthUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenshareAuthUser.h; sourceTree = "<group>"; };
+		9076DF071C8D17B4004CEE3A /* OpenshareAuthUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenshareAuthUser.m; sourceTree = "<group>"; };
 		907A431C1C40FC1C002542E6 /* PIELaunchTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIELaunchTextField.h; sourceTree = "<group>"; };
 		907A431D1C40FC1C002542E6 /* PIELaunchTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIELaunchTextField.m; sourceTree = "<group>"; };
 		907A432B1C40FCA6002542E6 /* PIELaunchNextStepButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIELaunchNextStepButton.h; sourceTree = "<group>"; };
@@ -2965,6 +2993,7 @@
 		5CDB05ED1AA400410089121E /* Uitility */ = {
 			isa = PBXGroup;
 			children = (
+				9076DEE61C8C6935004CEE3A /* openshare */,
 				90BD57C01C71A7920063D2AD /* YYText */,
 				90769F011C4DCDD50005E108 /* LxDBAnything.h */,
 				F4C9BE491C1D4F7500A1AE82 /* categories */,
@@ -3134,6 +3163,26 @@
 				905DC1B11C4F518000596B0E /* TTTAttributedLabel.m */,
 			);
 			path = TTTAttributedLabel;
+			sourceTree = "<group>";
+		};
+		9076DEE61C8C6935004CEE3A /* openshare */ = {
+			isa = PBXGroup;
+			children = (
+				9076DEE71C8C6935004CEE3A /* OpenShare+Alipay.h */,
+				9076DEE81C8C6935004CEE3A /* OpenShare+Alipay.m */,
+				9076DEE91C8C6935004CEE3A /* OpenShare+QQ.h */,
+				9076DEEA1C8C6935004CEE3A /* OpenShare+QQ.m */,
+				9076DEEB1C8C6935004CEE3A /* OpenShare+Renren.h */,
+				9076DEEC1C8C6935004CEE3A /* OpenShare+Renren.m */,
+				9076DEED1C8C6935004CEE3A /* OpenShare+Weibo.h */,
+				9076DEEE1C8C6935004CEE3A /* OpenShare+Weibo.m */,
+				9076DEEF1C8C6935004CEE3A /* OpenShare+Weixin.h */,
+				9076DEF01C8C6935004CEE3A /* OpenShare+Weixin.m */,
+				9076DEF11C8C6935004CEE3A /* OpenShare.h */,
+				9076DEF21C8C6935004CEE3A /* OpenShare.m */,
+				9076DEF31C8C6935004CEE3A /* OpenShareHeader.h */,
+			);
+			path = openshare;
 			sourceTree = "<group>";
 		};
 		90A95E5E1C7828400001CE66 /* NewWallet */ = {
@@ -3365,8 +3414,14 @@
 		E93D237B1B3CFA340081F632 /* share */ = {
 			isa = PBXGroup;
 			children = (
+				9022D7191C8D580C00389878 /* NSString+SNSAddition.h */,
+				9022D71A1C8D580C00389878 /* NSString+SNSAddition.m */,
+				9022D70A1C8D551F00389878 /* TWSNSRequest.h */,
+				9022D70B1C8D551F00389878 /* TWSNSRequest.m */,
 				E93D237C1B3CFA4D0081F632 /* DDShareManager.h */,
 				E93D237D1B3CFA4D0081F632 /* DDShareManager.m */,
+				9076DF061C8D17B4004CEE3A /* OpenshareAuthUser.h */,
+				9076DF071C8D17B4004CEE3A /* OpenshareAuthUser.m */,
 			);
 			name = share;
 			sourceTree = "<group>";
@@ -5463,6 +5518,7 @@
 				5C3101871AAE9B0F00EF529B /* PIEThirdPartyBindingViewController.m in Sources */,
 				0ECED3461C17CC4E00D3F097 /* PIEChannelDetailAskPSItemView.m in Sources */,
 				F4F0A1C61C437F1C000DDEBB /* QBAssetsViewController.m in Sources */,
+				9076DEF61C8C6935004CEE3A /* OpenShare+Renren.m in Sources */,
 				E9A5B66D1B9040310059754C /* DDServiceConstants.m in Sources */,
 				F4275A1A1BE0B9E400BBE7E4 /* PIEMyFansViewController.m in Sources */,
 				F46117D81BAD1101001A6F1A /* IQUIView+Hierarchy.m in Sources */,
@@ -5577,6 +5633,7 @@
 				E900AB5F1B4513B20019BAEA /* DDCollectManager.m in Sources */,
 				5C4C70C81AB6E20800358989 /* DDUserManager.m in Sources */,
 				90B7BABC1C7D4E1900DE5C8D /* PIECarouselViewController3.m in Sources */,
+				9076DEF41C8C6935004CEE3A /* OpenShare+Alipay.m in Sources */,
 				E991EF001B735B7000025108 /* EAIntroPage.m in Sources */,
 				E95691AF1B22E88300DA84BB /* MTLModel+NSCoding.m in Sources */,
 				F41FF0E81BDDFCE800566A12 /* UIImage+JTSImageEffects.m in Sources */,
@@ -5631,6 +5688,7 @@
 				F46117DB1BAD1101001A6F1A /* IQKeyboardManager.m in Sources */,
 				9013383F1C78798D007D0B4A /* PIEEliteReplyTableViewCell.m in Sources */,
 				906F87EC1C3FBDE200318DBB /* PIEFurtherRegistrationView.m in Sources */,
+				9076DEF91C8C6935004CEE3A /* OpenShare.m in Sources */,
 				F4E5F5FA1BD9D2E100AB8B31 /* AFURLConnectionOperation.m in Sources */,
 				90D01BCF1C58966F0035F959 /* PIEChannelTutorialCommentsCountTableViewCell.m in Sources */,
 				F47EF0891C031FF500BFB442 /* VVBlurViewController.m in Sources */,
@@ -5756,6 +5814,7 @@
 				F4106CFC1C3F8B66006A23B9 /* LeesinPreviewBar.m in Sources */,
 				5C83A88C1AC66F910071A024 /* POPAnimator.mm in Sources */,
 				E9F890911B86C4AB0057ECBF /* FMDatabaseQueue.m in Sources */,
+				9022D70C1C8D551F00389878 /* TWSNSRequest.m in Sources */,
 				90BD58041C71A7920063D2AD /* NSParagraphStyle+YYText.m in Sources */,
 				F46117DF1BAD1101001A6F1A /* IQBarButtonItem.m in Sources */,
 				0EF2F5C71C154A5700F27D61 /* PIEChannelTableViewCell.m in Sources */,
@@ -5782,6 +5841,7 @@
 				0E54C78D1C1E8F5E00F431AC /* PIEDoneCollectionViewCell.m in Sources */,
 				F47EF0881C031FF500BFB442 /* VVBlurTransitioning.m in Sources */,
 				F499E44F1BD0E90100E5F178 /* PIESignOutTableViewCell.m in Sources */,
+				9076DEF71C8C6935004CEE3A /* OpenShare+Weibo.m in Sources */,
 				90BD57F61C71A7920063D2AD /* YYTextDebugOption.m in Sources */,
 				F4993CED1BE5B32C007F9BE4 /* UIButton+AFNetworking.m in Sources */,
 				F44CB2E31C731A2B00B68C6C /* PageModel.xcdatamodeld in Sources */,
@@ -5792,6 +5852,7 @@
 				F439303A1BE4BD75006C9437 /* UIImage+MRImageEffects.m in Sources */,
 				E9D739141B79F200008CE562 /* CustomBadge.m in Sources */,
 				904D1E641C563020009DCEE3 /* PIEChannelTutorialTeacherDescTableViewCell.m in Sources */,
+				9076DEF51C8C6935004CEE3A /* OpenShare+QQ.m in Sources */,
 				5CDB06661AA45C680089121E /* DDCreateProfileVC.m in Sources */,
 				F4F28F221C23AE9B0067F2E4 /* SDWebImageDownloaderOperation.m in Sources */,
 				F4F28F231C23AE9B0067F2E4 /* SDWebImageManager.m in Sources */,
@@ -5813,6 +5874,7 @@
 				E9CBFF4C1B5214FB00DC8ED4 /* SIAlertView.m in Sources */,
 				90BD58031C71A7920063D2AD /* NSAttributedString+YYText.m in Sources */,
 				90F401501C5084BB00B39CEB /* PIEMyWalletViewController.m in Sources */,
+				9076DF081C8D17B4004CEE3A /* OpenshareAuthUser.m in Sources */,
 				5C561A501AB7C8210052D4D5 /* PIEModelImageInfo.m in Sources */,
 				90BD57FD1C71A7920063D2AD /* YYTextSelectionView.m in Sources */,
 				F4C705E21C0998750057AA6A /* PIEImageView_blur.m in Sources */,
@@ -5864,12 +5926,14 @@
 				F4F28F261C23AE9B0067F2E4 /* UIImage+GIF.m in Sources */,
 				E942898B1B5B374B00ED26E4 /* HexColors.m in Sources */,
 				F44CB3B41C77002300B68C6C /* PIEPageCollectionSwipeView.m in Sources */,
+				9022D71B1C8D580C00389878 /* NSString+SNSAddition.m in Sources */,
 				9061EA7E1C55ECE40078374E /* PIEChannelTutorialFinishUploadingHomeworkView.m in Sources */,
 				5C31018A1AAE9B5700EF529B /* PIEAccountBindingView.m in Sources */,
 				F43930461BE4BD75006C9437 /* MRMethodCopier.m in Sources */,
 				F44CB3CE1C7ADF9D00B68C6C /* PIECommentTableViewHeader.m in Sources */,
 				F4106CF81C3F8B66006A23B9 /* LeesinBottomBar.m in Sources */,
 				F4F9FFC91BFC849A00032FDE /* SMPageControl.m in Sources */,
+				9076DEF81C8C6935004CEE3A /* OpenShare+Weixin.m in Sources */,
 				F4207AE01C044A20004B1978 /* PIESearchUserSimpleCollectionCell.m in Sources */,
 				90BD57FC1C71A7920063D2AD /* YYTextMagnifier.m in Sources */,
 				5C84063B1ABADA8B00068F35 /* PIEPageDAO.m in Sources */,

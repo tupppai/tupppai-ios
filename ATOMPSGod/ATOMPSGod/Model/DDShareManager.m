@@ -11,6 +11,12 @@
 
 
 //#import "DDSessionManager.h"
+#import "OpenShareHeader.h"
+#import "LxDBAnything.h"
+#import "OpenshareAuthUser.h"
+#import "TWSNSRequest.h"
+#import "NSString+SNSAddition.h"
+
 @implementation DDShareManager
 
 + (void) getShareInfo:(NSDictionary *)param withBlock:(void (^)(ATOMShare *))block {
@@ -49,6 +55,63 @@
         }
     }];
 }
+
++ (void)authorize_openshare:(ATOMAuthType)authType
+                  withBlock:(void (^)(OpenshareAuthUser *))block
+{
+    // 利用第三方登录，获得第三方平台用户的相应信息
+    @weakify(self);
+    switch (authType) {
+        case ATOMAuthTypeWeibo: {
+            [OpenShare WeiboAuth:@"all"
+                     redirectURI:@"https://api.weibo.com/oauth2/default.html"
+                         Success:^(NSDictionary *message) {
+                             @strongify(self);
+                             [self weiboOAuthWithMessage:message
+                                       completionHandler:^(OpenshareAuthUser *user) {
+                                           if (block != nil) {
+                                               block(user);
+                                           }
+                                       }];
+                         } Fail:^(NSDictionary *message, NSError *error) {
+                             LxDBAnyVar(error);
+                         }];
+            break;
+        }
+        case ATOMAuthTypeWeixin: {
+            [OpenShare WeixinAuth:@"snsapi_userinfo"
+                          Success:^(NSDictionary *message) {
+                              @strongify(self);
+                              [self weixinOAuthWithMessage:message
+                                         completionHandler:^(OpenshareAuthUser *user) {
+                                             if (block != nil) {
+                                                 block(user);
+                                             }
+                                         }];
+                          } Fail:^(NSDictionary *message, NSError *error) {
+                              LxDBAnyVar(error);
+                          }];
+            break;
+        }
+        case ATOMAuthTypeQQ: {
+            [OpenShare QQAuth:@"get_user_info"
+                      Success:^(NSDictionary *message) {
+                          @strongify(self);
+                          [self qqOAuthWithMessage:message
+                                 completionHandler:^(OpenshareAuthUser *user) {
+                                     if (block != nil) {
+                                         block(user);
+                                     }
+                                 }];
+                      } Fail:^(NSDictionary *message, NSError *error) {
+                          LxDBAnyVar(error);
+                      }];
+            break;
+        }
+    }
+}
+
+
 
 + (void)getRemoteShareInfo:(PIEPageVM*)vm withSocialShareType:(ATOMShareType)shareType withBlock:(void (^)(ATOMShare* share))block {
     NSMutableDictionary* param = [NSMutableDictionary new];
@@ -125,7 +188,7 @@
             NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
             //注释掉的话 微博自动分享
             [shareParams SSDKEnableUseClientShare];
-            
+        
             if (shareType == ATOMShareTypeWechatFriends) {
                 if ([share.type isEqualToString:@"image" ]) {
                     //这里要自己生成图片
@@ -139,8 +202,6 @@
 
                     }];
                 }    else   {
-                    
-
                     [DDService sd_downloadImage:vm.imageURL withBlock:^(UIImage *image) {
                         
                     [shareParams SSDKSetupWeChatParamsByText:desc title:shareTitle url:sUrl thumbImage:image image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeWebPage forPlatformSubType:SSDKPlatformSubTypeWechatSession];
@@ -236,7 +297,7 @@
             }
         
     }];
-    
+
 }
 
 /*
@@ -356,6 +417,95 @@
      }];
 }
 
+
++ (void)postSocialShare_openshare:(PIEPageVM *)vm
+              withSocialShareType:(ATOMShareType)shareType
+                            block:(void (^)(BOOL))block
+{
+    //先获取服务器传输过来的信息
+    [self
+     getRemoteShareInfo:vm
+     withSocialShareType:shareType
+     withBlock:^(ATOMShare *share) {
+         if (share != nil) {
+             NSString* shareTitle = share.title;
+             NSString* desc = share.desc;
+             if ([shareTitle isEqualToString:@""]) {
+                 shareTitle = @"我在#图派#app分享了一张图片，你也来看看吧";
+             }
+             if ([desc isEqualToString:@""]) {
+                 desc = @"我在#图派#app分享了一张图片，你也来看看吧";
+             }
+             NSString* imageUrl_trimmed = [share.imageUrl trimToImageWidth:100];
+//             NSURL* imageUrl = [[NSURL alloc]initWithString:[NSString stringWithFormat:@"%@",imageUrl_trimmed]];
+             
+             
+             // Create OSMessage for OpenShare
+             OSMessage *message = [[OSMessage alloc] init];
+             message.title      = shareTitle;
+             message.link       = share.url;
+             message.desc       = share.desc;
+             
+             [DDService
+              sd_downloadImage:imageUrl_trimmed
+              withBlock:^(UIImage *image) {
+                  message.thumbnail = image;
+                  message.image     = image;
+                  
+                  // sharing by OpenShare
+                  if (shareType == ATOMShareTypeWechatFriends) {
+                      [OpenShare
+                       shareToWeixinSession:message
+                       Success:^(OSMessage *message) {
+                           [Hud success:@"顺利分享微信回话"];
+                       }
+                       Fail:^(OSMessage *message, NSError *error) {
+                           [Hud error:@"没有分享到微信会话"];
+                       }];
+                  }
+                  else if (shareType == ATOMShareTypeWechatMoments){
+                      [OpenShare
+                       shareToWeixinTimeline:message
+                       Success:^(OSMessage *message) {
+                           [Hud success:@"顺利分享微信朋友圈"];
+                       } Fail:^(OSMessage *message, NSError *error) {
+                           [Hud error:@"没有分享到微信会话"];
+                       }];
+                  }
+                  else if (shareType == ATOMShareTypeSinaWeibo){
+                      [OpenShare
+                       shareToWeibo:message
+                       Success:^(OSMessage *message) {
+                           [Hud success:@"顺利分享微博"];
+                           
+                       } Fail:^(OSMessage *message, NSError *error) {
+                           [Hud error:@"没有分享到微博"];
+                       }];
+                  }
+                  else if (shareType == ATOMShareTypeQQFriends){
+                      [OpenShare
+                       shareToQQFriends:message
+                       Success:^(OSMessage *message) {
+                           [Hud success:@"顺利分享QQ好友"];
+                       } Fail:^(OSMessage *message, NSError *error) {
+                           [Hud error:@"没有分享到QQ好友"];
+                       }];
+                  }
+                  else if (shareType == ATOMShareTypeQQZone){
+                      [OpenShare
+                       shareToQQZone:message
+                       Success:^(OSMessage *message) {
+                           [Hud success:@"顺利分享QQ空间"];
+                       } Fail:^(OSMessage *message, NSError *error) {
+                           [Hud error:@"没有分享到QQ好友"];
+                       }];
+                  }
+              }];
+         }
+     }];
+    
+}
+
 + (void)bindUserWithThirdPartyPlatform:(NSString *)type openId:(NSString *)openId
                                failure:(void (^)(void))failure
                                success:(void (^)(void))success
@@ -384,6 +534,82 @@
                           }
                       }
                   }];
+}
+
+
+#pragma mark - OpenShare private helpers
+// TODO: 以后重构到Openshare里面
+
+// NSDictionary -> OpenshareAuthUser
+
++ (void)weixinOAuthWithMessage:(NSDictionary *)message
+             completionHandler:(void (^)(OpenshareAuthUser* user))completionHandler
+{
+    NSString *url =
+    [NSString
+     stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/access_token?appid=%@&secret=%@&code=%@&grant_type=authorization_code",
+     kSNSPlatformWeixinID, kSNSPlatformWeixinSecret, message[@"code"]];
+    
+    [TWSNSRequest get:url completionHandler:^(NSDictionary *data, NSError *error) {
+        NSString *accessToken = data[@"access_token"];
+        NSString *openid = data[@"openid"];
+        
+        NSString *userInfoUrl =
+        [NSString stringWithFormat:@"https://api.weixin.qq.com/sns/userinfo?access_token=%@&openid=%@&lang=zh_CN", accessToken, openid];
+        [TWSNSRequest get:userInfoUrl
+        completionHandler:^(NSDictionary *userInfo, NSError *error) {
+            NSMutableDictionary *completeUserInfo = userInfo.mutableCopy;
+            [completeUserInfo addEntriesFromDictionary:message];
+            // 就地捏出一个OpenshareAuthUser出来
+            ULog(@"微信登录成功:%@\n",completeUserInfo);
+            completionHandler(nil);
+        }];
+    }];
+}
+
++ (void)weiboOAuthWithMessage:(NSDictionary *)message
+             completionHandler:(void (^)(OpenshareAuthUser* user))completionHandler
+{
+    NSString *url        = @"https://api.weibo.com/2/users/show.json";
+    NSDictionary *params = @{@"source": kSNSPlatformWeiboID,
+                             @"access_token": message[@"accessToken"],
+                             @"uid": message[@"userID"]};
+    [TWSNSRequest get:url
+               params:params
+    completionHandler:^(NSDictionary *data, NSError *error) {
+        NSMutableDictionary *completeUserInfo = data.mutableCopy;
+        [completeUserInfo addEntriesFromDictionary:message];
+        // 就地捏出一个OpenshareAuthUser出来
+        OpenshareAuthUser *authUser = [[OpenshareAuthUser alloc] init];
+        authUser.nickname           = completeUserInfo[@"screen_name"];
+        authUser.icon               = completeUserInfo[@"avatar_large"];
+        authUser.uid                = completeUserInfo[@"idstr"];
+        authUser.rawData            = completeUserInfo;
+        completionHandler(authUser);
+    }];
+}
+
++ (void)qqOAuthWithMessage:(NSDictionary *)message
+            completionHandler:(void (^)(OpenshareAuthUser* user))completionHandler
+{
+    NSString *url = @"https://graph.qq.com/user/get_user_info";
+    NSDictionary *params = @{@"oauth_consumer_key": kSNSPlatformQQID,
+                             @"access_token": message[@"access_token"],
+                             @"openid": message[@"openid"]};
+    [TWSNSRequest get:url
+               params:params
+    completionHandler:^(NSDictionary *data, NSError *error) {
+        NSMutableDictionary *completeUserInfo = data.mutableCopy;
+        [completeUserInfo addEntriesFromDictionary:message];
+        
+        // 自己手捏一个OpenshareAuth
+        OpenshareAuthUser *authUser = [OpenshareAuthUser new];
+        authUser.nickname = completeUserInfo[@"nickname"];
+        authUser.icon     = completeUserInfo[@"figureurl_qq_2"];
+        authUser.uid      = completeUserInfo[@"openid"];
+        authUser.rawData  = completeUserInfo;
+        completionHandler(authUser);
+    }];
 }
 
 @end

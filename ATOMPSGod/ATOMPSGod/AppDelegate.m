@@ -14,12 +14,17 @@
 #import "DDIntroVC.h"
 #import "ATOMBaseDAO.h"
 #import "UMessage.h"
+
+
 #import <ShareSDK/ShareSDK.h>
 #import <ShareSDKConnector/ShareSDKConnector.h>
 #import <TencentOpenAPI/TencentOAuth.h>
 #import <TencentOpenAPI/QQApiInterface.h>
 #import "WXApi.h"
 #import "WeiboSDK.h"
+
+#import "OpenShareHeader.h"
+
 #import "PIECommentViewController.h"
 #import "PIENotificationViewController.h"
 #import "MobClick.h"
@@ -29,8 +34,6 @@
 //@property (nonatomic, strong) UINavigationController *baseNav;
 
 @end
-
-
 
 @implementation AppDelegate
 
@@ -50,7 +53,12 @@
     [[IQKeyboardManager sharedManager] setEnableAutoToolbar:NO];
     [self initializeDatabase];
     [self initializeAfterDB];
-    [self setupShareSDK];
+    
+    // 新需求：用Openshare替换ShareSDK
+    //    [self setupShareSDK];
+    [self setupOpenShare];
+    
+    
     [self setupUmengPush:launchOptions];
     [self setupBarButtonItem];
 //    [[IQKeyboardManager sharedManager] disableInViewControllerClass:[PIECommentViewController class]];
@@ -112,8 +120,6 @@
 
 }
 -(void)initializeAfterDB {
-    
-    
     // ## Step 1: 先尝试在本地沙盒加载用户的数据...
     [DDUserManager getMyProfileFromDatabase:^(BOOL success) {
         if (success) {
@@ -210,20 +216,33 @@
 
 }
 
+- (void)setupOpenShare
+{
+    // 第一步：注册Key
+    [OpenShare connectQQWithAppId:kSNSPlatformQQID];
+    [OpenShare connectWeiboWithAppKey:kSNSPlatformWeiboID];
+    [OpenShare connectWeixinWithAppId:kSNSPlatformWeixinID];
+}
 
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
-    BOOL canHandleURL = [Pingpp handleOpenURL:url withCompletion:nil];
-    return canHandleURL;
+    BOOL pingppCanHandleURL    = [Pingpp handleOpenURL:url withCompletion:nil];
+    
+    BOOL openShareCanHandleURL = [OpenShare handleOpenURL:url];
+    
+    return (pingppCanHandleURL || openShareCanHandleURL);
 }
 
 - (BOOL)application:(UIApplication *)app
             openURL:(NSURL *)url
             options:(NSDictionary *)options {
-    BOOL canHandleURL = [Pingpp handleOpenURL:url withCompletion:nil];
-    return canHandleURL;
+    BOOL pingppCanHandleURL    = [Pingpp handleOpenURL:url withCompletion:nil];
+
+    BOOL openShareCanHandleURL = [OpenShare handleOpenURL:url];
+    
+    return (pingppCanHandleURL || openShareCanHandleURL);
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {

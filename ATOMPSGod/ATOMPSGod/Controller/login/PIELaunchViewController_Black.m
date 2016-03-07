@@ -21,7 +21,6 @@
 #import "UINavigationBar+Awesome.h"
 #import "DeviceUtil.h"
 
-
 #import "RengarViewController.h"
 
 
@@ -646,36 +645,35 @@ PIEVerificationCodeCountdownButton *countdownButton;
 
 #pragma mark - Third-party login
 - (void)QQLogin{
-    [self thirdPartyLoginWithType:SSDKPlatformTypeQQ];
+    [self thirdPartyLoginWithType:ATOMAuthTypeQQ];
 }
 
 - (void)wechatLogin{
-    [self thirdPartyLoginWithType:SSDKPlatformTypeWechat];
+    [self thirdPartyLoginWithType:ATOMAuthTypeWeixin];
 }
 
 - (void)sinaWeiboLogin{
-    [self thirdPartyLoginWithType:SSDKPlatformTypeSinaWeibo];
+    [self thirdPartyLoginWithType:ATOMAuthTypeWeibo];
 }
 
 #pragma mark - private helpers
 
 
-- (void)thirdPartyLoginWithType:(SSDKPlatformType)platformType
+- (void)thirdPartyLoginWithType:(ATOMAuthType)authType
 {
+    // 新需求：Openshare -> ShareSDK
     @weakify(self);
     [DDShareManager
-     authorize2:platformType
-     withBlock:^(SSDKUser *user) {
-         
-
+     authorize_openshare:authType
+     withBlock:^(OpenshareAuthUser *user) {
          @strongify(self);
          if (user != nil) {
              [self fetchUserFromOpenId:user.uid
-                          platformType:platformType
+                          platformType:authType
                         userModelBlock:^(PIEUserModel *userModel) {
                             if (userModel == nil) {
                                 userModel = [self adHocUserFromShareSDK:user
-                                                           platformType:platformType];
+                                                           platformType:authType];
                             }
                             
                             // 保存这个userModel到本地，并且直接跳入主页面, 不需要向后台发送openId
@@ -690,58 +688,9 @@ PIEVerificationCodeCountdownButton *countdownButton;
      }];
 }
 
-- (PIEUserModel *)adHocUserFromShareSDK:(SSDKUser *)user
-                           platformType:(SSDKPlatformType)platformType
-{
-    PIEUserModel *userModel = [[PIEUserModel alloc] init];
-    /*
-        为临时用户的模型纪录存储从ShareSDK中传递过来的openID(-> NSUserDefaults)
-     */
-    userModel.uid      = kPIETouristUID;
-    userModel.nickname = user.nickname;
-
-
-    if (platformType == SSDKPlatformTypeQQ) {
-        userModel.avatar = [user.rawData objectForKey:@"figureurl_qq_2"];
-    }else {
-        userModel.avatar   = user.icon;
-    }
-    userModel.mobile   = user.nickname;
-    
-    [[NSUserDefaults standardUserDefaults] setObject:user.uid
-                                              forKey:PIETouristOpenIdKey];
-    /*
-        为临时用户的模型记录openID的来源（微博？QQ？微信？）
-     */
-    NSString *pieTouristLoginTypeString;
-    switch (platformType) {
-        case SSDKPlatformTypeSinaWeibo: {
-            pieTouristLoginTypeString = @"weibo";
-            break;
-        }
-        case SSDKPlatformTypeWechat: {
-            pieTouristLoginTypeString = @"weixin";
-            break;
-        }
-        case SSDKPlatformTypeQQ: {
-            pieTouristLoginTypeString = @"qq";
-            break;
-        }
-        default:
-            break;
-    }
-    [[NSUserDefaults standardUserDefaults] setObject:pieTouristLoginTypeString
-                                              forKey:PIETouristLoginTypeStringKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    return userModel;
-}
-
-
-
 - (void)fetchUserFromOpenId:(NSString *)openId
-                         platformType:(SSDKPlatformType)platformType
-                       userModelBlock:(void (^)(PIEUserModel *userModel))userModelBlock
+               platformType:(ATOMAuthType)authType
+             userModelBlock:(void (^)(PIEUserModel *userModel))userModelBlock
 {
     // NSString SSDKPlatformType -> PIEUserModel, nil if openId is not registered yet
     // 检测这个第三方登录得到的用户openID，是否在之前已经绑定手机号、完成了一整个的登录流程
@@ -749,26 +698,26 @@ PIEVerificationCodeCountdownButton *countdownButton;
     // 参数： openid
     
     NSString *authURL;
-    switch (platformType) {
-        case SSDKPlatformTypeSinaWeibo: {
+    switch (authType) {
+        case ATOMAuthTypeWeibo: {
             authURL = @"auth/weibo";
             break;
         }
-        case SSDKPlatformTypeWechat: {
+        case ATOMAuthTypeWeixin: {
             authURL = @"auth/weixin";
             break;
         }
-        case SSDKPlatformTypeQQ: {
+        case ATOMAuthTypeQQ: {
             authURL = @"auth/qq";
             break;
         }
-            default:
+        default:
             break;
     }
     
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     params[@"openid"] = openId;
-
+    
     
     [DDBaseService
      GET:params
@@ -810,8 +759,8 @@ PIEVerificationCodeCountdownButton *countdownButton;
          BOOL openIdIsRegistered = [dataDict[@"is_register"] boolValue];
          
          if (openIdIsRegistered == NO) {
-             /* 
-                全新的游客态，数据库没有这个用户的相应记录
+             /*
+              全新的游客态，数据库没有这个用户的相应记录
               */
              userModel = nil;
          }else{
@@ -828,6 +777,48 @@ PIEVerificationCodeCountdownButton *countdownButton;
      }];
 }
 
+
+- (PIEUserModel *)adHocUserFromShareSDK:(OpenshareAuthUser *)user
+                           platformType:(ATOMAuthType)authType
+{
+    PIEUserModel *userModel = [[PIEUserModel alloc] init];
+    /*
+        为临时用户的模型纪录存储从ShareSDK中传递过来的openID(-> NSUserDefaults)
+     */
+    userModel.uid      = kPIETouristUID;
+    userModel.nickname = user.nickname;
+
+    userModel.avatar   = user.icon;
+    userModel.mobile   = user.nickname;
+    
+    [[NSUserDefaults standardUserDefaults] setObject:user.uid
+                                              forKey:PIETouristOpenIdKey];
+    /*
+        为临时用户的模型记录openID的来源（微博？QQ？微信？）
+     */
+    NSString *pieTouristLoginTypeString;
+    switch (authType) {
+        case ATOMAuthTypeWeibo: {
+            pieTouristLoginTypeString = @"weibo";
+            break;
+        }
+        case ATOMAuthTypeWeixin: {
+            pieTouristLoginTypeString = @"weixin";
+            break;
+        }
+        case ATOMAuthTypeQQ: {
+            pieTouristLoginTypeString = @"qq";
+            break;
+        }
+        default:
+            break;
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:pieTouristLoginTypeString
+                                              forKey:PIETouristLoginTypeStringKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    return userModel;
+}
 
 
 - (void)tapLogo {
