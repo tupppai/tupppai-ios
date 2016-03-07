@@ -253,26 +253,43 @@ static NSString *PIEProceedingAskTableViewCell_NoGapIdentifier =
 //sina
 -(void)tapShare1 {
     [self.shareView dismiss];
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeSinaWeibo block:nil];
+//    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeSinaWeibo block:nil];
+    [DDShareManager postSocialShare_openshare:_selectedVM
+                          withSocialShareType:ATOMShareTypeSinaWeibo
+                                        block:nil];
 }
 //qqzone
 -(void)tapShare2 {
     [self.shareView dismiss];
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQZone  block:nil];
+//    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQZone  block:nil];
+    [DDShareManager postSocialShare_openshare:_selectedVM
+                          withSocialShareType:ATOMShareTypeQQZone
+                                        block:nil];
 }
 //wechat moments
 -(void)tapShare3 {
     [self.shareView dismiss];
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatMoments block:nil];
+//    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatMoments block:nil];
+    
+    [DDShareManager postSocialShare_openshare:_selectedVM
+                          withSocialShareType:ATOMShareTypeWechatMoments
+                                        block:nil];
 }
 //wechat friends
 -(void)tapShare4 {
     [self.shareView dismiss];
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatFriends  block:nil];
+//    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeWechatFriends  block:nil];
+    
+    [DDShareManager postSocialShare_openshare:_selectedVM
+                          withSocialShareType:ATOMShareTypeWechatFriends
+                                        block:nil];
 }
 -(void)tapShare5 {
     [self.shareView dismiss];
-    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQFriends  block:nil];
+//    [DDShareManager postSocialShare2:_selectedVM withSocialShareType:ATOMShareTypeQQFriends  block:nil];
+    [DDShareManager postSocialShare_openshare:_selectedVM
+                          withSocialShareType:ATOMShareTypeQQFriends
+                                        block:nil];
     
 }
 -(void)tapShare6 {

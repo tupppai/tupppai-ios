@@ -70,7 +70,7 @@ extern NSString * const kPublishTimeFont;
 /** 临时赋予“游客”状态的用户的UID */
 extern NSInteger const kPIETouristUID;
 
-/** "临时身份证"，记录在本地NSUserDefault里面的openID (from ShareSDK) 
+/** "临时身份证"，记录在本地NSUserDefault里面的openID (from Openshare) 
  
     赋值： PIELaunchViewController_Black的 －adHocUserFromShareSDK
     撤销这个临时身份证：临时用户 -> 正式用户的那一瞬间

@@ -180,21 +180,21 @@ typedef void(^requestResultBlock)(void);
 -(void)toggleSwitch:(id)sender {
     UISwitch *bindSwitch = sender;
     NSString *type;
-    SSDKPlatformType shareType = SSDKPlatformTypeUnknown;
+    ATOMAuthType authType = ATOMAuthTypeQQ;
     switch (bindSwitch.tag) {
         case 0:{
             type = @"weibo";
-            shareType = SSDKPlatformTypeSinaWeibo;
+            authType = ATOMAuthTypeWeibo;
             break;
         }
         case 1:{
             type = @"weixin";
-            shareType = SSDKPlatformTypeWechat;
+            authType = ATOMAuthTypeWeixin;
             break;
         }
         case 2:{
             type = @"qq";
-            shareType = SSDKPlatformTypeQQ;
+            authType = ATOMAuthTypeQQ;
             break;
         }
         default:
@@ -205,8 +205,8 @@ typedef void(^requestResultBlock)(void);
     if (bindSwitch.on) {
         // 弹出第三方的登录界面，目标只有openid
         [DDShareManager
-         authorize2:shareType
-         withBlock:^(SSDKUser *user) {
+         authorize_openshare:authType
+         withBlock:^(OpenshareAuthUser *user) {
              // 取得openID之后，开始手机与第三方openID的绑定
              NSString *openId = user.uid;
              
@@ -214,13 +214,12 @@ typedef void(^requestResultBlock)(void);
               bindUserWithThirdPartyPlatform:type
               openId:openId
               failure:^{
-                  /*绑定失败，重置UI*/
+                  /* 绑定失败，重置UI */
                   bindSwitch.on = NO;
-              }
-              success:^{
+              } success:^{
                   // 重置currentUser单例并且同步到本地沙盒
+                  
                   NSString *prompt =
-
                   [NSString stringWithFormat:@"成功绑定%@",self.platformTypeChineseDict[type]];
                   [Hud text:prompt];
                   
@@ -242,9 +241,10 @@ typedef void(^requestResultBlock)(void);
                           break;
                   }
                   [DDUserManager updateCurrentUserInDatabase];
-                  
               }];
          }];
+        
+
         
     }
     //2.如果想要取消绑定

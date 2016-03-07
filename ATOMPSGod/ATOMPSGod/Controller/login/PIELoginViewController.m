@@ -134,6 +134,7 @@
     } else if (type == ATOMSignUpMobile) {
         
     }
+    /*
     [DDShareManager authorize2:platformType withBlock:^(SSDKUser *sdkUser) {
         if (sdkUser) {
             NSMutableDictionary* param = [NSMutableDictionary new];
@@ -162,6 +163,7 @@
             }];
         }
     }];
+     */
 }
 
 

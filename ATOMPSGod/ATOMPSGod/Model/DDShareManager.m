@@ -26,35 +26,35 @@
     }];
 }
 
-
-+ (void)getUserInfo:(SSDKPlatformType)type withBlock:(void (^)(NSString* openId ))block{
-    [ShareSDK getUserInfo:type conditional:nil onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
-        if (state == SSDKResponseStateSuccess) {
-            block(user.uid);
-        } else {
-            block(nil);
-            [Hud error:@"获取不到信息，请重试"];
-        }
-    }];
-}
-+ (void)authorize:(SSDKPlatformType)type withBlock:(void (^)(NSDictionary* ))block{
-    [ShareSDK authorize:type settings:nil onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
-        if (state == SSDKResponseStateSuccess) {
-            block(user.rawData);
-        } else {
-            [Hud error:@"获取不到信息，请重试"];
-        }
-    }];
-}
-+ (void)authorize2:(SSDKPlatformType)type withBlock:(void (^)(SSDKUser* user ))block{
-    [ShareSDK authorize:type settings:nil onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
-        if (state == SSDKResponseStateSuccess) {
-            block(user);
-        }else {
-            [Hud error:@"获取不到信息，请重试"];
-        }
-    }];
-}
+//
+//+ (void)getUserInfo:(SSDKPlatformType)type withBlock:(void (^)(NSString* openId ))block{
+//    [ShareSDK getUserInfo:type conditional:nil onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
+//        if (state == SSDKResponseStateSuccess) {
+//            block(user.uid);
+//        } else {
+//            block(nil);
+//            [Hud error:@"获取不到信息，请重试"];
+//        }
+//    }];
+//}
+//+ (void)authorize:(SSDKPlatformType)type withBlock:(void (^)(NSDictionary* ))block{
+//    [ShareSDK authorize:type settings:nil onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
+//        if (state == SSDKResponseStateSuccess) {
+//            block(user.rawData);
+//        } else {
+//            [Hud error:@"获取不到信息，请重试"];
+//        }
+//    }];
+//}
+//+ (void)authorize2:(SSDKPlatformType)type withBlock:(void (^)(SSDKUser* user ))block{
+//    [ShareSDK authorize:type settings:nil onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
+//        if (state == SSDKResponseStateSuccess) {
+//            block(user);
+//        }else {
+//            [Hud error:@"获取不到信息，请重试"];
+//        }
+//    }];
+//}
 
 + (void)authorize_openshare:(ATOMAuthType)authType
                   withBlock:(void (^)(OpenshareAuthUser *))block
@@ -163,6 +163,8 @@
         [Hud success:@"成功复制到粘贴板"];
     }];
 }
+
+/*
 +(void)postSocialShare2:(PIEPageVM*)vm withSocialShareType:(ATOMShareType)shareType block:(void (^)(BOOL success))block {
     
     //先获取服务器传输过来的信息
@@ -299,13 +301,15 @@
     }];
 
 }
-
+*/
 /*
     第三版postSocialShare与第二版的主要区别：
     － 分享的时候具体是显示什么图片，由服务器决定（即：使用-[ATOMShare imageUrl])，而不是自带的viewModel的图片。
     - 一直没搞清楚第二版的postSocialShare是什么鬼，为什么要有这么多的判断？
  
  */
+
+/*
 + (void)postSocialShare3:(PIEPageVM*)vm withSocialShareType:(ATOMShareType)shareType block:(void (^)(BOOL success))block {
     
     //先获取服务器传输过来的信息
@@ -378,8 +382,9 @@
     
     
 }
+*/
 
-
+/*
 +(void) shareStep2:(SSDKPlatformType)platformType withShareParams:(NSMutableDictionary*) shareParams block:(void (^)(BOOL success))block {
     //进行分享
     [ShareSDK share:platformType
@@ -416,7 +421,7 @@
          
      }];
 }
-
+*/
 
 + (void)postSocialShare_openshare:(PIEPageVM *)vm
               withSocialShareType:(ATOMShareType)shareType

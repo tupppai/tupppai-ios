@@ -66,13 +66,14 @@
         PIEPageVM *pageVM = [[PIEPageVM alloc] initWithPageEntity:self.homeworkPageModel];
         
         [DDShareManager
-         postSocialShare3:pageVM
+         postSocialShare_openshare:pageVM
          withSocialShareType:ATOMShareTypeSinaWeibo
          block:^(BOOL success) {
              if (success) {
                  [self dismiss];
                  if (_delegate != nil &&
-                     [_delegate respondsToSelector:@selector(shareHomeworkPanelView:didShareHomeworkWithType:)]) {
+                     [_delegate
+                      respondsToSelector:@selector(shareHomeworkPanelView:didShareHomeworkWithType:)]) {
                      [_delegate shareHomeworkPanelView:self
                               didShareHomeworkWithType:ATOMShareTypeSinaWeibo];
                  }
@@ -85,15 +86,18 @@
         @strongify(self);
         
         PIEPageVM *pageVM = [[PIEPageVM alloc] initWithPageEntity:self.homeworkPageModel];
+        
         [DDShareManager
-         postSocialShare3:pageVM
+         postSocialShare_openshare:pageVM
          withSocialShareType:ATOMShareTypeQQZone
          block:^(BOOL success) {
              if (success) {
                  [self dismiss];
                  if (_delegate != nil &&
-                     [_delegate respondsToSelector:@selector(shareHomeworkPanelView:didShareHomeworkWithType:)]) {
-                     [_delegate shareHomeworkPanelView:self didShareHomeworkWithType:ATOMShareTypeQQZone];
+                     [_delegate
+                      respondsToSelector:@selector(shareHomeworkPanelView:didShareHomeworkWithType:)]) {
+                     [_delegate shareHomeworkPanelView:self
+                              didShareHomeworkWithType:ATOMShareTypeQQZone];
                  }
              }
          }];
@@ -106,14 +110,17 @@
         
         PIEPageVM *pageVM = [[PIEPageVM alloc] initWithPageEntity:self.homeworkPageModel];
         [DDShareManager
-         postSocialShare3:pageVM
+         postSocialShare_openshare:pageVM
          withSocialShareType:ATOMShareTypeWechatMoments
          block:^(BOOL success) {
-             [self dismiss];
-             if (_delegate != nil &&
-                 [_delegate respondsToSelector:@selector(shareHomeworkPanelView:didShareHomeworkWithType:)]) {
-                 [_delegate shareHomeworkPanelView:self
-                          didShareHomeworkWithType:ATOMShareTypeWechatMoments];
+             if (success) {
+                 [self dismiss];
+                 if (_delegate != nil &&
+                     [_delegate
+                      respondsToSelector:@selector(shareHomeworkPanelView:didShareHomeworkWithType:)]) {
+                         [_delegate shareHomeworkPanelView:self
+                                  didShareHomeworkWithType:ATOMShareTypeWechatMoments];
+                     }
              }
          }];
     }];
@@ -123,8 +130,9 @@
     subscribeNext:^(id x) {
         @strongify(self);
         PIEPageVM *pageVM = [[PIEPageVM alloc] initWithPageEntity:self.homeworkPageModel];
+
         [DDShareManager
-         postSocialShare3:pageVM
+         postSocialShare_openshare:pageVM
          withSocialShareType:ATOMShareTypeWechatFriends
          block:^(BOOL success) {
              if (success) {
@@ -134,8 +142,7 @@
                      [_delegate shareHomeworkPanelView:self
                               didShareHomeworkWithType:ATOMShareTypeWechatFriends];
                  }
-             }
-         }];
+             }}];
     }];
     
     
@@ -146,7 +153,7 @@
          PIEPageVM *pageVM = [[PIEPageVM alloc] initWithPageEntity:self.homeworkPageModel];
          
          [DDShareManager
-          postSocialShare3:pageVM
+          postSocialShare_openshare:pageVM
           withSocialShareType:ATOMShareTypeQQFriends
           block:^(BOOL success) {
               if (success) {

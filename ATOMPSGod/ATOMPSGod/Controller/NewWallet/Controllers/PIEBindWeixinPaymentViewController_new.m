@@ -136,19 +136,18 @@
 #pragma mark - Network request
 - (void)bindWeixinAccountRequest
 {
-    // 尚未绑定微信，先绑定微信账户
+    // 尚未绑定微信， 先绑定微信账户
+    @weakify(self);
     [DDShareManager
-     authorize2:SSDKPlatformTypeWechat
-     withBlock:^(SSDKUser *user) {
-         NSString *openId = user.uid;
-
+     authorize_openshare:ATOMAuthTypeWeixin
+     withBlock:^(OpenshareAuthUser *user) {
          [DDShareManager
           bindUserWithThirdPartyPlatform:@"weixin"
-          openId:openId
+          openId:user.uid
           failure:^{
               [Hud error:@"绑定失败"];
           } success:^{
-              
+              @strongify(self);
               [DDUserManager currentUser].bindWechat = YES;
               [DDUserManager updateCurrentUserInDatabase];
               
