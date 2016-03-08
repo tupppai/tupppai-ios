@@ -654,8 +654,13 @@
             NSMutableDictionary *completeUserInfo = userInfo.mutableCopy;
             [completeUserInfo addEntriesFromDictionary:message];
             // 就地捏出一个OpenshareAuthUser出来
-            ULog(@"微信登录成功:%@\n",completeUserInfo);
-            completionHandler(nil);
+
+            OpenshareAuthUser *authUser = [OpenshareAuthUser new];
+            authUser.rawData            = completeUserInfo;
+            authUser.nickname           = completeUserInfo[@"nickname"];
+            authUser.icon               = completeUserInfo[@"headimgurl"];
+            authUser.uid                = completeUserInfo[@"openid"];
+            completionHandler(authUser);
         }];
     }];
 }
