@@ -662,6 +662,31 @@ PIEVerificationCodeCountdownButton *countdownButton;
 - (void)thirdPartyLoginWithType:(ATOMAuthType)authType
 {
     // 新需求：Openshare -> ShareSDK
+//    @weakify(self);
+//    [DDShareManager
+//     authorize_openshare:authType
+//     withBlock:^(OpenshareAuthUser *user) {
+//         @strongify(self);
+//         if (user != nil) {
+//             [self fetchUserFromOpenId:user.uid
+//                          platformType:authType
+//                        userModelBlock:^(PIEUserModel *userModel) {
+//                            if (userModel == nil) {
+//                                userModel = [self adHocUserFromShareSDK:user
+//                                                           platformType:authType];
+//                            }
+//                            
+//                            // 保存这个userModel到本地，并且直接跳入主页面, 不需要向后台发送openId
+//                            [DDUserManager updateCurrentUserFromUserModel:userModel];
+//                            
+//                            // go back to main thread to update UI
+//                            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+//                                [[AppDelegate APP] switchToMainTabbarController];
+//                            }];
+//                        }];
+//         }
+//     }];
+    
     @weakify(self);
     [DDShareManager
      authorize_openshare:authType
@@ -672,10 +697,9 @@ PIEVerificationCodeCountdownButton *countdownButton;
                           platformType:authType
                         userModelBlock:^(PIEUserModel *userModel) {
                             if (userModel == nil) {
-                                userModel = [self adHocUserFromShareSDK:user
-                                                           platformType:authType];
+                                userModel =
+                                [self adHocUserFromShareSDK:user  platformType:authType];
                             }
-                            
                             // 保存这个userModel到本地，并且直接跳入主页面, 不需要向后台发送openId
                             [DDUserManager updateCurrentUserFromUserModel:userModel];
                             
@@ -684,7 +708,10 @@ PIEVerificationCodeCountdownButton *countdownButton;
                                 [[AppDelegate APP] switchToMainTabbarController];
                             }];
                         }];
-         }
+             
+         }}
+     Failure:^(NSDictionary *message, NSError *error) {
+         // no nothing
      }];
 }
 

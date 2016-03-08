@@ -242,9 +242,11 @@ typedef void(^requestResultBlock)(void);
                   }
                   [DDUserManager updateCurrentUserInDatabase];
               }];
+         }
+         Failure:^(NSDictionary *message, NSError *error) {
+             /* 绑定失败，重置UI */
+             bindSwitch.on = NO;
          }];
-        
-
         
     }
     //2.如果想要取消绑定

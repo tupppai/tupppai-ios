@@ -62,6 +62,8 @@ enum
                                  };
         
         [self setGeneralPasteboard:[@"com.tencent.tencent" stringByAppendingString:[self keyFor:schema][@"appid"]] Value:authData encoding:OSPboardEncodingKeyedArchiver];
+        
+        
         [self openURL:[NSString stringWithFormat:@"mqqOpensdkSSoLogin://SSoLogin/tencent%@/com.tencent.tencent%@?generalpastboard=1",[self keyFor:schema][@"appid"],[self keyFor:schema][@"appid"]]];
     }
 }

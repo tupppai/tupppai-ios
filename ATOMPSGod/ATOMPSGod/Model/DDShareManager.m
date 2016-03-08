@@ -57,61 +57,100 @@
 //}
 
 + (void)authorize_openshare:(ATOMAuthType)authType
-                  withBlock:(void (^)(OpenshareAuthUser *))block
+                  withBlock:(void (^)(OpenshareAuthUser *user))block
+                    Failure:(void (^)(NSDictionary *message, NSError *error))failureBlock
 {
+    /*
+        自问自答：
+        Q: 为什么一定要有一个FailureBlock回调到外面， 而不是把错误信息自己消化弹个窗就算了？
+        A: 一般情况下，在图派APP中，假如分享、第三方登录失败，对这些失败的回馈操作充其量只需要弹个窗提示一下用户即可，其他一切都不变；
+           唯一需要FailureBlock回调的场景，就是设定-> 账户安全-> 绑定第三方平台: 假如绑定失败，必须重置 UISwitch的UI
+     */
+    
     // 利用第三方登录，获得第三方平台用户的相应信息
     @weakify(self);
     switch (authType) {
         case ATOMAuthTypeWeibo: {
-            [OpenShare WeiboAuth:@"all"
-                     redirectURI:@"https://api.weibo.com/oauth2/default.html"
-                         Success:^(NSDictionary *message) {
-                             @strongify(self);
-                             [self weiboOAuthWithMessage:message
-                                       completionHandler:^(OpenshareAuthUser *user) {
-                                           if (block != nil) {
-                                               block(user);
-                                           }
-                                       }];
-                         } Fail:^(NSDictionary *message, NSError *error) {
-                             LxDBAnyVar(error);
-                         }];
+            if ([OpenShare isWeiboInstalled] == NO) {
+                [Hud error:@"手机里没有安装微博APP"];
+                if (failureBlock != nil) {
+                    failureBlock(nil, nil);
+                }
+            }else{
+                [OpenShare WeiboAuth:@"all"
+                         redirectURI:@"https://api.weibo.com/oauth2/default.html"
+                             Success:^(NSDictionary *message) {
+                                 @strongify(self);
+                                 [self weiboOAuthWithMessage:message
+                                           completionHandler:^(OpenshareAuthUser *user) {
+                                               if (block != nil) {
+                                                   block(user);
+                                               }
+                                           }];
+                             } Fail:^(NSDictionary *message, NSError *error) {
+                                 [Hud error:@"获取不到信息，请重试"];
+                                 if (failureBlock != nil) {
+                                     failureBlock(message, error);
+                                 }
+                             }];
+            }
             break;
         }
         case ATOMAuthTypeWeixin: {
-            [OpenShare WeixinAuth:@"snsapi_userinfo"
-                          Success:^(NSDictionary *message) {
-                              @strongify(self);
-                              [self weixinOAuthWithMessage:message
-                                         completionHandler:^(OpenshareAuthUser *user) {
-                                             if (block != nil) {
-                                                 block(user);
-                                             }
-                                         }];
-                          } Fail:^(NSDictionary *message, NSError *error) {
-                              LxDBAnyVar(error);
-                          }];
+            if ([OpenShare isWeixinInstalled] == NO) {
+                [Hud error:@"手机里没有安装微信APP"];
+                if (failureBlock != nil) {
+                    failureBlock(nil, nil);
+                }
+            }
+            else{
+                [OpenShare WeixinAuth:@"snsapi_userinfo"
+                              Success:^(NSDictionary *message) {
+                                  @strongify(self);
+                                  [self weixinOAuthWithMessage:message
+                                             completionHandler:^(OpenshareAuthUser *user) {
+                                                 if (block != nil) {
+                                                     block(user);
+                                                 }
+                                             }];
+                              } Fail:^(NSDictionary *message, NSError *error) {
+                                  [Hud error:@"获取不到信息，请重试"];
+                                  if (failureBlock != nil) {
+                                      failureBlock(message, error);
+                                  }
+                              }];
+            }
             break;
         }
         case ATOMAuthTypeQQ: {
-            [OpenShare QQAuth:@"get_user_info"
-                      Success:^(NSDictionary *message) {
-                          @strongify(self);
-                          [self qqOAuthWithMessage:message
-                                 completionHandler:^(OpenshareAuthUser *user) {
-                                     if (block != nil) {
-                                         block(user);
-                                     }
-                                 }];
-                      } Fail:^(NSDictionary *message, NSError *error) {
-                          LxDBAnyVar(error);
-                      }];
+            
+            if ([OpenShare isQQInstalled] == NO) {
+                [Hud error:@"手机没有安装QQ"];
+                if (failureBlock != nil) {
+                    failureBlock(nil, nil);
+                }
+            }
+            else{
+                [OpenShare QQAuth:@"get_user_info"
+                          Success:^(NSDictionary *message) {
+                              @strongify(self);
+                              [self qqOAuthWithMessage:message
+                                     completionHandler:^(OpenshareAuthUser *user) {
+                                         if (block != nil) {
+                                             block(user);
+                                         }
+                                     }];
+                          } Fail:^(NSDictionary *message, NSError *error) {
+                              [Hud error:@"获取不到信息，请重试"];
+                              if (failureBlock != nil) {
+                                  failureBlock(message, error);
+                              }
+                          }];
+            }
             break;
         }
     }
 }
-
-
 
 + (void)getRemoteShareInfo:(PIEPageVM*)vm withSocialShareType:(ATOMShareType)shareType withBlock:(void (^)(ATOMShare* share))block {
     NSMutableDictionary* param = [NSMutableDictionary new];
@@ -427,87 +466,136 @@
               withSocialShareType:(ATOMShareType)shareType
                             block:(void (^)(BOOL))block
 {
-    //先获取服务器传输过来的信息
-    [self
-     getRemoteShareInfo:vm
-     withSocialShareType:shareType
-     withBlock:^(ATOMShare *share) {
-         if (share != nil) {
-             NSString* shareTitle = share.title;
-             NSString* desc = share.desc;
-             if ([shareTitle isEqualToString:@""]) {
-                 shareTitle = @"我在#图派#app分享了一张图片，你也来看看吧";
+    NSDictionary *thirdplatformChineseDict =
+    @{@(ATOMShareTypeQQZone):@"QQ",
+      @(ATOMShareTypeQQFriends):@"QQ",
+      @(ATOMShareTypeSinaWeibo):@"微博",
+      @(ATOMShareTypeWechatFriends):@"微信",
+      @(ATOMShareTypeWechatMoments):@"微信"};
+    
+    if ([self hasInstalledShareType:shareType] == NO) {
+        NSString *prompt =
+        [NSString stringWithFormat:@"手机没有安装%@的APP，分享不了",thirdplatformChineseDict[@(shareType)]];
+        
+        [Hud error:prompt];
+        if (block != nil) {
+            block(NO);
+        }
+    }
+    else{
+        //先获取服务器传输过来的信息
+        [self
+         getRemoteShareInfo:vm
+         withSocialShareType:shareType
+         withBlock:^(ATOMShare *share) {
+             if (share != nil) {
+                 NSString* shareTitle = share.title;
+                 NSString* desc = share.desc;
+                 if ([shareTitle isEqualToString:@""]) {
+                     shareTitle = @"我在#图派#app分享了一张图片，你也来看看吧";
+                 }
+                 if ([desc isEqualToString:@""]) {
+                     desc = @"我在#图派#app分享了一张图片，你也来看看吧";
+                 }
+                 NSString* imageUrl_trimmed = [share.imageUrl trimToImageWidth:100];
+                 
+                 // Create OSMessage for OpenShare
+                 OSMessage *message = [[OSMessage alloc] init];
+                 message.title      = shareTitle;
+                 message.link       = share.url;
+                 message.desc       = share.desc;
+                 
+                 [DDService
+                  sd_downloadImage:imageUrl_trimmed
+                  withBlock:^(UIImage *image) {
+                      message.thumbnail = image;
+                      message.image     = image;
+                      
+                      // sharing by OpenShare
+                      if (shareType == ATOMShareTypeWechatFriends) {
+                          [OpenShare
+                           shareToWeixinSession:message
+                           Success:^(OSMessage *message) {
+                               [Hud success:@"成功分享到微信"];
+                               if (block != nil) {
+                                   block(YES);
+                               }
+                           }
+                           Fail:^(OSMessage *message, NSError *error) {
+                               [Hud error:@"分享到微信失败"];
+                               if (block != nil) {
+                                   block(NO);
+                               }
+                           }];
+                      }
+                      else if (shareType == ATOMShareTypeWechatMoments){
+                          [OpenShare
+                           shareToWeixinTimeline:message
+                           Success:^(OSMessage *message) {
+                               [Hud success:@"成功分享到微信朋友圈"];
+                               if (block != nil) {
+                                   block(YES);
+                               }
+                           } Fail:^(OSMessage *message, NSError *error) {
+                               [Hud error:@"没有分享到微信朋友圈"];
+                               if (block != nil) {
+                                   block(NO);
+                               }
+                           }];
+                      }
+                      else if (shareType == ATOMShareTypeSinaWeibo){
+                          [OpenShare
+                           shareToWeibo:message
+                           Success:^(OSMessage *message) {
+                               [Hud success:@"成功分享到微博"];
+                               if (block != nil) {
+                                   block(YES);
+                               }
+                               
+                           } Fail:^(OSMessage *message, NSError *error) {
+                               [Hud error:@"没有分享到微博"];
+                               if (block != nil) {
+                                   block(NO);
+                               }
+                           }];
+                      }
+                      else if (shareType == ATOMShareTypeQQFriends){
+                          [OpenShare
+                           shareToQQFriends:message
+                           Success:^(OSMessage *message) {
+                               [Hud success:@"顺利分享QQ好友"];
+                               if (block != nil) {
+                                   block(YES);
+                               }
+                               
+                           } Fail:^(OSMessage *message, NSError *error) {
+                               [Hud error:@"没有分享到QQ好友"];
+                               if (block != nil) {
+                                   block(NO);
+                               }
+                           }];
+                      }
+                      else if (shareType == ATOMShareTypeQQZone){
+                          [OpenShare
+                           shareToQQZone:message
+                           Success:^(OSMessage *message) {
+                               [Hud success:@"顺利分享QQ空间"];
+                               if (block != nil) {
+                                   block(YES);
+                               }
+                           } Fail:^(OSMessage *message, NSError *error) {
+                               [Hud error:@"没有分享到QQ好友"];
+                               if (block != nil) {
+                                   block(NO);
+                               }
+                           }];
+                      }
+                  }];
              }
-             if ([desc isEqualToString:@""]) {
-                 desc = @"我在#图派#app分享了一张图片，你也来看看吧";
-             }
-             NSString* imageUrl_trimmed = [share.imageUrl trimToImageWidth:100];
-//             NSURL* imageUrl = [[NSURL alloc]initWithString:[NSString stringWithFormat:@"%@",imageUrl_trimmed]];
-             
-             
-             // Create OSMessage for OpenShare
-             OSMessage *message = [[OSMessage alloc] init];
-             message.title      = shareTitle;
-             message.link       = share.url;
-             message.desc       = share.desc;
-             
-             [DDService
-              sd_downloadImage:imageUrl_trimmed
-              withBlock:^(UIImage *image) {
-                  message.thumbnail = image;
-                  message.image     = image;
-                  
-                  // sharing by OpenShare
-                  if (shareType == ATOMShareTypeWechatFriends) {
-                      [OpenShare
-                       shareToWeixinSession:message
-                       Success:^(OSMessage *message) {
-                           [Hud success:@"顺利分享微信回话"];
-                       }
-                       Fail:^(OSMessage *message, NSError *error) {
-                           [Hud error:@"没有分享到微信会话"];
-                       }];
-                  }
-                  else if (shareType == ATOMShareTypeWechatMoments){
-                      [OpenShare
-                       shareToWeixinTimeline:message
-                       Success:^(OSMessage *message) {
-                           [Hud success:@"顺利分享微信朋友圈"];
-                       } Fail:^(OSMessage *message, NSError *error) {
-                           [Hud error:@"没有分享到微信会话"];
-                       }];
-                  }
-                  else if (shareType == ATOMShareTypeSinaWeibo){
-                      [OpenShare
-                       shareToWeibo:message
-                       Success:^(OSMessage *message) {
-                           [Hud success:@"顺利分享微博"];
-                           
-                       } Fail:^(OSMessage *message, NSError *error) {
-                           [Hud error:@"没有分享到微博"];
-                       }];
-                  }
-                  else if (shareType == ATOMShareTypeQQFriends){
-                      [OpenShare
-                       shareToQQFriends:message
-                       Success:^(OSMessage *message) {
-                           [Hud success:@"顺利分享QQ好友"];
-                       } Fail:^(OSMessage *message, NSError *error) {
-                           [Hud error:@"没有分享到QQ好友"];
-                       }];
-                  }
-                  else if (shareType == ATOMShareTypeQQZone){
-                      [OpenShare
-                       shareToQQZone:message
-                       Success:^(OSMessage *message) {
-                           [Hud success:@"顺利分享QQ空间"];
-                       } Fail:^(OSMessage *message, NSError *error) {
-                           [Hud error:@"没有分享到QQ好友"];
-                       }];
-                  }
-              }];
-         }
-     }];
+         }];
+    }
+    
+    
     
 }
 
@@ -573,7 +661,7 @@
 }
 
 + (void)weiboOAuthWithMessage:(NSDictionary *)message
-             completionHandler:(void (^)(OpenshareAuthUser* user))completionHandler
+            completionHandler:(void (^)(OpenshareAuthUser* user))completionHandler
 {
     NSString *url        = @"https://api.weibo.com/2/users/show.json";
     NSDictionary *params = @{@"source": kSNSPlatformWeiboID,
@@ -595,7 +683,7 @@
 }
 
 + (void)qqOAuthWithMessage:(NSDictionary *)message
-            completionHandler:(void (^)(OpenshareAuthUser* user))completionHandler
+         completionHandler:(void (^)(OpenshareAuthUser* user))completionHandler
 {
     NSString *url = @"https://graph.qq.com/user/get_user_info";
     NSDictionary *params = @{@"oauth_consumer_key": kSNSPlatformQQID,
@@ -615,6 +703,36 @@
         authUser.rawData  = completeUserInfo;
         completionHandler(authUser);
     }];
+}
+
+/**
+ *  ATOMShareType -> BOOL
+ *
+ *  判断对应的第三方平台是否已经在手机安装了APP
+ */
++ (BOOL)hasInstalledShareType:(ATOMShareType)shareType
+{
+    switch (shareType) {
+        case ATOMShareTypeWechatMoments:
+        case ATOMShareTypeWechatFriends: {
+            return [OpenShare isWeixinInstalled];
+            break;
+        }
+        case ATOMShareTypeSinaWeibo: {
+            return [OpenShare isWeiboInstalled];
+            break;
+        }
+        case ATOMShareTypeQQZone:
+        case ATOMShareTypeQQFriends: {
+            return [OpenShare isQQInstalled];
+            break;
+        }
+        case ATOMShareTypeCopyLinks: {
+            return NO;
+            break;
+        }
+    }
+    return NO;
 }
 
 @end

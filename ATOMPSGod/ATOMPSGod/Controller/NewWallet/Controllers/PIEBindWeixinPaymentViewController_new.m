@@ -153,7 +153,10 @@
               
               [self pushToAuthcodeViewController];
           }];
+     } Failure:^(NSDictionary *message, NSError *error) {
+         // do nothing
      }];
+
 }
 
 #pragma mark - Push view controllers

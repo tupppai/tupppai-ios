@@ -8,9 +8,6 @@
 
 #import "PIEBindWeixinPaymentViewController.h"
 
-
-
-
 @interface PIEBindWeixinPaymentViewController ()
 
 @end
@@ -145,7 +142,6 @@
         button;
     });
     [[bindWeixinPaymentButton rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(id x) {
-        
         [DDShareManager
          authorize_openshare:ATOMAuthTypeWeixin
          withBlock:^(OpenshareAuthUser *user) {
@@ -169,6 +165,9 @@
                                }
                                [self dismiss];
                            }];
+         }
+         Failure:^(NSDictionary *message, NSError *error) {
+             // Do nothing
          }];
     }];
     
