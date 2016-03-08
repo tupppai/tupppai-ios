@@ -203,6 +203,10 @@ typedef void(^requestResultBlock)(void);
     
     //1.如果想要绑定
     if (bindSwitch.on) {
+        
+        // 背地里偷偷把UISwitch的状态改回来，因为用户有可能是点击了最左上角的“返回图派”直接返回应用，这样没有回调函数可以检查到这一点
+        bindSwitch.on = NO;
+        
         // 弹出第三方的登录界面，目标只有openid
         [DDShareManager
          authorize_openshare:authType
@@ -217,6 +221,9 @@ typedef void(^requestResultBlock)(void);
                   /* 绑定失败，重置UI */
                   bindSwitch.on = NO;
               } success:^{
+                  /* 绑定成功，刷新UI */
+                  bindSwitch.on = YES;
+                  
                   // 重置currentUser单例并且同步到本地沙盒
                   
                   NSString *prompt =
@@ -251,12 +258,19 @@ typedef void(^requestResultBlock)(void);
     }
     //2.如果想要取消绑定
     else  {
+        
+        // 背地里偷偷把UISwitch的状态改回来，因为用户有可能是点击了最左上角的“返回图派”直接返回应用，这样没有回调函数可以检查到这一点
+        bindSwitch.on = YES;
+        
         [self
          unbindUserWithThirdPartyPlatform:type
          failure:^{
              /* 解绑失败，重置UI */
              bindSwitch.on = YES;
          } success:^{
+             /* 解绑成功，重置UI */
+             bindSwitch.on = NO;
+             
              NSString *prompt =
              [NSString stringWithFormat:@"已经解绑%@",self.platformTypeChineseDict[type]];
              [Hud text:prompt];
