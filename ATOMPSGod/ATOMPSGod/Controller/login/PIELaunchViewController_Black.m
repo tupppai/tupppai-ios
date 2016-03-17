@@ -661,41 +661,19 @@ PIEVerificationCodeCountdownButton *countdownButton;
 
 - (void)thirdPartyLoginWithType:(ATOMAuthType)authType
 {
-    // 新需求：Openshare -> ShareSDK
-//    @weakify(self);
-//    [DDShareManager
-//     authorize_openshare:authType
-//     withBlock:^(OpenshareAuthUser *user) {
-//         @strongify(self);
-//         if (user != nil) {
-//             [self fetchUserFromOpenId:user.uid
-//                          platformType:authType
-//                        userModelBlock:^(PIEUserModel *userModel) {
-//                            if (userModel == nil) {
-//                                userModel = [self adHocUserFromShareSDK:user
-//                                                           platformType:authType];
-//                            }
-//                            
-//                            // 保存这个userModel到本地，并且直接跳入主页面, 不需要向后台发送openId
-//                            [DDUserManager updateCurrentUserFromUserModel:userModel];
-//                            
-//                            // go back to main thread to update UI
-//                            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-//                                [[AppDelegate APP] switchToMainTabbarController];
-//                            }];
-//                        }];
-//         }
-//     }];
-    
+    [Hud activity:@"跳转中..."];
     @weakify(self);
     [DDShareManager
      authorize_openshare:authType
      withBlock:^(OpenshareAuthUser *user) {
          @strongify(self);
          if (user != nil) {
-             [self fetchUserFromOpenId:user.uid
+             [self fetchUserFromOpenshareUser:user
                           platformType:authType
                         userModelBlock:^(PIEUserModel *userModel) {
+                            [Hud dismiss];
+                            
+                            // 如果返回的userModel为空，说明这个第三方用户没有绑定手机。
                             if (userModel == nil) {
                                 userModel =
                                 [self adHocUserFromShareSDK:user  platformType:authType];
@@ -708,14 +686,14 @@ PIEVerificationCodeCountdownButton *countdownButton;
                                 [[AppDelegate APP] switchToMainTabbarController];
                             }];
                         }];
-             
          }}
      Failure:^(NSDictionary *message, NSError *error) {
          // no nothing
+         [Hud dismiss];
      }];
 }
 
-- (void)fetchUserFromOpenId:(NSString *)openId
+- (void)fetchUserFromOpenshareUser:(OpenshareAuthUser *)authUser
                platformType:(ATOMAuthType)authType
              userModelBlock:(void (^)(PIEUserModel *userModel))userModelBlock
 {
@@ -743,8 +721,8 @@ PIEVerificationCodeCountdownButton *countdownButton;
     }
     
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    params[@"openid"] = openId;
-    
+    params[@"openid"]   = authUser.uid;
+    params[@"nickname"] = authUser.nickname;
     
     [DDBaseService
      GET:params

@@ -371,22 +371,21 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
 {
     [Hud text:@"该手机号码已注册，准备重新绑定手机号"];
     
-    
     if ([self.cellphoneNumberTextField.text isMobileNumber] == NO) {
         [Hud error:@"手机号码格式不对"];
     }else if (self.verificationCodeTextField.text.length == 0){
         [Hud error:@"验证码不能为空"];
     }
     else {
-        
         /*
-         account/register, POST, (mobile, code, openid, type)
+         account/register, POST, (mobile, code, openid, type, nickname)
          
          */
         NSMutableDictionary<NSString *, NSString *>
         *params = [NSMutableDictionary dictionary];
         params[@"mobile"] = self.cellphoneNumberTextField.text;
         params[@"code"]   = self.verificationCodeTextField.text;
+        params[@"nickname"] = [DDUserManager currentUser].nickname;
         NSString *openid  =
         [[NSUserDefaults standardUserDefaults] objectForKey:PIETouristOpenIdKey];
         params[@"openid"] = openid;
@@ -435,10 +434,6 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
                               // dismiss current model view controller
                               [self dismissViewControllerAnimated:YES
                                                        completion:nil];
-                              
-
-
-
                           }
                       }];
     }
@@ -460,7 +455,7 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
     }
     else {
         /*
-         account/register, POST, (mobile, code, password, openid, type)
+         account/register, POST, (mobile, code, password, openid, type, nickname)
          
          */
         NSMutableDictionary<NSString *, NSString *>
@@ -468,6 +463,7 @@ RACDisposable *hasRegisteredNetworkRequestDisposable;
         params[@"mobile"]   = self.cellphoneNumberTextField.text;
         params[@"code"]     = self.verificationCodeTextField.text;
         params[@"password"] = self.passwordTextField.text;
+        params[@"nickname"] = [DDUserManager currentUser].nickname;
         NSString *openid    =
         [[NSUserDefaults standardUserDefaults] objectForKey:PIETouristOpenIdKey];
         params[@"openid"]   = openid;
