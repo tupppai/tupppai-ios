@@ -32,8 +32,7 @@
 
 @interface PIETabBarController ()
 <
-    UITabBarControllerDelegate,
-    RengarViewControllerDelegate
+    UITabBarControllerDelegate
 >
 @property (nonatomic, strong) DDNavigationController *navigation_new;
 @property (nonatomic, strong) DDNavigationController *navigation_elite;
@@ -119,6 +118,13 @@
     
 }
 
+#pragma mark - Public method
+- (void)refreshMoments{
+    [self setSelectedIndex:0];
+    PIEEliteViewController *eliteViewController = _navigation_elite.viewControllers[0];
+    [eliteViewController refreshMoments];
+}
+
 #pragma mark - Notification methods
 
 -(void) errorOccuredRET {
@@ -191,22 +197,18 @@
     PIEProceedingViewController2 *proceedingViewController = [PIEProceedingViewController2 new];
     
     PIEMeViewController *aboutMeVC = (PIEMeViewController *)[[UIStoryboard storyboardWithName:@"Me" bundle:nil] instantiateViewControllerWithIdentifier: @"PIEME"];
-
     
     myAttentionViewController.title = @"动态";
     channelVc.title                 = @"图派";
     proceedingViewController.title  = @"进行中";
     aboutMeVC.title                 = @"我";
-    
-    
-    
+
     _navigation_new = [[DDNavigationController alloc] initWithRootViewController:channelVc];
     _navigation_elite = [[DDNavigationController alloc] initWithRootViewController:myAttentionViewController];
     _navigation_proceeding = [[DDNavigationController alloc] initWithRootViewController:proceedingViewController];
     _navigation_me = [[DDNavigationController alloc] initWithRootViewController:aboutMeVC];
     _preNav = _navigation_elite;
     _navigationPlaceholder_center = [[DDNavigationController alloc] init];
-    
     
     _navigation_elite.tabBarItem.image =
     [[UIImage imageNamed:@"tab_home_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
@@ -253,8 +255,6 @@
     }];
 }
 
-
-
 - (UIImage*)getSelectedTabImage {
     
     UIImage* maskImage = [UIImage imageNamed:@"pie_tab_mask"];
@@ -300,81 +300,90 @@
 
 
 
-//-(BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
-//    if (viewController == _centerNav) {
-//        [self presentBlurViewController];
-//        return NO;
-//    }
-//    return YES;
-//}
-- (BOOL)tabBarController:(UITabBarController *)tabBarController
-shouldSelectViewController:(UIViewController *)viewController
-{
+-(BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
     if (viewController == _navigationPlaceholder_center) {
-        [self presentRengarViewController];
+        [self presentBlurViewController];
         return NO;
     }
     return YES;
 }
 
-- (void)presentRengarViewController
-{
-    if ([DDUserManager currentUser].uid == kPIETouristUID) {
-        [[NSNotificationCenter defaultCenter]
-         postNotificationName:PIENetworkCallForFurtherRegistrationNotification
-         object:nil
-         userInfo:nil];
-    }else{
-        RengarViewController *rengarVC = [RengarViewController new];
-        rengarVC.delegate              = self;
-        rengarVC.titleStr              = @"发布动态";
-        
-        DDNavigationController *nav =
-        [[DDNavigationController alloc] initWithRootViewController:rengarVC];
-        
-        [self presentViewController:nav animated:YES completion:nil];
-    }
-    
+
+
+- (void)presentBlurViewController {
+    PIECameraViewController *pvc = [PIECameraViewController new];
+    pvc.blurStyle = UIBlurEffectStyleDark;
+    [self presentViewController:pvc animated:YES completion:nil];
 }
 
-
-#pragma mark - <RengarViewControllerDelegate>
-- (void)rengarViewController:(RengarViewController *)rengarViewController
-  didFinishPickingPhotoAsset:(PHAsset *)asset
-           descriptionString:(NSString *)descriptionString
-{
-    // upload 'momonet', a.k.a reply with ask_ID == 0
-    LeesinUploadModel *uploadModel = [LeesinUploadModel new];
-    LeesinUploadManager *manager   = [LeesinUploadManager new];
-    
-    uploadModel.ask_id     = 0;
-    uploadModel.type       = PIEPageTypeReply;
-    uploadModel.content    = descriptionString;
-    uploadModel.imageArray = [NSMutableOrderedSet orderedSetWithObject:asset];
-    
-    manager.model = uploadModel;
-    
-    @weakify(self);
-    [Hud activity:@"正在上传动态..."];
-    [manager uploadMoment:^(CGFloat percentage, BOOL success) {
-        @strongify(self);
-        if (success) {
-            [Hud dismiss];
-            [self setSelectedIndex:0];
-            PIEEliteViewController *eliteViewController = _navigation_elite.viewControllers[0];
-            [eliteViewController refreshMoments];
-        }
-    }];
-    
-}
-
-
-//- (void)presentBlurViewController {
-//    PIECameraViewController *pvc = [PIECameraViewController new];
-//    pvc.blurStyle = UIBlurEffectStyleDark;
-//    [self presentViewController:pvc animated:YES completion:nil];
+//- (void)presentRengarViewController
+//{
+//    if ([DDUserManager currentUser].uid == kPIETouristUID) {
+//        [[NSNotificationCenter defaultCenter]
+//         postNotificationName:PIENetworkCallForFurtherRegistrationNotification
+//         object:nil
+//         userInfo:nil];
+//    }else{
+//        RengarViewController *rengarVC = [RengarViewController new];
+//        rengarVC.delegate              = self;
+//        rengarVC.titleStr              = @"发布动态";
+//        
+//        DDNavigationController *nav =
+//        [[DDNavigationController alloc] initWithRootViewController:rengarVC];
+//        
+//        [self presentViewController:nav animated:YES completion:nil];
+//    }
+//    
 //}
 
+
+//- (BOOL)tabBarController:(UITabBarController *)tabBarController
+//shouldSelectViewController:(UIViewController *)viewController
+//{
+//    if (viewController == _navigationPlaceholder_center) {
+//        [self presentRengarViewController];
+//        return NO;
+//    }
+//    return YES;
+//}
+
+//#pragma mark - <RengarViewControllerDelegate>
+//- (void)rengarViewController:(RengarViewController *)rengarViewController
+//  didFinishPickingPhotoAsset:(PHAsset *)asset
+//           descriptionString:(NSString *)descriptionString
+//{
+//    // upload 'momonet', a.k.a reply with ask_ID == 0
+//    LeesinUploadModel *uploadModel = [LeesinUploadModel new];
+//    LeesinUploadManager *manager   = [LeesinUploadManager new];
+//    
+//    uploadModel.ask_id     = 0;
+//    uploadModel.type       = PIEPageTypeReply;
+//    uploadModel.content    = descriptionString;
+//    uploadModel.imageArray = [NSMutableOrderedSet orderedSetWithObject:asset];
+//    
+//    manager.model = uploadModel;
+//    
+//    @weakify(self);
+//    [Hud activity:@"正在上传动态..."];
+//    [manager uploadMoment:^(CGFloat percentage, BOOL success) {
+//        @strongify(self);
+//        if (success) {
+//            [Hud dismiss];
+//            [self setSelectedIndex:0];
+//            PIEEliteViewController *eliteViewController = _navigation_elite.viewControllers[0];
+//            [eliteViewController refreshMoments];
+//        }
+//    }];
+//    
+//}
+
+
+
+
+
+/*
+    废弃的代码，当时被Ken坑到的
+ */
 //- (BOOL)tabBarController:(UITabBarController *)tabBarController
 //shouldSelectViewController:(UIViewController *)viewController
 //{

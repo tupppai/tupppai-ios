@@ -13,6 +13,9 @@
 @protocol LeesinViewControllerDelegate <NSObject>
 @optional
 - (void)leesinViewController:(LeesinViewController *)leesinViewController uploadPercentage:(CGFloat)percentage uploadSucceed:(BOOL)success;
+
+- (void)leesinViewControllerDidDismiss:(LeesinViewController *)leesinViewController;
+
 @end
 
 

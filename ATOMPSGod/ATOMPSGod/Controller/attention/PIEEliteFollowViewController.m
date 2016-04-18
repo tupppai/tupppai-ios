@@ -71,6 +71,7 @@
 <JGActionSheetDelegate>
 @end
 
+
 @implementation PIEEliteFollowViewController
 
 static NSString *PIEEliteAskCellIdentifier   = @"PIEEliteAskTableViewCell";
@@ -443,6 +444,26 @@ static NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
     return YES;
 }
 
+#pragma mark - <LeesinViewControllerDelegate>
+- (void)leesinViewController:(LeesinViewController *)leesinViewController
+            uploadPercentage:(CGFloat)percentage
+               uploadSucceed:(BOOL)success
+{
+    // 设置进度条
+    [Hud activity:@"正在上传..."];
+    
+    if (success) {
+        [Hud dismiss];
+        [[AppDelegate APP].mainTabBarController refreshMoments];
+    }
+}
+
+- (void)leesinViewControllerDidDismiss:(LeesinViewController *)leesinViewController{
+    // 同时退出CameraVC和LeesinViewController
+    [[AppDelegate APP].mainTabBarController.presentedViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+
 #pragma mark - RAC signal response methods
 - (void)tapOnAvatarOrUsernameLabelAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -566,4 +587,6 @@ static NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
     }
     return _shareView;
 }
+
+
 @end
