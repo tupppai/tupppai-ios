@@ -27,6 +27,7 @@
 #import "PIEPageDetailViewController.h"
 
 #import "PIEPageManager.h"
+
 /* Variables */
 @interface PIEEliteFollowViewController ()
 @property (nonatomic, strong) NSMutableArray<PIEPageVM *> *sourceFollow;
@@ -49,6 +50,7 @@
 
 @property (nonatomic, strong) PIEShareView * shareView;
 
+
 @end
 
 /* Protocols */
@@ -70,9 +72,6 @@
 @end
 
 @implementation PIEEliteFollowViewController
-
-//static  NSString* askIndentifier      = @"PIEEliteFollowAskTableViewCell";
-//static  NSString* replyIndentifier    = @"PIEEliteFollowReplyTableViewCell";
 
 static NSString *PIEEliteAskCellIdentifier   = @"PIEEliteAskTableViewCell";
 static NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
@@ -102,6 +101,13 @@ static NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RefreshNavigation_Elite_Follow" object:nil];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self setupNavBar];
+}
+
 #pragma mark - data setup
 - (void)configData {
     _canRefreshFooterFollow = YES;
@@ -122,6 +128,15 @@ static NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
 
 
 #pragma mark - UI components setup
+- (void)setupNavBar
+{
+    self.parentViewController.navigationController.navigationBar.tintColor =
+    [UIColor colorWithHex:0x4a4a4a andAlpha:0.93];
+
+    [self.parentViewController.navigationController.navigationBar
+     setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+}
+
 - (void)configTableViewFollow {
     // add as subview and add constraint
     [self.view addSubview:self.tableFollow];
@@ -132,15 +147,6 @@ static NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
     }];
 }
 
-//- (void)setupGestures {
-//    
-//    UITapGestureRecognizer* tapGestureFollow = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureFollow:)];
-//    [self.tableFollow addGestureRecognizer:tapGestureFollow];
-//   
-//    UILongPressGestureRecognizer* longPressGestureFollow = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressOnFollow:)];
-//    [self.tableFollow addGestureRecognizer:longPressGestureFollow];
-//    
-//}
 
 #pragma mark - Notification Methods
 - (void)refreshHeader {
@@ -302,18 +308,7 @@ static NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
         
         return replyCell;
     }
-    
-//    if (vm.type == PIEPageTypeAsk) {
-//        PIEEliteFollowAskTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:askIndentifier];
-//        [cell injectSauce:vm];
-//        return cell;
-//    }
-//    else {
-//        PIEEliteFollowReplyTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:replyIndentifier];
-//        [cell injectSauce:vm];
-//        return cell;
-//    }
-    
+
     return nil;
 }
 
@@ -448,159 +443,6 @@ static NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
     return YES;
 }
 
-/*
-#pragma mark - Gesture Event
-
-- (void)longPressOnFollow:(UILongPressGestureRecognizer *)gesture {
-        CGPoint location = [gesture locationInView:self.tableFollow];
-        _selectedIndexPath_follow = [self.tableFollow indexPathForRowAtPoint:location];
-        _selectedVM = _sourceFollow[_selectedIndexPath_follow.row];
-        if (_selectedIndexPath_follow) {
-            //关注  求p
-            _selectedVM = _sourceFollow[_selectedIndexPath_follow.row];
-            
-            if (_selectedVM.type == PIEPageTypeAsk) {
-                
-                PIEEliteFollowAskTableViewCell* cell = [self.tableFollow cellForRowAtIndexPath:_selectedIndexPath_follow];
-                CGPoint p = [gesture locationInView:cell];
-                if (CGRectContainsPoint(cell.theImageView.frame, p)) {
-                    //进入热门详情
-                    [self showShareView:_selectedVM];
-                }            }
-            
-            //关注  作品
-            else {
-                PIEEliteFollowReplyTableViewCell* cell = [self.tableFollow cellForRowAtIndexPath:_selectedIndexPath_follow];
-                CGPoint p = [gesture locationInView:cell];
-                if (CGRectContainsPoint(cell.animateImageView.frame, p)) {
-                    [self showShareView:_selectedVM];
-                }      else if (CGRectContainsPoint(cell.likeView.frame, p)) {
-                    [_selectedVM love:YES];
-                }
-
-            }
-        }
-    
-}
-
-- (void)tapGestureFollow:(UITapGestureRecognizer *)gesture {
-    CGPoint location = [gesture locationInView:self.tableFollow];
-    _selectedIndexPath_follow = [self.tableFollow indexPathForRowAtPoint:location];
-
-    if (_selectedIndexPath_follow == nil) {
-        return;
-    }
-    _selectedVM = _sourceFollow[_selectedIndexPath_follow.row];
-    
-    if (_selectedVM == nil) {
-        return;
-    }
-    
-    if (_selectedVM.type == PIEPageTypeAsk) {
-        
-        PIEEliteFollowAskTableViewCell* cell = [self.tableFollow cellForRowAtIndexPath:_selectedIndexPath_follow];
-        CGPoint p = [gesture locationInView:cell];
-        if (CGRectContainsPoint(cell.theImageView.frame, p)) {
-
-            PIEPageDetailViewController *vc = [PIEPageDetailViewController new];
-            vc.pageViewModel = _selectedVM;
-            [self.navigationController pushViewController:vc animated:YES];
-        }
-        //点击头像
-        else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
-            PIEFriendViewController * friendVC = [PIEFriendViewController new];
-            friendVC.pageVM = _selectedVM;
-            [self.navigationController pushViewController:friendVC animated:YES];
-        }
-        //点击用户名
-        else if (CGRectContainsPoint(cell.nameLabel.frame, p)) {
-            PIEFriendViewController * friendVC = [PIEFriendViewController new];
-            friendVC.pageVM = _selectedVM;
-            [self.navigationController pushViewController:friendVC animated:YES];
-        }
-        else if (CGRectContainsPoint(cell.bangView.frame, p)) {
-            self.psActionSheet.vm = _selectedVM;
-            [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
-        }
-//                else if (CGRectContainsPoint(cell.followView.frame, p)) {
-////                    [self follow:cell.followView];
-//                    [_selectedVM follow];
-//                }
-        else if (CGRectContainsPoint(cell.shareView.frame, p)) {
-            [self showShareView:_selectedVM];
-        }
-        
-        else if (CGRectContainsPoint(cell.commentView.frame, p)) {
-            PIECommentViewController* vc = [PIECommentViewController new];
-            vc.shouldShowHeaderView = NO;
-            vc.vm = _selectedVM;
-            [self.navigationController pushViewController:vc animated:YES];
-        }
-        else if (CGRectContainsPoint(cell.allWorkView.frame, p)) {
-            PIEReplyCollectionViewController* vc = [PIEReplyCollectionViewController new];
-            vc.pageVM = _selectedVM;
-            [self.navigationController pushViewController:vc animated:YES];
-        }
-        
-    }
-    
-            //关注  作品
-            
-    else {
-        PIEEliteFollowReplyTableViewCell* cell = [self.tableFollow cellForRowAtIndexPath:_selectedIndexPath_follow];
-        CGPoint p = [gesture locationInView:cell];
-        if (CGRectContainsPoint(cell.animateImageView.frame, p)) {
-            //进入热门详情
-//            PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-            //                    _selectedVM.image = cell.theImageView.image;
-//            vc.pageVM = _selectedVM;
-//            [self presentViewController:vc animated:YES completion:nil];
-            
-            PIEPageDetailViewController *vc2 = [PIEPageDetailViewController new];
-            vc2.pageViewModel = _selectedVM;
-            [self.navigationController pushViewController:vc2 animated:YES];
-        }
-        //点击头像
-        else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
-            PIEFriendViewController * friendVC = [PIEFriendViewController new];
-            friendVC.pageVM = _selectedVM;
-            [self.navigationController pushViewController:friendVC animated:YES];
-        }
-        //点击用户名
-        else if (CGRectContainsPoint(cell.nameLabel.frame, p)) {
-            PIEFriendViewController * friendVC = [PIEFriendViewController new];
-            friendVC.pageVM = _selectedVM;
-            [self.navigationController pushViewController:friendVC animated:YES];
-        }
-        else if (CGRectContainsPoint(cell.likeView.frame, p)) {
-//                    [PIEPageManager love:cell.likeView viewModel:_selectedVM revert:NO];
-            [_selectedVM love:NO];
-        }
-//                else if (CGRectContainsPoint(cell.followView.frame, p)) {
-//                    [_selectedVM follow];
-//                }
-        else if (CGRectContainsPoint(cell.shareView.frame, p)) {
-            [self showShareView:_selectedVM];
-        }
-//                else if (CGRectContainsPoint(cell.collectView.frame, p)) {
-//                    [self collect:cell.collectView shouldShowHud:NO];
-//                }
-        else if (CGRectContainsPoint(cell.commentView.frame, p)) {
-            PIECommentViewController* vc = [PIECommentViewController new];
-            vc.vm = _selectedVM;
-            vc.shouldShowHeaderView = NO;
-            [self.navigationController pushViewController:vc animated:YES];
-        }
-        else if (CGRectContainsPoint(cell.allWorkView.frame, p)) {
-            PIEReplyCollectionViewController* vc = [PIEReplyCollectionViewController new];
-            vc.pageVM = _selectedVM;
-            [self.navigationController pushViewController:vc animated:YES];
-        }
-    }
-    
-}
-*/
-
 #pragma mark - RAC signal response methods
 - (void)tapOnAvatarOrUsernameLabelAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -691,12 +533,6 @@ static NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
         
         _tableFollow.estimatedRowHeight   = SCREEN_WIDTH+155;
         _tableFollow.rowHeight            = UITableViewAutomaticDimension;
-        
-        
-//        UINib* nib2 = [UINib nibWithNibName:askIndentifier bundle:nil];
-//        [self.tableFollow registerNib:nib2 forCellReuseIdentifier:askIndentifier];
-//        UINib* nib3 = [UINib nibWithNibName:replyIndentifier bundle:nil];
-//        [self.tableFollow registerNib:nib3 forCellReuseIdentifier:replyIndentifier];
         
         UINib *askCellNib =
         [UINib nibWithNibName:@"PIEEliteAskTableViewCell" bundle:nil];

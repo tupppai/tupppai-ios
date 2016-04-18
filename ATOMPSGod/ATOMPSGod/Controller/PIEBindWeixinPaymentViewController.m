@@ -8,9 +8,6 @@
 
 #import "PIEBindWeixinPaymentViewController.h"
 
-
-
-
 @interface PIEBindWeixinPaymentViewController ()
 
 @end
@@ -145,29 +142,33 @@
         button;
     });
     [[bindWeixinPaymentButton rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(id x) {
-            [DDShareManager authorize2:SSDKPlatformTypeWechat withBlock:^(SSDKUser *user) {
-                NSMutableDictionary *params = [NSMutableDictionary <NSString *, NSString *> new];
-                params[@"type"]             = @"weixin";
-                params[@"openid"]           = user.uid;
-                [DDBaseService POST:params
-                                url:@"auth/bind"
-                              block:^(id responseObject) {
-                                  if (responseObject) {
-                                      [DDUserManager currentUser].bindWechat = YES;
-                                      [DDUserManager updateCurrentUserInDatabase];
-                                      [Hud success:@"绑定微信成功"];
-                                  } else {
-                                      [Hud error:@"绑定微信失败"];
-                                  }
-                                  
-                                  BOOL success = !(responseObject == nil);
-                                  if (_delegate && [_delegate respondsToSelector:@selector(bindWechatViewController:success:)]) {
-                                      [_delegate bindWechatViewController:self success:success];
-                                  }
-                                  [self dismiss];
-                              }];
-            }];
-        
+        [DDShareManager
+         authorize_openshare:ATOMAuthTypeWeixin
+         withBlock:^(OpenshareAuthUser *user) {
+             NSMutableDictionary *params = [NSMutableDictionary <NSString *, NSString *> new];
+             params[@"type"]             = @"weixin";
+             params[@"openid"]           = user.uid;
+             [DDBaseService POST:params
+                             url:@"auth/bind"
+                           block:^(id responseObject) {
+                               if (responseObject) {
+                                   [DDUserManager currentUser].bindWechat = YES;
+                                   [DDUserManager updateCurrentUserInDatabase];
+                                   [Hud success:@"绑定微信成功"];
+                               } else {
+                                   [Hud error:@"绑定微信失败"];
+                               }
+                               
+                               BOOL success = !(responseObject == nil);
+                               if (_delegate && [_delegate respondsToSelector:@selector(bindWechatViewController:success:)]) {
+                                   [_delegate bindWechatViewController:self success:success];
+                               }
+                               [self dismiss];
+                           }];
+         }
+         Failure:^(NSDictionary *message, NSError *error) {
+             // Do nothing
+         }];
     }];
     
 }

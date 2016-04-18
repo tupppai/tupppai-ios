@@ -30,7 +30,7 @@
 #import "PIEPageManager.h"
 #import "PIEPageDetailViewController.h"
 
-
+#define kEliteHotCellLimitedCacheCount 4
 
 @interface PIEEliteHotViewController ()
 
@@ -60,7 +60,9 @@
 
 @property (nonatomic, strong) SMPageControl *pageControl_swipeView;
 
-@property (nonatomic, copy) NSArray *pageManagedObjects;
+@property (nonatomic, copy) NSArray<NSManagedObject *> *pageManagedObjects;
+
+@property (nonatomic, copy) NSArray<NSManagedObject *> *bannerManagedObjects;
 
 @end
 
@@ -111,8 +113,7 @@ static  NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
 {
     [super viewWillAppear:animated];
     [self fetchPageModelsFromDatabase];
-
-    [self.swipeView reloadData];
+    [self fetchBannerModelsFromDatabase];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -128,6 +129,9 @@ static  NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
     [super viewDidAppear:animated];
 }
 
+
+#pragma mark - Core data methods
+
 - (NSManagedObjectContext *)managedObjectContext {
     NSManagedObjectContext *context = nil;
     id delegate = [[UIApplication sharedApplication] delegate];
@@ -139,14 +143,24 @@ static  NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
 
 - (void)renewPageModelInManagedContext:(NSArray*)array {
     [self clearPagesInDatabase];
-    for (int i = 0; i<4; i++) {
-        if (array.count < i+1) {
-            return;
-        }
+    
+    unsigned long minimumIterateCount = MIN(array.count, kEliteHotCellLimitedCacheCount);
+    
+    for (int i = 0; i < minimumIterateCount; i++) {
         PIEPageVM *vm = [array objectAtIndex:i];
         [self addPageModelToManagedContext:vm.model];
     }
 }
+
+- (void)renewBannerModelInManagedContext:(NSArray *)array
+{
+    [self clearBannersInDatabase];
+    
+    for (PIEBannerModel *bannerModel in array) {
+        [self addBannerModelToManagedContext:bannerModel];
+    }
+}
+
 - (void)addPageModelToManagedContext:(PIEPageModel*)model {
     NSManagedObjectContext *context = [self managedObjectContext];
     // Create a new managed object
@@ -157,25 +171,41 @@ static  NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
     [newPage setValue:model.imageURL forKey:@"page_url"];
     [newPage setValue:model.avatar forKey:@"avatar_url"];
     [newPage setValue:@(model.type) forKey:@"type"];
+    [context save:nil];
+}
+
+- (void)addBannerModelToManagedContext:(PIEBannerModel *)model
+{
+    NSManagedObjectContext *context = [self managedObjectContext];
+    
+    NSManagedObject *newBanner = [NSEntityDescription insertNewObjectForEntityForName:@"Banner"
+                                                               inManagedObjectContext:context];
+    [newBanner setValue:@(model.ID) forKey:@"id"];
+    [newBanner setValue:model.desc forKey:@"desc"];
+    [newBanner setValue:model.url  forKey:@"url"];
+    [newBanner setValue:model.imageUrl forKey:@"imageUrl"];
+    [context save:nil];
 }
 
 - (void)fetchPageModelsFromDatabase {
     // Fetch the devices from persistent data store
     NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Page"];
-    fetchRequest.fetchLimit = 4;
+    
+    fetchRequest.fetchLimit = kEliteHotCellLimitedCacheCount;
+    
     NSArray *pages = [[managedObjectContext executeFetchRequest:fetchRequest error:nil] mutableCopy];
     self.pageManagedObjects = pages;
     for (NSManagedObject *object in pages) {
         PIEPageModel *model = [PIEPageModel new];
-        model.ID = [[object valueForKey:@"id"]integerValue];
-        model.uid = [[object valueForKey:@"user_id"]integerValue];
-        model.nickname = [object valueForKey:@"username"];
-        model.avatar = [object valueForKey:@"avatar_url"];
-        model.imageURL = [object valueForKey:@"page_url"];
-        model.type = [[object valueForKey:@"type"]integerValue];
-        
-        PIEPageVM *vm = [[PIEPageVM alloc]initWithPageEntity:model];
+        model.ID            = [[object valueForKey:@"id"]integerValue];
+        model.uid           = [[object valueForKey:@"user_id"]integerValue];
+        model.nickname      = [object valueForKey:@"username"];
+        model.avatar        = [object valueForKey:@"avatar_url"];
+        model.imageURL      = [object valueForKey:@"page_url"];
+        model.type          = [[object valueForKey:@"type"]integerValue];
+
+        PIEPageVM *vm       = [[PIEPageVM alloc]initWithPageEntity:model];
         
         // TODO: 这里self.sourceHot已经绑定了RAC， 一旦sourceHot有改变就会reload一次tableView；
         //       这里有可能会造成不必要的性能损耗（每次显示页面CPU都会有一次尖峰，导致卡顿）
@@ -184,12 +214,45 @@ static  NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
     [self.tableHot reloadData];
 }
 
+- (void)fetchBannerModelsFromDatabase
+{
+    // Fetch the devices from persistent data store
+    NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Banner"];
+    
+    NSArray *banners =
+    [[managedObjectContext executeFetchRequest:fetchRequest error:nil] mutableCopy];
+    self.bannerManagedObjects = banners;
+    
+    for (NSManagedObject *bannerObject in banners) {
+        PIEBannerModel *bannerModel = [PIEBannerModel new];
+        bannerModel.ID              = [[bannerObject valueForKey:@"id"] integerValue];
+        bannerModel.url             = [bannerObject valueForKey:@"url"];
+        bannerModel.imageUrl        = [bannerObject valueForKey:@"imageUrl"];
+        bannerModel.desc            = [bannerObject valueForKey:@"desc"];
+        
+        [self.sourceBanner addObject:bannerModel];
+    }
+    
+    [self.swipeView reloadData];
+}
+
 - (void)clearPagesInDatabase {
     
     NSManagedObjectContext *context = [self managedObjectContext];
     for (NSManagedObject *page in self.pageManagedObjects) {
         [context deleteObject:page];
     }
+    [context save:nil];
+}
+
+- (void)clearBannersInDatabase
+{
+    NSManagedObjectContext *context = [self managedObjectContext];
+    for (NSManagedObject *banner in self.bannerManagedObjects) {
+        [context deleteObject:banner];
+    }
+    [context save:nil];
 }
 
 #pragma mark - data setup
@@ -687,6 +750,9 @@ static  NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
         [self.sourceBanner addObjectsFromArray:array];
         
         _pageControl_swipeView.numberOfPages = self.sourceBanner.count;
+        
+        [self renewBannerModelInManagedContext:array];
+        
         [self.swipeView reloadData];
  
 
@@ -737,7 +803,8 @@ static  NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
             block(YES);
         }
         
-        [self getSourceIfEmpty_banner];
+//        [self getSourceIfEmpty_banner];
+        [self getRemoteSourceBanner];
 
     }];
     

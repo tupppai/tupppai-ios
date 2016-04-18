@@ -14,12 +14,17 @@
 #import "DDIntroVC.h"
 #import "ATOMBaseDAO.h"
 #import "UMessage.h"
-#import <ShareSDK/ShareSDK.h>
-#import <ShareSDKConnector/ShareSDKConnector.h>
-#import <TencentOpenAPI/TencentOAuth.h>
-#import <TencentOpenAPI/QQApiInterface.h>
-#import "WXApi.h"
-#import "WeiboSDK.h"
+
+
+//#import <ShareSDK/ShareSDK.h>
+//#import <ShareSDKConnector/ShareSDKConnector.h>
+//#import <TencentOpenAPI/TencentOAuth.h>
+//#import <TencentOpenAPI/QQApiInterface.h>
+//#import "WXApi.h"
+//#import "WeiboSDK.h"
+
+#import "OpenShareHeader.h"
+
 #import "PIECommentViewController.h"
 #import "PIENotificationViewController.h"
 #import "MobClick.h"
@@ -29,8 +34,6 @@
 //@property (nonatomic, strong) UINavigationController *baseNav;
 
 @end
-
-
 
 @implementation AppDelegate
 
@@ -50,7 +53,11 @@
     [[IQKeyboardManager sharedManager] setEnableAutoToolbar:NO];
     [self initializeDatabase];
     [self initializeAfterDB];
-    [self setupShareSDK];
+    
+    // 新需求：用Openshare替换ShareSDK
+    //    [self setupShareSDK];
+    [self setupOpenShare];
+    
     [self setupUmengPush:launchOptions];
     [self setupBarButtonItem];
 //    [[IQKeyboardManager sharedManager] disableInViewControllerClass:[PIECommentViewController class]];
@@ -112,8 +119,6 @@
 
 }
 -(void)initializeAfterDB {
-    
-    
     // ## Step 1: 先尝试在本地沙盒加载用户的数据...
     [DDUserManager getMyProfileFromDatabase:^(BOOL success) {
         if (success) {
@@ -165,65 +170,78 @@
 
 #pragma mark - Share
 
-- (void)setupShareSDK {
-    [ShareSDK registerApp:@"65b1ce491325"
-          activePlatforms:@[@(SSDKPlatformTypeWechat), @(SSDKPlatformTypeSinaWeibo),@(SSDKPlatformTypeQQ)]
-                 onImport:^(SSDKPlatformType platformType) {
-                     
-                     switch (platformType)
-                     {
-                         case SSDKPlatformTypeWechat:
-                             [ShareSDKConnector connectWeChat:[WXApi class]];
-                             break;
-                         case SSDKPlatformTypeQQ:
-                             [ShareSDKConnector connectQQ:[QQApiInterface class] tencentOAuthClass:[TencentOAuth class]];
-                             break;
-                         case SSDKPlatformTypeSinaWeibo:
-                             [ShareSDKConnector connectWeibo:[WeiboSDK class]];
-                             break;
-                         default:
-                             break;
-                     }
-                     
-                 }
-          onConfiguration:^(SSDKPlatformType platformType, NSMutableDictionary *appInfo) {
-              switch (platformType)
-              {
-                
-                  case SSDKPlatformTypeWechat:
-                      [appInfo SSDKSetupWeChatByAppId:@"wx86ff6f67a2b9b4b8" appSecret:@"c2da31fda3acf1c09c40ee25772b6ca5"];
-                      break;
-                  case SSDKPlatformTypeSinaWeibo:
-                      //设置新浪微博应用信息,其中authType设置为使用SSO＋Web形式授权
-                      [appInfo SSDKSetupSinaWeiboByAppKey:@"882276088"
-                                                appSecret:@"454f67c8e6d29b770d701e9272bc5ee7"
-                                              redirectUri:@"https://api.weibo.com/oauth2/default.html"
-                                                 authType:SSDKAuthTypeBoth];
-                      break;
-                    case SSDKPlatformTypeQQ:
-                      [appInfo SSDKSetupQQByAppId:@"1104845173" appKey:@"66J8VPEAzAO3yQt4" authType:SSDKAuthTypeBoth];
-                      break;
-                  default: break;
-              }
-          }
-     ];
+//- (void)setupShareSDK {
+//    [ShareSDK registerApp:@"65b1ce491325"
+//          activePlatforms:@[@(SSDKPlatformTypeWechat), @(SSDKPlatformTypeSinaWeibo),@(SSDKPlatformTypeQQ)]
+//                 onImport:^(SSDKPlatformType platformType) {
+//                     
+//                     switch (platformType)
+//                     {
+//                         case SSDKPlatformTypeWechat:
+//                             [ShareSDKConnector connectWeChat:[WXApi class]];
+//                             break;
+//                         case SSDKPlatformTypeQQ:
+//                             [ShareSDKConnector connectQQ:[QQApiInterface class] tencentOAuthClass:[TencentOAuth class]];
+//                             break;
+//                         case SSDKPlatformTypeSinaWeibo:
+//                             [ShareSDKConnector connectWeibo:[WeiboSDK class]];
+//                             break;
+//                         default:
+//                             break;
+//                     }
+//                     
+//                 }
+//          onConfiguration:^(SSDKPlatformType platformType, NSMutableDictionary *appInfo) {
+//              switch (platformType)
+//              {
+//                
+//                  case SSDKPlatformTypeWechat:
+//                      [appInfo SSDKSetupWeChatByAppId:@"wx86ff6f67a2b9b4b8" appSecret:@"c2da31fda3acf1c09c40ee25772b6ca5"];
+//                      break;
+//                  case SSDKPlatformTypeSinaWeibo:
+//                      //设置新浪微博应用信息,其中authType设置为使用SSO＋Web形式授权
+//                      [appInfo SSDKSetupSinaWeiboByAppKey:@"882276088"
+//                                                appSecret:@"454f67c8e6d29b770d701e9272bc5ee7"
+//                                              redirectUri:@"https://api.weibo.com/oauth2/default.html"
+//                                                 authType:SSDKAuthTypeBoth];
+//                      break;
+//                    case SSDKPlatformTypeQQ:
+//                      [appInfo SSDKSetupQQByAppId:@"1104845173" appKey:@"66J8VPEAzAO3yQt4" authType:SSDKAuthTypeBoth];
+//                      break;
+//                  default: break;
+//              }
+//          }
+//     ];
+//
+//}
 
+- (void)setupOpenShare
+{
+    // 第一步：注册Key
+    [OpenShare connectQQWithAppId:kSNSPlatformQQID];
+    [OpenShare connectWeiboWithAppKey:kSNSPlatformWeiboID];
+    [OpenShare connectWeixinWithAppId:kSNSPlatformWeixinID];
 }
-
 
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
-    BOOL canHandleURL = [Pingpp handleOpenURL:url withCompletion:nil];
-    return canHandleURL;
+    BOOL pingppCanHandleURL    = [Pingpp handleOpenURL:url withCompletion:nil];
+    
+    BOOL openShareCanHandleURL = [OpenShare handleOpenURL:url];
+    
+    return (pingppCanHandleURL || openShareCanHandleURL);
 }
 
 - (BOOL)application:(UIApplication *)app
             openURL:(NSURL *)url
             options:(NSDictionary *)options {
-    BOOL canHandleURL = [Pingpp handleOpenURL:url withCompletion:nil];
-    return canHandleURL;
+    BOOL pingppCanHandleURL    = [Pingpp handleOpenURL:url withCompletion:nil];
+
+    BOOL openShareCanHandleURL = [OpenShare handleOpenURL:url];
+    
+    return (pingppCanHandleURL || openShareCanHandleURL);
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
@@ -284,7 +302,7 @@
                                              forKey:PIEHasNewNotificationFlagKey];
     [[NSUserDefaults standardUserDefaults]synchronize];
     
-    [self addRedDotToTabBarItemIndex:3];
+    [self addRedDotToTabBarItemIndex:4];
     [[NSNotificationCenter defaultCenter] postNotification:
      [NSNotification
       notificationWithName:PIEUpdateNotificationStatusNotification object:nil]];

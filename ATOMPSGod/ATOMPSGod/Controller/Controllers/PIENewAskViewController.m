@@ -154,10 +154,10 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
     [_takePhotoButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(44);
         make.leading.and.trailing.equalTo(self.view);
-        self.takePhotoButtonBottomMarginConstraint =
+        weakSelf.takePhotoButtonBottomMarginConstraint =
         make.bottom.equalTo(weakSelf.view);
     }];
-   
+
 }
 
 
@@ -474,11 +474,17 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
 
 #pragma mark - Target-actions
 - (void)takePhoto {
-    LeesinViewController* vc = [LeesinViewController new];
-    vc.type = LeesinViewControllerTypeAsk;
-    vc.channel_id = _channelVM.ID;
-    vc.delegate = self;
-    [self presentViewController:vc animated:YES completion:nil];
+    if ([DDUserManager currentUser].uid == kPIETouristUID) {
+        [[NSNotificationCenter defaultCenter]
+        postNotificationName:PIENetworkCallForFurtherRegistrationNotification
+         object:nil];
+    }else{
+        LeesinViewController* vc = [LeesinViewController new];
+        vc.type = LeesinViewControllerTypeAsk;
+        vc.channel_id = _channelVM.ID;
+        vc.delegate = self;
+        [self presentViewController:vc animated:YES completion:nil];
+    }
 }
 
 

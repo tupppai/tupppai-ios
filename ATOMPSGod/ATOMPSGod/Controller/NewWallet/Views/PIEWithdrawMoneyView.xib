@@ -100,7 +100,7 @@
                             <rect key="frame" x="15" y="115" width="402" height="1"/>
                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="1" id="ilD-tS-4bU"/>
+                                <constraint firstAttribute="height" priority="250" constant="1" id="ilD-tS-4bU"/>
                             </constraints>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="￥2000.00元" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EuA-Zb-GOx">
@@ -164,7 +164,7 @@
                 <outlet property="remainingBalanceLabel" destination="EuA-Zb-GOx" id="O1Q-z6-6h1"/>
                 <outlet property="separatorLineView" destination="QVV-hK-FHj" id="qvb-U1-Hxe"/>
             </connections>
-            <point key="canvasLocation" x="30.5" y="179.5"/>
+            <point key="canvasLocation" x="-51.5" y="138.5"/>
         </view>
     </objects>
     <resources>

@@ -116,6 +116,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkShowInfoCall" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:PIENetworkCallForFurtherRegistrationNotification
                                                   object:nil];
+    
 }
 
 #pragma mark - Notification methods
@@ -155,11 +156,6 @@
                           handler:^(SIAlertView *alert) {
                               //清空数据库用户表
                               [ATOMUserDAO clearUsers];
-                              
-                              /*
-                                    Potential bug found: 
-                                    没有清理cookies。假如用户等处置后用另外一个账号登录就会出事
-                               */
                               
                               //清空当前用户
                               [DDUserManager clearCurrentUser];
@@ -323,15 +319,22 @@ shouldSelectViewController:(UIViewController *)viewController
 
 - (void)presentRengarViewController
 {
+    if ([DDUserManager currentUser].uid == kPIETouristUID) {
+        [[NSNotificationCenter defaultCenter]
+         postNotificationName:PIENetworkCallForFurtherRegistrationNotification
+         object:nil
+         userInfo:nil];
+    }else{
+        RengarViewController *rengarVC = [RengarViewController new];
+        rengarVC.delegate              = self;
+        rengarVC.titleStr              = @"发布动态";
+        
+        DDNavigationController *nav =
+        [[DDNavigationController alloc] initWithRootViewController:rengarVC];
+        
+        [self presentViewController:nav animated:YES completion:nil];
+    }
     
-    RengarViewController *rengarVC = [RengarViewController new];
-    rengarVC.delegate              = self;
-    rengarVC.titleStr              = @"发布动态";
-    
-    DDNavigationController *nav =
-    [[DDNavigationController alloc] initWithRootViewController:rengarVC];
-    
-    [self presentViewController:nav animated:YES completion:nil];
 }
 
 
@@ -352,9 +355,11 @@ shouldSelectViewController:(UIViewController *)viewController
     manager.model = uploadModel;
     
     @weakify(self);
+    [Hud activity:@"正在上传动态..."];
     [manager uploadMoment:^(CGFloat percentage, BOOL success) {
         @strongify(self);
         if (success) {
+            [Hud dismiss];
             [self setSelectedIndex:0];
             PIEEliteViewController *eliteViewController = _navigation_elite.viewControllers[0];
             [eliteViewController refreshMoments];

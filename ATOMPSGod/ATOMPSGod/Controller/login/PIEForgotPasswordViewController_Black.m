@@ -113,8 +113,7 @@
         NSMutableDictionary *params =
         [NSMutableDictionary dictionary];
         
-        params[@"phone"] =
-        @([self.cellPhoneTextField.text integerValue]);
+        params[@"phone"] = self.cellPhoneTextField.text;
         [DDBaseService GET:params
                        url:@"account/requestAuthCode"
                      block:^(id responseObject) {

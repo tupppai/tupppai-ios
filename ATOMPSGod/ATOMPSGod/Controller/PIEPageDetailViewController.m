@@ -21,6 +21,8 @@
 #import "PIEPageCollectionSwipeView.h"
 #import "DDHotDetailManager.h"
 #import "PIECarouselViewController3.h"
+#import "JTSImageViewController.h"
+#import "JTSImageInfo.h"
 
 @interface PIEPageDetailViewController ()<UITableViewDataSource,UITableViewDelegate,PIEPageDetailTextInputBarDelegate,SwipeViewDelegate,SwipeViewDataSource>
 @property (nonatomic,strong) UITableView *tableView;
@@ -85,13 +87,19 @@
 
 - (void)setupViews {
     [self.view addSubview:self.tableView];
-    [self.view addSubview:self.textInputBar];
-    [self.textInputBar mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.and.trailing.equalTo(self.view);
-        self.inputbarBottomMarginHC = make.bottom.equalTo(self.view);
-        self.inputBarHC = make.height.equalTo(@(self.textInputBar.appropriateHeight));
-    }];
-    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, self.textInputBar.appropriateHeight, 0);
+    
+    /*
+        新需求：游客态则隐藏textInputBar
+     */
+    if ([DDUserManager currentUser].uid != kPIETouristUID) {
+        [self.view addSubview:self.textInputBar];
+        [self.textInputBar mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.leading.and.trailing.equalTo(self.view);
+            self.inputbarBottomMarginHC = make.bottom.equalTo(self.view);
+            self.inputBarHC = make.height.equalTo(@(self.textInputBar.appropriateHeight));
+        }];
+        self.tableView.contentInset = UIEdgeInsetsMake(0, 0, self.textInputBar.appropriateHeight, 0);
+    }
     
     [self setupTableViewRefreshingFooter];
 }
@@ -245,7 +253,27 @@
         return;
     }
     if (indexPath.section == 0) {
-        return;
+        
+        // present JITImageViewController
+        PIEPageDetailHeaderTableViewCell *headerCell =
+        [self.tableView cellForRowAtIndexPath:indexPath];
+        
+        JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
+        imageInfo.image =
+        headerCell.blurAnimateImageView.imageView.image;
+        
+        imageInfo.referenceRect = headerCell.frame;
+        imageInfo.referenceView = self.tableView;
+        imageInfo.referenceContentMode = UIViewContentModeScaleAspectFit;
+        
+        JTSImageViewController *imageViewVC =
+        [[JTSImageViewController alloc]
+         initWithImageInfo:imageInfo
+         mode:JTSImageViewControllerMode_Image
+         backgroundStyle:JTSImageViewControllerBackgroundOption_Scaled];
+        
+        [imageViewVC showFromViewController:self transition:JTSImageViewControllerTransition_FromOriginalPosition];
+        
     } else if (indexPath.section == 1) {
         
         NSInteger row = indexPath.row;
@@ -450,6 +478,7 @@
 - (void)tapFollow_Header {
     [self.pageViewModel follow];
 }
+
 
 -(void)pageDetailTextInputBar:(PIEPageDetailTextInputBar *)pageDetailTextInputBar tapRightButton:(UIButton *)tappedButton {
     [self sendComment];

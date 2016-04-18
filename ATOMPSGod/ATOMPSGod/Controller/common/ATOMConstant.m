@@ -119,3 +119,14 @@ NSInteger kPIERewardSuccessInteger = 1;
 
 
 double kPIEChargeMinimumAmount = 0.01;
+
+
+NSString *kSNSPlatformWeiboID      = @"882276088";
+
+NSString *kSNSPlatformQQID         = @"1104845173";
+
+NSString *kSNSPlatformQQKey        = @"66J8VPEAzAO3yQt4";
+
+NSString *kSNSPlatformWeixinID     = @"wx86ff6f67a2b9b4b8";
+
+NSString *kSNSPlatformWeixinSecret = @"c2da31fda3acf1c09c40ee25772b6ca5";

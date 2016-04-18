@@ -37,4 +37,22 @@
 + (NSValueTransformer *)threadsJSONTransformer {
     return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:[PIEPageModel class]];
 }
+
+
+/*
+    2016-3-22： 这是服务器的锅，在最新求P区里不应该出现“男神活动”的页面。
+               所以在测试服里一点开最新求P区就会马上崩溃，因为type为nil。
+               这里为type字段设置一个默认的值，APP不会崩溃，但是后台担心
+               这样可能会给用户机会去污染后台数据。所以现在前端先这样修改着。
+ 
+ */
+- (void)setNilValueForKey:(NSString *)key
+{
+    if ([key isEqualToString:@"type"]) {
+        self.type = PIECategoryTypeChannel;
+    }else{
+        [super setNilValueForKey:key];
+    }
+}
 @end
+

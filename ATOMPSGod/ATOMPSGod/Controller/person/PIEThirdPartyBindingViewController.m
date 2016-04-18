@@ -180,21 +180,21 @@ typedef void(^requestResultBlock)(void);
 -(void)toggleSwitch:(id)sender {
     UISwitch *bindSwitch = sender;
     NSString *type;
-    SSDKPlatformType shareType = SSDKPlatformTypeUnknown;
+    ATOMAuthType authType = ATOMAuthTypeQQ;
     switch (bindSwitch.tag) {
         case 0:{
             type = @"weibo";
-            shareType = SSDKPlatformTypeSinaWeibo;
+            authType = ATOMAuthTypeWeibo;
             break;
         }
         case 1:{
             type = @"weixin";
-            shareType = SSDKPlatformTypeWechat;
+            authType = ATOMAuthTypeWeixin;
             break;
         }
         case 2:{
             type = @"qq";
-            shareType = SSDKPlatformTypeQQ;
+            authType = ATOMAuthTypeQQ;
             break;
         }
         default:
@@ -203,10 +203,14 @@ typedef void(^requestResultBlock)(void);
     
     //1.如果想要绑定
     if (bindSwitch.on) {
+        
+        // 背地里偷偷把UISwitch的状态改回来，因为用户有可能是点击了最左上角的“返回图派”直接返回应用，这样没有回调函数可以检查到这一点
+        bindSwitch.on = NO;
+        
         // 弹出第三方的登录界面，目标只有openid
         [DDShareManager
-         authorize2:shareType
-         withBlock:^(SSDKUser *user) {
+         authorize_openshare:authType
+         withBlock:^(OpenshareAuthUser *user) {
              // 取得openID之后，开始手机与第三方openID的绑定
              NSString *openId = user.uid;
              
@@ -214,13 +218,15 @@ typedef void(^requestResultBlock)(void);
               bindUserWithThirdPartyPlatform:type
               openId:openId
               failure:^{
-                  /*绑定失败，重置UI*/
+                  /* 绑定失败，重置UI */
                   bindSwitch.on = NO;
-              }
-              success:^{
+              } success:^{
+                  /* 绑定成功，刷新UI */
+                  bindSwitch.on = YES;
+                  
                   // 重置currentUser单例并且同步到本地沙盒
+                  
                   NSString *prompt =
-
                   [NSString stringWithFormat:@"成功绑定%@",self.platformTypeChineseDict[type]];
                   [Hud text:prompt];
                   
@@ -242,19 +248,29 @@ typedef void(^requestResultBlock)(void);
                           break;
                   }
                   [DDUserManager updateCurrentUserInDatabase];
-                  
               }];
+         }
+         Failure:^(NSDictionary *message, NSError *error) {
+             /* 绑定失败，重置UI */
+             bindSwitch.on = NO;
          }];
         
     }
     //2.如果想要取消绑定
     else  {
+        
+        // 背地里偷偷把UISwitch的状态改回来，因为用户有可能是点击了最左上角的“返回图派”直接返回应用，这样没有回调函数可以检查到这一点
+        bindSwitch.on = YES;
+        
         [self
          unbindUserWithThirdPartyPlatform:type
          failure:^{
              /* 解绑失败，重置UI */
              bindSwitch.on = YES;
          } success:^{
+             /* 解绑成功，重置UI */
+             bindSwitch.on = NO;
+             
              NSString *prompt =
              [NSString stringWithFormat:@"已经解绑%@",self.platformTypeChineseDict[type]];
              [Hud text:prompt];

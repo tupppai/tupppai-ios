@@ -242,9 +242,26 @@
 - (void)postShareType:(ATOMShareType)shareType
     selectedViewModel:(PIEPageVM *)selectedVM
 {
+//    @weakify(self);
+//    [DDShareManager
+//     postSocialShare2:selectedVM
+//     withSocialShareType:shareType
+//     block:^(BOOL success) {
+//         if (success) {
+//             @strongify(self);
+//             selectedVM.model.totalShareNumber++;
+//             if (_delegate != nil &&
+//                 [_delegate respondsToSelector:@selector(shareView:didShareWithType:)]) {
+//                 [_delegate shareView:self didShareWithType:shareType];
+//             }
+//             [self dismiss];
+//
+//         }
+//     }];
+    
     @weakify(self);
     [DDShareManager
-     postSocialShare2:selectedVM
+     postSocialShare_openshare:selectedVM
      withSocialShareType:shareType
      block:^(BOOL success) {
          if (success) {
@@ -255,7 +272,7 @@
                  [_delegate shareView:self didShareWithType:shareType];
              }
              [self dismiss];
-
+             
          }
      }];
 }
