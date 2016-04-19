@@ -28,6 +28,8 @@
 
 #import "PIEPageManager.h"
 
+#import "MRNavigationBarProgressView.h"
+
 /* Variables */
 @interface PIEEliteFollowViewController ()
 @property (nonatomic, strong) NSMutableArray<PIEPageVM *> *sourceFollow;
@@ -49,6 +51,8 @@
 @property (nonatomic, strong) PIEActionSheet_PS * psActionSheet;
 
 @property (nonatomic, strong) PIEShareView * shareView;
+
+@property (nonatomic, strong) MRNavigationBarProgressView *progressView;
 
 
 @end
@@ -107,6 +111,7 @@ static NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
     [super viewWillAppear:animated];
     
     [self setupNavBar];
+    [self setupProgressView];
 }
 
 #pragma mark - data setup
@@ -136,6 +141,12 @@ static NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
 
     [self.parentViewController.navigationController.navigationBar
      setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+    
+}
+
+- (void)setupProgressView {
+    _progressView = [MRNavigationBarProgressView progressViewForNavigationController:self.navigationController];
+    _progressView.progressTintColor = [UIColor colorWithHex:0x4a4a4a andAlpha:0.93];
 }
 
 - (void)configTableViewFollow {
@@ -445,16 +456,24 @@ static NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
 }
 
 #pragma mark - <LeesinViewControllerDelegate>
+- (void)leesinViewControllerWillUploadImage:(LeesinViewController *)leesinViewController{
+    // 在开始传送图片之前先跳转到eliteFollow页面
+    [[AppDelegate APP].mainTabBarController toggleToEliteFollow];
+    
+    
+}
+
 - (void)leesinViewController:(LeesinViewController *)leesinViewController
             uploadPercentage:(CGFloat)percentage
                uploadSucceed:(BOOL)success
 {
     // 设置进度条
-    [Hud activity:@"正在上传..."];
-    
+    [self.progressView setProgress:percentage animated:YES];
     if (success) {
-        [Hud dismiss];
-        [[AppDelegate APP].mainTabBarController refreshMoments];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [[AppDelegate APP].mainTabBarController refreshMoments];
+        });
     }
 }
 
@@ -550,7 +569,6 @@ static NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
         _tableFollow.psDelegate           = self;
         _tableFollow.emptyDataSetSource   = self;
         _tableFollow.emptyDataSetDelegate = self;
-        
         
         _tableFollow.estimatedRowHeight   = SCREEN_WIDTH+155;
         _tableFollow.rowHeight            = UITableViewAutomaticDimension;

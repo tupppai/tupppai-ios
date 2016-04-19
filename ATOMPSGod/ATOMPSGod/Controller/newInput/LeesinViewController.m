@@ -388,6 +388,12 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     uploadModel.imageArray = self.selectedAssets;
     
     uploadManager.model = uploadModel;
+    
+    if (_delegate &&
+        [_delegate respondsToSelector:@selector(leesinViewControllerWillUploadImage:)]) {
+        [_delegate leesinViewControllerWillUploadImage:self];
+    }
+    
     [uploadManager upload:^(CGFloat percentage, BOOL success) {
         if (_delegate && [_delegate respondsToSelector:@selector(leesinViewController:uploadPercentage:uploadSucceed:)]) {
             [_delegate leesinViewController:self uploadPercentage:percentage uploadSucceed:success];

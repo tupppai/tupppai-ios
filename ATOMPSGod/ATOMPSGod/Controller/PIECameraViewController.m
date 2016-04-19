@@ -73,17 +73,22 @@ typedef NS_ENUM(NSUInteger, CameraType) {
 }
 
 - (void)tapOnG1 {
-//    [self presentViewController:self.QBImagePickerController animated:YES completion:nil];
-    [self toggleLeesinVC:CameraTypeAsk];
+    
+    @weakify(self);
+    [self hideButtons:^{
+        @strongify(self);
+        [self toggleLeesinVC:CameraTypeAsk];
+    }];
+    
 }
 - (void)tapOnG2 {
-//    [self dismissViewControllerAnimated:YES completion:^{
-//        DDNavigationController* nav = [AppDelegate APP].mainTabBarController.selectedViewController;
-//        PIEToHelpViewController* vc = [PIEToHelpViewController new];
-//        vc.channelVM = _channelVM;
-//        [nav pushViewController:vc animated:YES];
-//    }];
-    [self toggleLeesinVC:CameraTypeReply];
+    
+    @weakify(self);
+    [self hideButtons:^{
+        @strongify(self);
+        [self toggleLeesinVC:CameraTypeReply];
+    }];
+    
 }
 - (void)dismissViewController {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -142,6 +147,7 @@ typedef NS_ENUM(NSUInteger, CameraType) {
 
 /**
     跨层为LeesinViewController设置代理(设计的略糟糕……)
+    小心一点就不用怕空指针异常啦
  */
 - (void)setRemoteLeesinDelegate:(LeesinViewController *)leesinViewController{
     
@@ -153,6 +159,20 @@ typedef NS_ENUM(NSUInteger, CameraType) {
     navigationVC.topViewController.childViewControllers[1];
     
     leesinViewController.delegate = followVC;
+}
+
+- (void)hideButtons:(void(^)(void))completionBlock{
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         _bg1.hidden = YES;
+                         _bg2.hidden = YES;
+                     } completion:^(BOOL finished) {
+                         if (finished) {
+                             if (completionBlock != nil) {
+                                 completionBlock();
+                             }
+                         }
+                     }];
 }
 
 @end

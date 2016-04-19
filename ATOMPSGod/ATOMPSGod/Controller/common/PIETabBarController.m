@@ -119,8 +119,13 @@
 }
 
 #pragma mark - Public method
-- (void)refreshMoments{
+- (void)toggleToEliteFollow{
     [self setSelectedIndex:0];
+    PIEEliteViewController *eliteViewController = _navigation_elite.viewControllers[0];
+    [eliteViewController toggleToEliteFollow];
+}
+
+- (void)refreshMoments{
     PIEEliteViewController *eliteViewController = _navigation_elite.viewControllers[0];
     [eliteViewController refreshMoments];
 }

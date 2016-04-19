@@ -297,6 +297,7 @@ static NSString *CellIdentifier2 = @"PIENewAskCollectionCell";
         
 }
 
+#pragma mark - <LeesinViewControllerDelegate>
 -(void)leesinViewController:(LeesinViewController *)leesinViewController uploadPercentage:(CGFloat)percentage uploadSucceed:(BOOL)success {
     [self.progressView setProgress:percentage animated:YES];
     if  (success) {
