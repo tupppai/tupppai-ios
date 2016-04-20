@@ -12,6 +12,12 @@
 @interface PIEEliteViewController : DDBaseVC
 @property (nonatomic, strong) MRNavigationBarProgressView *progressView;
 
+/** 跳转到EliteFollow */
+- (void)toggleToEliteFollow;
+
+/**
+ *  下拉刷新eliteFollow
+ */
 - (void)refreshMoments;
 
 @end

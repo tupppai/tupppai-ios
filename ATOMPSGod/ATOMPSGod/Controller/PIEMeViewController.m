@@ -310,6 +310,9 @@ typedef NS_ENUM(NSUInteger, PIEMeViewControllerNavigationBarStyle) {
     
     self.usernameLabel.font = [UIFont mediumTupaiFontOfSize:17];
     
+    // 需求不明确，先隐藏掉wallet
+    _myWalletIndicatorImageView.hidden = YES;
+    
     [self setupColorAndFont];
     [self setupTapGesture];
 }

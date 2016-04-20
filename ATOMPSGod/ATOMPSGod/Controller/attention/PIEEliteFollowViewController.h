@@ -7,9 +7,14 @@
 //
 
 #import "DDBaseVC.h"
+#import "LeesinViewController.h"
 
-@interface PIEEliteFollowViewController : DDBaseVC<DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
-
+@interface PIEEliteFollowViewController : DDBaseVC
+<
+    DZNEmptyDataSetSource,
+    DZNEmptyDataSetDelegate,
+    LeesinViewControllerDelegate
+>
 
 - (void)getSourceIfEmpty_follow:(void (^)(BOOL finished))block;
 

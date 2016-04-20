@@ -28,6 +28,8 @@
 
 #import "PIEPageManager.h"
 
+#import "MRNavigationBarProgressView.h"
+
 /* Variables */
 @interface PIEEliteFollowViewController ()
 @property (nonatomic, strong) NSMutableArray<PIEPageVM *> *sourceFollow;
@@ -50,6 +52,8 @@
 
 @property (nonatomic, strong) PIEShareView * shareView;
 
+@property (nonatomic, strong) MRNavigationBarProgressView *progressView;
+
 
 @end
 
@@ -70,6 +74,7 @@
 @interface PIEEliteFollowViewController (JGActionSheet)
 <JGActionSheetDelegate>
 @end
+
 
 @implementation PIEEliteFollowViewController
 
@@ -106,6 +111,7 @@ static NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
     [super viewWillAppear:animated];
     
     [self setupNavBar];
+    [self setupProgressView];
 }
 
 #pragma mark - data setup
@@ -135,6 +141,12 @@ static NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
 
     [self.parentViewController.navigationController.navigationBar
      setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+    
+}
+
+- (void)setupProgressView {
+    _progressView = [MRNavigationBarProgressView progressViewForNavigationController:self.navigationController];
+    _progressView.progressTintColor = [UIColor colorWithHex:0x4a4a4a andAlpha:0.93];
 }
 
 - (void)configTableViewFollow {
@@ -443,6 +455,37 @@ static NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
     return YES;
 }
 
+#pragma mark - <LeesinViewControllerDelegate>
+- (void)leesinViewControllerWillUploadImage:(LeesinViewController *)leesinViewController{
+    // 假如上次的上传没有成功，那么把progressView的数据也清零
+    [self.progressView setProgress:0 animated:NO];
+    
+    // 在开始传送图片之前先跳转到eliteFollow页面
+    [[AppDelegate APP].mainTabBarController toggleToEliteFollow];
+    
+    
+}
+
+- (void)leesinViewController:(LeesinViewController *)leesinViewController
+            uploadPercentage:(CGFloat)percentage
+               uploadSucceed:(BOOL)success
+{
+    // 设置进度条
+    [self.progressView setProgress:percentage animated:YES];
+    if (success) {
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [[AppDelegate APP].mainTabBarController refreshMoments];
+        });
+    }
+}
+
+- (void)leesinViewControllerDidDismiss:(LeesinViewController *)leesinViewController{
+    // 同时退出CameraVC和LeesinViewController
+    [[AppDelegate APP].mainTabBarController.presentedViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+
 #pragma mark - RAC signal response methods
 - (void)tapOnAvatarOrUsernameLabelAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -530,7 +573,6 @@ static NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
         _tableFollow.emptyDataSetSource   = self;
         _tableFollow.emptyDataSetDelegate = self;
         
-        
         _tableFollow.estimatedRowHeight   = SCREEN_WIDTH+155;
         _tableFollow.rowHeight            = UITableViewAutomaticDimension;
         
@@ -566,4 +608,6 @@ static NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
     }
     return _shareView;
 }
+
+
 @end

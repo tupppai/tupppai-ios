@@ -381,7 +381,7 @@
 
 - (UIView *)swipeView:(SwipeView *)swipeView viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
 {
-    CGFloat swipeViewHeight = swipeView.frame.size.height-1;
+    CGFloat swipeViewHeight = swipeView.frame.size.height;
 
     if (!view)
     {

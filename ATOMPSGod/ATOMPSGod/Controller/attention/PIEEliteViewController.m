@@ -13,7 +13,6 @@
 
 #import "PIEEliteHotViewController.h"
 #import "PIEEliteFollowViewController.h"
-#import "YYFPSLabel.h"
 
 
 typedef NS_ENUM(NSInteger, PIEEliteType) {
@@ -74,8 +73,8 @@ typedef NS_ENUM(NSInteger, PIEEliteType) {
     
     // fetch the initial data
     
-    // setup FPS label
-    [self setupFPSLabel];
+//    // setup FPS label
+//    [self setupFPSLabel];
     
 }
 
@@ -143,17 +142,7 @@ typedef NS_ENUM(NSInteger, PIEEliteType) {
     }
 }
 
-- (void)setupFPSLabel
-{
-    // 加测试 fps
-    YYFPSLabel *fpsLabel =
-    [[YYFPSLabel alloc] initWithFrame:CGRectMake(0, 100, 200, 200)];
-    [fpsLabel sizeToFit];
-    // 当前顶层窗口
-    UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
-    // 添加到窗口
-    [window addSubview:fpsLabel];
-}
+
 
 #pragma mark - <UIScrollViewDelegate>
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
@@ -229,16 +218,17 @@ typedef NS_ENUM(NSInteger, PIEEliteType) {
 }
 
 #pragma mark - Public methods
-- (void)refreshMoments
-{
+- (void)toggleToEliteFollow{
     [self.segmentedControl setSelectedSegmentIndex:1 animated:YES];
     [self toggleWithType:PIEEliteTypeFollow];
+}
 
+- (void)refreshMoments
+{
     // frefresh follow immediately
     PIEEliteFollowViewController *followVC = (PIEEliteFollowViewController *)
     self.eliteViewControllers[1];
     [followVC refreshMoments];
-    
 }
 
 #pragma mark - Lazy loadings

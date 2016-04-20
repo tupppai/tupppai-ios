@@ -312,7 +312,12 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
         if ([self.bar.textView isFirstResponder]) {
             [self.bar.textView resignFirstResponder];
         }
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:^{
+            if (_delegate != nil &&
+                [_delegate respondsToSelector:@selector(leesinViewControllerDidDismiss:)]) {
+                [_delegate leesinViewControllerDidDismiss:self];
+            }
+        }];
     }
 }
 - (void)bar_tapLeftButton1:(id)sender {
@@ -383,6 +388,12 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     uploadModel.imageArray = self.selectedAssets;
     
     uploadManager.model = uploadModel;
+    
+    if (_delegate &&
+        [_delegate respondsToSelector:@selector(leesinViewControllerWillUploadImage:)]) {
+        [_delegate leesinViewControllerWillUploadImage:self];
+    }
+    
     [uploadManager upload:^(CGFloat percentage, BOOL success) {
         if (_delegate && [_delegate respondsToSelector:@selector(leesinViewController:uploadPercentage:uploadSucceed:)]) {
             [_delegate leesinViewController:self uploadPercentage:percentage uploadSucceed:success];
@@ -390,7 +401,12 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     }];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self dismissViewControllerAnimated:YES completion:NULL];
+        [self dismissViewControllerAnimated:YES completion:^{
+            if (_delegate != nil &&
+                [_delegate respondsToSelector:@selector(leesinViewControllerDidDismiss:)]) {
+                [_delegate leesinViewControllerDidDismiss:self];
+            }
+        }];
     });
     
 }
@@ -795,7 +811,12 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
     [Hud activity:@"" inView:self.view];
     UIImage *imageToBeSaved = info[UIImagePickerControllerOriginalImage];
     UIImageWriteToSavedPhotosAlbum(imageToBeSaved, nil, nil, nil);
-    [self dismissViewControllerAnimated:YES completion:NULL];
+    [self dismissViewControllerAnimated:YES completion:^{
+        if (_delegate != nil &&
+            [_delegate respondsToSelector:@selector(leesinViewControllerDidDismiss:)]) {
+            [_delegate leesinViewControllerDidDismiss:self];
+        }
+    }];
 }
 - (void)reloadPreviewBar {
     
@@ -903,12 +924,14 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
 -(void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController {
     [self dismissViewControllerAnimated:YES completion:^{
         [self.qbImagePickerController.selectedAssets removeAllObjects];
+        if (_delegate != nil &&
+            [_delegate respondsToSelector:@selector(leesinViewControllerDidDismiss:)]) {
+            [_delegate leesinViewControllerDidDismiss:self];
+        }
     }];
 }
 -(void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didFinishPickingAssets:(NSArray *)assets {
     [self dismissViewControllerAnimated:YES completion:^{
-        
-        
         for (PHAsset *asset in self.selectedAssets) {
             asset.selected = NO;
         }
@@ -940,7 +963,12 @@ typedef NS_ENUM(NSUInteger, PIESwipeViewResueViewType) {
         [self lsn_updateSourceAndReloadPreviewBar];
         
         [self.qbImagePickerController.selectedAssets removeAllObjects];
-
+        
+//        if (_delegate != nil &&
+//            [_delegate respondsToSelector:@selector(leesinViewControllerDidDismiss:)]) {
+//            [_delegate leesinViewControllerDidDismiss:self];
+//        }
+        
     }];
 }
 

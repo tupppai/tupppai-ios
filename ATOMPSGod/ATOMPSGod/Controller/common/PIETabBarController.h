@@ -11,4 +11,11 @@
 @interface PIETabBarController : UITabBarController
 @property (nonatomic,copy) UIImage* avatarImage;
 - (void)updateTabbarAvatar;
+
+/** 跳转到EliteFollow */
+- (void)toggleToEliteFollow;
+
+/** 下拉刷新eliteFollow(like 朋友圈) */
+- (void)refreshMoments;
+
 @end
