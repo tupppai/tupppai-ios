@@ -457,6 +457,9 @@ static NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
 
 #pragma mark - <LeesinViewControllerDelegate>
 - (void)leesinViewControllerWillUploadImage:(LeesinViewController *)leesinViewController{
+    // 假如上次的上传没有成功，那么把progressView的数据也清零
+    [self.progressView setProgress:0 animated:NO];
+    
     // 在开始传送图片之前先跳转到eliteFollow页面
     [[AppDelegate APP].mainTabBarController toggleToEliteFollow];
     
