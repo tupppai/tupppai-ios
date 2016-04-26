@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -65,7 +65,7 @@
                                 <constraint firstAttribute="width" secondItem="toi-Fk-YSd" secondAttribute="height" multiplier="85:36" id="n4k-Lj-W2t"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <state key="normal" title="下载">
+                            <state key="normal" title="帮P">
                                 <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
                         </button>
@@ -79,13 +79,6 @@
                                 <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
                         </button>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bang_icon" translatesAutoresizingMaskIntoConstraints="NO" id="tPU-T0-ZWT">
-                            <rect key="frame" x="308" y="25" width="27" height="33"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="33" id="1wd-sd-9gF"/>
-                                <constraint firstAttribute="width" constant="27" id="LFK-te-c5Y"/>
-                            </constraints>
-                        </imageView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BQe-Nc-GLY" customClass="PIELoveButton">
                             <rect key="frame" x="300" y="31" width="35" height="28"/>
                             <constraints>
@@ -101,20 +94,12 @@
                         <constraint firstItem="toi-Fk-YSd" firstAttribute="width" secondItem="2eR-Dd-PJs" secondAttribute="width" multiplier="170:700" id="GsT-Po-Sv7"/>
                         <constraint firstItem="PjT-tn-IKh" firstAttribute="width" secondItem="2eR-Dd-PJs" secondAttribute="width" multiplier="17:70" id="Js7-pp-6K0"/>
                         <constraint firstAttribute="trailing" secondItem="BQe-Nc-GLY" secondAttribute="trailing" constant="12" id="WZB-gi-FP5"/>
-                        <constraint firstAttribute="trailing" secondItem="tPU-T0-ZWT" secondAttribute="trailing" constant="12" id="WaW-vf-uBp"/>
                         <constraint firstItem="PjT-tn-IKh" firstAttribute="centerY" secondItem="2eR-Dd-PJs" secondAttribute="centerY" id="X3m-JC-GAs"/>
                         <constraint firstItem="toi-Fk-YSd" firstAttribute="trailing" secondItem="2eR-Dd-PJs" secondAttribute="centerX" constant="-5" id="ajD-yE-KmV"/>
                         <constraint firstItem="toi-Fk-YSd" firstAttribute="centerY" secondItem="2eR-Dd-PJs" secondAttribute="centerY" id="dJf-Vf-GFP"/>
                         <constraint firstItem="BQe-Nc-GLY" firstAttribute="centerY" secondItem="2eR-Dd-PJs" secondAttribute="centerY" constant="3" id="gAu-FH-aVS"/>
-                        <constraint firstItem="tPU-T0-ZWT" firstAttribute="centerY" secondItem="2eR-Dd-PJs" secondAttribute="centerY" id="lDh-Ap-7sa"/>
                         <constraint firstItem="toi-Fk-YSd" firstAttribute="centerX" secondItem="2eR-Dd-PJs" secondAttribute="centerX" priority="750" id="m7a-VK-OyI"/>
-                        <constraint firstItem="tPU-T0-ZWT" firstAttribute="leading" secondItem="BQe-Nc-GLY" secondAttribute="trailing" constant="12" id="wsZ-Jy-Kzs"/>
                     </constraints>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="wsZ-Jy-Kzs"/>
-                        </mask>
-                    </variation>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -142,7 +127,6 @@
             <connections>
                 <outlet property="askIconImageView" destination="bRC-6B-Cly" id="5eV-6s-ABx"/>
                 <outlet property="avatarView" destination="5bE-IR-7OE" id="efj-tx-lh8"/>
-                <outlet property="bangIconImageView" destination="tPU-T0-ZWT" id="r7Q-eO-Guq"/>
                 <outlet property="blurAnimateImageView" destination="kgb-fY-Gt7" id="d7A-Xo-H70"/>
                 <outlet property="createdTimeLabel" destination="W6x-qB-6Vx" id="wTa-TF-OqR"/>
                 <outlet property="detailButton" destination="PjT-tn-IKh" id="aH0-po-d1J"/>
@@ -156,7 +140,6 @@
         </view>
     </objects>
     <resources>
-        <image name="bang_icon" width="27" height="33"/>
         <image name="image_detail_ask" width="43" height="23"/>
         <image name="image_detail_reply" width="43" height="23"/>
     </resources>
