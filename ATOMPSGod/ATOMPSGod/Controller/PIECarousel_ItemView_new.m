@@ -55,7 +55,6 @@
                                  forState:UIControlStateNormal];
     
     self.blurAnimateImageView.hideThumbView = YES;
-    
 
 }
 
@@ -102,7 +101,7 @@
   contextInfo: (void *) contextInfo {
     
     [Hud dismiss];
-    if(error != NULL){
+    if(error != nil || image == nil){
         [Hud customText:@"保存出错" inView:[AppDelegate APP].window];
     } else {
         [Hud customText:@"作品保存成功" inView:[AppDelegate APP].window];

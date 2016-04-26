@@ -15,8 +15,8 @@ typedef NS_ENUM(NSInteger, PIECategoryType) {
 };
 @class PIEPageVM;
 @interface PIECategoryModel : PIEBaseModel
-@property (nonatomic,assign ) NSNumber       * ID;
-@property (nonatomic,assign ) NSNumber       * askID;
+@property (nonatomic,strong ) NSNumber       * ID;
+@property (nonatomic,strong ) NSNumber       * askID;
 @property (nonatomic,assign ) PIECategoryType type;
 @property (nonatomic,copy   ) NSString       * imageUrl;
 @property (nonatomic,copy   ) NSString       * iconUrl;
