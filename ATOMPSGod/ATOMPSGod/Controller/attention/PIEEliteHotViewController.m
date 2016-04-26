@@ -102,10 +102,8 @@ static  NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
     
     [self getSourceIfEmpty_hot:nil];
     
-   
     [self configureSwipeView];
 
-    
 }
 
 
@@ -567,160 +565,6 @@ static  NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
     return YES;
 }
 
-/*
-#pragma mark - Gesture events
-- (void)longPressOnHot:(UILongPressGestureRecognizer *)gesture {
-    CGPoint location = [gesture locationInView:self.tableHot];
-    _selectedIndexPath_hot = [self.tableHot indexPathForRowAtPoint:location];
-    if (_selectedIndexPath_hot) {
-        //关注  求p
-        _selectedVM = _sourceHot[_selectedIndexPath_hot.row];
-        
-        if (_selectedVM.type == PIEPageTypeAsk) {
-            
-            PIEEliteHotAskTableViewCell* cell = [self.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
-            CGPoint p = [gesture locationInView:cell];
-            if (CGRectContainsPoint(cell.theImageView.frame, p)) {
-                [self showShareView:_selectedVM];
-            }          // 点赞
-        }
-        //关注  作品
-        
-        else {
-//            PIEEliteHotReplyTableViewCell* cell = [self.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
-//            CGPoint p = [gesture locationInView:cell];
-//            //点击大图
-//            if (CGRectContainsPoint(cell.blurAnimateView.frame, p)) {
-//                [self showShareView:_selectedVM];
-//            }
-//            else if (CGRectContainsPoint(cell.likeView.frame, p)) {
-//                [_selectedVM love:YES];
-//            }
-        }
-    }
-}
-
-- (void)tapGestureHot:(UITapGestureRecognizer *)gesture {
-    CGPoint location = [gesture locationInView:self.tableHot];
-    _selectedIndexPath_hot = [self.tableHot indexPathForRowAtPoint:location];
-    
-    if (_selectedIndexPath_hot == nil) {
-        return;
-    }
-    _selectedVM = _sourceHot[_selectedIndexPath_hot.row];
-    
-    if (_selectedVM == nil) {
-        return;
-    }
-    
-    if (_selectedVM.type == PIEPageTypeAsk) {
-        
-        PIEEliteHotAskTableViewCell* cell = [self.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
-        CGPoint p = [gesture locationInView:cell];
-        if (CGRectContainsPoint(cell.theImageView.frame, p)) {
-            //进入热门详情
-            PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-            vc.pageVM = _selectedVM;
-            [self presentViewController:vc animated:YES completion:nil];
-            
-        }
-        //点击头像
-        else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
-            PIEFriendViewController * friendVC = [PIEFriendViewController new];
-            friendVC.pageVM = _selectedVM;
-            [self.navigationController pushViewController:friendVC animated:YES];
-        }
-        //点击用户名
-        else if (CGRectContainsPoint(cell.nameLabel.frame, p)) {
-            PIEFriendViewController * friendVC = [PIEFriendViewController new];
-            friendVC.pageVM = _selectedVM;
-            [self.navigationController pushViewController:friendVC animated:YES];
-        }
-        else if (CGRectContainsPoint(cell.bangView.frame, p)) {
-            self.psActionSheet.vm = _selectedVM;
-            [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
-        }
-        else if (CGRectContainsPoint(cell.followView.frame, p)) {
-            [_selectedVM follow];
-        }
-        else if (CGRectContainsPoint(cell.shareView.frame, p)) {
-            [self showShareView:_selectedVM];
-        }
-        
-        else if ((CGRectContainsPoint(cell.commentView.frame, p))||(CGRectContainsPoint(cell.commentLabel1.frame, p))||(CGRectContainsPoint(cell.commentLabel2.frame, p)) ) {
-            PIECommentViewController* vc = [PIECommentViewController new];
-            vc.vm = _selectedVM;
-            vc.shouldShowHeaderView = NO;
-            [self.navigationController pushViewController:vc animated:YES];
-        }
-        else if (CGRectContainsPoint(cell.allWorkView.frame, p)) {
-            PIEReplyCollectionViewController* vc = [PIEReplyCollectionViewController new];
-            vc.pageVM = _selectedVM;
-            [self.navigationController pushViewController:vc animated:YES];
-        }
-        
-    }
-            else {
-//                PIEEliteHotReplyTableViewCell* cell = [self.tableHot cellForRowAtIndexPath:_selectedIndexPath_hot];
-//                CGPoint p = [gesture locationInView:cell];
-//                //点击小图
-//                if (CGRectContainsPoint(cell.blurAnimateView.frame, p)) {
-//                    CGPoint pp = [gesture locationInView:cell.blurAnimateView.thumbView];
-//                    if (CGRectContainsPoint(cell.blurAnimateView.thumbView.leftView.frame,pp)) {
-//                        [cell animateWithType:PIEThumbAnimateViewTypeLeft];
-//                    }
-//                    
-//                    else if (CGRectContainsPoint(cell.blurAnimateView.thumbView.rightView.frame,pp)) {
-//                        [cell animateWithType:PIEThumbAnimateViewTypeRight];
-//                    }
-//                    
-//                    else  if (CGRectContainsPoint(cell.blurAnimateView.imageView.frame, p)) {
-//                        PIECarouselViewController2* vc = [PIECarouselViewController2 new];
-//                        vc.pageVM = _selectedVM;
-//                        [self presentViewController:vc animated:YES completion:nil];
-//                    }
-//                }
-              
-//                //点击头像
-//                else if (CGRectContainsPoint(cell.avatarView.frame, p)) {
-//                    PIEFriendViewController * friendVC = [PIEFriendViewController new];
-//                    friendVC.pageVM = _selectedVM;
-//                    [self.navigationController pushViewController:friendVC animated:YES];
-//                }
-//                //点击用户名
-//                else if (CGRectContainsPoint(cell.nameLabel.frame, p)) {
-//                    PIEFriendViewController * friendVC = [PIEFriendViewController new];
-//                    friendVC.pageVM = _selectedVM;
-//                    [self.navigationController pushViewController:friendVC animated:YES];
-//                }
-//                // 点赞
-//                else if (CGRectContainsPoint(cell.likeView.frame, p)) {
-//                    [_selectedVM love:NO];
-//                }
-//                // 关注
-//                else if (CGRectContainsPoint(cell.followView.frame, p)) {
-//                    [_selectedVM follow];
-//                }
-                // 分享
-//                else if (CGRectContainsPoint(cell.shareView.frame, p)) {
-//                    [self showShareView:_selectedVM];
-//                }
-//                // 评论
-//                else if ((CGRectContainsPoint(cell.commentView.frame, p))||(CGRectContainsPoint(cell.commentLabel1.frame, p))||(CGRectContainsPoint(cell.commentLabel2.frame, p)) ) {                    PIECommentViewController* vc = [PIECommentViewController new];
-//                    vc.vm = _selectedVM;
-//                    vc.shouldShowHeaderView = NO;
-//                    [self.navigationController pushViewController:vc animated:YES];
-//                }
-//                 全部作品
-//                else if (CGRectContainsPoint(cell.allWorkView.frame, p)) {
-//                    PIEReplyCollectionViewController* vc = [PIEReplyCollectionViewController new];
-//                    vc.pageVM = _selectedVM;
-//                    [self.navigationController pushViewController:vc animated:YES];
-//                }
-            }
-}
-*/
-
 
 #pragma mark - Notification methods
 
@@ -746,15 +590,17 @@ static  NSString *PIEEliteReplyCellIdentifier = @"PIEEliteReplyTableViewCell";
     [param setObject:@(SCREEN_WIDTH_RESOLUTION) forKey:@"width"];
     
     [PIEEliteManager getBannerSource:param withBlock:^(NSMutableArray *array) {
-        [self.sourceBanner removeAllObjects];
-        [self.sourceBanner addObjectsFromArray:array];
         
-        _pageControl_swipeView.numberOfPages = self.sourceBanner.count;
-        
-        [self renewBannerModelInManagedContext:array];
-        
-        [self.swipeView reloadData];
- 
+        if (array.count != 0) {
+            [self.sourceBanner removeAllObjects];
+            [self.sourceBanner addObjectsFromArray:array];
+            
+            _pageControl_swipeView.numberOfPages = self.sourceBanner.count;
+            
+            [self renewBannerModelInManagedContext:array];
+            
+            [self.swipeView reloadData];
+        }
 
     }];
 }
