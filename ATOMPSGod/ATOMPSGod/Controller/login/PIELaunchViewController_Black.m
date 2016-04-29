@@ -23,6 +23,8 @@
 
 #import "RengarViewController.h"
 
+#import "OpenShareHeader.h"
+
 
 /* Variables */
 @interface PIELaunchViewController_Black ()
@@ -47,6 +49,11 @@ PIEVerificationCodeCountdownButton *countdownButton;
 
 @property (nonatomic, strong) RACDisposable *loginOrSignupRequestDisposable;
 
+@property (nonatomic, strong) UIButton *sinaButton;
+
+@property (nonatomic, strong) UIButton *QQButton;
+
+@property (nonatomic, strong) UIButton *wechatButton;
 
 @end
 
@@ -72,6 +79,9 @@ PIEVerificationCodeCountdownButton *countdownButton;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [self checkIfThirdPartyAppShouldBeHidden];
+    
 
     [self.navigationController.navigationBar
      lt_setBackgroundColor:[UIColor clearColor]];
@@ -314,6 +324,7 @@ PIEVerificationCodeCountdownButton *countdownButton;
     [sinaButton addTarget:self
                    action:@selector(sinaWeiboLogin)
          forControlEvents:UIControlEventTouchUpInside];
+    self.sinaButton = sinaButton;
 
     // QQ
     UIButton *QQButton = ({
@@ -339,6 +350,8 @@ PIEVerificationCodeCountdownButton *countdownButton;
     [QQButton addTarget:self
                  action:@selector(QQLogin)
        forControlEvents:UIControlEventTouchUpInside];
+    self.QQButton = QQButton;
+    
     
     // wechat
     UIButton *wechatButton = ({
@@ -362,6 +375,8 @@ PIEVerificationCodeCountdownButton *countdownButton;
     [wechatButton addTarget:self
                      action:@selector(wechatLogin)
            forControlEvents:UIControlEventTouchUpInside];
+    self.wechatButton = wechatButton;
+    
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -370,7 +385,13 @@ PIEVerificationCodeCountdownButton *countdownButton;
 }
 
 
-
+- (void)checkIfThirdPartyAppShouldBeHidden{
+    
+    self.QQButton.hidden     = ![OpenShare isQQInstalled];
+    self.sinaButton.hidden   = ![OpenShare isWeiboInstalled];
+    self.wechatButton.hidden = ![OpenShare isWeixinInstalled];
+    
+}
 
 #pragma mark - Network Request
 - (void)setupHasRegisteredRequest
