@@ -55,6 +55,7 @@
                                  forState:UIControlStateNormal];
     
     self.blurAnimateImageView.hideThumbView = YES;
+
 }
 
 - (void)setupTouchingEvents
@@ -91,13 +92,22 @@
      initWithTarget:self
      action:@selector(longPressOnLoveButton)];
     [self.loveButton addGestureRecognizer:longPressOnLoveButton];
-    
-    UITapGestureRecognizer *tapOnBang =
-    [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnBang)];
-    self.bangIconImageView.userInteractionEnabled = YES;
-    [self.bangIconImageView addGestureRecognizer:tapOnBang];
+
 
 }
+
+#pragma mark -
+- (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error
+  contextInfo: (void *) contextInfo {
+    
+    [Hud dismiss];
+    if(error != nil || image == nil){
+        [Hud customText:@"保存出错" inView:[AppDelegate APP].window];
+    } else {
+        [Hud customText:@"作品保存成功" inView:[AppDelegate APP].window];
+    }
+}
+
 
 #pragma mark - Touching event responses
 - (void)tapOnUser
@@ -117,10 +127,29 @@
     
 }
 
+
+/**
+    新需求：
+    ASK-> “帮P”，弹Actionsheet
+    Reply -> "保存"， 直接下载图片到沙盒
+ 
+    因为名字太难改了，所以downloadButton，downloadImage这些名字保持原来一致(就是信不过xcode的refactor）
+ */
 - (void)downloadImage
 {
-    self.psActionSheet.vm = _currentPageVM;
-    [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
+    if (_currentPageVM.type == PIEPageTypeAsk) {
+        self.psActionSheet.vm = _currentPageVM;
+        [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
+    }else{
+        // 保存到沙盒
+        [Hud activity:@"保存中..."];
+        [DDService sd_downloadImage:_currentPageVM.model.imageURL withBlock:^(UIImage *image) {
+        
+            UIImageWriteToSavedPhotosAlbum(image,self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
+        }];
+        
+    }
+    
 }
 
 - (void)pushToCommentVC
@@ -155,11 +184,11 @@
     self.loveButton.numberString = _currentPageVM.likeCount;
 }
 
-- (void)tapOnBang
-{
-    self.psActionSheet.vm = _currentPageVM;
-    [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
-}
+//- (void)tapOnBang
+//{
+//    self.psActionSheet.vm = _currentPageVM;
+//    [self.psActionSheet showInView:[AppDelegate APP].window animated:YES];
+//}
 
 #pragma mark - public methods
 - (void)injectPageVM:(PIEPageVM *)pageVM
@@ -172,13 +201,13 @@
         self.askIconImageView.hidden   = NO;
         self.replyIconImageView.hidden = YES;
         self.loveButton.hidden         = YES;
-        self.bangIconImageView.hidden  = NO;
+        [self.downloadButton setTitle:@"帮P" forState:UIControlStateNormal];
         
     }else if (pageVM.type == PIEPageTypeReply){
         self.askIconImageView.hidden   = YES;
         self.replyIconImageView.hidden = NO;
         self.loveButton.hidden         = NO;
-        self.bangIconImageView.hidden  = YES;
+        [self.downloadButton setTitle:@"保存" forState:UIControlStateNormal];
     }
     
     // 头像

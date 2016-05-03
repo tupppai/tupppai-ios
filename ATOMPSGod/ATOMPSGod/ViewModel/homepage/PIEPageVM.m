@@ -71,7 +71,6 @@
         [_model addObserver:self forKeyPath:@"totalShareNumber" options:NSKeyValueObservingOptionNew context:NULL];
         [_model addObserver:self forKeyPath:@"totalCommentNumber" options:NSKeyValueObservingOptionNew context:NULL];
         
-        
         _model.uid = model.uid;
         _model.avatar = model.avatar;
         _model.nickname = model.nickname;

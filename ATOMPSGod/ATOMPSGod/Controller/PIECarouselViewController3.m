@@ -55,7 +55,7 @@
 }
 
 -(BOOL)prefersStatusBarHidden {
-    return YES;
+    return NO;
 }
 -(BOOL)hidesBottomBarWhenPushed {
     return YES;

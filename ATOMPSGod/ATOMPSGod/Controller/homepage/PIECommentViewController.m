@@ -265,12 +265,23 @@ static NSString *MessengerCellIdentifier = @"MessengerCell";
     [self.textView resignFirstResponder];
     self.textView.placeholder = @"添加评论";
     
+    
+    
     PIECommentVM *commentVM = [PIECommentVM new];
+    
+    commentVM.model = [PIECommentModel new];
+    
+    
+    
     commentVM.username = [DDUserManager currentUser].nickname;
     commentVM.uid = [DDUserManager currentUser].uid;
     commentVM.avatar = [DDUserManager currentUser].avatar;
     commentVM.originText = self.textView.text;
     commentVM.time = @"刚刚";
+    
+    commentVM.model.uid = [DDUserManager currentUser].uid;
+    commentVM.model.avatar = [DDUserManager currentUser].avatar;
+    
 //    NSString* commentToShow;
     //回复评论
     if (_targetCommentVM) {

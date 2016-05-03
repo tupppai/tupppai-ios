@@ -32,7 +32,7 @@
 
 @property (weak, nonatomic) IBOutlet PIELoveButton           *loveButton;
 
-@property (weak, nonatomic) IBOutlet UIImageView             *bangIconImageView;
+//@property (weak, nonatomic) IBOutlet UIImageView             *bangIconImageView;
 
 
 + (PIECarousel_ItemView_new *)itemView;
