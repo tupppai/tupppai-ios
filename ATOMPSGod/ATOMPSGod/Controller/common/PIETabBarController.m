@@ -7,7 +7,7 @@
 //
 
 #import "PIETabBarController.h"
-#import "PIEChannelViewController.h"
+//#import "PIEChannelViewController.h"
 #import "DDNavigationController.h"
 #import "DDService.h"
 #import "PIEMeViewController.h"
@@ -28,7 +28,7 @@
 #import "LeesinUploadModel.h"
 #import "LeesinUploadManager.h"
 #import "MRNavigationBarProgressView.h"
-
+#import "PIEMovieViewController.h"
 
 @interface PIETabBarController ()
 <
@@ -196,19 +196,20 @@
 
 - (void)configureTabBarController {
     
-    PIEChannelViewController *channelVc = [PIEChannelViewController new];
-
+//    PIEChannelViewController *channelVc = [PIEChannelViewController new];
+    PIEMovieViewController *vc2 = [PIEMovieViewController new];
+    
     PIEEliteViewController *myAttentionViewController = [PIEEliteViewController new];
     PIEProceedingViewController2 *proceedingViewController = [PIEProceedingViewController2 new];
     
     PIEMeViewController *aboutMeVC = (PIEMeViewController *)[[UIStoryboard storyboardWithName:@"Me" bundle:nil] instantiateViewControllerWithIdentifier: @"PIEME"];
     
     myAttentionViewController.title = @"动态";
-    channelVc.title                 = @"图派";
+    vc2.title                 = @"微出品";
     proceedingViewController.title  = @"进行中";
     aboutMeVC.title                 = @"我";
 
-    _navigation_new = [[DDNavigationController alloc] initWithRootViewController:channelVc];
+    _navigation_new = [[DDNavigationController alloc] initWithRootViewController:vc2];
     _navigation_elite = [[DDNavigationController alloc] initWithRootViewController:myAttentionViewController];
     _navigation_proceeding = [[DDNavigationController alloc] initWithRootViewController:proceedingViewController];
     _navigation_me = [[DDNavigationController alloc] initWithRootViewController:aboutMeVC];
@@ -285,9 +286,6 @@
     if (viewController == _navigation_new) {
         if (_preNav == _navigation_new) {
 
-            [[NSNotificationCenter defaultCenter]
-            postNotificationName:PIERefreshNavigationChannelFromTabBarNotification
-             object:nil];
         }
     } else if (viewController == _navigation_elite) {
         if (_preNav == _navigation_elite) {
