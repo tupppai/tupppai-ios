@@ -6,11 +6,20 @@
 //  Copyright © 2016 Shenzhen Pires Internet Technology CO.,LTD. All rights reserved.
 //
 
+
+static NSString *WEB_READY = @"web_ready";
+
+
 #import "PIEMovieViewController.h"
 #import "TFHpple.h"
 
-@interface PIEMovieViewController ()
+
+
+
+@interface PIEMovieViewController ()<UIWebViewDelegate>
 @property (strong, nonatomic)  UIWebView *webView;
+@property (strong, nonatomic) UIView *backView;
+@property (assign, nonatomic) NSInteger clickTimes;
 
 @end
 
@@ -23,31 +32,79 @@
     self.webView.scalesPageToFit = YES;
     self.webView.backgroundColor = [UIColor clearColor];
     self.webView.contentMode = UIViewContentModeScaleAspectFit;
-    NSNumber *version =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    NSString *urlB= [NSString stringWithFormat:@"%@?version=%@&token=%@",@"http://wechupin.com/?/",version,[DDUserManager currentUser].token];
-    //    NSLog(@"%@ url",urlB);
+    self.webView.delegate = self;
     
+    [self initBackButton];
+
+    
+    
+    NSNumber *version =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    NSString *urlB= [NSString stringWithFormat:@"%@?version=%@&token=%@",@"http://wechupin.com/?/",version,[DDUserManager currentUser].token];    
     NSURL *nsurl=[NSURL URLWithString:urlB];
     NSURLRequest *nsrequest=[NSURLRequest requestWithURL:nsurl];
     [self.webView loadRequest:nsrequest];
-    [self loadDataFromHtml:urlB];
  
 }
 
-- (void)loadDataFromHtml:(NSString*)stringUrl {
-    NSURL *url = [NSURL URLWithString:stringUrl];
-    NSData *data = [NSData dataWithContentsOfURL:url];
+- (void)initBackButton {
     
-    TFHpple *parser = [TFHpple hppleWithHTMLData:data];
+    _backView = [[UIView alloc] initWithFrame:CGRectMake(0,0, 40, 44)];
+    [self.view addSubview:_backView];
+    _backView.hidden = YES;
     
-    NSString *XpathQueryStringTitle = @"//title";
-    NSArray *nodes = [parser searchWithXPathQuery:XpathQueryStringTitle];
-    for (TFHppleElement *element in nodes) {
-        self.title = [[element firstChild]content];
+    UIButton *sysButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 44)];
+    [sysButton setTitle:@"返回" forState:UIControlStateNormal];
+    [sysButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [sysButton addTarget:self action:@selector(backButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    sysButton.tag = 10001;
+    [_backView addSubview:sysButton];
+    
+    UIBarButtonItem *leftBar = [[UIBarButtonItem alloc] initWithCustomView:_backView];
+    leftBar.style = UIBarButtonItemStylePlain;
+    self.navigationItem.leftBarButtonItem = leftBar;
+    
+}
+
+- (void)backButtonPressed:(UIButton *)button {
+    if ([self.webView canGoBack] && button.tag == 10001) {
+        [self.webView  goBack];
+    } else {
+        [self dismissViewControllerAnimated:true completion:NULL];
     }
 }
 
+#pragma mark - webview delegate
+- (void)webViewDidStartLoad:(UIWebView *)webView {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    self.navigationItem.title = @"载入中...";
+    
+    NSLog(@"webViewDidStartLoad canGoBack%d",webView.canGoBack);
+    
+}
 
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    
+    NSLog(@"webViewDidFinishLoad canGoBack%d",webView.canGoBack);
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    self.navigationItem.title = [self.webView stringByEvaluatingJavaScriptFromString:@"document.title"];
+    
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    
+    NSLog(@"didFailLoadWithError canGoBack%d",webView.canGoBack);
+
+}
+
+-(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    NSLog(@"request %@ navigationType %d canGoBack %d",request,navigationType,webView.canGoBack);
+    _backView.hidden = !webView.canGoBack;
+    
+    NSLog(@"shouldStartLoadWithRequest count %d ,length%f",webView.pageCount,webView.pageLength);
+    return YES;
+}
 
 
 @end

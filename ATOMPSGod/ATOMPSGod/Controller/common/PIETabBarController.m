@@ -5,21 +5,21 @@
 //  Created by atom on 1padding/3/3.
 //  Copyright (c) 201padding年 ATOM. All rights reserved.
 //
-
+#import "PIEShopViewController.h"
 #import "PIETabBarController.h"
 //#import "PIEChannelViewController.h"
 #import "DDNavigationController.h"
 #import "DDService.h"
 #import "PIEMeViewController.h"
 #import "PIECameraViewController.h"
-#import "PIEProceedingViewController.h"
+//#import "PIEProceedingViewController.h"
 
 #import "DDLoginNavigationController.h"
 #import "ATOMUserDAO.h"
 #import "PIEUploadManager.h"
 #import "UIImage+Colors.h"
 
-#import "PIEProceedingViewController2.h"
+//#import "PIEProceedingViewController2.h"
 #import "PIEEliteViewController.h"
 #import "PIELaunchViewController_Black.h"
 #import "PIEBindCellphoneViewController.h"
@@ -200,7 +200,7 @@
     PIEMovieViewController *vc2 = [PIEMovieViewController new];
     
     PIEEliteViewController *myAttentionViewController = [PIEEliteViewController new];
-    PIEProceedingViewController2 *proceedingViewController = [PIEProceedingViewController2 new];
+    PIEShopViewController *proceedingViewController = [PIEShopViewController new];
     
     PIEMeViewController *aboutMeVC = (PIEMeViewController *)[[UIStoryboard storyboardWithName:@"Me" bundle:nil] instantiateViewControllerWithIdentifier: @"PIEME"];
     
@@ -307,7 +307,15 @@
     if (viewController == _navigationPlaceholder_center) {
         [self presentBlurViewController];
         return NO;
+    } else if (viewController == _navigation_new) {
+        [self presentMovie];
+        return NO;
     }
+    else if (viewController == _navigation_proceeding) {
+        [self presentMovie];
+        return NO;
+    }
+
     return YES;
 }
 
@@ -316,6 +324,11 @@
 - (void)presentBlurViewController {
     PIECameraViewController *pvc = [PIECameraViewController new];
     pvc.blurStyle = UIBlurEffectStyleDark;
+    [self presentViewController:pvc animated:YES completion:nil];
+}
+
+- (void)presentMovie {
+    PIEMovieViewController *pvc = [PIEMovieViewController new];
     [self presentViewController:pvc animated:YES completion:nil];
 }
 
