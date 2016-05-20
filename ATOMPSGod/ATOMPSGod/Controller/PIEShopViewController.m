@@ -76,32 +76,40 @@
 }
 - (void)initBackButton {
     
-    _backView = [[UIView alloc] initWithFrame:CGRectMake(0,0, 40, 44)];
+    _backView = [[UIView alloc] initWithFrame:CGRectMake(0,0, 90, 44)];
     [self.view addSubview:_backView];
+    //    _backView.hidden = YES;
     
     UIButton *sysButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 44)];
-    [sysButton setTitle:@"返回" forState:UIControlStateNormal];
+    [sysButton setTitle:@"关闭" forState:UIControlStateNormal];
     [sysButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [sysButton addTarget:self action:@selector(backButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [sysButton addTarget:self action:@selector(closeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     sysButton.tag = 10001;
     [_backView addSubview:sysButton];
+    
+    UIButton *sysButton2 = [[UIButton alloc] initWithFrame:CGRectMake(45, 0, 40, 44)];
+    [sysButton2 setTitle:@"返回" forState:UIControlStateNormal];
+    [sysButton2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [sysButton2 addTarget:self action:@selector(backButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    sysButton2.tag = 10002;
+    [_backView addSubview:sysButton2];
+    
     
     UIBarButtonItem *leftBar = [[UIBarButtonItem alloc] initWithCustomView:_backView];
     leftBar.style = UIBarButtonItemStylePlain;
     self.navigationItem.leftBarButtonItem = leftBar;
-
+    
 }
 
-/**
- *  如果您想使用返回和关闭，一定记得在这里实现，回退时修改backView，然后添加关闭按钮，可以参照微信的实现哦
- */
+- (void)closeButtonPressed {
+    [self dismissViewControllerAnimated:true completion:NULL];
+}
 - (void)backButtonPressed:(UIButton *)button {
-    if ([_commonWebView canGoBack] && button.tag == 10001) {
-        [_commonWebView goBack];
-    } else {
-//        [self.navigationController  popViewControllerAnimated:YES];
+    if ([self.commonWebView canGoBack] && button.tag == 10002) {
+        [self.commonWebView  goBack];
     }
 }
+
 
 #pragma mark - webview delegate
 - (void)webViewDidStartLoad:(UIWebView *)webView {

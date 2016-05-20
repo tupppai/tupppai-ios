@@ -34,14 +34,14 @@
 <
     UITabBarControllerDelegate
 >
-@property (nonatomic, strong) DDNavigationController *navigation_new;
-@property (nonatomic, strong) DDNavigationController *navigation_elite;
-//@property (nonatomic, strong) DDNavigationController *centerNav;
-@property (nonatomic, strong) DDNavigationController *navigation_proceeding;
-@property (nonatomic, strong) DDNavigationController *navigation_me;
+
+@property (nonatomic, strong) DDNavigationController *navigation_first;
+@property (nonatomic, strong) DDNavigationController *navigation_second;
+@property (nonatomic, strong) DDNavigationController *navigation_third;
+@property (nonatomic, strong) DDNavigationController *navigation_fourth;
+@property (nonatomic, strong) DDNavigationController *navigation_fifth;
 @property (nonatomic, strong) DDNavigationController *preNav;
 @property (nonatomic, assign) long long timeStamp_error;
-@property (nonatomic, strong) DDNavigationController *navigationPlaceholder_center;
 
 //@property (nonatomic, strong) MRNavigationBarProgressView *progressView;
 
@@ -121,12 +121,12 @@
 #pragma mark - Public method
 - (void)toggleToEliteFollow{
     [self setSelectedIndex:0];
-    PIEEliteViewController *eliteViewController = _navigation_elite.viewControllers[0];
+    PIEEliteViewController *eliteViewController = _navigation_first.viewControllers[0];
     [eliteViewController toggleToEliteFollow];
 }
 
 - (void)refreshMoments{
-    PIEEliteViewController *eliteViewController = _navigation_elite.viewControllers[0];
+    PIEEliteViewController *eliteViewController = _navigation_first.viewControllers[0];
     [eliteViewController refreshMoments];
 }
 
@@ -196,57 +196,60 @@
 
 - (void)configureTabBarController {
     
-//    PIEChannelViewController *channelVc = [PIEChannelViewController new];
-    PIEMovieViewController *vc2 = [PIEMovieViewController new];
+//    PIEMovieViewController *vc2 = [PIEMovieViewController new];
     
     PIEEliteViewController *myAttentionViewController = [PIEEliteViewController new];
-    PIEShopViewController *proceedingViewController = [PIEShopViewController new];
+//    PIEShopViewController *proceedingViewController = [PIEShopViewController new];
     
     PIEMeViewController *aboutMeVC = (PIEMeViewController *)[[UIStoryboard storyboardWithName:@"Me" bundle:nil] instantiateViewControllerWithIdentifier: @"PIEME"];
     
     myAttentionViewController.title = @"动态";
-    vc2.title                 = @"微出品";
-    proceedingViewController.title  = @"进行中";
+//    vc2.title                 = @"微出品";
+//    proceedingViewController.title  = @"进行中";
     aboutMeVC.title                 = @"我";
 
-    _navigation_new = [[DDNavigationController alloc] initWithRootViewController:vc2];
-    _navigation_elite = [[DDNavigationController alloc] initWithRootViewController:myAttentionViewController];
-    _navigation_proceeding = [[DDNavigationController alloc] initWithRootViewController:proceedingViewController];
-    _navigation_me = [[DDNavigationController alloc] initWithRootViewController:aboutMeVC];
-    _preNav = _navigation_elite;
-    _navigationPlaceholder_center = [[DDNavigationController alloc] init];
+    _navigation_second = [[DDNavigationController alloc] init];
+    _navigation_second.title = @"微出品";
+    _navigation_fourth = [[DDNavigationController alloc] init];
+    _navigation_fourth.title = @"影视";
+
     
-    _navigation_elite.tabBarItem.image =
+    _navigation_first = [[DDNavigationController alloc] initWithRootViewController:myAttentionViewController];
+    _navigation_fifth = [[DDNavigationController alloc] initWithRootViewController:aboutMeVC];
+    _preNav = _navigation_first;
+    _navigation_third = [[DDNavigationController alloc] init];
+    
+    _navigation_first.tabBarItem.image =
     [[UIImage imageNamed:@"tab_home_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 
-    _navigation_elite.tabBarItem.selectedImage =
+    _navigation_first.tabBarItem.selectedImage =
     [[UIImage imageNamed:@"tab_home_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
-    _navigation_new.tabBarItem.image =
+    _navigation_second.tabBarItem.image =
     [[UIImage imageNamed:@"tab_new_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    _navigation_new.tabBarItem.selectedImage =
+    _navigation_second.tabBarItem.selectedImage =
     [[UIImage imageNamed:@"tab_new_seleted"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    _navigation_proceeding.tabBarItem.image =
+    _navigation_fourth.tabBarItem.image =
     [[UIImage imageNamed:@"tab_jinxing_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    _navigation_proceeding.tabBarItem.selectedImage =
+    _navigation_fourth.tabBarItem.selectedImage =
     [[UIImage imageNamed:@"tab_jinxing_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 
-    _navigation_me.tabBarItem.image =
+    _navigation_fifth.tabBarItem.image =
     [[UIImage imageNamed:@"pie_tab_5"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    _navigation_me.tabBarItem.selectedImage =
+    _navigation_fifth.tabBarItem.selectedImage =
     [[UIImage imageNamed:@"pie_tab_5_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
-    _navigationPlaceholder_center.title = nil;
-    _navigationPlaceholder_center.tabBarItem.image =
+    _navigation_third.title = nil;
+    _navigation_third.tabBarItem.image =
     [[UIImage imageNamed:@"tab_post"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    _navigationPlaceholder_center.tabBarItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0);
+    _navigation_third.tabBarItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0);
     
     [self updateTabbarAvatar];
-    self.viewControllers = [NSArray arrayWithObjects:_navigation_elite,
-                            _navigation_new,
-                            _navigationPlaceholder_center,
-                            _navigation_proceeding,
-                            _navigation_me, nil];
+    self.viewControllers = [NSArray arrayWithObjects:_navigation_first,
+                            _navigation_second,
+                            _navigation_third,
+                            _navigation_fourth,
+                            _navigation_fifth, nil];
 }
 
 
@@ -255,8 +258,8 @@
         if (image) {
             UIImage* scaledImage = [Util imageWithImage:image scaledToSize:CGSizeMake(26,26) circlize:YES];
             _avatarImage = scaledImage;
-            _navigation_me.tabBarItem.image = [_avatarImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-            _navigation_me.tabBarItem.selectedImage = [[self getSelectedTabImage] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+            _navigation_fifth.tabBarItem.image = [_avatarImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+            _navigation_fifth.tabBarItem.selectedImage = [[self getSelectedTabImage] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         }
     }];
 }
@@ -283,16 +286,16 @@
 }
 
 -(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
-    if (viewController == _navigation_new) {
-        if (_preNav == _navigation_new) {
+    if (viewController == _navigation_second) {
+        if (_preNav == _navigation_second) {
 
         }
-    } else if (viewController == _navigation_elite) {
-        if (_preNav == _navigation_elite) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshNavigation_Elite" object:nil];
+    } else if (viewController == _navigation_first) {
+        if (_preNav == _navigation_first) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"Refreshnavigation_first" object:nil];
         }
-    } else if (viewController == _navigation_proceeding){
-        if (_preNav == _navigation_proceeding) {
+    } else if (viewController == _navigation_fourth){
+        if (_preNav == _navigation_fourth) {
             [[NSNotificationCenter defaultCenter]
              postNotificationName:PIEPrefreshNavigationProceedingFromTabBarNotification
              object:nil];
@@ -304,14 +307,14 @@
 
 
 -(BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
-    if (viewController == _navigationPlaceholder_center) {
+    if (viewController == _navigation_third) {
         [self presentBlurViewController];
         return NO;
-    } else if (viewController == _navigation_new) {
+    } else if (viewController == _navigation_second) {
         [self presentMovie];
         return NO;
     }
-    else if (viewController == _navigation_proceeding) {
+    else if (viewController == _navigation_fourth) {
         [self presentMovie];
         return NO;
     }
@@ -327,9 +330,18 @@
     [self presentViewController:pvc animated:YES completion:nil];
 }
 
+- (void)presentShop {
+    //    PIEMovieViewController *pvc = [PIEMovieViewController new];
+    PIEShopViewController *vc = [PIEShopViewController new];
+    DDNavigationController *nav = [[DDNavigationController alloc]initWithRootViewController:vc];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
 - (void)presentMovie {
-    PIEMovieViewController *pvc = [PIEMovieViewController new];
-    [self presentViewController:pvc animated:YES completion:nil];
+//    PIEMovieViewController *pvc = [PIEMovieViewController new];
+    PIEMovieViewController *movie = [PIEMovieViewController new];
+    DDNavigationController *nav = [[DDNavigationController alloc]initWithRootViewController:movie];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 //- (void)presentRengarViewController
@@ -356,7 +368,7 @@
 //- (BOOL)tabBarController:(UITabBarController *)tabBarController
 //shouldSelectViewController:(UIViewController *)viewController
 //{
-//    if (viewController == _navigationPlaceholder_center) {
+//    if (viewController == _navigation_third) {
 //        [self presentRengarViewController];
 //        return NO;
 //    }
@@ -386,7 +398,7 @@
 //        if (success) {
 //            [Hud dismiss];
 //            [self setSelectedIndex:0];
-//            PIEEliteViewController *eliteViewController = _navigation_elite.viewControllers[0];
+//            PIEEliteViewController *eliteViewController = _navigation_first.viewControllers[0];
 //            [eliteViewController refreshMoments];
 //        }
 //    }];

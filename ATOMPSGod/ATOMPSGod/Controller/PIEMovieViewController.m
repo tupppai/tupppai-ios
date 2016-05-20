@@ -35,7 +35,6 @@ static NSString *WEB_READY = @"web_ready";
     self.webView.delegate = self;
     
     [self initBackButton];
-
     
     
     NSNumber *version =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
@@ -48,16 +47,24 @@ static NSString *WEB_READY = @"web_ready";
 
 - (void)initBackButton {
     
-    _backView = [[UIView alloc] initWithFrame:CGRectMake(0,0, 40, 44)];
+    _backView = [[UIView alloc] initWithFrame:CGRectMake(0,0, 90, 44)];
     [self.view addSubview:_backView];
-    _backView.hidden = YES;
+//    _backView.hidden = YES;
     
     UIButton *sysButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 44)];
-    [sysButton setTitle:@"返回" forState:UIControlStateNormal];
+    [sysButton setTitle:@"关闭" forState:UIControlStateNormal];
     [sysButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [sysButton addTarget:self action:@selector(backButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [sysButton addTarget:self action:@selector(closeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     sysButton.tag = 10001;
     [_backView addSubview:sysButton];
+    
+    UIButton *sysButton2 = [[UIButton alloc] initWithFrame:CGRectMake(45, 0, 40, 44)];
+    [sysButton2 setTitle:@"返回" forState:UIControlStateNormal];
+    [sysButton2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [sysButton2 addTarget:self action:@selector(backButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    sysButton2.tag = 10002;
+    [_backView addSubview:sysButton2];
+
     
     UIBarButtonItem *leftBar = [[UIBarButtonItem alloc] initWithCustomView:_backView];
     leftBar.style = UIBarButtonItemStylePlain;
@@ -65,11 +72,12 @@ static NSString *WEB_READY = @"web_ready";
     
 }
 
+- (void)closeButtonPressed {
+    [self dismissViewControllerAnimated:true completion:NULL];
+}
 - (void)backButtonPressed:(UIButton *)button {
-    if ([self.webView canGoBack] && button.tag == 10001) {
+    if ([self.webView canGoBack] && button.tag == 10002) {
         [self.webView  goBack];
-    } else {
-        [self dismissViewControllerAnimated:true completion:NULL];
     }
 }
 
@@ -100,7 +108,7 @@ static NSString *WEB_READY = @"web_ready";
 
 -(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     NSLog(@"request %@ navigationType %d canGoBack %d",request,navigationType,webView.canGoBack);
-    _backView.hidden = !webView.canGoBack;
+//    _backView.hidden = !webView.canGoBack;
     
     NSLog(@"shouldStartLoadWithRequest count %d ,length%f",webView.pageCount,webView.pageLength);
     return YES;
