@@ -10,6 +10,7 @@
 
 #import "YZSDK.h"
 #import "CacheUserInfo.h"
+#import "DDUserManager.h"
 
 
 //warning:目前使用的是 libYouzan_debug SDK,不是发行版本
@@ -53,26 +54,51 @@
 
 - (void)loadRequestFromString:(NSString*)urlString {
     
-    CacheUserInfo *cacheModel = [CacheUserInfo sharedManage];
-    if(!cacheModel.isValid) {
-        
-        YZUserModel *userModel = [CacheUserInfo getYZUserModelFromCacheUserModel:cacheModel];
-        [YZSDK registerYZUser:userModel callBack:^(NSString *message, BOOL isError) {
-            if(isError) {
-                cacheModel.isValid = NO;
-            } else {
-                cacheModel.isValid = YES;
-                NSURL *url = [NSURL URLWithString:urlString];
-                NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
-                [self.commonWebView loadRequest:urlRequest];
-            }
-        }];
+    
+    YZUserModel* userModel = [YZUserModel new];
+    userModel.userID = [NSString stringWithFormat:@"%zd",[DDUserManager currentUser].uid ];
+    userModel.userName = [DDUserManager currentUser].nickname;
+    userModel.nickName = [DDUserManager currentUser].nickname;
+    userModel.telePhone = [DDUserManager currentUser].mobile;
+    userModel.avatar = [DDUserManager currentUser].avatar;
+    if ([DDUserManager currentUser].sex == 1) {
+        userModel.gender = @"1";
     } else {
-        cacheModel.isValid = YES;
-        NSURL *url = [NSURL URLWithString:urlString];
-        NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
-        [self.commonWebView loadRequest:urlRequest];
+        userModel.gender = @"2";
     }
+    
+    NSLog(@"userModel%@",userModel);
+    
+    [YZSDK registerYZUser:userModel callBack:^(NSString *message, BOOL isError) {
+        NSLog(@"message %@,isError %d",message,isError);
+        if(isError) {
+        } else {
+            NSURL *url = [NSURL URLWithString:urlString];
+            NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+            [self.commonWebView loadRequest:urlRequest];
+        }
+    }];
+
+
+//    CacheUserInfo *cacheModel = [CacheUserInfo sharedManage];
+//    if(!cacheModel.isValid) {
+//        YZUserModel *userModel = [CacheUserInfo getYZUserModelFromCacheUserModel:cacheModel];
+//        [YZSDK registerYZUser:userModel callBack:^(NSString *message, BOOL isError) {
+//            if(isError) {
+//                cacheModel.isValid = NO;
+//            } else {
+//                cacheModel.isValid = YES;
+//                NSURL *url = [NSURL URLWithString:urlString];
+//                NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+//                [self.commonWebView loadRequest:urlRequest];
+//            }
+//        }];
+//    } else {
+//        cacheModel.isValid = YES;
+//        NSURL *url = [NSURL URLWithString:urlString];
+//        NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+//        [self.commonWebView loadRequest:urlRequest];
+//    }
 }
 - (void)initBackButton {
     

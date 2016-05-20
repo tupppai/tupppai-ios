@@ -315,7 +315,7 @@
         return NO;
     }
     else if (viewController == _navigation_fourth) {
-        [self presentMovie];
+        [self presentShop];
         return NO;
     }
 

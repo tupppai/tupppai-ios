@@ -37,9 +37,9 @@ static NSString *WEB_READY = @"web_ready";
     [self initBackButton];
     
     
-    NSNumber *version =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    NSString *urlB= [NSString stringWithFormat:@"%@?version=%@&token=%@",@"http://wechupin.com/?/",version,[DDUserManager currentUser].token];    
-    NSURL *nsurl=[NSURL URLWithString:urlB];
+//    NSNumber *version =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+//    NSString *urlB= [NSString stringWithFormat:@"%@?version=%@&token=%@",@"http://wechupin.com/?/",version,[DDUserManager currentUser].token];
+    NSURL *nsurl=[NSURL URLWithString:@"http://wechupin.com/index-app.html#app/playcategory"];
     NSURLRequest *nsrequest=[NSURLRequest requestWithURL:nsurl];
     [self.webView loadRequest:nsrequest];
  
