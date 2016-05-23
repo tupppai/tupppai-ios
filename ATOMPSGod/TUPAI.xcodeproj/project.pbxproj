@@ -514,6 +514,8 @@
 		F465C6FD1C294EAE00D8A410 /* PIEChannelDetailLatestPSCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F465C6FB1C294EAE00D8A410 /* PIEChannelDetailLatestPSCell.xib */; };
 		F46CBC7D1C2CDE0D00A64474 /* PIELoveButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F46CBC7C1C2CDE0C00A64474 /* PIELoveButton.m */; };
 		F46CBC801C2CE03200A64474 /* PIELoveLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F46CBC7F1C2CE03200A64474 /* PIELoveLabel.m */; };
+		F474591B1CEDBC8C00633937 /* PIEShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F474591A1CEDBC8C00633937 /* PIEShopViewController.m */; };
+		F474591E1CEDBD8F00633937 /* CacheUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = F474591D1CEDBD8F00633937 /* CacheUserInfo.m */; };
 		F47EF0861C031FF500BFB442 /* VVBlurPresentationController.m in Sources */ = {isa = PBXBuildFile; fileRef = F47EF07F1C031FF500BFB442 /* VVBlurPresentationController.m */; };
 		F47EF0871C031FF500BFB442 /* VVBlurPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = F47EF0811C031FF500BFB442 /* VVBlurPresenter.m */; };
 		F47EF0881C031FF500BFB442 /* VVBlurTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = F47EF0831C031FF500BFB442 /* VVBlurTransitioning.m */; };
@@ -556,6 +558,7 @@
 		F4C0DFEC1BE9D45F000615CF /* PIEWebViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4C0DFEA1BE9D45F000615CF /* PIEWebViewViewController.xib */; };
 		F4C0DFF01BE9EF3A000615CF /* PIEFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C0DFEE1BE9EF3A000615CF /* PIEFeedbackViewController.m */; };
 		F4C0DFF11BE9EF3A000615CF /* PIEFeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4C0DFEF1BE9EF3A000615CF /* PIEFeedbackViewController.xib */; };
+		F4C498241CED8F88008A2325 /* libYouzan_debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4C498191CED8F88008A2325 /* libYouzan_debug.a */; };
 		F4C705DF1C0995840057AA6A /* PIEImageView_BlurBG.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C705DE1C0995840057AA6A /* PIEImageView_BlurBG.m */; };
 		F4C705E21C0998750057AA6A /* PIEImageView_blur.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C705E11C0998750057AA6A /* PIEImageView_blur.m */; };
 		F4C9BE4C1C1D4F8C00A1AE82 /* UIImage+Colors.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C9BE4B1C1D4F8C00A1AE82 /* UIImage+Colors.m */; };
@@ -619,6 +622,7 @@
 		F4EC11271BCF55EC002D1DCF /* PIENotificationLikeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4EC11261BCF55EC002D1DCF /* PIENotificationLikeTableViewCell.xib */; };
 		F4EC11291BCF55F7002D1DCF /* PIENotificationSystemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4EC11281BCF55F7002D1DCF /* PIENotificationSystemTableViewCell.xib */; };
 		F4EC112B1BCF5604002D1DCF /* PIENotificationReplyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4EC112A1BCF5604002D1DCF /* PIENotificationReplyTableViewCell.xib */; };
+		F4ED23D51CEB19A7008D7041 /* PIEMovieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4ED23D41CEB19A7008D7041 /* PIEMovieViewController.m */; };
 		F4ED2D711C607CEB00C00DA6 /* PIEStateBackgroundColorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F4ED2D701C607CEB00C00DA6 /* PIEStateBackgroundColorButton.m */; };
 		F4EF1AA61C44845A005B86AE /* NSNumber+leesinDone.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EF1AA51C44845A005B86AE /* NSNumber+leesinDone.m */; };
 		F4EF1AAC1C44E026005B86AE /* QBAlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EF1AAB1C44E026005B86AE /* QBAlbumCell.m */; };
@@ -1762,6 +1766,10 @@
 		F46CBC7C1C2CDE0C00A64474 /* PIELoveButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIELoveButton.m; sourceTree = "<group>"; };
 		F46CBC7E1C2CE03200A64474 /* PIELoveLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIELoveLabel.h; path = homepage/PIELoveLabel.h; sourceTree = "<group>"; };
 		F46CBC7F1C2CE03200A64474 /* PIELoveLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIELoveLabel.m; path = homepage/PIELoveLabel.m; sourceTree = "<group>"; };
+		F47459191CEDBC8C00633937 /* PIEShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEShopViewController.h; sourceTree = "<group>"; };
+		F474591A1CEDBC8C00633937 /* PIEShopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEShopViewController.m; sourceTree = "<group>"; };
+		F474591C1CEDBD8F00633937 /* CacheUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacheUserInfo.h; sourceTree = "<group>"; };
+		F474591D1CEDBD8F00633937 /* CacheUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CacheUserInfo.m; sourceTree = "<group>"; };
 		F47EF07E1C031FF500BFB442 /* VVBlurPresentationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VVBlurPresentationController.h; sourceTree = "<group>"; };
 		F47EF07F1C031FF500BFB442 /* VVBlurPresentationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VVBlurPresentationController.m; sourceTree = "<group>"; };
 		F47EF0801C031FF500BFB442 /* VVBlurPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VVBlurPresenter.h; sourceTree = "<group>"; };
@@ -1839,6 +1847,16 @@
 		F4C0DFED1BE9EF3A000615CF /* PIEFeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEFeedbackViewController.h; sourceTree = "<group>"; };
 		F4C0DFEE1BE9EF3A000615CF /* PIEFeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEFeedbackViewController.m; sourceTree = "<group>"; };
 		F4C0DFEF1BE9EF3A000615CF /* PIEFeedbackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIEFeedbackViewController.xib; sourceTree = "<group>"; };
+		F4C498171CED8F88008A2325 /* NSError+YZNetworkError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+YZNetworkError.h"; sourceTree = "<group>"; };
+		F4C498181CED8F88008A2325 /* NSMutableDictionary+NullObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+NullObject.h"; sourceTree = "<group>"; };
+		F4C498191CED8F88008A2325 /* libYouzan_debug.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libYouzan_debug.a; sourceTree = "<group>"; };
+		F4C4981C1CED8F88008A2325 /* YZUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZUserModel.h; sourceTree = "<group>"; };
+		F4C4981E1CED8F88008A2325 /* OpenGoodsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGoodsService.h; sourceTree = "<group>"; };
+		F4C4981F1CED8F88008A2325 /* OpenGoodsServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGoodsServiceProtocol.h; sourceTree = "<group>"; };
+		F4C498201CED8F88008A2325 /* OpenTradeService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenTradeService.h; sourceTree = "<group>"; };
+		F4C498211CED8F88008A2325 /* OpenTradeServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenTradeServiceProtocol.h; sourceTree = "<group>"; };
+		F4C498221CED8F88008A2325 /* YZSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZSDK.h; sourceTree = "<group>"; };
+		F4C498231CED8F88008A2325 /* YZSDKDefination.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZSDKDefination.h; sourceTree = "<group>"; };
 		F4C705DD1C0995840057AA6A /* PIEImageView_BlurBG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEImageView_BlurBG.h; sourceTree = "<group>"; };
 		F4C705DE1C0995840057AA6A /* PIEImageView_BlurBG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEImageView_BlurBG.m; sourceTree = "<group>"; };
 		F4C705E01C0998750057AA6A /* PIEImageView_blur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIEImageView_blur.h; path = login/PIEImageView_blur.h; sourceTree = "<group>"; };
@@ -1949,6 +1967,8 @@
 		F4EC11261BCF55EC002D1DCF /* PIENotificationLikeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIENotificationLikeTableViewCell.xib; sourceTree = "<group>"; };
 		F4EC11281BCF55F7002D1DCF /* PIENotificationSystemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIENotificationSystemTableViewCell.xib; sourceTree = "<group>"; };
 		F4EC112A1BCF5604002D1DCF /* PIENotificationReplyTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIENotificationReplyTableViewCell.xib; sourceTree = "<group>"; };
+		F4ED23D31CEB19A7008D7041 /* PIEMovieViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEMovieViewController.h; sourceTree = "<group>"; };
+		F4ED23D41CEB19A7008D7041 /* PIEMovieViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEMovieViewController.m; sourceTree = "<group>"; };
 		F4ED2D6F1C607CEB00C00DA6 /* PIEStateBackgroundColorButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIEStateBackgroundColorButton.h; sourceTree = "<group>"; };
 		F4ED2D701C607CEB00C00DA6 /* PIEStateBackgroundColorButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIEStateBackgroundColorButton.m; sourceTree = "<group>"; };
 		F4EF1AA41C44845A005B86AE /* NSNumber+leesinDone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+leesinDone.h"; sourceTree = "<group>"; };
@@ -2056,6 +2076,7 @@
 				F44CB2F11C731F4900B68C6C /* CoreData.framework in Frameworks */,
 				F4279A1B1C55F17C004CFBBE /* libsqlite3.0.tbd in Frameworks */,
 				F4279A151C55F0EA004CFBBE /* CFNetwork.framework in Frameworks */,
+				F4C498241CED8F88008A2325 /* libYouzan_debug.a in Frameworks */,
 				F44A52791C0BF91500707281 /* libxml2.2.tbd in Frameworks */,
 				E99C51481B85ADF9004CA47B /* ImageIO.framework in Frameworks */,
 				E99C51461B85ADEF004CA47B /* JavaScriptCore.framework in Frameworks */,
@@ -2774,6 +2795,8 @@
 		5CDB05EA1AA400410089121E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				F474590A1CEDBC6300633937 /* shop */,
+				F4ED23C61CEB198F008D7041 /* movie */,
 				F44CB39D1C76E48100B68C6C /* PageDetail */,
 				F4CAFD851C586E30000332C3 /* Rengar */,
 				F4F0A1A41C437F1C000DDEBB /* QBImagePicker */,
@@ -2824,6 +2847,7 @@
 		5CDB05EC1AA400410089121E /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				F4C498151CED8F88008A2325 /* YouzaniOSSDK */,
 				F42799F81C55F0B6004CFBBE /* ping++ */,
 				F42799971C51C566004CFBBE /* UMAnalytics_Sdk_3.6.7 */,
 				905DC1AF1C4F518000596B0E /* TTTAttributedLabel */,
@@ -4275,6 +4299,17 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		F474590A1CEDBC6300633937 /* shop */ = {
+			isa = PBXGroup;
+			children = (
+				F474591C1CEDBD8F00633937 /* CacheUserInfo.h */,
+				F474591D1CEDBD8F00633937 /* CacheUserInfo.m */,
+				F47459191CEDBC8C00633937 /* PIEShopViewController.h */,
+				F474591A1CEDBC8C00633937 /* PIEShopViewController.m */,
+			);
+			name = shop;
+			sourceTree = "<group>";
+		};
 		F47EF07D1C031FF500BFB442 /* VVBlur */ = {
 			isa = PBXGroup;
 			children = (
@@ -4440,6 +4475,47 @@
 				F4C0DFEA1BE9D45F000615CF /* PIEWebViewViewController.xib */,
 			);
 			name = BannerWebView;
+			sourceTree = "<group>";
+		};
+		F4C498151CED8F88008A2325 /* YouzaniOSSDK */ = {
+			isa = PBXGroup;
+			children = (
+				F4C498161CED8F88008A2325 /* Category */,
+				F4C498191CED8F88008A2325 /* libYouzan_debug.a */,
+				F4C4981B1CED8F88008A2325 /* Model */,
+				F4C4981D1CED8F88008A2325 /* Service */,
+				F4C498221CED8F88008A2325 /* YZSDK.h */,
+				F4C498231CED8F88008A2325 /* YZSDKDefination.h */,
+			);
+			path = YouzaniOSSDK;
+			sourceTree = "<group>";
+		};
+		F4C498161CED8F88008A2325 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				F4C498171CED8F88008A2325 /* NSError+YZNetworkError.h */,
+				F4C498181CED8F88008A2325 /* NSMutableDictionary+NullObject.h */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		F4C4981B1CED8F88008A2325 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F4C4981C1CED8F88008A2325 /* YZUserModel.h */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		F4C4981D1CED8F88008A2325 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				F4C4981E1CED8F88008A2325 /* OpenGoodsService.h */,
+				F4C4981F1CED8F88008A2325 /* OpenGoodsServiceProtocol.h */,
+				F4C498201CED8F88008A2325 /* OpenTradeService.h */,
+				F4C498211CED8F88008A2325 /* OpenTradeServiceProtocol.h */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		F4C9BE491C1D4F7500A1AE82 /* categories */ = {
@@ -4641,6 +4717,15 @@
 			name = 2.1;
 			sourceTree = "<group>";
 		};
+		F4ED23C61CEB198F008D7041 /* movie */ = {
+			isa = PBXGroup;
+			children = (
+				F4ED23D31CEB19A7008D7041 /* PIEMovieViewController.h */,
+				F4ED23D41CEB19A7008D7041 /* PIEMovieViewController.m */,
+			);
+			name = movie;
+			sourceTree = "<group>";
+		};
 		F4F0A1A41C437F1C000DDEBB /* QBImagePicker */ = {
 			isa = PBXGroup;
 			children = (
@@ -4822,6 +4907,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = PIE;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Shenzhen Pires Internet Technology CO.,LTD";
 				TargetAttributes = {
@@ -5157,6 +5243,7 @@
 				907A431E1C40FC1C002542E6 /* PIELaunchTextField.m in Sources */,
 				F41FF0E61BDDFCE800566A12 /* JTSSimpleImageDownloader.m in Sources */,
 				F4092DDC1C3A3D3B003A3AD7 /* SLKTypingIndicatorView.m in Sources */,
+				F4ED23D51CEB19A7008D7041 /* PIEMovieViewController.m in Sources */,
 				5C83A8861AC66F910071A024 /* POPAnimatableProperty.mm in Sources */,
 				F4B02E1B1BECAAE200406A55 /* DDHotDetailManager.m in Sources */,
 				F421A2101BEB41560028C521 /* PIEShareImageView.m in Sources */,
@@ -5219,6 +5306,7 @@
 				F4CAFD841C586CC1000332C3 /* RengarViewController.m in Sources */,
 				F4E530961BD4CFB800FAA65D /* PIELoginViewController.m in Sources */,
 				909E2E381C58DBDC000EA0EC /* PIEChannelTutorialRewardFailedView.m in Sources */,
+				F474591E1CEDBD8F00633937 /* CacheUserInfo.m in Sources */,
 				F44CB3AD1C76E4B500B68C6C /* PIEPageDetailHeaderTableViewCell.m in Sources */,
 				F4CAFD881C586F39000332C3 /* RengarPanelView.m in Sources */,
 				F4CB08681C59E0B1007CB846 /* RengarAlbumTableViewCell.m in Sources */,
@@ -5268,6 +5356,7 @@
 				F4F28F1F1C23AE9B0067F2E4 /* SDWebImageCompat.m in Sources */,
 				E94289861B5B32A200ED26E4 /* TSBlurView.m in Sources */,
 				E99D2F5E1B1C7E8D000D7784 /* NYXProgressiveImageView.m in Sources */,
+				F474591B1CEDBC8C00633937 /* PIEShopViewController.m in Sources */,
 				5C4C70461AB665F500358989 /* PIEPageVM.m in Sources */,
 				F4F0A1C41C437F1C000DDEBB /* QBAlbumsViewController.m in Sources */,
 				F4C0DFEB1BE9D45F000615CF /* PIEWebViewViewController.m in Sources */,
@@ -5781,6 +5870,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -5810,6 +5900,7 @@
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/UMAnalytics_Sdk_3.6.7",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/lib/Channels",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/lib",
+					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/YouzaniOSSDK",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -5824,6 +5915,7 @@
 				PRODUCT_NAME = TUPAI;
 				PROVISIONING_PROFILE = "";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = " armv7 armv7s arm64 arm6";
@@ -5834,6 +5926,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -5863,6 +5956,7 @@
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/UMAnalytics_Sdk_3.6.7",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/lib/Channels",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/lib",
+					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/YouzaniOSSDK",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
@@ -5966,6 +6060,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -5996,6 +6091,7 @@
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/UMAnalytics_Sdk_3.6.7",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/lib/Channels",
 					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/lib",
+					"$(PROJECT_DIR)/ATOMPSGod/OpenSource/YouzaniOSSDK",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (

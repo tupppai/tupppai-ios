@@ -14,7 +14,7 @@
 #import "DDIntroVC.h"
 #import "ATOMBaseDAO.h"
 #import "UMessage.h"
-
+#import "YZSDK.h"
 
 //#import <ShareSDK/ShareSDK.h>
 //#import <ShareSDKConnector/ShareSDKConnector.h>
@@ -66,11 +66,20 @@
     
     [self setupUmengAnalytics];
     
+    [self setupYouzan];
     
     
     return YES;
 }
 
+
+-(void)setupYouzan {
+    [YZSDK setOpenInterfaceAppID:@"31b1fd3fe46b915ed3" appSecret:@"882a98a688fa264fd26f4a563c1afc97"];
+    [YZSDK setOpenDebugLog:NO];
+    
+//    NSNumber *version =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    [YZSDK userAgentInit:@"d1362c1b2c6f7a83a11463623085612" version:@"1.0"];
+}
 -(void)applicationWillTerminate:(UIApplication *)application {
     [self saveContext];
 }
