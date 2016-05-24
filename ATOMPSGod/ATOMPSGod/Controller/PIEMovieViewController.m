@@ -39,7 +39,10 @@ static NSString *WEB_READY = @"web_ready";
     
 //    NSNumber *version =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 //    NSString *urlB= [NSString stringWithFormat:@"%@?version=%@&token=%@",@"http://wechupin.com/?/",version,[DDUserManager currentUser].token];
-    NSURL *nsurl=[NSURL URLWithString:@"http://wechupin.com/index-app.html#app/playcategory"];
+    NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    NSHTTPCookie *cookie = [[cookieJar cookies]firstObject];
+    NSString *url = [NSString stringWithFormat:@"http://wechupin.com/index-app.html?c=%@#app/playcategory",cookie.value];
+    NSURL *nsurl=[NSURL URLWithString:url];
     NSURLRequest *nsrequest=[NSURLRequest requestWithURL:nsurl];
     [self.webView loadRequest:nsrequest];
  
